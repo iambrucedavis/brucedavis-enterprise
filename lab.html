@@ -254,6 +254,83 @@ a { color:inherit; }
 }
 .tumble-reset:hover, .tumble-reset:focus-visible { outline:none; border-color:var(--yellow); color:var(--yellow); }
 
+/* Bloom — injected by bloom.js */
+.bloom-canvas { position:absolute; inset:0; width:100%; height:100%; }
+.bloom-score {
+  position:absolute; top:clamp(16px,3vw,24px); left:50%; transform:translateX(-50%); z-index:3;
+  font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+  color:rgba(236,231,219,.6);
+}
+.bloom-score b { color:var(--yellow); font-weight:700; }
+.bloom-readout {
+  position:absolute; left:0; right:0; bottom:clamp(22px,5vh,40px); z-index:2;
+  display:flex; flex-direction:column; align-items:center; gap:11px;
+  pointer-events:none; padding:0 20px;
+}
+.bloom-hint { font-family:var(--mono); font-size:12px; letter-spacing:.04em; color:#ECE7DB; }
+.bloom-meter { width:160px; height:3px; background:rgba(236,231,219,.16); overflow:hidden; }
+.bloom-meter-fill { display:block; width:100%; height:100%; background:var(--yellow); transform-origin:left; transform:scaleX(0); }
+.bloom-cta {
+  position:absolute; inset:0; z-index:3;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; gap:14px; padding:32px; background:rgba(11,11,11,.72);
+  transition:opacity .3s ease;
+}
+.bloom-cta.is-gone { opacity:0; pointer-events:none; }
+.bloom-cta-line {
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(26px,3.6vw,44px); line-height:1; text-transform:uppercase;
+  letter-spacing:.01em; color:#ECE7DB; max-width:18ch;
+}
+.bloom-cta-sub {
+  font-family:var(--mono); font-size:12px; line-height:1.75;
+  color:rgba(236,231,219,.6); max-width:46ch;
+}
+.bloom-cta-btn {
+  margin-top:6px; background:var(--yellow); color:var(--ink); border:none;
+  font-family:var(--mono); font-size:12px; font-weight:700;
+  letter-spacing:.12em; text-transform:uppercase; padding:13px 20px; cursor:pointer;
+  transition:filter .15s ease;
+}
+.bloom-cta-btn:hover, .bloom-cta-btn:focus-visible { outline:none; filter:brightness(1.07); }
+
+/* Maestro — injected by maestro.js */
+.mae-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scaleX(-1); opacity:.14; }
+.mae-canvas { position:absolute; inset:0; width:100%; height:100%; }
+.mae-readout {
+  position:absolute; left:0; right:0; bottom:clamp(22px,5vh,40px); z-index:2;
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  pointer-events:none; text-align:center; padding:0 20px;
+}
+.mae-hint { font-family:var(--mono); font-size:12px; letter-spacing:.04em; color:#ECE7DB; }
+.mae-legend {
+  display:flex; gap:18px; flex-wrap:wrap; justify-content:center;
+  font-family:var(--mono); font-size:9px; letter-spacing:.13em; text-transform:uppercase;
+  color:rgba(236,231,219,.45);
+}
+.mae-cta {
+  position:absolute; inset:0; z-index:3;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; gap:14px; padding:32px; background:rgba(11,11,11,.72);
+}
+.mae-cta[hidden] { display:none; }
+.mae-cta-line {
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(26px,3.6vw,44px); line-height:1; text-transform:uppercase;
+  letter-spacing:.01em; color:#ECE7DB; max-width:18ch;
+}
+.mae-cta-sub {
+  font-family:var(--mono); font-size:12px; line-height:1.75;
+  color:rgba(236,231,219,.6); max-width:46ch;
+}
+.mae-cta-btn {
+  margin-top:6px; background:var(--yellow); color:var(--ink); border:none;
+  font-family:var(--mono); font-size:12px; font-weight:700;
+  letter-spacing:.12em; text-transform:uppercase; padding:13px 20px; cursor:pointer;
+  transition:filter .15s ease;
+}
+.mae-cta-btn:hover, .mae-cta-btn:focus-visible { outline:none; filter:brightness(1.07); }
+
 /* ─── MOTION ───────────────────────────────── */
 @keyframes rise { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
 @keyframes spark { 0% { box-shadow:0 0 0 0 rgba(255,229,0,.65); } 100% { box-shadow:0 0 0 10px rgba(255,229,0,0); } }
@@ -317,13 +394,15 @@ a { color:inherit; }
     <div class="toy-foot">[ Enter exhibit → ]</div>
   </article>
 
-  <article class="toy" aria-label="Bloom — forthcoming">
+  <article class="toy is-live" data-toy="bloom" tabindex="0" role="button"
+           aria-label="Bloom — playable. Open the exhibit.">
+    <div class="toy-drop">Drop 04 · Live</div>
     <div class="toy-no"><span class="br">[</span> 02 <span class="br">]</span></div>
     <h2 class="toy-name">Bloom</h2>
     <p class="toy-line">Sing, hum, or whisper. Watch your sound grow into a garden.</p>
     <div class="toy-rule"></div>
     <div class="toy-meta"><span>medium — voice, growth</span><span>2026</span></div>
-    <div class="toy-foot">Forthcoming</div>
+    <div class="toy-foot">[ Enter exhibit → ]</div>
   </article>
 
   <article class="toy is-live" data-toy="tumble" tabindex="0" role="button"
@@ -348,13 +427,15 @@ a { color:inherit; }
     <div class="toy-foot">[ Enter exhibit → ]</div>
   </article>
 
-  <article class="toy" aria-label="Maestro — forthcoming">
+  <article class="toy is-live" data-toy="maestro" tabindex="0" role="button"
+           aria-label="Maestro — playable. Open the exhibit.">
+    <div class="toy-drop">Drop 05 · Live</div>
     <div class="toy-no"><span class="br">[</span> 05 <span class="br">]</span></div>
     <h2 class="toy-name">Maestro</h2>
     <p class="toy-line">Conduct an ensemble with your hands and voice.</p>
     <div class="toy-rule"></div>
     <div class="toy-meta"><span>medium — hands, voice, sound</span><span>2026</span></div>
-    <div class="toy-foot">Forthcoming</div>
+    <div class="toy-foot">[ Enter exhibit → ]</div>
   </article>
 
 </main>
@@ -430,6 +511,8 @@ const TOYS = {
   familiar: { src: './lab/familiar.js', fn: 'launchFamiliar', sound: true },
   wisp:     { src: './lab/wisp.js',     fn: 'launchWisp',     sound: true },
   tumble:   { src: './lab/tumble.js',   fn: 'launchTumble',   sound: false },
+  bloom:    { src: './lab/bloom.js',    fn: 'launchBloom',    sound: true },
+  maestro:  { src: './lab/maestro.js',  fn: 'launchMaestro',  sound: true },
 };
 
 const overlay = document.getElementById('toy-overlay');
