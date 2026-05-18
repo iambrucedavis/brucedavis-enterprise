@@ -45,6 +45,7 @@ a { color:inherit; }
 .lab-top a { text-decoration:none; transition:color .2s; }
 .lab-top a:hover { color:var(--dim); }
 .lab-top .reg { color:var(--dim); }
+.lab-nav { display:flex; gap:clamp(14px,2.6vw,28px); flex-wrap:wrap; }
 
 /* ─── SHELL ────────────────────────────────── */
 .wrap {
@@ -281,7 +282,13 @@ a { color:inherit; }
 <!-- ── TOP BAR ───────────────────────────── -->
 <header class="lab-top">
   <a href="index.html">← Bruce Davis</a>
-  <span>The Lab <span class="reg">®</span></span>
+  <nav class="lab-nav">
+    <a href="index.html#work">Work</a>
+    <a href="lab.html">Lab</a>
+    <a href="about.html">About</a>
+    <a href="bruce-davis-resume.html">Resume</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
 </header>
 
 <!-- ── HERO ──────────────────────────────── -->

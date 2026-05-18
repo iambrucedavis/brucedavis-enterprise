@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Bruce Davis</title>
+<!-- // 6% — small change. whole product. quietly here. -->
+<meta name="description" content="Bruce Davis — designer who codes, engineer who designs. Fifteen years on systems you had to trust: payment infrastructure, HIPAA-regulated IAM, identity governance at Microsoft. Now building AI products end to end.">
+<meta property="og:title" content="About — Bruce Davis">
+<meta property="og:description" content="Designer who codes. Engineer who designs. Fifteen years on systems you had to trust — money, identity, health records. Now pointing both halves at AI.">
+<meta property="og:type" content="profile">
+
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+/* ─── TOKENS — READYMADE, formal register ─── */
+:root {
+  --paper:        #ECE4D0;
+  --paper-clean:  #F4EFE0;
+  --ink:          #111111;
+  --ink-soft:     #2B2522;
+  --mute:         #8A847A;
+  --mute-soft:    #B7B0A2;
+  --signal:       #E1261C;
+  --hairline:        rgba(0,0,0,.14);
+  --hairline-strong: rgba(0,0,0,.34);
+  --display: 'Anton', 'Bebas Neue', Impact, sans-serif;
+  --serif:   'EB Garamond', Georgia, serif;
+  --mono:    'Space Mono', ui-monospace, monospace;
+  --shadow:    4px 4px 0 var(--ink);
+  --shadow-lg: 6px 6px 0 var(--ink);
+  --m-fast: 60ms  cubic-bezier(.2,0,0,1);
+  --m-base: 140ms cubic-bezier(.2,0,0,1);
+  --maxw: 1500px;
+}
+
+/* ─── RESET ──────────────────────────────── */
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─── NAV ────────────────────────────────── */
+#nav {
+  position: fixed; top:0; left:0; right:0; z-index:500;
+  height: 64px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 0 clamp(22px,5vw,56px);
+  background: var(--paper);
+  border-bottom: 1px solid var(--hairline-strong);
+}
+.nav-logo {
+  font-family: var(--mono);
+  font-weight: 700; font-size: 13px;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink); text-decoration: none;
+}
+.nav-links { display:flex; gap: clamp(20px,3vw,38px); list-style:none; }
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--mute); text-decoration: none;
+  transition: color var(--m-base);
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-links a[aria-current="page"] { color: var(--ink); }
+
+/* ─── SECTION SHELL ──────────────────────── */
+.section { padding: clamp(64px,8vw,116px) clamp(22px,5vw,56px); }
+.section + .section { border-top: 1px solid var(--hairline); }
+.inner { max-width: var(--maxw); margin: 0; }
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: 26px;
+}
+
+/* ─── HERO ───────────────────────────────── */
+#about-hero {
+  padding-top: clamp(128px,15vw,184px);
+  padding-bottom: clamp(56px,8vw,104px);
+}
+.hero-row {
+  display:flex; align-items:flex-start;
+  gap: clamp(32px,5vw,76px);
+  flex-wrap: wrap;
+}
+
+/* Photo placeholder — square; holds its space with or without an image */
+.about-photo {
+  position: relative;
+  flex-shrink: 0;
+  width: clamp(208px, 26vw, 312px);
+  aspect-ratio: 1 / 1;
+  background: var(--paper-clean);
+  border: 1px solid var(--hairline-strong);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.about-photo img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+.about-photo-ph {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+  text-align: center;
+}
+.about-photo-ph::before {
+  content: '';
+  width: 46px; height: 46px;
+  border: 2px solid var(--hairline-strong);
+  border-radius: 50%;
+}
+.about-photo-ph span {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--mute);
+}
+
+.hero-lede-wrap { flex: 1 1 380px; min-width: 0; }
+.about-lede {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.35vw, 33px);
+  line-height: 1.36;
+  color: var(--ink-soft);
+  max-width: 26ch;
+}
+.about-lede strong { font-weight: 600; color: var(--ink); }
+.about-lede .accent { color: var(--signal); }
+
+/* ─── CONTENT SECTIONS ───────────────────── */
+.section-h2 {
+  font-family: var(--display); font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(28px,3.6vw,52px);
+  line-height: 1;
+  letter-spacing: .015em;
+  color: var(--ink);
+  margin-bottom: clamp(28px,3.5vw,44px);
+}
+.prose { max-width: 64ch; }
+.prose p {
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+.prose p + p { margin-top: 20px; }
+.prose strong { font-weight: 600; color: var(--ink); }
+.prose .turn {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--ink);
+}
+
+/* ─── CONTACT LINE ───────────────────────── */
+.contact-line {
+  margin-top: 28px;
+  font-family: var(--mono);
+  font-size: clamp(12px,1.1vw,14px); letter-spacing: .06em;
+  display:flex; gap:14px; flex-wrap:wrap; align-items:center;
+}
+.contact-line a {
+  color: var(--ink); text-decoration:none;
+  border-bottom: 1.5px solid var(--hairline-strong);
+  transition: color var(--m-base), border-color var(--m-base);
+}
+.contact-line a:hover { color: var(--signal); border-bottom-color: var(--signal); }
+.contact-sep { color: var(--mute); }
+
+/* ─── FOOTER ─────────────────────────────── */
+footer {
+  background: var(--paper);
+  border-top: 1px solid var(--hairline-strong);
+  padding: 32px clamp(22px,5vw,56px);
+  display:flex; justify-content:space-between; align-items:center;
+  flex-wrap:wrap; gap:16px;
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: .06em;
+  color: var(--mute);
+}
+.footer-links { display:flex; gap:20px; flex-wrap:wrap; }
+footer a {
+  color: var(--mute); text-decoration:none;
+  letter-spacing: .1em;
+  transition: color var(--m-base);
+}
+footer a:hover { color: var(--ink); }
+
+/* ─── A11Y ───────────────────────────────── */
+.skip-link {
+  position:absolute; left:-9999px; top:8px; z-index:10001;
+  background: var(--paper); color: var(--signal);
+  padding: 10px 16px; border: 2px solid var(--signal);
+  font-family: var(--mono); font-size: 11px; letter-spacing: .14em;
+  text-transform: uppercase; text-decoration: none;
+}
+.skip-link:focus { left: 8px; }
+a:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+
+/* ─── MOTION ─────────────────────────────── */
+.reveal { opacity: 0; transform: translateY(20px); }
+
+@media (max-width: 680px) {
+  .about-lede { max-width: none; }
+  footer { flex-direction:column; text-align:center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { transition-duration:.001ms !important; animation-duration:.001ms !important; }
+  html { scroll-behavior:auto; }
+  .reveal { opacity:1; transform:none; }
+}
+
+</style>
+</head>
+<body>
+
+<a href="#arc" class="skip-link">Skip to content</a>
+
+<!-- ── NAV ──────────────────────────────── -->
+<nav id="nav">
+  <a href="index.html" class="nav-logo" aria-label="Bruce Davis — home">Bruce Davis</a>
+  <ul class="nav-links">
+    <li><a href="index.html#work">Work</a></li>
+    <li><a href="lab.html">Lab</a></li>
+    <li><a href="about.html" aria-current="page">About</a></li>
+    <li><a href="bruce-davis-resume.html" target="_blank" rel="noopener">Resume</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO / LEDE ──────────────────────── -->
+<section class="section" id="about-hero">
+  <div class="inner">
+    <div class="hero-row reveal">
+
+      <!-- Photo placeholder — drop a portrait in later:
+           <img src="bruce-davis.jpg" alt="Bruce Davis">
+           The square holds its space with or without an image. -->
+      <div class="about-photo">
+        <span class="about-photo-ph"><span>Portrait</span></span>
+      </div>
+
+      <div class="hero-lede-wrap">
+        <div class="eyebrow">About</div>
+        <p class="about-lede">
+          <strong>Designer who codes. Engineer who designs.</strong> Fifteen years on systems you had to trust — money, identity, health records — and on the design details that made them feel trustworthy. Now pointing both halves at <span class="accent">AI</span>.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── THE ARC ──────────────────────────── -->
+<section class="section reveal" id="arc">
+  <div class="inner">
+    <h2 class="section-h2">The Arc</h2>
+    <div class="prose">
+      <p>The work started at Wells Fargo on payment infrastructure — moving money between banks on rails like SWIFT and Fedwire, zero room for error. Then HIPAA-regulated IAM for 16,000+ users at Veradigm. Security engineering across 60+ Starbucks domains. Cloud Solutions Architect at Microsoft, automating identity governance for Entra ID and Non-Human Identity.</p>
+      <p>Two through-lines ran underneath all of it. The engineering one — identity, authorization, audit, trust: who's allowed to do what, and how do you prove it. And the design one — the question nobody puts on a resume: how does this actually <em>feel</em> to use, and why do users trust the screen in front of them? Every project was secretly a UX project too.</p>
+      <p>Neither problem shrunk when AI arrived. They got bigger. Non-Human Identity governance — the work at Microsoft — is the same shape as the problem now defining how enterprises deploy AI agents. The interface trust problem is the same one, scaled up by a model that can talk back.</p>
+      <p class="turn">The career didn't pivot. It compounded.</p>
+      <p>Today I build AI products end to end. Engineering side: Claude workflows, MCP servers, document pipelines. Design side: AI-native interfaces, motion systems, interaction patterns. Both halves, same job. The proof is in <strong>Work</strong> and the <strong>Lab</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── HOW I WORK ───────────────────────── -->
+<section class="section reveal" id="how">
+  <div class="inner">
+    <h2 class="section-h2">How I Work</h2>
+    <div class="prose">
+      <p>On a product team, I do both jobs — design and build — without the usual handoff gap. Design side: UX-first thinking, motion as a UX decision, creative direction and aesthetic taste applied to every surface. Engineering side: React, TypeScript, AI-native tooling (Claude Code, Cursor, Copilot) as everyday muscle, not experiments. I prototype to think. I ship to learn. The parts most people skip — empty states, error states, the moment something breaks — are where products earn trust.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── CURRENTLY ────────────────────────── -->
+<section class="section reveal" id="currently">
+  <div class="inner">
+    <h2 class="section-h2">Currently</h2>
+    <div class="prose">
+      <p>Charlotte, NC. Lately I'm into card games, whodunit mysteries, and interactive new media — the kind of work where engagement <em>is</em> the design problem. The Lab is the portfolio version of that obsession.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHAT I'M LOOKING FOR ──────────────── -->
+<section class="section reveal" id="looking-for">
+  <div class="inner">
+    <h2 class="section-h2">What I'm Looking For</h2>
+    <div class="prose">
+      <p>I want to build tools for visionary work — film, games, narrative, new media, the teams making things that didn't exist before. AI-native. Design and engineering as one role. The harder the problem and the more interesting the team, the better.</p>
+      <p><strong>Full-time, contract, and project work — all welcome.</strong></p>
+      <div class="contact-line">
+        <a href="mailto:iambrucedavis@gmail.com">iambrucedavis@gmail.com</a>
+        <span class="contact-sep">·</span>
+        <a href="https://linkedin.com/in/bruce3" target="_blank" rel="noopener">LinkedIn</a>
+        <span class="contact-sep">·</span>
+        <a href="https://github.com/iambrucedavis" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ───────────────────────────── -->
+<footer>
+  <div>Bruce Davis · Charlotte, NC · 2026</div>
+  <div class="footer-links">
+    <a href="index.html#work">Work</a>
+    <a href="lab.html">Lab</a>
+    <a href="about.html">About</a>
+    <a href="bruce-davis-resume.html" target="_blank" rel="noopener">Resume</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+'use strict';
+
+const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (motionOK && window.gsap) {
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* Hero — quiet entrance */
+  gsap.to('#about-hero .reveal', { opacity:1, y:0, duration:.7, ease:'power2.out', delay:.05 });
+
+  /* Sections — fade + rise on scroll */
+  gsap.utils.toArray('.section.reveal').forEach(el => {
+    gsap.to(el, {
+      opacity:1, y:0, duration:.6, ease:'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 82%' },
+    });
+  });
+} else {
+  document.querySelectorAll('.reveal').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+}
+
+/* ── 6% — easter egg */
+console.log('%c// 6% — small change. whole product.', 'color:#E1261C;font-family:monospace;letter-spacing:.04em;');
+console.log('%c// bruce davis · 2026', 'color:#8A847A;font-family:monospace;letter-spacing:.04em;');
+</script>
+
+</body>
+</html>
