@@ -9,7 +9,7 @@ import { notion, COLOR_LAB_DB_ID } from '../lib/notion.js';
 const inputSchema = {
   brief: z.string().min(1).describe("Free-text project intent or mood. Used as a hint, not a strict filter."),
   limit: z.number().int().min(1).max(20).optional().describe("Max palettes to return (default 8)."),
-  category_hint: z.string().optional().describe("Optional category filter (e.g., 'Off-White', 'Technical', 'Editorial'). Soft-matched."),
+  category_hint: z.string().optional().describe("Optional category filter (e.g., 'Neutral', 'Technical', 'Editorial'). Soft-matched."),
 };
 
 const description =
