@@ -4,7 +4,8 @@
   "builds": [
     { "src": "*.html", "use": "@vercel/static" },
     { "src": "*.pdf", "use": "@vercel/static" },
-    { "src": "lab/**", "use": "@vercel/static" }
+    { "src": "lab/**", "use": "@vercel/static" },
+    { "src": "videos/**", "use": "@vercel/static" }
   ],
   "routes": [
     { "src": "/", "dest": "/index.html" },
