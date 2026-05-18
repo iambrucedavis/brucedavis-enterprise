@@ -60,6 +60,7 @@ export function launchBloom(stage, opts = {}) {
   let plants = [];                  /* settled + growing */
   let active = null;                /* the plant currently growing */
   let motes = [];
+  let bursts = [];                  /* flower-firework celebration bursts */
   let level = 0, levelSmooth = 0;    /* 0..1 loudness */
   let bright = 0.5;                 /* 0..1 spectral-centroid pitch proxy */
   let silence = SETTLE;             /* seconds of quiet so far */
@@ -87,19 +88,42 @@ export function launchBloom(stage, opts = {}) {
       leafAt: 0.4 + Math.random() * 0.2,
     };
   }
-  function bloomPlant(p, withChime = true) {
+  function bloomPlant(p, celebrate = true) {
     if (p.bloom || p.h < 38) return;
     const petals = 4 + Math.round(bright * 5 + (p.peak > 0.6 ? 1 : 0));
     p.bloom = { petals, r: 13 + p.h * 0.07 + p.peak * 16, open: 0 };
     store.flowers += 1; save(); renderScore();
-    if (withChime) chime(p);
+    if (celebrate) { spawnBurst(stemTop(p)); chime(p); }
+  }
+
+  /* a flower-firework — a bright pop of petals, sparks and a ring */
+  function spawnBurst(at) {
+    const parts = [];
+    const n = 30;
+    for (let i = 0; i < n; i++) {
+      const ang = (i / n) * 6.2832 + Math.random() * 0.4;
+      const spd = 150 + Math.random() * 250;
+      const petal = i % 2 === 0;            /* half petals, half spark glints */
+      parts.push({
+        x: at.x, y: at.y,
+        vx: Math.cos(ang) * spd,
+        vy: Math.sin(ang) * spd - 80,        /* an upward kick */
+        age: 0, life: 0.95 + Math.random() * 0.8,
+        size: petal ? 3.5 + Math.random() * 4.5 : 1.8 + Math.random() * 2.4,
+        kind: petal ? 'petal' : 'spark',
+        rot: Math.random() * 6.2832,
+        spin: (Math.random() - 0.5) * 11,
+        tint: Math.random(),
+      });
+    }
+    bursts.push({ x: at.x, y: at.y, ring: 0, parts });
   }
 
   /* ── seed a quiet demo garden behind the CTA ── */
   for (let i = 0; i < 6; i++) {
     const p = newPlant(true);
     p.peak = 0.5 + Math.random() * 0.4;
-    bloomPlant(p, false);   /* demo blooms are silent — never chime during seeding */
+    bloomPlant(p, false);   /* demo blooms are silent — no chime or firework while seeding */
     if (p.bloom) p.bloom.open = 1;
     p.demo = true;
     plants.push(p);
@@ -134,7 +158,7 @@ export function launchBloom(stage, opts = {}) {
     timeBuf = new Float32Array(analyser.fftSize);
     freqBuf = new Float32Array(analyser.frequencyBinCount);
     chimeGain = audioCtx.createGain();
-    chimeGain.gain.value = 0.0001;
+    chimeGain.gain.value = 0.5;
     chimeGain.connect(audioCtx.destination);
 
     /* the demo garden becomes the visitor's starting garden */
@@ -147,21 +171,23 @@ export function launchBloom(stage, opts = {}) {
   }
   ctaBtn.addEventListener('click', enableMic);
 
-  /* soft bloom chime — a small major triad ping */
+  /* a cheery rising chime when a flower opens — a little major arpeggio */
   function chime(p) {
     if (!audioCtx || !isSoundOn() || mode !== 'live') return;
-    const base = 294 * Math.pow(2, Math.round(bright * 7) / 12);  /* D4 up the scale */
-    [0, 4, 7].forEach((semi, i) => {
+    const base = 440 * Math.pow(2, Math.round(bright * 3) / 12);  /* A4 up the scale */
+    /* root · third · fifth · octave · a high sparkle */
+    [0, 4, 7, 12, 12].forEach((semi, i) => {
       const o = audioCtx.createOscillator();
       const g = audioCtx.createGain();
-      o.type = 'sine';
-      o.frequency.value = base * Math.pow(2, semi / 12);
-      const t0 = audioCtx.currentTime + i * 0.04;
+      o.type = i >= 3 ? 'triangle' : 'sine';
+      o.frequency.value = base * Math.pow(2, semi / 12) * (i === 4 ? 1.5 : 1);
+      const t0 = audioCtx.currentTime + i * 0.07;
+      const peak = i >= 3 ? 0.08 : 0.12;
       g.gain.setValueAtTime(0.0001, t0);
-      g.gain.exponentialRampToValueAtTime(0.13, t0 + 0.03);
-      g.gain.exponentialRampToValueAtTime(0.0001, t0 + 1.1);
+      g.gain.exponentialRampToValueAtTime(peak, t0 + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.85);
       o.connect(g); g.connect(chimeGain);
-      o.start(t0); o.stop(t0 + 1.2);
+      o.start(t0); o.stop(t0 + 0.95);
     });
   }
 
@@ -237,6 +263,20 @@ export function launchBloom(stage, opts = {}) {
       m.x += Math.sin(m.drift) * 7 * dt;
       if (m.y < -10) { m.y = H + 10; m.x = Math.random() * W; }
     }
+
+    /* flower-firework bursts */
+    for (const b of bursts) {
+      b.ring += dt;
+      for (const pt of b.parts) {
+        pt.age += dt;
+        pt.vy += 190 * dt;          /* gravity */
+        pt.vx *= 0.992;
+        pt.x += pt.vx * dt;
+        pt.y += pt.vy * dt;
+        pt.rot += pt.spin * dt;
+      }
+    }
+    bursts = bursts.filter((b) => b.ring < 0.55 || b.parts.some((pt) => pt.age < pt.life));
   }
 
   /* ── render ──────────────────────────────── */
@@ -348,6 +388,58 @@ export function launchBloom(stage, opts = {}) {
     /* plants — settled behind, active last */
     const ordered = plants.slice().sort((a, b) => (a === active ? 1 : 0) - (b === active ? 1 : 0));
     for (const p of ordered) drawPlant(p);
+
+    /* flower-firework bursts — on top of everything */
+    for (const b of bursts) {
+      /* a brief white-hot pop */
+      if (b.ring < 0.18) {
+        const fk = 1 - b.ring / 0.18;
+        ctx.globalAlpha = fk;
+        ctx.fillStyle = '#FFF4F1';
+        ctx.shadowBlur = 30 * fk;
+        ctx.shadowColor = 'rgba(227,66,52,0.95)';
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, 5 + fk * 17, 0, 6.2832);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+      /* an expanding ring */
+      if (b.ring < 0.55) {
+        const rk = b.ring / 0.55;
+        ctx.globalAlpha = (1 - rk) * 0.7;
+        ctx.strokeStyle = '#FBDED9';
+        ctx.lineWidth = 2.5 * (1 - rk);
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, 8 + rk * 62, 0, 6.2832);
+        ctx.stroke();
+      }
+      for (const pt of b.parts) {
+        const k = pt.age / pt.life;
+        if (k >= 1) continue;
+        const fade = 1 - k;
+        ctx.globalAlpha = Math.min(1, fade * 1.7);
+        ctx.fillStyle = pt.tint < 0.4 ? '#E34234'
+          : pt.tint < 0.62 ? '#EF7E6B'
+            : pt.tint < 0.82 ? '#FBDED9' : '#ECE7DB';
+        ctx.shadowBlur = 14 * fade;
+        ctx.shadowColor = 'rgba(227,66,52,0.85)';
+        if (pt.kind === 'petal') {
+          ctx.save();
+          ctx.translate(pt.x, pt.y);
+          ctx.rotate(pt.rot);
+          ctx.beginPath();
+          ctx.ellipse(0, 0, pt.size, pt.size * 0.5, 0, 0, 6.2832);
+          ctx.fill();
+          ctx.restore();
+        } else {
+          ctx.beginPath();
+          ctx.arc(pt.x, pt.y, pt.size, 0, 6.2832);
+          ctx.fill();
+        }
+      }
+    }
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
   }
 
   /* ── loop ────────────────────────────────── */
