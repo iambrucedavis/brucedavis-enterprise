@@ -248,6 +248,13 @@ body {
 /* ─── A11Y ─────────────────────────────── */
 a:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
 
+/* ─── SCREEN — scale up for on-screen reading ─── */
+/* The document is calibrated as a letter-sized PDF; this only enlarges the
+   browser view so recruiters get larger, more legible text. Print is untouched. */
+@media screen {
+  body { zoom: 1.3; }
+}
+
 /* ─── PRINT ────────────────────────────── */
 @media print {
   body { margin: 0; padding: 42px 64px; }
