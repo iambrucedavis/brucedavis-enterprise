@@ -87,19 +87,19 @@ export function launchBloom(stage, opts = {}) {
       leafAt: 0.4 + Math.random() * 0.2,
     };
   }
-  function bloomPlant(p) {
+  function bloomPlant(p, withChime = true) {
     if (p.bloom || p.h < 38) return;
     const petals = 4 + Math.round(bright * 5 + (p.peak > 0.6 ? 1 : 0));
     p.bloom = { petals, r: 13 + p.h * 0.07 + p.peak * 16, open: 0 };
     store.flowers += 1; save(); renderScore();
-    chime(p);
+    if (withChime) chime(p);
   }
 
   /* ── seed a quiet demo garden behind the CTA ── */
   for (let i = 0; i < 6; i++) {
     const p = newPlant(true);
     p.peak = 0.5 + Math.random() * 0.4;
-    bloomPlant(p);
+    bloomPlant(p, false);   /* demo blooms are silent — never chime during seeding */
     if (p.bloom) p.bloom.open = 1;
     p.demo = true;
     plants.push(p);
