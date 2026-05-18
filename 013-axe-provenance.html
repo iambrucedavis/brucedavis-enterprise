@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AXE Provenance — Bruce Davis</title>
+<meta name="description" content="Real-time identity governance for fleets of autonomous AI agents — a control room where six agents work an enterprise incident, each a governed identity with a permission scope, a token budget, and a human-in-the-loop gate on every escalation.">
+<meta property="og:title" content="AXE Provenance — Bruce Davis">
+<meta property="og:description" content="A control room for fleets of AI agents with real identity governance — scope rings, token budgets, generative UI, and a human-in-the-loop gate on every privilege escalation.">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+/* ─── TOKENS — formal register ─────── */
+:root {
+  --paper:        #ECE4D0;
+  --paper-clean:  #F4EFE0;
+  --paper-deep:   #E4DAC2;
+  --ink:          #111111;
+  --ink-soft:     #2B2522;
+  --mute:         #8A847A;
+  --mute-soft:    #B7B0A2;
+  --signal:       #E1261C;
+  --signal-rgb:   225,38,28;
+  --hairline:        rgba(0,0,0,.14);
+  --hairline-strong: rgba(0,0,0,.34);
+  --display: 'Anton', 'Bebas Neue', Impact, sans-serif;
+  --serif:   'EB Garamond', Georgia, serif;
+  --mono:    'Space Mono', ui-monospace, monospace;
+  --shadow:    4px 4px 0 var(--ink);
+  --shadow-lg: 6px 6px 0 var(--ink);
+  --m-fast: 60ms  cubic-bezier(.2,0,0,1);
+  --m-base: 140ms cubic-bezier(.2,0,0,1);
+  --bg: var(--paper);
+  --surface: var(--paper-clean);
+  --surface-hi: var(--paper-deep);
+  --border: var(--hairline);
+  --border-hi: var(--hairline-strong);
+  --text: var(--ink);
+  --text-dim: var(--ink-soft);
+  --text-muted: var(--mute);
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+a { color:inherit; text-decoration:none; }
+
+/* ─── NAV ──────────────────────────────────────── */
+#top-nav {
+  position:fixed; top:0; left:0; right:0; z-index:500;
+  height:64px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 clamp(22px,5vw,56px);
+  background:var(--paper);
+  border-bottom:1px solid var(--hairline-strong);
+}
+.nav-back {
+  font-family:var(--mono); font-weight:700;
+  font-size:13px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--ink);
+  transition:color var(--m-base);
+}
+.nav-back:hover { color:var(--signal); }
+.nav-links { display:flex; gap:clamp(20px,3vw,38px); }
+.nav-links a {
+  font-family:var(--mono);
+  font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--mute);
+  transition:color var(--m-base);
+}
+.nav-links a:hover { color:var(--ink); }
+
+/* ─── HERO ─────────────────────────────────────── */
+#hero {
+  min-height:80vh;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:132px clamp(22px,5vw,56px) 72px;
+  border-bottom:1px solid var(--hairline-strong);
+}
+.hero-pre {
+  font-family:var(--mono);
+  font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--signal);
+  margin-bottom:22px;
+}
+#hero-hl {
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(48px,8vw,104px); line-height:.92;
+  letter-spacing:.005em; text-transform:uppercase;
+  color:var(--ink);
+}
+#hero-hl .h-line { display:block; overflow:hidden; }
+.hero-sub {
+  margin-top:30px;
+  font-family:var(--serif); font-style:italic;
+  font-size:clamp(18px,1.7vw,23px); line-height:1.5;
+  color:var(--ink-soft);
+  max-width:52ch;
+}
+.hero-meta {
+  margin-top:28px;
+  display:flex; gap:20px; flex-wrap:wrap;
+  font-family:var(--mono);
+  font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--mute);
+}
+
+/* ─── SECTION SCAFFOLD ─────────────────────────── */
+.dv-section { padding:clamp(64px,8vw,100px) clamp(22px,5vw,56px); border-bottom:1px solid var(--hairline-strong); }
+.sec-inner  { max-width:1000px; margin:0 auto; }
+.dv-hdr     { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px; gap:16px; flex-wrap:wrap; }
+.dv-label   { font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); }
+.dv-version { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--mute); }
+.dv-title   { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:clamp(26px,3.6vw,44px); line-height:1; letter-spacing:.01em; color:var(--ink); margin-bottom:14px; }
+.dv-desc    { font-family:var(--serif); font-size:16.5px; color:var(--ink-soft); margin-bottom:32px; max-width:60ch; line-height:1.6; }
+
+/* ─── VIDEO ────────────────────────────────────── */
+.video-frame { background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.video-bar { display:flex; align-items:center; justify-content:space-between; padding:11px 18px; border-bottom:1px solid var(--hairline-strong); background:var(--paper-deep); gap:12px; }
+.video-bar-name { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--ink-soft); }
+.video-bar-status { font-family:var(--mono); font-size:10px; letter-spacing:.06em; color:var(--signal); }
+.video-frame video { display:block; width:100%; height:auto; background:#0a0b0d; }
+
+/* ─── FLOW DIAGRAM ─────────────────────────────── */
+.flow { display:flex; align-items:stretch; border:1px solid var(--hairline-strong); box-shadow:var(--shadow); background:var(--paper-clean); }
+.flow-node { flex:1; background:var(--paper-clean); padding:26px 14px; display:flex; flex-direction:column; gap:5px; text-align:center; justify-content:center; }
+.flow-node.is-signal { box-shadow:inset 0 0 0 2px var(--signal); }
+.flow-kicker { font-family:var(--mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--mute); }
+.flow-name { font-family:var(--serif); font-size:18px; font-weight:600; color:var(--ink); }
+.flow-node.is-signal .flow-name { color:var(--signal); }
+.flow-sub { font-family:var(--serif); font-size:13px; color:var(--ink-soft); }
+.flow-arrow { display:flex; align-items:center; padding:0 8px; background:var(--paper-clean); color:var(--mute); font-size:15px; border-left:1px solid var(--hairline); border-right:1px solid var(--hairline); }
+.flow-cap { font-family:var(--serif); font-size:15px; color:var(--ink-soft); line-height:1.6; margin-top:18px; max-width:66ch; }
+
+/* ─── STAT STRIP ───────────────────────────────── */
+.stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); margin-top:26px; }
+.stat { background:var(--paper-clean); padding:28px 18px; }
+.stat-num { font-family:var(--display); font-weight:400; font-size:44px; letter-spacing:.01em; line-height:1; color:var(--ink); }
+.stat.is-signal .stat-num { color:var(--signal); }
+.stat-label { font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--mute); margin-top:11px; }
+
+/* ─── AGENT CARDS ──────────────────────────────── */
+.tool-cards { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.tool-card { background:var(--paper-clean); padding:26px 22px; display:flex; flex-direction:column; gap:10px; }
+.tc-verb { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:21px; letter-spacing:.01em; color:var(--ink); }
+.tc-name { font-family:var(--mono); font-size:11px; color:var(--signal); }
+.tc-desc { font-family:var(--serif); font-size:14.5px; color:var(--ink-soft); line-height:1.6; }
+.tc-model { font-family:var(--mono); font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); margin-top:auto; padding-top:10px; }
+
+/* ─── FRAME ────────────────────────────────────── */
+.c-frame { background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.c-bar   { display:flex; align-items:center; justify-content:space-between; padding:11px 18px; border-bottom:1px solid var(--hairline-strong); background:var(--paper-deep); gap:12px; }
+.c-bar-name   { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--ink-soft); }
+.c-bar-status { font-family:var(--mono); font-size:10px; letter-spacing:.06em; color:var(--signal); }
+.c-body { padding:22px; }
+.c-line { font-family:var(--mono); font-size:13px; line-height:1.85; color:var(--ink-soft); }
+.c-line .b { color:var(--signal); }
+.c-line .k { color:var(--ink); font-weight:700; }
+.c-cap  { font-family:var(--serif); font-size:15px; color:var(--ink-soft); line-height:1.6; margin-top:16px; max-width:66ch; }
+
+/* ─── RULE CARDS ───────────────────────────────── */
+.rules { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.rule { background:var(--paper-clean); padding:24px 22px; }
+.rule-name { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:18px; letter-spacing:.01em; color:var(--ink); margin-bottom:11px; }
+.rule-body { font-family:var(--serif); font-size:14.5px; color:var(--ink-soft); line-height:1.65; }
+
+/* ─── REVIEW ───────────────────────────────────── */
+#review { padding:clamp(64px,8vw,100px) clamp(22px,5vw,56px); border-bottom:1px solid var(--hairline-strong); }
+#review .sec-inner { max-width:1000px; margin:0 auto; }
+.review-lbl { font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); margin-bottom:22px; }
+.review-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:14px; max-width:68ch; }
+.review-list li { font-family:var(--serif); font-size:16px; color:var(--ink-soft); line-height:1.6; padding-left:28px; position:relative; }
+.review-list li::before { content:'+'; position:absolute; left:0; top:0; font-family:var(--mono); font-size:14px; color:var(--signal); }
+
+/* ─── FOOTER ───────────────────────────────────── */
+footer { background:var(--paper); border-top:1px solid var(--hairline-strong); }
+#page-footer { padding:36px clamp(22px,5vw,56px); display:flex; justify-content:space-between; align-items:center; max-width:1000px; margin:0 auto; gap:14px; flex-wrap:wrap; }
+.pf-back { font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); transition:color var(--m-base); }
+.pf-back:hover { color:var(--signal); }
+.pf-links { display:flex; gap:22px; flex-wrap:wrap; }
+.pf-links a { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); transition:color var(--m-base); }
+.pf-links a:hover { color:var(--signal); }
+
+/* ─── A11Y + MOTION ────────────────────────────── */
+a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline-offset:2px; }
+.reveal { opacity:0; transform:translateY(20px); }
+
+@media (max-width:760px) {
+  .rules { grid-template-columns:1fr; }
+}
+@media (max-width:600px) {
+  .flow { flex-direction:column; }
+  .flow-arrow { align-self:center; transform:rotate(90deg); padding:8px 0; border:none; }
+  .stats { grid-template-columns:repeat(2,1fr); }
+  .tool-cards { grid-template-columns:1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { transition-duration:.001ms !important; animation-duration:.001ms !important; }
+  html { scroll-behavior:auto; }
+}
+</style>
+</head>
+<body>
+
+<nav id="top-nav">
+  <a href="index.html" class="nav-back">← Bruce Davis</a>
+  <div class="nav-links">
+    <a href="index.html#work">Work</a>
+    <a href="lab.html">Lab</a>
+    <a href="about.html">About</a>
+    <a href="bruce-davis-resume.html">Resume</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-pre">AI Experience · Agent Governance</div>
+  <h1 id="hero-hl">AXE<br>Provenance</h1>
+  <p class="hero-sub">
+    Real-time identity governance for fleets of autonomous AI agents — the control room operators will need when "AI agent" becomes a real headcount line. Six agents work an enterprise incident. Each one is a governed identity: a permission scope, a token budget, an accountable owner. When an agent needs to act beyond its scope, a human decides.
+  </p>
+  <div class="hero-meta">
+    <span>6 governed agents</span>
+    <span>Generative UI</span>
+    <span>Python · React · TypeScript</span>
+    <span>Live interactive demo</span>
+  </div>
+</section>
+
+<!-- SEE IT RUN -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">See it run</span>
+      <span class="dv-version">one take, no narration</span>
+    </div>
+    <h2 class="dv-title">The operator's seat.</h2>
+    <p class="dv-desc">A full incident, detection to containment, with the human-in-the-loop escalation gate in the middle. A real run — nothing staged.</p>
+
+    <div class="video-frame">
+      <div class="video-bar">
+        <span class="video-bar-name">axe-provenance · scenario INC-7731</span>
+        <span class="video-bar-status">[ RECORDED RUN ]</span>
+      </div>
+      <video controls preload="metadata" playsinline poster="videos/axe-provenance-poster.jpg">
+        <source src="videos/axe-provenance.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <p class="c-cap">Recorded against the live backend. The same experience is playable in the browser — <a href="https://axe-provenance.vercel.app" target="_blank" rel="noopener" style="color:var(--signal);border-bottom:1.5px solid var(--signal);">open the interactive demo →</a></p>
+  </div>
+</div>
+
+<!-- WHAT IT IS — DIAGRAM + STATS -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">What it is</span>
+    </div>
+
+    <div class="flow">
+      <div class="flow-node">
+        <span class="flow-kicker">Person</span>
+        <span class="flow-name">Operator</span>
+        <span class="flow-sub">governs the fleet</span>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node">
+        <span class="flow-kicker">AI</span>
+        <span class="flow-name">Agent fleet</span>
+        <span class="flow-sub">six identities act</span>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node is-signal">
+        <span class="flow-kicker">This project</span>
+        <span class="flow-name">provenance</span>
+        <span class="flow-sub">the governance layer</span>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node">
+        <span class="flow-kicker">Output</span>
+        <span class="flow-name">Contained incident</span>
+        <span class="flow-sub">+ a full audit trail</span>
+      </div>
+    </div>
+    <p class="flow-cap">Every action is scoped, metered, and logged. The privilege escalation is not a scripted beat — it emerges from a real permission check failing inside the agent loop. <strong style="color:var(--ink);font-weight:600;">Governance that is enforced, not decorative.</strong></p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">governed agents</div></div>
+      <div class="stat is-signal"><div class="stat-num">3</div><div class="stat-label">permission scopes</div></div>
+      <div class="stat"><div class="stat-num">1</div><div class="stat-label">human-in-the-loop gate</div></div>
+      <div class="stat"><div class="stat-num">0</div><div class="stat-label">escalations granted without a person</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 01 THE FLEET -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">01 — The Fleet</span>
+      <span class="dv-version">six agents, six identities</span>
+    </div>
+    <h2 class="dv-title">Every agent is an identity.</h2>
+    <p class="dv-desc">Not a task queue — a fleet of distinct identities. Each holds a standing permission scope, a token budget, and an accountable owner. The interface makes all of it visible at a glance.</p>
+
+    <div class="tool-cards">
+      <div class="tool-card">
+        <div class="tc-verb">Watchtower</div>
+        <div class="tc-name">read-only monitor</div>
+        <div class="tc-desc">Sweeps identity activity for anomalies. Holds no write access — the always-on baseline of the fleet.</div>
+        <div class="tc-model">Scope · read-only</div>
+      </div>
+      <div class="tool-card">
+        <div class="tc-verb">Analyst</div>
+        <div class="tc-name">signal enrichment</div>
+        <div class="tc-desc">Pulls behavior profiles and correlates credential use across regions. Turns a raw signal into evidence.</div>
+        <div class="tc-model">Scope · read-write</div>
+      </div>
+      <div class="tool-card">
+        <div class="tc-verb">Triage</div>
+        <div class="tc-name">risk classification</div>
+        <div class="tc-desc">Weighs the evidence, assigns a severity, and routes the incident to the agent that should act on it.</div>
+        <div class="tc-model">Scope · read-only</div>
+      </div>
+      <div class="tool-card">
+        <div class="tc-verb">Remediation</div>
+        <div class="tc-name">containment actor</div>
+        <div class="tc-desc">Revokes sessions and rotates credentials. Its standing scope can't do that — so it has to ask.</div>
+        <div class="tc-model">Scope · read-write · escalates</div>
+      </div>
+      <div class="tool-card">
+        <div class="tc-verb">Auditor</div>
+        <div class="tc-name">audit &amp; receipts</div>
+        <div class="tc-desc">Logs every action, every escalation, every approval to an append-only trail. The receipt-keeper.</div>
+        <div class="tc-model">Scope · read-only</div>
+      </div>
+      <div class="tool-card">
+        <div class="tc-verb">Provisioner</div>
+        <div class="tc-name">credential issuer</div>
+        <div class="tc-desc">Mints single-agent, time-boxed credentials — but only once the operator has approved an escalation.</div>
+        <div class="tc-model">Scope · elevated</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 02 THE GATE -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">02 — The Gate</span>
+      <span class="dv-version">the agent asks; the person decides</span>
+    </div>
+    <h2 class="dv-title">It asks before it acts.</h2>
+    <p class="dv-desc">Remediation needs to revoke a compromised credential. Its standing scope doesn't allow it. The system does not override the rule — it stops the agent and asks the operator.</p>
+
+    <div class="c-frame">
+      <div class="c-bar">
+        <span class="c-bar-name">INC-7731 · escalation</span>
+        <span class="c-bar-status">[ BLOCKED — AWAITING OPERATOR ]</span>
+      </div>
+      <div class="c-body">
+        <div class="c-line"><span class="b">scope check</span> &nbsp;revoke_sessions requires <span class="k">elevated</span>; Remediation holds read_write</div>
+        <div class="c-line"><span class="b">escalation</span> &nbsp;Remediation requests elevated scope — operator approval required</div>
+        <div class="c-line">&nbsp;&nbsp;&rarr; operator approves &nbsp;·&nbsp; Provisioner mints a time-boxed credential</div>
+        <div class="c-line">&nbsp;&nbsp;&rarr; Remediation acts &nbsp;·&nbsp; sessions revoked, credentials rotated</div>
+      </div>
+    </div>
+    <p class="c-cap">The escalation isn't hardcoded to pause here. It's a real permission check failing inside the agent loop — the gate is the governance, not a scripted demo moment. Approve, and a credential is issued, used, and expires. Deny, and the agent holds at its standing scope.</p>
+  </div>
+</div>
+
+<!-- 03 GENERATIVE UI -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">03 — The Interface</span>
+      <span class="dv-version">the UI renders the agents, not the reverse</span>
+    </div>
+    <h2 class="dv-title">The UI is generative.</h2>
+    <p class="dv-desc">The backend emits a structured event stream. The control room renders against that stream and re-renders as it changes — the agents are never hardcoded into the interface. That is the technical claim the project demonstrates.</p>
+
+    <div class="rules">
+      <div class="rule">
+        <div class="rule-name">Generative, not hardcoded</div>
+        <div class="rule-body">The control room is a projection of the backend's JSON state. Change the fleet on the backend and the UI renders the change — no interface edits.</div>
+      </div>
+      <div class="rule">
+        <div class="rule-name">Human-in-the-loop</div>
+        <div class="rule-body">Every privilege escalation pauses the fleet. Nothing elevates, and nothing destructive runs, until a person approves it.</div>
+      </div>
+      <div class="rule">
+        <div class="rule-name">One frontend, two transports</div>
+        <div class="rule-body">Demo mode replays a recorded run; live mode streams from the backend. Same UI, same reducer — proof the render is data-driven.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IN REVIEW -->
+<section id="review" class="reveal">
+  <div class="sec-inner">
+    <div class="review-lbl">In review — what I'd do differently</div>
+    <ul class="review-list">
+      <li>The agents' decisions are deliberate and legible, not LLM-improvised — the demo is about the system being governable, not the agents being clever.</li>
+      <li>One incident scenario ships; the event-stream contract is built to carry many, and the next step is a second one.</li>
+      <li>The backend runs locally by design — the deployed demo replays a recorded run, so there is no key to leak and no per-visit cost to carry.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div id="page-footer">
+    <a href="index.html" class="pf-back">← Back to Bruce Davis</a>
+    <div class="pf-links">
+      <a href="index.html#work">Work</a>
+      <a href="bruce-davis-resume.html">Resume</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="https://axe-provenance.vercel.app" target="_blank" rel="noopener">Live Demo</a>
+      <a href="https://github.com/iambrucedavis/axe-provenance" target="_blank" rel="noopener">GitHub Repo</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+'use strict';
+
+const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+gsap.registerPlugin(ScrollTrigger);
+
+/* ── HERO — char-split entrance */
+const hl = document.getElementById('hero-hl');
+hl.innerHTML = hl.innerHTML.split('<br>').map(line =>
+  `<span class="h-line" style="display:block;overflow:hidden">${
+    [...line.trim()].map(ch => ch === ' '
+      ? `<span style="display:inline-block;min-width:.25em"> </span>`
+      : `<span class="h-char" style="display:inline-block">${ch}</span>`
+    ).join('')
+  }</span>`
+).join('');
+if (motionOK) gsap.from('.h-char', { yPercent:110, duration:.7, stagger:.02, ease:'power3.out', delay:.1 });
+
+/* ── REVEAL */
+if (motionOK) {
+  document.querySelectorAll('.reveal').forEach(el => {
+    gsap.to(el, {
+      opacity:1, y:0, duration:.6, ease:'power2.out',
+      scrollTrigger:{ trigger:el, start:'top 84%' },
+    });
+  });
+} else {
+  document.querySelectorAll('.reveal').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+}
+
+/* ── 6% — easter egg */
+console.log('%c// 6% — small change. whole product.', 'color:#E1261C;font-family:monospace;letter-spacing:.04em;');
+console.log('%c// bruce davis · 2026', 'color:#8A847A;font-family:monospace;letter-spacing:.04em;');
+</script>
+
+</body>
+</html>
