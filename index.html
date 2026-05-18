@@ -302,6 +302,46 @@ section { padding: clamp(76px,10vw,128px) clamp(22px,5vw,56px); }
 }
 .work-head .work-tag { margin-bottom: 0; }
 
+/* ─── MANIFESTO — point of view ──────────── */
+#manifesto {
+  background: var(--paper-clean);
+  border-top: 1px solid var(--hairline-strong);
+  border-bottom: 1px solid var(--hairline-strong);
+}
+.manifesto-block {
+  max-width: 60ch;
+  border-left: 3px solid var(--signal);
+  padding-left: clamp(20px,3vw,40px);
+}
+.manifesto-lead {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(25px,3vw,40px);
+  line-height: 1.16;
+  color: var(--ink);
+  margin-bottom: 22px;
+}
+.manifesto-body {
+  font-family: var(--serif);
+  font-size: clamp(17px,1.5vw,21px);
+  line-height: 1.62;
+  color: var(--ink-soft);
+  margin-bottom: 20px;
+}
+.manifesto-close {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(19px,1.9vw,26px);
+  line-height: 1.35;
+  color: var(--ink);
+  margin-bottom: 24px;
+}
+.manifesto-caption {
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--mute);
+}
+
 /* ─── AI TOOLS — the one concrete inversion ─ */
 #ai-tools { background: var(--concrete); color: var(--paper); }
 .ai-tools-grid, .bg-grid {
@@ -430,13 +470,13 @@ a:focus-visible, button:focus-visible {
   <div class="inner">
     <div class="hero-name">Bruce Davis · Charlotte, NC</div>
     <h1 class="hero-h1">
-      I'm Bruce Davis. <span class="accent">AI Engineer</span>. I design and build AI products — interfaces, agents, workflows, and the infrastructure underneath them.
+      I'm Bruce Davis. <span class="accent">AI Engineer</span> building products people actually return to — the engagement layer most AI demos forget.
     </h1>
     <p class="hero-tagline">
-      I build the AI tools your team will actually use — and design the screens people open them in.
+      Engagement systems for AI products.
     </p>
     <p class="hero-sub">
-      Fifteen years shipping systems for Wells Fargo, Microsoft, Starbucks, Bank of America, and Veradigm. Now applying that to AI.
+      Fifteen years shipping systems in regulated environments — identity, payments, HIPAA-compliant IAM, Non-Human Identity governance at Microsoft. Now applying that rigor to AI products that don't just demo well, but earn the second visit.
     </p>
     <div class="hero-cta">
       <a href="#work" class="btn btn-primary">See the work</a>
@@ -483,6 +523,18 @@ a:focus-visible, button:focus-visible {
   </div>
 </section>
 
+<!-- ── MANIFESTO ────────────────────────── -->
+<section id="manifesto" aria-label="Point of view">
+  <div class="inner">
+    <div class="manifesto-block">
+      <p class="manifesto-lead">Most AI products are dead inside.</p>
+      <p class="manifesto-body">They have a chat box, a "generate" button, and a churn problem. The teams winning the next decade won't be the ones with the best models — they'll be the ones who designed for the loop. Return visits. Mastery. Status. Surprise. The boring behavioral science under the shiny demo.</p>
+      <p class="manifesto-close">That's the layer I build.</p>
+      <p class="manifesto-caption">Engagement systems for AI products.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ── WORK ─────────────────────────────── -->
 <section id="work">
   <div class="inner">
@@ -498,6 +550,23 @@ a:focus-visible, button:focus-visible {
 
     <div class="work-grid">
 
+      <a href="007-security-ux-concept.html" class="work-card" data-pillars="experience infra" aria-label="Security UX">
+        <div class="work-head">
+          <div class="work-tag">Experience · Infrastructure &amp; Security</div>
+          <span class="axe-mark" aria-label="AI Experience — AXE">AXE</span>
+        </div>
+        <div class="work-name">Security UX</div>
+        <p class="work-desc">
+          A security awareness training surface redesigned to borrow the visual language of the threat itself — a game-style heads-up display, scan lines, a threat pulse, and a playable "spot the phish" round. Motion, empty states, and behavioral interaction design applied to a compliance use case.
+        </p>
+        <div class="work-badges">
+          <span class="badge">GSAP</span>
+          <span class="badge">Web Audio</span>
+          <span class="badge">Vanilla JS</span>
+          <span class="badge">HUD UI</span>
+        </div>
+      </a>
+
       <a href="002-ai-interface-design-system.html" class="work-card" data-pillars="experience" aria-label="AI Interface Patterns">
         <div class="work-head">
           <div class="work-tag">Experience</div>
@@ -505,7 +574,7 @@ a:focus-visible, button:focus-visible {
         </div>
         <div class="work-name">AI Interface Patterns</div>
         <p class="work-desc">
-          The small screen details that make an AI product feel trustworthy instead of confusing — text that streams in as the AI "types," a clear sign when it's thinking, a warning when it doesn't have enough information to answer well, a flag when it's unsure of an answer, and a graceful recovery when something breaks. Five working interface patterns for AI products — the loading, empty, and error states the UX Engineer JD asks for, built as live React/TypeScript, not Figma mockups.
+          The small screen details that make an AI product feel trustworthy instead of confusing — text that streams in as the AI "types," a clear sign when it's thinking, a warning when it doesn't have enough information to answer well, a flag when it's unsure of an answer, and a graceful recovery when something breaks. Five working interface patterns for AI products — the loading, empty, and error states most AI demos skip, built as live React/TypeScript, not Figma mockups.
         </p>
         <div class="work-badges">
           <span class="badge">React</span>
@@ -532,30 +601,13 @@ a:focus-visible, button:focus-visible {
         </div>
       </a>
 
-      <a href="007-security-ux-concept.html" class="work-card" data-pillars="experience infra" aria-label="Security UX">
-        <div class="work-head">
-          <div class="work-tag">Experience · Infrastructure &amp; Security</div>
-          <span class="axe-mark" aria-label="AI Experience — AXE">AXE</span>
-        </div>
-        <div class="work-name">Security UX</div>
-        <p class="work-desc">
-          A security awareness training surface redesigned to borrow the visual language of the threat itself — a game-style heads-up display, scan lines, a threat pulse, and a playable "spot the phish" round. Motion, empty states, and behavioral interaction design applied to a compliance use case.
-        </p>
-        <div class="work-badges">
-          <span class="badge">GSAP</span>
-          <span class="badge">Web Audio</span>
-          <span class="badge">Vanilla JS</span>
-          <span class="badge">HUD UI</span>
-        </div>
-      </a>
-
       <a href="009-document-pipeline.html" class="work-card" data-pillars="systems infra" aria-label="Document Pipeline">
         <div class="work-head">
           <div class="work-tag">Systems · Infrastructure &amp; Security</div>
         </div>
         <div class="work-name">Document Pipeline</div>
         <p class="work-desc">
-          A tool that reads documents and pulls out the important information automatically — while hiding personal details like names and Social Security numbers, and setting aside anything unusual for a person to double-check. Built as a set of Claude tools: extraction, PII masking, validation against a structured JSON schema, human-in-the-loop review for edge cases, and token-cost tracking. Built for regulated environments, where that safety net is the default, not the add-on. The Claude Engineer JD end to end.
+          A tool that reads documents and pulls out the important information automatically — while hiding personal details like names and Social Security numbers, and setting aside anything unusual for a person to double-check. Built as a set of Claude tools: extraction, PII masking, validation against a structured JSON schema, human-in-the-loop review for edge cases, and token-cost tracking. Built for regulated environments, where that safety net is the default, not the add-on. Claude tool engineering, end to end.
         </p>
         <div class="work-badges">
           <span class="badge">Claude</span>
