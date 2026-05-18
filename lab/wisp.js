@@ -260,7 +260,7 @@ export function launchWisp(stage, opts = {}) {
       if (inkLast) {
         inkCtx.globalCompositeOperation = 'lighter';
         inkCtx.lineCap = 'round'; inkCtx.lineJoin = 'round';
-        stroke(inkCtx, [inkLast, pen], '#ffd23d', '#fffdf0', 26, 3.4);
+        stroke(inkCtx, [inkLast, pen], '#ef7e6b', '#fef4f1', 26, 3.4);
       }
       inkLast = { x: pen.x, y: pen.y };
     } else {
@@ -279,7 +279,7 @@ export function launchWisp(stage, opts = {}) {
     if (trail.length > 1) {
       trailCtx.globalCompositeOperation = 'lighter';
       trailCtx.lineCap = 'round'; trailCtx.lineJoin = 'round';
-      stroke(trailCtx, trail, '#ffe500', '#fff7d6', 22, 3.6);
+      stroke(trailCtx, trail, '#e34234', '#fbdcd7', 22, 3.6);
     }
 
     /* fx layer — cleared and redrawn every frame */
@@ -289,34 +289,34 @@ export function launchWisp(stage, opts = {}) {
       const r = 6 + Math.sin(m.phase) * 1.6;
       fxCtx.beginPath();
       fxCtx.arc(m.x, m.y, r, 0, 6.2832);
-      fxCtx.fillStyle = '#ffe500';
-      fxCtx.shadowBlur = 16; fxCtx.shadowColor = '#ffe500';
+      fxCtx.fillStyle = '#e34234';
+      fxCtx.shadowBlur = 16; fxCtx.shadowColor = '#e34234';
       fxCtx.fill();
     }
     for (const p of pops) {
       const t = p.age / 0.55;
       fxCtx.beginPath();
       fxCtx.arc(p.x, p.y, 8 + t * 46, 0, 6.2832);
-      fxCtx.strokeStyle = '#fff7d6';
+      fxCtx.strokeStyle = '#fbdcd7';
       fxCtx.globalAlpha = 1 - t;
       fxCtx.lineWidth = 3 * (1 - t);
-      fxCtx.shadowBlur = 14; fxCtx.shadowColor = '#ffe500';
+      fxCtx.shadowBlur = 14; fxCtx.shadowColor = '#e34234';
       fxCtx.stroke();
       fxCtx.globalAlpha = 1;
     }
     if (pen.has) {
       fxCtx.beginPath();
       fxCtx.arc(pen.x, pen.y, pen.draw ? 9 : 6, 0, 6.2832);
-      fxCtx.fillStyle = pen.draw ? '#fffdf0' : 'rgba(255,229,0,0.5)';
-      fxCtx.shadowBlur = pen.draw ? 22 : 8; fxCtx.shadowColor = '#ffe500';
+      fxCtx.fillStyle = pen.draw ? '#fef4f1' : 'rgba(227,66,52,0.5)';
+      fxCtx.shadowBlur = pen.draw ? 22 : 8; fxCtx.shadowColor = '#e34234';
       fxCtx.fill();
     }
     if (eraseHold > 0.02 && pen.has) {
       const t = Math.min(1, eraseHold / ERASE_HOLD);
       fxCtx.beginPath();
       fxCtx.arc(pen.x, pen.y, 26, -1.5708, -1.5708 + t * 6.2832);
-      fxCtx.strokeStyle = '#ffe500';
-      fxCtx.lineWidth = 3; fxCtx.shadowBlur = 10; fxCtx.shadowColor = '#ffe500';
+      fxCtx.strokeStyle = '#e34234';
+      fxCtx.lineWidth = 3; fxCtx.shadowBlur = 10; fxCtx.shadowColor = '#e34234';
       fxCtx.stroke();
     }
     fxCtx.shadowBlur = 0;

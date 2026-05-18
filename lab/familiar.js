@@ -61,14 +61,14 @@ export function launchFamiliar(stage, opts = {}) {
   const geo = new THREE.IcosahedronGeometry(R, 4);
   const base = Float32Array.from(geo.attributes.position.array);
   const bodyMat = new THREE.MeshStandardMaterial({
-    color: 0xe9e3d2, emissive: 0xffe500, emissiveIntensity: 0.2, roughness: 0.5, metalness: 0.0,
+    color: 0xe9e3d2, emissive: 0xe34234, emissiveIntensity: 0.2, roughness: 0.5, metalness: 0.0,
   });
   const body = new THREE.Mesh(geo, bodyMat);
   familiar.add(body);
 
   /* halo — a soft additive shell so the creature reads as glowing */
   const haloMat = new THREE.MeshBasicMaterial({
-    color: 0xffe500, transparent: true, opacity: 0.06,
+    color: 0xe34234, transparent: true, opacity: 0.06,
     side: THREE.BackSide, blending: THREE.AdditiveBlending, depthWrite: false,
   });
   const halo = new THREE.Mesh(new THREE.IcosahedronGeometry(R * 1.4, 2), haloMat);
@@ -188,7 +188,7 @@ export function launchFamiliar(stage, opts = {}) {
     const ring = new THREE.Mesh(
       new THREE.RingGeometry(R * 1.05, R * 1.12, 56),
       new THREE.MeshBasicMaterial({
-        color: 0xffe500, transparent: true, opacity: 0.55,
+        color: 0xe34234, transparent: true, opacity: 0.55,
         side: THREE.DoubleSide, depthWrite: false,
       }),
     );

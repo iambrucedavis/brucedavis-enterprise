@@ -281,9 +281,9 @@ export function launchBloom(stage, opts = {}) {
       const pulse = 3.4 + levelSmooth * 7;
       ctx.beginPath();
       ctx.arc(top.x, top.y, pulse, 0, 6.2832);
-      ctx.fillStyle = '#FFE500';
+      ctx.fillStyle = '#E34234';
       ctx.shadowBlur = 16 + levelSmooth * 26;
-      ctx.shadowColor = 'rgba(255,229,0,0.9)';
+      ctx.shadowColor = 'rgba(227,66,52,0.9)';
       ctx.fill();
       ctx.shadowBlur = 0;
     }
@@ -298,14 +298,14 @@ export function launchBloom(stage, opts = {}) {
     ctx.save();
     ctx.translate(x, y);
     ctx.rotate(p.sway * 0.05);
-    ctx.shadowBlur = 14; ctx.shadowColor = 'rgba(255,229,0,0.5)';
+    ctx.shadowBlur = 14; ctx.shadowColor = 'rgba(227,66,52,0.5)';
     /* petals */
     for (let i = 0; i < b.petals; i++) {
       ctx.save();
       ctx.rotate((i / b.petals) * 6.2832);
       ctx.beginPath();
       ctx.ellipse(0, -r * 0.62 * breathe, r * 0.34, r * 0.62 * breathe, 0, 0, 6.2832);
-      ctx.fillStyle = '#FFE500';
+      ctx.fillStyle = '#E34234';
       ctx.fill();
       ctx.restore();
     }
@@ -327,8 +327,8 @@ export function launchBloom(stage, opts = {}) {
 
     /* soil glow */
     const g = ctx.createLinearGradient(0, soilY - 60, 0, H);
-    g.addColorStop(0, 'rgba(255,229,0,0)');
-    g.addColorStop(1, 'rgba(255,229,0,0.06)');
+    g.addColorStop(0, 'rgba(227,66,52,0)');
+    g.addColorStop(1, 'rgba(227,66,52,0.06)');
     ctx.fillStyle = g;
     ctx.fillRect(0, soilY - 60, W, H - soilY + 60);
     ctx.beginPath();
@@ -341,7 +341,7 @@ export function launchBloom(stage, opts = {}) {
     for (const m of motes) {
       ctx.beginPath();
       ctx.arc(m.x, m.y, m.r, 0, 6.2832);
-      ctx.fillStyle = 'rgba(255,229,0,0.34)';
+      ctx.fillStyle = 'rgba(227,66,52,0.34)';
       ctx.fill();
     }
 

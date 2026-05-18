@@ -278,8 +278,8 @@ export function launchMaestro(stage, opts = {}) {
 
     /* the column */
     const grad = ctx.createLinearGradient(0, baseY, 0, top);
-    grad.addColorStop(0, 'rgba(255,229,0,' + (0.05 + glow * 0.22).toFixed(3) + ')');
-    grad.addColorStop(1, 'rgba(255,229,0,' + (0.12 + glow * 0.6).toFixed(3) + ')');
+    grad.addColorStop(0, 'rgba(227,66,52,' + (0.05 + glow * 0.22).toFixed(3) + ')');
+    grad.addColorStop(1, 'rgba(227,66,52,' + (0.12 + glow * 0.6).toFixed(3) + ')');
     ctx.fillStyle = grad;
     ctx.fillRect(v.x - w / 2, top, w, h);
 
@@ -288,9 +288,9 @@ export function launchMaestro(stage, opts = {}) {
     const r = (4 + glow * 11) * breathe;
     ctx.beginPath();
     ctx.arc(v.x, top, r, 0, 6.2832);
-    ctx.fillStyle = glow > 0.04 ? '#FFE500' : 'rgba(236,231,219,0.32)';
+    ctx.fillStyle = glow > 0.04 ? '#E34234' : 'rgba(236,231,219,0.32)';
     ctx.shadowBlur = 8 + glow * 30;
-    ctx.shadowColor = 'rgba(255,229,0,0.85)';
+    ctx.shadowColor = 'rgba(227,66,52,0.85)';
     ctx.fill();
     ctx.shadowBlur = 0;
   }
@@ -316,9 +316,9 @@ export function launchMaestro(stage, opts = {}) {
         const yy = y + Math.sin(x * 0.035 + shimmer * 4) * amp * Math.sin(x / W * Math.PI);
         if (x === 0) ctx.moveTo(x, yy); else ctx.lineTo(x, yy);
       }
-      ctx.strokeStyle = 'rgba(255,229,0,' + (0.2 + leadLevel * 0.6).toFixed(3) + ')';
+      ctx.strokeStyle = 'rgba(227,66,52,' + (0.2 + leadLevel * 0.6).toFixed(3) + ')';
       ctx.lineWidth = 1.5 + leadLevel * 2;
-      ctx.shadowBlur = 12; ctx.shadowColor = 'rgba(255,229,0,0.7)';
+      ctx.shadowBlur = 12; ctx.shadowColor = 'rgba(227,66,52,0.7)';
       ctx.stroke();
       ctx.shadowBlur = 0;
     }
@@ -328,7 +328,7 @@ export function launchMaestro(stage, opts = {}) {
       const a = (1 - tr.age / 0.6) * 0.5;
       ctx.beginPath();
       ctx.arc(tr.x, tr.y, 3, 0, 6.2832);
-      ctx.fillStyle = 'rgba(255,229,0,' + a.toFixed(3) + ')';
+      ctx.fillStyle = 'rgba(227,66,52,' + a.toFixed(3) + ')';
       ctx.fill();
     }
 
@@ -338,15 +338,15 @@ export function launchMaestro(stage, opts = {}) {
       const rr = 16 + open * 26;
       ctx.beginPath();
       ctx.arc(h.x, h.y, rr, 0, 6.2832);
-      ctx.strokeStyle = open > 0.35 ? 'rgba(255,229,0,0.9)' : 'rgba(236,231,219,0.4)';
+      ctx.strokeStyle = open > 0.35 ? 'rgba(227,66,52,0.9)' : 'rgba(236,231,219,0.4)';
       ctx.lineWidth = 2;
       ctx.shadowBlur = open > 0.35 ? 16 : 0;
-      ctx.shadowColor = 'rgba(255,229,0,0.7)';
+      ctx.shadowColor = 'rgba(227,66,52,0.7)';
       ctx.stroke();
       ctx.shadowBlur = 0;
       ctx.beginPath();
       ctx.arc(h.x, h.y, 3, 0, 6.2832);
-      ctx.fillStyle = '#FFE500';
+      ctx.fillStyle = '#E34234';
       ctx.fill();
     }
   }

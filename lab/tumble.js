@@ -148,11 +148,11 @@ export function launchTumble(stage, opts = {}) {  // eslint-disable-line no-unus
       }
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
-      ctx.strokeStyle = pass === 0 ? '#ffe500' : '#fff7d6';
+      ctx.strokeStyle = pass === 0 ? '#e34234' : '#fbdcd7';
       ctx.lineWidth = pass === 0 ? 14 : 4;
       ctx.globalAlpha = pass === 0 ? 0.2 : 1;
       ctx.shadowBlur = pass === 0 ? 20 : 6;
-      ctx.shadowColor = '#ffe500';
+      ctx.shadowColor = '#e34234';
       ctx.stroke();
     }
     ctx.globalAlpha = 1;
@@ -170,7 +170,7 @@ export function launchTumble(stage, opts = {}) {  // eslint-disable-line no-unus
       ctx.arc(b.position.x, b.position.y, b.tumbleR, 0, 6.2832);
       ctx.fillStyle = '#ECE7DB';
       ctx.shadowBlur = 12;
-      ctx.shadowColor = 'rgba(255,229,0,0.45)';
+      ctx.shadowColor = 'rgba(227,66,52,0.45)';
       ctx.fill();
     }
     ctx.shadowBlur = 0;
