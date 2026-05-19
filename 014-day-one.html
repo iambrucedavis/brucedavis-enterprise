@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day One — Bruce Davis</title>
+<meta name="description" content="A conversational generative-UI onboarding demo — a new hire types a plain-language request, Claude returns a structured UI spec, and the app renders the right interactive component: a wizard, a progress ring, a benefits picker. Generative UI, not a chat transcript.">
+<meta property="og:title" content="Day One — Bruce Davis">
+<meta property="og:description" content="Type a sentence, get an interface. Structured outputs from Claude, dynamically rendered React components — a generative-UI onboarding experience.">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+/* ─── TOKENS — formal register ─────── */
+:root {
+  --paper:        #ECE4D0;
+  --paper-clean:  #F4EFE0;
+  --paper-deep:   #E4DAC2;
+  --ink:          #111111;
+  --ink-soft:     #2B2522;
+  --mute:         #8A847A;
+  --mute-soft:    #B7B0A2;
+  --signal:       #E1261C;
+  --signal-rgb:   225,38,28;
+  --hairline:        rgba(0,0,0,.14);
+  --hairline-strong: rgba(0,0,0,.34);
+  --display: 'Anton', 'Bebas Neue', Impact, sans-serif;
+  --serif:   'EB Garamond', Georgia, serif;
+  --mono:    'Space Mono', ui-monospace, monospace;
+  --shadow:    4px 4px 0 var(--ink);
+  --shadow-lg: 6px 6px 0 var(--ink);
+  --m-fast: 60ms  cubic-bezier(.2,0,0,1);
+  --m-base: 140ms cubic-bezier(.2,0,0,1);
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+a { color:inherit; text-decoration:none; }
+
+/* ─── NAV ──────────────────────────────────────── */
+#top-nav {
+  position:fixed; top:0; left:0; right:0; z-index:500;
+  height:64px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 clamp(22px,5vw,56px);
+  background:var(--paper);
+  border-bottom:1px solid var(--hairline-strong);
+}
+.nav-back {
+  font-family:var(--mono); font-weight:700;
+  font-size:13px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--ink);
+  transition:color var(--m-base);
+}
+.nav-back:hover { color:var(--signal); }
+.nav-links { display:flex; gap:clamp(20px,3vw,38px); }
+.nav-links a {
+  font-family:var(--mono);
+  font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--mute);
+  transition:color var(--m-base);
+}
+.nav-links a:hover { color:var(--ink); }
+
+/* ─── HERO ─────────────────────────────────────── */
+#hero {
+  min-height:80vh;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:132px clamp(22px,5vw,56px) 72px;
+  border-bottom:1px solid var(--hairline-strong);
+}
+.hero-pre {
+  font-family:var(--mono);
+  font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--signal);
+  margin-bottom:22px;
+}
+#hero-hl {
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(48px,8vw,104px); line-height:.92;
+  letter-spacing:.005em; text-transform:uppercase;
+  color:var(--ink);
+}
+#hero-hl .h-line { display:block; overflow:hidden; }
+.hero-sub {
+  margin-top:30px;
+  font-family:var(--serif); font-style:italic;
+  font-size:clamp(18px,1.7vw,23px); line-height:1.5;
+  color:var(--ink-soft);
+  max-width:54ch;
+}
+.hero-meta {
+  margin-top:28px;
+  display:flex; gap:20px; flex-wrap:wrap;
+  font-family:var(--mono);
+  font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--mute);
+}
+
+/* ─── SECTION SCAFFOLD ─────────────────────────── */
+.dv-section { padding:clamp(64px,8vw,100px) clamp(22px,5vw,56px); border-bottom:1px solid var(--hairline-strong); }
+.sec-inner  { max-width:1000px; margin:0 auto; }
+.dv-hdr     { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px; gap:16px; flex-wrap:wrap; }
+.dv-label   { font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); }
+.dv-version { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--mute); }
+.dv-title   { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:clamp(26px,3.6vw,44px); line-height:1; letter-spacing:.01em; color:var(--ink); margin-bottom:14px; }
+.dv-desc    { font-family:var(--serif); font-size:16.5px; color:var(--ink-soft); margin-bottom:32px; max-width:60ch; line-height:1.6; }
+
+/* ─── VIDEO ────────────────────────────────────── */
+.video-frame { background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.video-bar { display:flex; align-items:center; justify-content:space-between; padding:11px 18px; border-bottom:1px solid var(--hairline-strong); background:var(--paper-deep); gap:12px; }
+.video-bar-name { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--ink-soft); }
+.video-bar-status { font-family:var(--mono); font-size:10px; letter-spacing:.06em; color:var(--signal); }
+.video-frame video { display:block; width:100%; height:auto; background:#0a0b0d; }
+.video-pending { display:flex; align-items:center; justify-content:center; min-height:300px; background:var(--paper-deep); font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); text-align:center; padding:40px; }
+
+/* ─── FLOW DIAGRAM ─────────────────────────────── */
+.flow { display:flex; align-items:stretch; border:1px solid var(--hairline-strong); box-shadow:var(--shadow); background:var(--paper-clean); }
+.flow-node { flex:1; background:var(--paper-clean); padding:26px 14px; display:flex; flex-direction:column; gap:5px; text-align:center; justify-content:center; }
+.flow-node.is-signal { box-shadow:inset 0 0 0 2px var(--signal); }
+.flow-kicker { font-family:var(--mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--mute); }
+.flow-name { font-family:var(--serif); font-size:18px; font-weight:600; color:var(--ink); }
+.flow-node.is-signal .flow-name { color:var(--signal); }
+.flow-sub { font-family:var(--serif); font-size:13px; color:var(--ink-soft); }
+.flow-arrow { display:flex; align-items:center; padding:0 8px; background:var(--paper-clean); color:var(--mute); font-size:15px; border-left:1px solid var(--hairline); border-right:1px solid var(--hairline); }
+.flow-cap { font-family:var(--serif); font-size:15px; color:var(--ink-soft); line-height:1.6; margin-top:18px; max-width:66ch; }
+
+/* ─── STAT STRIP ───────────────────────────────── */
+.stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); margin-top:26px; }
+.stat { background:var(--paper-clean); padding:28px 18px; }
+.stat-num { font-family:var(--display); font-weight:400; font-size:44px; letter-spacing:.01em; line-height:1; color:var(--ink); }
+.stat.is-signal .stat-num { color:var(--signal); }
+.stat-label { font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--mute); margin-top:11px; }
+
+/* ─── COMPONENT CARDS ──────────────────────────── */
+.tool-cards { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.tool-card { background:var(--paper-clean); padding:26px 22px; display:flex; flex-direction:column; gap:10px; }
+.tc-verb { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:21px; letter-spacing:.01em; color:var(--ink); }
+.tc-name { font-family:var(--mono); font-size:11px; color:var(--signal); }
+.tc-desc { font-family:var(--serif); font-size:14.5px; color:var(--ink-soft); line-height:1.6; }
+.tc-model { font-family:var(--mono); font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); margin-top:auto; padding-top:10px; }
+
+/* ─── FRAME ────────────────────────────────────── */
+.c-frame { background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.c-bar   { display:flex; align-items:center; justify-content:space-between; padding:11px 18px; border-bottom:1px solid var(--hairline-strong); background:var(--paper-deep); gap:12px; }
+.c-bar-name   { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--ink-soft); }
+.c-bar-status { font-family:var(--mono); font-size:10px; letter-spacing:.06em; color:var(--signal); }
+.c-body { padding:22px; overflow-x:auto; }
+.c-line { font-family:var(--mono); font-size:13px; line-height:1.85; color:var(--ink-soft); white-space:pre; }
+.c-line .b { color:var(--signal); }
+.c-line .k { color:var(--ink); font-weight:700; }
+.c-cap  { font-family:var(--serif); font-size:15px; color:var(--ink-soft); line-height:1.6; margin-top:16px; max-width:66ch; }
+
+/* ─── RULE CARDS ───────────────────────────────── */
+.rules { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.rule { background:var(--paper-clean); padding:24px 22px; }
+.rule-name { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:18px; letter-spacing:.01em; color:var(--ink); margin-bottom:11px; }
+.rule-body { font-family:var(--serif); font-size:14.5px; color:var(--ink-soft); line-height:1.65; }
+
+/* ─── REVIEW ───────────────────────────────────── */
+#review { padding:clamp(64px,8vw,100px) clamp(22px,5vw,56px); border-bottom:1px solid var(--hairline-strong); }
+#review .sec-inner { max-width:1000px; margin:0 auto; }
+.review-lbl { font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); margin-bottom:22px; }
+.review-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:14px; max-width:68ch; }
+.review-list li { font-family:var(--serif); font-size:16px; color:var(--ink-soft); line-height:1.6; padding-left:28px; position:relative; }
+.review-list li::before { content:'+'; position:absolute; left:0; top:0; font-family:var(--mono); font-size:14px; color:var(--signal); }
+
+/* ─── FOOTER ───────────────────────────────────── */
+footer { background:var(--paper); border-top:1px solid var(--hairline-strong); }
+#page-footer { padding:36px clamp(22px,5vw,56px); display:flex; justify-content:space-between; align-items:center; max-width:1000px; margin:0 auto; gap:14px; flex-wrap:wrap; }
+.pf-back { font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); transition:color var(--m-base); }
+.pf-back:hover { color:var(--signal); }
+.pf-links { display:flex; gap:22px; flex-wrap:wrap; }
+.pf-links a { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); transition:color var(--m-base); }
+.pf-links a:hover { color:var(--signal); }
+
+/* ─── A11Y + MOTION ────────────────────────────── */
+a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline-offset:2px; }
+.reveal { opacity:0; transform:translateY(20px); }
+
+@media (max-width:760px) {
+  .rules { grid-template-columns:1fr; }
+}
+@media (max-width:600px) {
+  .flow { flex-direction:column; }
+  .flow-arrow { align-self:center; transform:rotate(90deg); padding:8px 0; border:none; }
+  .stats { grid-template-columns:repeat(2,1fr); }
+  .tool-cards { grid-template-columns:1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { transition-duration:.001ms !important; animation-duration:.001ms !important; }
+  html { scroll-behavior:auto; }
+}
+</style>
+</head>
+<body>
+
+<nav id="top-nav">
+  <a href="index.html" class="nav-back">← Bruce Davis</a>
+  <div class="nav-links">
+    <a href="index.html#work">Work</a>
+    <a href="lab.html">Lab</a>
+    <a href="about.html">About</a>
+    <a href="bruce-davis-resume.html">Resume</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-pre">AI Experience · Generative UI</div>
+  <h1 id="hero-hl">Day One</h1>
+  <p class="hero-sub">
+    A conversational onboarding experience where the interface assembles itself. A new hire asks in plain language; Claude returns structured data; the app renders the right interactive component — a setup wizard, a progress ring, a benefits picker — not a chat reply.
+  </p>
+  <div class="hero-meta">
+    <span>6 generative components</span>
+    <span>Generative UI</span>
+    <span>Next.js · React · TypeScript</span>
+    <span>Live interactive demo</span>
+  </div>
+</section>
+
+<!-- SEE IT RUN -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">See it run</span>
+      <span class="dv-version">one take, no narration</span>
+    </div>
+    <h2 class="dv-title">Type a sentence. Get an interface.</h2>
+    <p class="dv-desc">One pass: a plain-language onboarding request, a structured UI spec from Claude, and a real interactive interface rendered from it — assembled live, never hardcoded.</p>
+
+    <div class="video-frame">
+      <div class="video-bar">
+        <span class="video-bar-name">day-one · new-hire onboarding</span>
+        <span class="video-bar-status">[ RECORDED RUN ]</span>
+      </div>
+      <div class="video-pending">Demo recording coming soon — the interactive demo is live below.</div>
+    </div>
+    <p class="c-cap">Best seen live — the components are genuinely interactive. <a href="https://day-one.vercel.app" target="_blank" rel="noopener" style="color:var(--signal);border-bottom:1.5px solid var(--signal);">Open the interactive demo →</a></p>
+  </div>
+</div>
+
+<!-- WHAT IT IS -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">What it is</span>
+    </div>
+
+    <div class="flow">
+      <div class="flow-node">
+        <span class="flow-kicker">Person</span>
+        <span class="flow-name">New hire</span>
+        <span class="flow-sub">asks in plain language</span>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node">
+        <span class="flow-kicker">AI</span>
+        <span class="flow-name">Claude Sonnet</span>
+        <span class="flow-sub">returns a UI spec</span>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node is-signal">
+        <span class="flow-kicker">This project</span>
+        <span class="flow-name">day one</span>
+        <span class="flow-sub">the render layer</span>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node">
+        <span class="flow-kicker">Output</span>
+        <span class="flow-name">A real interface</span>
+        <span class="flow-sub">built from structured data</span>
+      </div>
+    </div>
+    <p class="flow-cap">The model never returns a chat reply. It returns a typed list of UI blocks; the app validates them with Zod and mounts real interactive components. <strong style="color:var(--ink);font-weight:600;">The interface is generated, not hardcoded.</strong></p>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">block types</div></div>
+      <div class="stat is-signal"><div class="stat-num">5</div><div class="stat-label">precomputed prompts</div></div>
+      <div class="stat"><div class="stat-num">1</div><div class="stat-label">Zod schema gate</div></div>
+      <div class="stat"><div class="stat-num">0</div><div class="stat-label">hardcoded screens</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 01 THE COMPONENTS -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">01 — The Components</span>
+      <span class="dv-version">six blocks the model can assemble</span>
+    </div>
+    <h2 class="dv-title">A vocabulary of UI.</h2>
+    <p class="dv-desc">The model doesn't draw pixels — it picks from a fixed set of interactive components and fills their props. Six block types cover a new hire's first week.</p>
+
+    <div class="tool-cards">
+      <div class="tool-card">
+        <div class="tc-verb">Profile Wizard</div>
+        <div class="tc-name">multi-step form</div>
+        <div class="tc-desc">A guided setup form — basics, role, logistics — with step progress and a final summary panel.</div>
+        <div class="tc-model">Block · profile_wizard</div>
+      </div>
+      <div class="tool-card">
+        <div class="tc-verb">Progress Ring</div>
+        <div class="tc-name">completion meter</div>
+        <div class="tc-desc">An onboarding-completion ring. Tap a task and it advances; the ring recomputes in place.</div>
+        <div class="tc-model">Block · progress_ring</div>
+      </div>
+      <div class="tool-card">
+        <div class="tc-verb">Benefits Selector</div>
+        <div class="tc-name">plan picker</div>
+        <div class="tc-desc">Pickable plan cards with a live cost summary that updates as the new hire chooses.</div>
+        <div class="tc-model">Block · benefits_selector</div>
+      </div>
+      <div class="tool-card">
+        <div class="tc-verb">Equipment Checklist</div>
+        <div class="tc-name">IT &amp; access setup</div>
+        <div class="tc-desc">A checkable IT-and-access list with a running "ready" counter and per-item owners.</div>
+        <div class="tc-model">Block · equipment_checklist</div>
+      </div>
+      <div class="tool-card">
+        <div class="tc-verb">Team Card</div>
+        <div class="tc-name">your people</div>
+        <div class="tc-desc">Manager, teammates, and an expandable note on where the team sits in the org.</div>
+        <div class="tc-model">Block · team_card</div>
+      </div>
+      <div class="tool-card">
+        <div class="tc-verb">Schedule Timeline</div>
+        <div class="tc-name">first week</div>
+        <div class="tc-desc">Day tabs over a per-day event timeline, with an add-to-calendar toggle on each event.</div>
+        <div class="tc-model">Block · schedule_timeline</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 02 THE MECHANISM -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">02 — The Mechanism</span>
+      <span class="dv-version">structured output, not free text</span>
+    </div>
+    <h2 class="dv-title">The model returns a UI spec.</h2>
+    <p class="dv-desc">Claude is forced to call one tool. Its argument is the UI spec — an ordered, typed list of blocks. This is what comes back from the request "what does my first week look like?"</p>
+
+    <div class="c-frame">
+      <div class="c-bar">
+        <span class="c-bar-name">render_onboarding_ui · tool call</span>
+        <span class="c-bar-status">[ STRUCTURED OUTPUT ]</span>
+      </div>
+      <div class="c-body">
+<div class="c-line">{</div>
+<div class="c-line">  <span class="k">"intent"</span>: "First-week schedule",</div>
+<div class="c-line">  <span class="k">"summary"</span>: "Here's how your week is shaped…",</div>
+<div class="c-line">  <span class="k">"blocks"</span>: [</div>
+<div class="c-line">    { <span class="k">"type"</span>: <span class="b">"schedule_timeline"</span>, <span class="k">"props"</span>: { … } },</div>
+<div class="c-line">    { <span class="k">"type"</span>: <span class="b">"progress_ring"</span>,     <span class="k">"props"</span>: { … } }</div>
+<div class="c-line">  ]</div>
+<div class="c-line">}</div>
+      </div>
+    </div>
+    <p class="c-cap">Tool-use forcing guarantees the envelope. A Zod discriminated union validates every block's props before a single component mounts — an invalid block never reaches the screen. The renderer switches on <code style="font-family:var(--mono);font-size:13px;">type</code> and mounts the matching React component.</p>
+  </div>
+</div>
+
+<!-- 03 GENERATIVE UI -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">03 — Generative UI</span>
+      <span class="dv-version">the data drives the interface</span>
+    </div>
+    <h2 class="dv-title">The UI is generative.</h2>
+    <p class="dv-desc">No screen in this app is hardcoded. Every interface a visitor sees is rendered from a structured spec — change the request, and the UI changes with it. That is the technical claim the project demonstrates.</p>
+
+    <div class="rules">
+      <div class="rule">
+        <div class="rule-name">Generative, not hardcoded</div>
+        <div class="rule-body">The screen is a render of the model's JSON. New request, new blocks, new UI — with no interface code changed.</div>
+      </div>
+      <div class="rule">
+        <div class="rule-name">Schema-validated</div>
+        <div class="rule-body">Tool-use forces the shape; a Zod discriminated union enforces the contract. The envelope and the props are both gated.</div>
+      </div>
+      <div class="rule">
+        <div class="rule-name">Two demo modes</div>
+        <div class="rule-body">Five precomputed prompts render instantly with no key; bring an Anthropic key to generate UI live from any request.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IN REVIEW -->
+<section id="review" class="reveal">
+  <div class="sec-inner">
+    <div class="review-lbl">In review — what I'd do differently</div>
+    <ul class="review-list">
+      <li>The five sample prompts are hand-authored UI specs — real shape, curated content — so the demo never needs an API key or spends a cent.</li>
+      <li>The tool's JSON Schema is deliberately permissive on block props; Zod does the real validation after the call. It's the reliable split for deep typed unions.</li>
+      <li>Six block types ship today. The registry is built to grow — a seventh component is a schema entry, a line in the prompt, and one file.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div id="page-footer">
+    <a href="index.html" class="pf-back">← Back to Bruce Davis</a>
+    <div class="pf-links">
+      <a href="index.html#work">Work</a>
+      <a href="bruce-davis-resume.html">Resume</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="https://day-one.vercel.app" target="_blank" rel="noopener">Live Demo</a>
+      <a href="https://github.com/iambrucedavis/day-one" target="_blank" rel="noopener">GitHub Repo</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+'use strict';
+
+const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+gsap.registerPlugin(ScrollTrigger);
+
+/* ── HERO — char-split entrance */
+const hl = document.getElementById('hero-hl');
+hl.innerHTML = hl.innerHTML.split('<br>').map(line =>
+  `<span class="h-line" style="display:block;overflow:hidden">${
+    [...line.trim()].map(ch => ch === ' '
+      ? `<span style="display:inline-block;min-width:.25em"> </span>`
+      : `<span class="h-char" style="display:inline-block">${ch}</span>`
+    ).join('')
+  }</span>`
+).join('');
+if (motionOK) gsap.from('.h-char', { yPercent:110, duration:.7, stagger:.02, ease:'power3.out', delay:.1 });
+
+/* ── REVEAL */
+if (motionOK) {
+  document.querySelectorAll('.reveal').forEach(el => {
+    gsap.to(el, {
+      opacity:1, y:0, duration:.6, ease:'power2.out',
+      scrollTrigger:{ trigger:el, start:'top 84%' },
+    });
+  });
+} else {
+  document.querySelectorAll('.reveal').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+}
+
+/* ── 6% — easter egg */
+console.log('%c// 6% — small change. whole product.', 'color:#E1261C;font-family:monospace;letter-spacing:.04em;');
+console.log('%c// bruce davis · 2026', 'color:#8A847A;font-family:monospace;letter-spacing:.04em;');
+</script>
+
+</body>
+</html>
