@@ -125,6 +125,13 @@ a { color:inherit; text-decoration:none; }
 .dv-title   { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:clamp(26px,3.6vw,44px); line-height:1; letter-spacing:.01em; color:var(--ink); margin-bottom:14px; }
 .dv-desc    { font-family:var(--serif); font-size:16.5px; color:var(--ink-soft); margin-bottom:32px; max-width:58ch; line-height:1.6; }
 
+/* ─── VIDEO ────────────────────────────────────── */
+.video-frame { background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.video-bar { display:flex; align-items:center; justify-content:space-between; padding:11px 18px; border-bottom:1px solid var(--hairline-strong); background:var(--paper-deep); gap:12px; }
+.video-bar-name { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--ink-soft); }
+.video-bar-status { font-family:var(--mono); font-size:10px; letter-spacing:.06em; color:var(--signal); }
+.video-frame video { display:block; width:100%; height:auto; background:#0a0b0d; }
+
 /* ─── FLOW DIAGRAM ─────────────────────────────── */
 .flow { display:flex; align-items:stretch; border:1px solid var(--hairline-strong); box-shadow:var(--shadow); background:var(--paper-clean); }
 .flow-node { flex:1; background:var(--paper-clean); padding:26px 14px; display:flex; flex-direction:column; gap:5px; text-align:center; justify-content:center; }
@@ -225,7 +232,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   <div class="hero-pre">AI Product Engineer · Systems · Infrastructure &amp; Security</div>
   <h1 id="hero-hl">Sentinel<br>Triage</h1>
   <p class="hero-sub">
-    An autonomous SOC triage agent. It investigates network security incidents — reasoning step by step, calling tools, and stopping for human approval before it touches anything. The autonomy dial and human-in-the-loop gate aren't infrastructure — they're the trust UX that makes a security team willing to deploy this in the first place.
+    An autonomous SOC triage agent. It investigates network security incidents — reasoning step by step, calling tools, and stopping for human approval before any action that bites. The autonomy dial and human-in-the-loop gate aren't infrastructure — they're the trust UX that makes a security team willing to deploy this in the first place.
   </p>
   <div class="hero-meta">
     <span>3 tools</span>
@@ -275,6 +282,30 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <div class="stat"><div class="stat-num">1</div><div class="stat-label">human-approval gate</div></div>
       <div class="stat"><div class="stat-num">0</div><div class="stat-label">actions taken without consent</div></div>
     </div>
+  </div>
+</div>
+
+<!-- SEE IT RUN — VIDEO -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">See it run</span>
+      <span class="dv-version">one take, no narration</span>
+    </div>
+    <h2 class="dv-title">Detection to containment.</h2>
+    <p class="dv-desc">A full triage of incident INC-4471 — the agent scans the logs, enriches the threat intel, and proposes containment, then stops at the human-approval gate before anything executes.</p>
+
+    <div class="video-frame">
+      <div class="video-bar">
+        <span class="video-bar-name">sentinel-triage · incident INC-4471</span>
+        <span class="video-bar-status">[ RECORDED RUN ]</span>
+      </div>
+      <video controls preload="metadata" playsinline poster="videos/sentinel-triage-poster.jpg">
+        <source src="videos/sentinel-triage.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <p class="c-cap">Recorded from a live run against Gemini 2.5 Flash. Or run it yourself — <a href="https://sentinel-triage.streamlit.app" target="_blank" rel="noopener" style="color:var(--signal);border-bottom:1.5px solid var(--signal);">open the live demo →</a></p>
   </div>
 </div>
 
