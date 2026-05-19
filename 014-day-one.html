@@ -122,7 +122,6 @@ a { color:inherit; text-decoration:none; }
 .video-bar-name { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--ink-soft); }
 .video-bar-status { font-family:var(--mono); font-size:10px; letter-spacing:.06em; color:var(--signal); }
 .video-frame video { display:block; width:100%; height:auto; background:#0a0b0d; }
-.video-pending { display:flex; align-items:center; justify-content:center; min-height:300px; background:var(--paper-deep); font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); text-align:center; padding:40px; }
 
 /* ─── FLOW DIAGRAM ─────────────────────────────── */
 .flow { display:flex; align-items:stretch; border:1px solid var(--hairline-strong); box-shadow:var(--shadow); background:var(--paper-clean); }
@@ -246,9 +245,12 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <span class="video-bar-name">day-one · new-hire onboarding</span>
         <span class="video-bar-status">[ RECORDED RUN ]</span>
       </div>
-      <div class="video-pending">Demo recording coming soon — the interactive demo is live below.</div>
+      <video controls preload="metadata" playsinline poster="videos/day-one-poster.jpg">
+        <source src="videos/day-one.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
     </div>
-    <p class="c-cap">Best seen live — the components are genuinely interactive. <a href="https://brucedavis-portfolio.vercel.app" target="_blank" rel="noopener" style="color:var(--signal);border-bottom:1.5px solid var(--signal);">Open the interactive demo →</a></p>
+    <p class="c-cap">A recorded run through the sample prompts — each one assembles a different interface, and every component is genuinely interactive. <a href="https://brucedavis-portfolio.vercel.app" target="_blank" rel="noopener" style="color:var(--signal);border-bottom:1.5px solid var(--signal);">Open the live demo →</a> to try it yourself.</p>
   </div>
 </div>
 
