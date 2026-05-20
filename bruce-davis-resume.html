@@ -10,15 +10,15 @@
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
-/* ─── TOKENS — formal register ─── */
+/* ─── TOKENS — enterprise register ─── */
 :root {
-  --paper:        #F4EFE0;
-  --ink:          #111111;
-  --ink-soft:     #2B2522;
-  --mute:         #8A847A;
-  --rule:         rgba(0,0,0,.16);
-  --rule-strong:  rgba(0,0,0,.42);
-  --signal:       #E1261C;
+  --paper:        #FFFFFF;
+  --ink:          #0A0E1A;
+  --ink-soft:     #1F2937;
+  --mute:         #6B7280;
+  --rule:         rgba(10,14,26,.12);
+  --rule-strong:  rgba(10,14,26,.32);
+  --signal:       #0066FF;
   --display: 'Anton', Impact, sans-serif;
   --serif:   'EB Garamond', Georgia, serif;
   --mono:    'Space Mono', ui-monospace, monospace;
@@ -307,56 +307,56 @@ a:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
   I build agentic AI systems that enterprise teams can deploy with confidence &mdash; MCP servers, ReAct agent loops, multi-agent orchestration, RAG pipelines &mdash; grounded in fifteen years of identity, security, and regulated-environment delivery. <strong>Non-Human Identity (NHI) governance at Microsoft.</strong> HIPAA-compliant IAM for 16,000+ users at Veradigm. Payment infrastructure for SWIFT/CHIPS/Fedwire at Wells Fargo. The same identity and authorization problems that defined that career now define secure AI agent deployment. PMP-certified. Security, identity, and compliance as the floor, not the footnote.
 </p>
 
-<!-- RECENT AI WORK -->
+<!-- SELECTED AGENTIC AI PROJECTS -->
 <section class="section">
-  <div class="sec-label">Recent AI Work</div>
+  <div class="sec-label">Selected Projects &mdash; Agentic AI, IAM, Security</div>
   <div class="projects">
 
     <div class="project">
       <div class="proj-id">Sentinel Triage</div>
       <div>
-        <div class="proj-name">Autonomous SOC triage agent with a human-in-the-loop gate</div>
-        <div class="proj-desc">A ReAct agent on Gemini 2.5 Flash that triages network security incidents &mdash; scans logs, enriches threat intelligence, proposes containment &mdash; through function-calling tools. Destructive actions pause for explicit human approval; an autonomy dial scopes how far the agent can act. Python · Streamlit · Gemini 2.5 Flash · google-genai SDK · function calling.</div>
+        <div class="proj-name">Autonomous SOC triage agent with human-in-the-loop authorization</div>
+        <div class="proj-desc">ReAct agent loop on Gemini 2.5 Flash &mdash; reads logs, enriches threat intelligence, proposes containment actions through function-calling tools. Destructive actions pause for explicit human approval before execution. An autonomy dial scopes operational reach. Built for security teams that need AI assistance without surrendering control. Python · Streamlit · Gemini 2.5 Flash · google-genai SDK · ReAct · Function Calling · HITL Architecture.</div>
       </div>
     </div>
 
     <div class="project">
-      <div class="proj-id">Visionary Producer</div>
+      <div class="proj-id">AXE Provenance</div>
       <div>
-        <div class="proj-name">Film pre-production orchestrator &mdash; one agent architecture, a new domain</div>
-        <div class="proj-desc">A ReAct agent that turns raw script pages into a structured pre-production package &mdash; scene breakdown, VFX complexity scoring, casting archetypes &mdash; gated by producer approval. Built on the identical agent loop as Sentinel Triage: proof the architecture travels across domains. Python · Streamlit · Gemini 2.5 Flash · google-genai SDK.</div>
-      </div>
-    </div>
-
-    <div class="project">
-      <div class="proj-id">Linear MCP</div>
-      <div>
-        <div class="proj-name">MCP server for Linear, with a full evaluation harness</div>
-        <div class="proj-desc">Six opinionated Claude tools for running an issue tracker &mdash; notification triage, issue scoping, velocity diagnosis, status writeups. Includes a 30-case evaluation harness, a documented threat model, and per-tool cost analysis. TypeScript · @modelcontextprotocol/sdk · Anthropic SDK · Linear GraphQL API · Zod · Vitest.</div>
+        <div class="proj-name">Multi-agent control room with Non-Human Identity (NHI) governance</div>
+        <div class="proj-desc">Six AI agents investigate a live security incident &mdash; each with its own identity, permission level, token budget, and accountable owner. When an agent needs elevated permissions, the system stops and requests human authorization before granting them. Non-Human Identity governance applied directly to AI agents. Python · React · TypeScript · Multi-agent Architecture · NHI · Generative UI.</div>
       </div>
     </div>
 
     <div class="project">
       <div class="proj-id">Document Pipeline</div>
       <div>
-        <div class="proj-name">Claude tools, end-to-end document processing</div>
-        <div class="proj-desc">MCP-based set of Claude tools that handle a document end to end &mdash; extraction, PII masking / deidentification, structured JSON outputs, validation, human-in-the-loop review, and token-cost tracking. Claude tool engineering, end to end. MCP SDK · Node · ajv · JSON Schema · Python.</div>
+        <div class="proj-name">End-to-end document processing for HIPAA-regulated environments</div>
+        <div class="proj-desc">Claude tool chain handles extraction, PII masking and deidentification, structured JSON output against a validated schema, human-in-the-loop review for edge cases, and token-cost tracking. Built to operate in HIPAA and compliance-sensitive workflows where the audit trail is the deliverable. MCP SDK · Node · Python · ajv · JSON Schema · PII Governance.</div>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="proj-id">Linear MCP</div>
+      <div>
+        <div class="proj-name">Production MCP server with threat model and evaluation harness</div>
+        <div class="proj-desc">Six opinionated Claude tools for engineering team operations &mdash; notification triage, issue scoping, velocity diagnosis, status reporting. Includes a 30-case evaluation harness, a documented threat model, and per-tool cost analysis. Open source. TypeScript · @modelcontextprotocol/sdk · Anthropic SDK · Linear GraphQL API · Zod · Vitest.</div>
       </div>
     </div>
 
     <div class="project">
       <div class="proj-id">Six Percent MCP</div>
       <div>
-        <div class="proj-name">Custom MCP server, five Claude tools</div>
-        <div class="proj-desc">Custom MCP server with five Claude tools for content workflow &mdash; Notion-backed idea retrieval, palette suggestion, voice-checking, page scaffolding, vault capture. @modelcontextprotocol/sdk · Notion API · Zod · Node.</div>
+        <div class="proj-name">Custom MCP server with five Claude tools</div>
+        <div class="proj-desc">Custom MCP server with five Claude tools powering a real content and research workflow &mdash; Notion-backed idea retrieval, tone analysis, page scaffolding, vault capture. A working example of MCP as personal infrastructure, not a demo. @modelcontextprotocol/sdk · Notion API · Zod · Node.</div>
       </div>
     </div>
 
     <div class="project">
-      <div class="proj-id">AI Interface Patterns</div>
+      <div class="proj-id">Visionary Producer</div>
       <div>
-        <div class="proj-name">Loading, empty, and error states for AI surfaces</div>
-        <div class="proj-desc">Five working React/TypeScript demos for AI products &mdash; streaming output, model state, low-context warnings, confidence flags, error recovery. Loading, empty, and error states built in code &mdash; not Figma mockups.</div>
+        <div class="proj-name">One agent architecture, validated across a second domain</div>
+        <div class="proj-desc">The same ReAct agent loop as Sentinel Triage, pointed at film pre-production &mdash; script breakdown, VFX complexity scoring, casting archetypes, producer-approval gate before lock. Proof the architecture travels. Python · Streamlit · Gemini 2.5 Flash · google-genai SDK · ReAct · Function Calling.</div>
       </div>
     </div>
 
@@ -458,20 +458,17 @@ a:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
 <section class="section">
   <div class="sec-label">Stack</div>
   <div class="stack">
-    <strong style="color:var(--ink);">Design &amp; Frontend:</strong>
-    Figma · React · TypeScript · Next.js · Tailwind · Radix UI · Storybook · HTML/CSS
+    <strong style="color:var(--ink);">Agentic AI:</strong>
+    Claude · Claude Code · Anthropic SDK · Gemini · google-genai SDK · MCP SDK · OpenAI SDK · Vercel AI SDK · ReAct · Function Calling · Multi-agent Architecture · RAG · Human-in-the-Loop (HITL) · Tool Use · Microsoft Copilot
     <br>
-    <strong style="color:var(--ink);">AI &amp; Automation:</strong>
-    Claude · Claude Code · Anthropic SDK · Gemini · google-genai SDK · MCP SDK · OpenAI SDK · Vercel AI SDK · Microsoft Copilot · Cursor · v0 · Figma Make
+    <strong style="color:var(--ink);">Identity &amp; Security:</strong>
+    Non-Human Identity (NHI) · Entra ID Governance · CyberArk · Microsoft Identity Manager (MIM) · HashiCorp Vault · Zero Trust · HIPAA · NIST · ISO 20022 · SWIFT · CHIPS · Fedwire · Threat Modeling · ServiceNow
     <br>
-    <strong style="color:var(--ink);">Motion &amp; Interaction:</strong>
-    GSAP · Framer Motion · Three.js · Canvas API · D3.js · Matter.js · Web Audio API · WebGL
+    <strong style="color:var(--ink);">Engineering:</strong>
+    Python · TypeScript · JavaScript · Node.js · React · Next.js · Streamlit · PowerShell · SQL · GraphQL · Zod · Vitest · Git · Vercel · Tailwind
     <br>
-    <strong style="color:var(--ink);">Languages &amp; Tools:</strong>
-    JavaScript · TypeScript · Node.js · Python · Streamlit · PowerShell · SQL · GraphQL · Zod · Vitest · Git · Vercel · FFmpeg
-    <br>
-    <strong style="color:var(--ink);">Enterprise &amp; Security:</strong>
-    SWIFT · CHIPS · Fedwire · ISO 20022 · Entra ID Governance · Non-Human Identity · HIPAA · NIST · Threat Modeling · CyberArk · MIM · ServiceNow · JIRA
+    <strong style="color:var(--ink);">Delivery:</strong>
+    PMP · Scrum (PSM I) · Microsoft AI Factory · Forward Deployed Engineering · Audit-Ready Documentation
   </div>
 </section>
 
