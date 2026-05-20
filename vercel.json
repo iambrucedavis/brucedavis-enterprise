@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "iambrucedavis",
+  "name": "brucedavis-enterprise",
   "builds": [
     { "src": "*.html", "use": "@vercel/static" },
     { "src": "*.pdf", "use": "@vercel/static" },
