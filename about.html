@@ -3,32 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About — Bruce Davis</title>
-<!-- // 6% — small change. whole product. quietly here. -->
-<meta name="description" content="Bruce Davis — AI Product Engineer. Designer who codes, engineer who designs. Fifteen years on systems you had to trust — money, identity, health records — now building AI products end to end. AI Engineer / Applied AI Engineer / Design Engineer roles welcome.">
-<meta property="og:title" content="About — Bruce Davis">
-<meta property="og:description" content="Designer who codes. Engineer who designs. Fifteen years on systems you had to trust — money, identity, health records. Now pointing both halves at AI.">
+<title>About — Bruce Davis | AI Systems Engineer</title>
+<meta name="description" content="Forward deployed AI engineer. IAM and security practitioner. Fifteen years at Microsoft, Wells Fargo, Starbucks, Veradigm. Now building agentic AI infrastructure — MCP, ReAct agents, LLM orchestration — for regulated environments.">
+<meta property="og:title" content="About — Bruce Davis | AI Systems Engineer">
+<meta property="og:description" content="Forward deployed AI engineer. IAM and security practitioner. Fifteen years at Microsoft, Wells Fargo, Starbucks, Veradigm. Now building agentic AI infrastructure — MCP, ReAct agents, LLM orchestration — for regulated environments.">
 <meta property="og:type" content="profile">
 
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 
-/* ─── TOKENS — formal register ─── */
+/* ─── TOKENS — enterprise register ─── */
 :root {
-  --paper:        #ECE4D0;
-  --paper-clean:  #F4EFE0;
-  --ink:          #111111;
-  --ink-soft:     #2B2522;
-  --mute:         #8A847A;
-  --mute-soft:    #B7B0A2;
-  --signal:       #E1261C;
-  --hairline:        rgba(0,0,0,.14);
-  --hairline-strong: rgba(0,0,0,.34);
+  --paper:        #0A0E1A;
+  --paper-clean:  #121826;
+  --ink:          #F5F7FA;
+  --ink-soft:     #C1C7D0;
+  --mute:         #7A8392;
+  --mute-soft:    #9CA3AF;
+  --signal:       #0066FF;
+  --hairline:        rgba(255,255,255,.08);
+  --hairline-strong: rgba(255,255,255,.18);
   --display: 'Anton', 'Bebas Neue', Impact, sans-serif;
   --serif:   'EB Garamond', Georgia, serif;
   --mono:    'Space Mono', ui-monospace, monospace;
-  --shadow:    4px 4px 0 var(--ink);
-  --shadow-lg: 6px 6px 0 var(--ink);
+  --shadow:    0 0 0 1px var(--hairline-strong);
+  --shadow-lg: 0 0 0 1px var(--hairline-strong), 0 24px 48px -24px rgba(0,0,0,.6);
   --m-fast: 60ms  cubic-bezier(.2,0,0,1);
   --m-base: 140ms cubic-bezier(.2,0,0,1);
   --maxw: 1500px;
@@ -54,14 +53,36 @@ body {
   height: 64px;
   display:flex; align-items:center; justify-content:space-between;
   padding: 0 clamp(22px,5vw,56px);
-  background: var(--paper);
+  background: rgba(10,14,26,.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--hairline-strong);
 }
+.nav-left { display:flex; align-items:center; gap: clamp(16px,3vw,28px); }
 .nav-logo {
   font-family: var(--mono);
   font-weight: 700; font-size: 13px;
   letter-spacing: .14em; text-transform: uppercase;
   color: var(--ink); text-decoration: none;
+}
+.nav-status {
+  display:inline-flex; align-items:center; gap: 8px;
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-soft);
+  padding: 5px 10px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 100px;
+}
+.nav-status::before {
+  content:''; width:7px; height:7px; border-radius:50%;
+  background: #22C55E;
+  box-shadow: 0 0 8px rgba(34,197,94,.7);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50%     { opacity: .5; }
 }
 .nav-links { display:flex; gap: clamp(20px,3vw,38px); list-style:none; }
 .nav-links a {
@@ -80,7 +101,7 @@ body {
 .eyebrow {
   font-family: var(--mono);
   font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
-  color: var(--mute);
+  color: var(--signal);
   margin-bottom: 26px;
 }
 
@@ -95,7 +116,7 @@ body {
   flex-wrap: wrap;
 }
 
-/* Photo placeholder — square; holds its space with or without an image */
+/* Photo placeholder */
 .about-photo {
   position: relative;
   flex-shrink: 0;
@@ -103,7 +124,6 @@ body {
   aspect-ratio: 1 / 1;
   background: var(--paper-clean);
   border: 1px solid var(--hairline-strong);
-  box-shadow: var(--shadow-lg);
   overflow: hidden;
 }
 .about-photo img {
@@ -135,7 +155,7 @@ body {
   font-size: clamp(22px, 2.35vw, 33px);
   line-height: 1.36;
   color: var(--ink-soft);
-  max-width: 26ch;
+  max-width: 30ch;
 }
 .about-lede strong { font-weight: 600; color: var(--ink); }
 .about-lede .accent { color: var(--signal); }
@@ -161,6 +181,7 @@ body {
 .prose strong { font-weight: 600; color: var(--ink); }
 .prose .turn {
   font-family: var(--serif);
+  font-weight: 600;
   font-style: italic;
   color: var(--ink);
 }
@@ -213,6 +234,9 @@ a:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
 /* ─── MOTION ─────────────────────────────── */
 .reveal { opacity: 0; transform: translateY(20px); }
 
+@media (max-width: 720px) {
+  .nav-status { display:none; }
+}
 @media (max-width: 680px) {
   .about-lede { max-width: none; }
   footer { flex-direction:column; text-align:center; }
@@ -221,6 +245,7 @@ a:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
   *,*::before,*::after { transition-duration:.001ms !important; animation-duration:.001ms !important; }
   html { scroll-behavior:auto; }
   .reveal { opacity:1; transform:none; }
+  .nav-status::before { animation: none; }
 }
 
 </style>
@@ -231,10 +256,12 @@ a:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
 
 <!-- ── NAV ──────────────────────────────── -->
 <nav id="nav">
-  <a href="index.html" class="nav-logo" aria-label="Bruce Davis — home">Bruce Davis</a>
+  <div class="nav-left">
+    <a href="index.html" class="nav-logo" aria-label="Bruce Davis — home">Bruce Davis</a>
+    <span class="nav-status" aria-label="Availability status">Available for contract &amp; full-time</span>
+  </div>
   <ul class="nav-links">
     <li><a href="index.html#work">Work</a></li>
-    <li><a href="lab.html">Lab</a></li>
     <li><a href="about.html" aria-current="page">About</a></li>
     <li><a href="bruce-davis-resume.html" target="_blank" rel="noopener">Resume</a></li>
     <li><a href="index.html#contact">Contact</a></li>
@@ -246,9 +273,6 @@ a:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
   <div class="inner">
     <div class="hero-row reveal">
 
-      <!-- Photo placeholder — drop a portrait in later:
-           <img src="bruce-davis.jpg" alt="Bruce Davis">
-           The square holds its space with or without an image. -->
       <div class="about-photo">
         <span class="about-photo-ph"><span>Portrait</span></span>
       </div>
@@ -256,7 +280,7 @@ a:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
       <div class="hero-lede-wrap">
         <div class="eyebrow">About</div>
         <p class="about-lede">
-          <strong>AI Product Engineer. Designer who codes. Engineer who designs.</strong> Fifteen years on systems you had to trust — money, identity, health records — and on the design details that made them feel trustworthy. Now pointing both halves at <span class="accent">AI products</span> that earn the second visit.
+          <strong>AI Systems Engineer. IAM and security practitioner. Forward deployed for fifteen years.</strong>
         </p>
       </div>
 
@@ -269,12 +293,11 @@ a:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
   <div class="inner">
     <h2 class="section-h2">The Arc</h2>
     <div class="prose">
-      <p>Started at Wells Fargo on payment infrastructure — moving money between banks on rails called SWIFT and Fedwire, zero margin for error. Then HIPAA-regulated IAM for 16,000+ users at Veradigm. Security engineering across 60+ Starbucks domains. Cloud Solutions Architect at Microsoft, automating identity governance for Entra ID and Non-Human Identity.</p>
-      <p><em>That's the CV version.</em></p>
-      <p>Underneath all of it, two through-lines. The engineering one — identity, authorization, audit, trust: who's allowed to do what, and how do you prove it. And the design one — the question nobody puts on a resume: <em>how does this actually feel to use, and why do users trust the screen in front of them?</em> Every project was secretly a UX project. I just didn't have the language for it yet.</p>
-      <p>Neither problem shrunk when AI arrived. They got bigger. Non-Human Identity governance — the work at Microsoft — is the same shape as the problem now defining how enterprises deploy AI agents. The interface trust problem is the same one, scaled up by a model that can talk back.</p>
+      <p>Started at Wells Fargo on payment infrastructure — SWIFT, CHIPS, Fedwire, zero margin for error. Then HIPAA-regulated IAM for 16,000+ users at Veradigm. Security engineering across 60+ Starbucks domains. Cloud Solutions Architect at Microsoft, building Python automation for Entra ID Governance and Non-Human Identity — before NHI governance was a named discipline.</p>
+      <p>Two things ran underneath all of it. The identity thread — who is allowed to do what, how do you prove it, what happens when the answer is wrong. And the systems thread — regulated deployments where the audit documentation is as important as the code.</p>
+      <p>Neither problem shrunk when AI arrived. Non-Human Identity governance — the work at Microsoft — is now the defining problem of secure enterprise AI agent deployment. The same question, scaled: how do you authorize an AI agent? How do you scope its permissions? How do you build the human-in-the-loop gate before something irreversible happens?</p>
       <p class="turn">The career didn't pivot. It compounded.</p>
-      <p>Today I build AI products end to end. Engineering side: Claude workflows, MCP servers, document pipelines. Design side: AI-native interfaces, motion systems, interaction patterns. Both halves, same job. The proof is in <strong>Work</strong> and the <strong>Lab</strong>.</p>
+      <p>Today I build agentic AI systems — MCP servers, ReAct agent loops, multi-agent orchestration, RAG pipelines — with the same identity-first, audit-ready instincts that defined the regulated-environment work. The AI layer runs on top of fifteen years of the thing most AI engineers skip.</p>
     </div>
   </div>
 </section>
@@ -284,18 +307,8 @@ a:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
   <div class="inner">
     <h2 class="section-h2">How I Work</h2>
     <div class="prose">
-      <p>On a product team, I do three jobs without the handoff gaps that usually break the work. Design side: UX-first thinking, motion as a UX decision, creative direction and the eye on every surface. Engineering side: React, TypeScript, AI-native tooling (Claude Code, Cursor, Copilot) as everyday muscle, not experiments. Delivery side: PMP-certified, fifteen years coordinating regulated rollouts — the rare AI engineer who can also run the program around the launch. I prototype to think. I ship to learn. The parts most people skip — empty states, error states, the moment something breaks — are where trust gets earned or lost.</p>
-      <p>Forward deployed: I work with customers in their environments, learning the domain as I ship. Microsoft AI Factory delivery, HIPAA-regulated healthcare IAM, payment infrastructure audit-readiness — same engine, AI now.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ── CURRENTLY ────────────────────────── -->
-<section class="section reveal" id="currently">
-  <div class="inner">
-    <h2 class="section-h2">Currently</h2>
-    <div class="prose">
-      <p>Charlotte, NC. Lately I'm into card games, whodunit mysteries, and interactive new media — the kind of work where engagement <em>is</em> the design problem. The Lab is the portfolio version of that obsession.</p>
+      <p>Forward deployed — I work embedded in customer environments, learning the domain while shipping the system. Microsoft AI Factory delivery, HIPAA-regulated healthcare IAM, Federal Reserve payment infrastructure. I don't build demos. I build systems that survive the stakeholder review, the audit, and the production incident at 2am.</p>
+      <p>On an agentic AI engagement: I design the agent architecture, build the MCP tooling, threat-model the permission surface, wire the human-in-the-loop gates, and write the evaluation harness. Then I stay through the rollout. PMP-certified — the rare AI engineer who can run the program around the build.</p>
     </div>
   </div>
 </section>
@@ -305,8 +318,7 @@ a:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
   <div class="inner">
     <h2 class="section-h2">What I'm Looking For</h2>
     <div class="prose">
-      <p>I want to build AI products people actually return to — engagement systems, generative UI, the interaction layer where AI meets a real human workflow. Best fits: AI Product Engineer roles, Applied AI Engineer roles at product-led teams, hybrid pods that want one builder who can design and engineer the loop. Regulated industries (healthcare, finance, fintech) are home turf. Creative tools, film, games, civic tech, learning tools, and new-media teams are where I'd most love to point this stack.</p>
-      <p><strong>Forward Deployed Engineer or AI Product Engineer roles. Full-time, contract, and project work — all welcome. Remote-first.</strong></p>
+      <p>AI agentic systems roles at enterprise teams building real production infrastructure — not research demos. Best fits: <strong>Forward Deployed AI Engineer, Applied AI Engineer, AI Systems Engineer, Senior AI Engineer.</strong> Industries: financial services, healthcare, cybersecurity, defense, regulated tech. Full-time, contract, and project work. Remote-first.</p>
       <div class="contact-line">
         <a href="mailto:iambrucedavis@gmail.com">iambrucedavis@gmail.com</a>
         <span class="contact-sep">·</span>
@@ -323,7 +335,6 @@ a:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
   <div>Bruce Davis · Charlotte, NC · 2026</div>
   <div class="footer-links">
     <a href="index.html#work">Work</a>
-    <a href="lab.html">Lab</a>
     <a href="about.html">About</a>
     <a href="bruce-davis-resume.html" target="_blank" rel="noopener">Resume</a>
     <a href="index.html#contact">Contact</a>
@@ -353,10 +364,6 @@ if (motionOK && window.gsap) {
 } else {
   document.querySelectorAll('.reveal').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
 }
-
-/* ── 6% — easter egg */
-console.log('%c// 6% — small change. whole product.', 'color:#E1261C;font-family:monospace;letter-spacing:.04em;');
-console.log('%c// bruce davis · 2026', 'color:#8A847A;font-family:monospace;letter-spacing:.04em;');
 </script>
 
 </body>

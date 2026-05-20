@@ -3,34 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bruce Davis — AI Product Engineer</title>
-<!-- // 6% — small change. whole product. quietly here. -->
-<meta name="description" content="AI Product Engineer building engagement systems for AI products. Fifteen years shipping in regulated environments — identity, payments, HIPAA-compliant IAM, Non-Human Identity governance at Microsoft. AI Engineer / Applied AI Engineer / Design Engineer roles welcome.">
-<meta property="og:title" content="Bruce Davis — AI Product Engineer">
-<meta property="og:description" content="AI product engineer and UX / design engineer. Fifteen years shipping systems for Wells Fargo, Microsoft, Starbucks, Bank of America, and Veradigm — identity, payments, HIPAA-compliant IAM, Non-Human Identity governance at Microsoft. Now pointed at AI.">
+<title>Bruce Davis — AI Systems Engineer | Agentic AI · IAM · Security</title>
+<meta name="description" content="AI Systems Engineer with 15 years in regulated environments — NHI governance at Microsoft, HIPAA-compliant IAM, payment infrastructure. Now building MCP servers, ReAct agents, and agentic AI systems that enterprise teams can trust.">
+<meta property="og:title" content="Bruce Davis — AI Systems Engineer | Agentic AI · IAM · Security">
+<meta property="og:description" content="AI Systems Engineer with 15 years in regulated environments — NHI governance at Microsoft, HIPAA-compliant IAM, payment infrastructure. Now building MCP servers, ReAct agents, and agentic AI systems that enterprise teams can trust.">
 <meta property="og:type" content="website">
 
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 
-/* ─── TOKENS — formal register ─── */
+/* ─── TOKENS — enterprise register ─── */
 :root {
-  --paper:        #ECE4D0;
-  --paper-clean:  #F4EFE0;
-  --ink:          #111111;
-  --ink-soft:     #2B2522;
-  --concrete:     #1A1715;
-  --mute:         #8A847A;
-  --mute-soft:    #B7B0A2;
-  --signal:       #E1261C;            /* the one accent — used sparingly */
-  --hairline:        rgba(0,0,0,.14);
-  --hairline-strong: rgba(0,0,0,.34);
+  --paper:        #0A0E1A;
+  --paper-clean:  #121826;
+  --ink:          #F5F7FA;
+  --ink-soft:     #C1C7D0;
+  --concrete:     #05080F;
+  --mute:         #7A8392;
+  --mute-soft:    #9CA3AF;
+  --signal:       #0066FF;            /* electric blue — the one accent */
+  --hairline:        rgba(255,255,255,.08);
+  --hairline-strong: rgba(255,255,255,.18);
   --display: 'Anton', 'Bebas Neue', Impact, sans-serif;
   --serif:   'EB Garamond', Georgia, serif;
   --mono:    'Space Mono', ui-monospace, monospace;
-  --shadow:     4px 4px 0 var(--ink);
-  --shadow-lg:  6px 6px 0 var(--ink);
-  --shadow-red: 6px 6px 0 var(--signal);
+  --shadow:     0 0 0 1px var(--hairline-strong);
+  --shadow-lg:  0 0 0 1px var(--hairline-strong), 0 24px 48px -24px rgba(0,0,0,.6);
+  --shadow-accent: 0 0 0 1px var(--signal);
   --m-fast: 60ms cubic-bezier(.2,0,0,1);
   --m-base: 140ms cubic-bezier(.2,0,0,1);
   --maxw: 1500px;
@@ -56,14 +55,36 @@ body {
   height: 64px;
   display:flex; align-items:center; justify-content:space-between;
   padding: 0 clamp(22px,5vw,56px);
-  background: var(--paper);
+  background: rgba(10,14,26,.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--hairline-strong);
 }
+.nav-left { display:flex; align-items:center; gap: clamp(16px,3vw,28px); }
 .nav-logo {
   font-family: var(--mono);
   font-weight: 700; font-size: 13px;
   letter-spacing: .14em; text-transform: uppercase;
   color: var(--ink); text-decoration: none;
+}
+.nav-status {
+  display:inline-flex; align-items:center; gap: 8px;
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-soft);
+  padding: 5px 10px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 100px;
+}
+.nav-status::before {
+  content:''; width:7px; height:7px; border-radius:50%;
+  background: #22C55E;
+  box-shadow: 0 0 8px rgba(34,197,94,.7);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50%     { opacity: .5; }
 }
 .nav-links { display:flex; gap: clamp(20px,3vw,38px); list-style:none; }
 .nav-links a {
@@ -76,8 +97,6 @@ body {
 
 /* ─── SECTION SHELL ──────────────────────── */
 section { padding: clamp(76px,10vw,128px) clamp(22px,5vw,56px); }
-/* Left-anchored content column — its left edge lines up with the
-   nav (both use the same clamp() side padding). #contact stays centered. */
 .inner { max-width: var(--maxw); margin: 0; }
 #contact .inner { margin-left: auto; margin-right: auto; }
 .eyebrow {
@@ -102,27 +121,35 @@ section { padding: clamp(76px,10vw,128px) clamp(22px,5vw,56px); }
 .hero-h1 {
   font-family: var(--display); font-weight: 400;
   text-transform: uppercase;
-  font-size: clamp(38px, 6.4vw, 94px);
+  font-size: clamp(48px, 8.4vw, 124px);
   line-height: .95;
   letter-spacing: .005em;
   color: var(--ink);
-  margin-bottom: 34px;
+  margin-bottom: 18px;
 }
 .hero-h1 .accent { color: var(--signal); }
+.hero-subhead {
+  font-family: var(--display); font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(20px, 2.4vw, 32px);
+  letter-spacing: .04em;
+  color: var(--mute-soft);
+  margin-bottom: 38px;
+}
 .hero-tagline {
-  font-family: var(--serif); font-style: italic;
-  font-size: clamp(19px, 1.9vw, 25px);
-  line-height: 1.4;
-  color: var(--ink-soft);
-  max-width: 40ch;
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.35;
+  color: var(--ink);
+  max-width: 44ch;
   margin-bottom: 26px;
 }
 .hero-sub {
   font-family: var(--serif);
   font-size: clamp(16px, 1.3vw, 19px);
-  line-height: 1.6;
+  line-height: 1.65;
   color: var(--ink-soft);
-  max-width: 60ch;
+  max-width: 64ch;
   margin-bottom: 42px;
 }
 .hero-cta { display:flex; gap:14px; flex-wrap:wrap; }
@@ -134,21 +161,20 @@ section { padding: clamp(76px,10vw,128px) clamp(22px,5vw,56px); }
   font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
   text-decoration: none;
   padding: 15px 28px;
-  border: 2px solid var(--ink);
+  border: 1px solid var(--ink);
   border-radius: 0;
-  transition: transform var(--m-fast), box-shadow var(--m-fast), background var(--m-fast), color var(--m-fast);
+  transition: background var(--m-fast), color var(--m-fast), border-color var(--m-fast);
 }
 .btn-primary {
-  background: var(--ink); color: var(--paper);
-  box-shadow: var(--shadow);
+  background: var(--signal); color: #FFFFFF;
+  border-color: var(--signal);
 }
-.btn-primary:hover  { transform: translate(-2px,-2px); box-shadow: var(--shadow-red); }
-.btn-primary:active { transform: translate(2px,2px);  box-shadow: 2px 2px 0 var(--signal); }
-.btn-ghost { background: transparent; color: var(--ink); }
-.btn-ghost:hover { background: var(--ink); color: var(--paper); }
+.btn-primary:hover  { background: #0052CC; border-color: #0052CC; }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--hairline-strong); }
+.btn-ghost:hover { border-color: var(--signal); color: var(--signal); }
 
-/* ─── LOOKING FOR / TWO LANES ────────────── */
-#looking-for { padding-top: clamp(36px,6vw,68px); }
+/* ─── PILLARS ───────────────────────────── */
+#pillars { padding-top: clamp(36px,6vw,68px); }
 .lf-grid {
   display:grid; grid-template-columns:repeat(3,1fr);
   gap: clamp(20px,2.4vw,32px);
@@ -156,47 +182,56 @@ section { padding: clamp(76px,10vw,128px) clamp(22px,5vw,56px); }
 .lf-card {
   background: var(--paper-clean);
   border: 1px solid var(--hairline-strong);
-  box-shadow: var(--shadow);
   padding: clamp(28px,3vw,44px);
   display:flex; flex-direction:column; gap:16px;
-  text-decoration:none; color:inherit;
-  transition: transform var(--m-base), box-shadow var(--m-base);
+  transition: border-color var(--m-base), background var(--m-base);
 }
-.lf-card:hover { transform: translate(-2px,-2px); box-shadow: var(--shadow-lg); }
+.lf-card:hover { border-color: var(--signal); }
 .lf-tag {
   font-family: var(--mono);
   font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
-  color: var(--mute);
+  color: var(--signal);
 }
 .lf-title {
   font-family: var(--display); font-weight: 400;
   text-transform: uppercase;
-  font-size: clamp(23px,2.5vw,34px); line-height: 1;
+  font-size: clamp(23px,2.5vw,32px); line-height: 1.05;
   letter-spacing: .01em;
   color: var(--ink);
 }
 .lf-body {
   font-family: var(--serif);
-  font-size: 16px; line-height: 1.6;
+  font-size: 16px; line-height: 1.65;
   color: var(--ink-soft);
   max-width: 48ch;
 }
-.lf-link {
-  font-family: var(--mono);
-  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--ink);
-  margin-top: 4px; align-self: flex-start;
-  border-bottom: 1.5px solid transparent;
-  transition: color var(--m-base), border-color var(--m-base);
+
+/* ─── STATEMENT — What I Build ────────────── */
+#statement {
+  background: var(--concrete);
+  border-top: 1px solid var(--hairline-strong);
+  border-bottom: 1px solid var(--hairline-strong);
 }
-.lf-card:hover .lf-link { color: var(--signal); border-bottom-color: var(--signal); }
+.statement-block {
+  max-width: 64ch;
+  border-left: 3px solid var(--signal);
+  padding-left: clamp(20px,3vw,40px);
+}
+.statement-body {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(22px,2.6vw,34px);
+  line-height: 1.32;
+  color: var(--ink);
+}
+.statement-body em { color: var(--signal); font-style: normal; font-weight: 600; }
 
 /* ─── WORK ───────────────────────────────── */
 .section-h2 {
   font-family: var(--display); font-weight: 400;
   text-transform: uppercase;
   font-size: clamp(28px,3.8vw,54px);
-  line-height: 1;
+  line-height: 1.02;
   letter-spacing: .01em;
   color: var(--ink);
   max-width: 36ch;
@@ -209,23 +244,33 @@ section { padding: clamp(76px,10vw,128px) clamp(22px,5vw,56px); }
 .work-card {
   background: var(--paper-clean);
   border: 1px solid var(--hairline-strong);
-  box-shadow: var(--shadow);
   padding: clamp(26px,2.6vw,38px);
   display:flex; flex-direction:column;
   text-decoration:none; color:inherit;
-  transition: transform var(--m-base), box-shadow var(--m-base);
+  transition: border-color var(--m-base), transform var(--m-base);
+  position: relative;
 }
-.work-card:hover { transform: translate(-2px,-2px); box-shadow: var(--shadow-lg); }
+.work-card:hover { border-color: var(--signal); }
+.work-card.span-2 { grid-column: 1 / -1; }
+.work-flagship {
+  position: absolute; top: 0; left: 0;
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
+  color: #FFFFFF; background: var(--signal);
+  padding: 5px 9px 4px;
+}
 .work-tag {
   font-family: var(--mono);
   font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
   color: var(--mute);
   margin-bottom: 14px;
 }
+.work-card.span-2 .work-tag { margin-top: 24px; }
 .work-name {
   font-family: var(--display); font-weight: 400;
   text-transform: uppercase;
-  font-size: clamp(21px,2.3vw,29px); line-height: 1;
+  font-size: clamp(22px,2.5vw,32px); line-height: 1.02;
   letter-spacing: .01em;
   color: var(--ink);
   margin-bottom: 14px;
@@ -234,7 +279,7 @@ section { padding: clamp(76px,10vw,128px) clamp(22px,5vw,56px); }
 .work-card:hover .work-name { color: var(--signal); }
 .work-desc {
   font-family: var(--serif);
-  font-size: 15.5px; line-height: 1.6;
+  font-size: 15.5px; line-height: 1.65;
   color: var(--ink-soft);
   margin-bottom: 22px; flex:1;
 }
@@ -242,133 +287,33 @@ section { padding: clamp(76px,10vw,128px) clamp(22px,5vw,56px); }
 .badge {
   font-family: var(--mono);
   font-size: 10px; letter-spacing: .04em;
-  color: var(--mute);
+  color: var(--mute-soft);
   border: 1px solid var(--hairline-strong);
   padding: 4px 8px;
 }
-.work-card.span-2 { grid-column: 1 / -1; }
 
-/* ─── PILLARS ────────────────────────────── */
-.lf-card { position: relative; }
-
-/* ─── AXE — quiet personal mark ──────────── */
-.axe-mark {
-  font-family: var(--mono);
-  font-weight: 700;
-  font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
-  color: var(--paper);
-  background: var(--ink);
-  padding: 4px 7px 3px;
-  display: inline-block;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.lf-card .axe-mark { position: absolute; top: clamp(28px,3vw,44px); right: clamp(28px,3vw,44px); }
-.lf-axe-note {
-  font-family: var(--mono);
-  font-size: 11px; letter-spacing: .06em;
-  color: var(--mute);
-  border-left: 2px solid var(--ink);
-  padding-left: 11px;
-  margin-top: -2px;
-}
-
-/* ─── WORK FILTER CHIPS ──────────────────── */
-.work-filters {
-  display: flex; flex-wrap: wrap; gap: 10px;
-  margin-bottom: clamp(30px,3.6vw,46px);
-}
-.chip {
-  font-family: var(--mono);
-  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--mute);
-  background: transparent;
-  border: 1px solid var(--hairline-strong);
-  padding: 9px 16px;
-  cursor: pointer;
-  transition: color var(--m-base), background var(--m-base), border-color var(--m-base);
-}
-.chip:hover { color: var(--ink); }
-.chip[aria-pressed="true"] {
-  background: var(--ink); color: var(--paper);
-  border-color: var(--ink);
-}
-
-/* ─── WORK CARD HEAD ROW ─────────────────── */
-.work-head {
-  display: flex; align-items: flex-start; justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-.work-head .work-tag { margin-bottom: 0; }
-
-/* ─── MANIFESTO — point of view ──────────── */
-#manifesto {
-  background: var(--paper-clean);
+/* ─── BACKGROUND BAND ────────────────────── */
+#background {
+  background: var(--concrete);
   border-top: 1px solid var(--hairline-strong);
   border-bottom: 1px solid var(--hairline-strong);
 }
-.manifesto-block {
-  max-width: 60ch;
-  border-left: 3px solid var(--signal);
-  padding-left: clamp(20px,3vw,40px);
-}
-.manifesto-lead {
-  font-family: var(--serif);
-  font-weight: 600;
-  font-size: clamp(25px,3vw,40px);
-  line-height: 1.16;
-  color: var(--ink);
-  margin-bottom: 22px;
-}
-.manifesto-body {
-  font-family: var(--serif);
-  font-size: clamp(17px,1.5vw,21px);
-  line-height: 1.62;
-  color: var(--ink-soft);
-  margin-bottom: 20px;
-}
-.manifesto-close {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(19px,1.9vw,26px);
-  line-height: 1.35;
-  color: var(--ink);
-  margin-bottom: 24px;
-}
-.manifesto-caption {
-  font-family: var(--mono);
-  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
-  color: var(--mute);
-}
-
-/* ─── AI TOOLS — the one concrete inversion ─ */
-#ai-tools { background: var(--concrete); color: var(--paper); }
-.ai-tools-grid, .bg-grid {
+.bg-grid {
   display:grid; grid-template-columns: 220px 1fr;
   gap: clamp(28px,5vw,80px); align-items:start;
 }
-.ai-tools-label {
+.bg-label {
   font-family: var(--mono);
   font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
-  color: var(--mute);
+  color: var(--signal);
 }
-#ai-tools .ai-tools-label { color: var(--mute-soft); }
-.ai-tools-body {
-  font-family: var(--serif);
-  font-size: clamp(18px,1.6vw,22px); line-height: 1.62;
-  color: var(--paper);
-  max-width: 62ch;
-}
-.ai-tools-body strong { font-weight: 600; color: #FFFFFF; }
-
-/* ─── BACKGROUND ─────────────────────────── */
 .bg-body {
   font-family: var(--serif);
   font-size: clamp(18px,1.6vw,22px); line-height: 1.62;
   color: var(--ink-soft);
-  max-width: 62ch;
+  max-width: 64ch;
 }
+.bg-body + .bg-body { margin-top: 18px; }
 .bg-body strong { font-weight: 600; color: var(--ink); }
 
 /* ─── CONTACT ────────────────────────────── */
@@ -412,7 +357,6 @@ footer a {
   transition: color var(--m-base);
 }
 footer a:hover { color: var(--ink); }
-.footer-sig { color: var(--mute-soft); letter-spacing: .14em; }
 
 /* ─── A11Y ───────────────────────────────── */
 .skip-link {
@@ -435,8 +379,11 @@ a:focus-visible, button:focus-visible {
 @media (max-width: 900px) {
   .work-grid { grid-template-columns:1fr; }
   .work-card.span-2 { grid-column:1; }
-  .ai-tools-grid, .bg-grid { grid-template-columns:1fr; gap:20px; }
+  .bg-grid { grid-template-columns:1fr; gap:20px; }
   footer { flex-direction:column; text-align:center; }
+}
+@media (max-width: 720px) {
+  .nav-status { display:none; }
 }
 @media (max-width: 620px) {
   .nav-links { gap:14px; }
@@ -445,6 +392,7 @@ a:focus-visible, button:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { transition-duration:.001ms !important; animation-duration:.001ms !important; }
   html { scroll-behavior:auto; }
+  .nav-status::before { animation: none; }
 }
 
 </style>
@@ -455,10 +403,12 @@ a:focus-visible, button:focus-visible {
 
 <!-- ── NAV ──────────────────────────────── -->
 <nav id="nav">
-  <a href="#" class="nav-logo" aria-label="Bruce Davis — home">Bruce Davis</a>
+  <div class="nav-left">
+    <a href="#" class="nav-logo" aria-label="Bruce Davis — home">Bruce Davis</a>
+    <span class="nav-status" aria-label="Availability status">Available for contract &amp; full-time</span>
+  </div>
   <ul class="nav-links">
     <li><a href="#work">Work</a></li>
-    <li><a href="lab.html">Lab</a></li>
     <li><a href="about.html">About</a></li>
     <li><a href="bruce-davis-resume.html" target="_blank" rel="noopener">Resume</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -470,13 +420,14 @@ a:focus-visible, button:focus-visible {
   <div class="inner">
     <div class="hero-name">Bruce Davis · Charlotte, NC</div>
     <h1 class="hero-h1">
-      I'm Bruce Davis. <span class="accent">AI Product Engineer · Forward Deployed Engineer</span> · Building products people actually return to — the engagement layer most AI demos forget.
+      AI Systems<br>Engineer
     </h1>
+    <div class="hero-subhead"><span class="accent" style="color:var(--signal);">Agentic AI</span> · IAM · Security</div>
     <p class="hero-tagline">
-      Engagement systems for AI products.
+      I build agentic AI infrastructure that enterprise teams can actually trust.
     </p>
     <p class="hero-sub">
-      Fifteen years forward deployed into regulated environments — identity, payments, HIPAA-compliant IAM, Non-Human Identity governance at Microsoft. The kind of work you don't get to fake. Same instinct, pointed at AI now.
+      Fifteen years forward deployed into regulated environments — Non-Human Identity (NHI) governance at Microsoft, HIPAA-compliant IAM for 16,000+ users at Veradigm, payment infrastructure for SWIFT/CHIPS/Fedwire at Wells Fargo. The same identity and authorization problems that defined that career now define secure AI agent deployment. MCP servers with threat models. ReAct agents with human-in-the-loop gates. Orchestration systems built to survive an audit. Not demos. Shipped systems.
     </p>
     <div class="hero-cta">
       <a href="#work" class="btn btn-primary">See the work</a>
@@ -485,52 +436,46 @@ a:focus-visible, button:focus-visible {
   </div>
 </section>
 
-<!-- ── LOOKING FOR ──────────────────────── -->
-<section id="looking-for" aria-label="What I'm looking for">
+<!-- ── PILLARS ──────────────────────────── -->
+<section id="pillars" aria-label="Capabilities">
   <div class="inner">
     <div class="lf-grid">
 
-      <a href="#work" data-goto-pillar="systems" class="lf-card">
+      <div class="lf-card">
         <div class="lf-tag">Pillar 1</div>
-        <div class="lf-title">AI Systems</div>
+        <div class="lf-title">Agentic AI Systems</div>
         <p class="lf-body">
-          The build. MCP servers, agentic systems, document pipelines, automation — the AI tools a team actually runs on. Python, Node, Claude SDK, function calling, structured outputs. Open source where it makes sense.
+          MCP servers, ReAct agent loops, LLM orchestration, RAG pipelines, multi-agent coordination, human-in-the-loop architecture. Built in Python and TypeScript. Threat-modeled. Evaluation-harnessed. The AI infrastructure a team actually runs on.
         </p>
-        <span class="lf-link">See Systems work →</span>
-      </a>
+      </div>
 
-      <a href="#work" data-goto-pillar="experience" class="lf-card">
-        <span class="axe-mark" aria-hidden="true">AXE</span>
+      <div class="lf-card">
         <div class="lf-tag">Pillar 2</div>
-        <div class="lf-title">AI Experience</div>
+        <div class="lf-title">Identity &amp; Security</div>
         <p class="lf-body">
-          The interface to AI — how humans actually use it. Interaction patterns, generative UI, agent UX, the streaming / loading / error states that make AI products feel trustworthy instead of confusing. Live React/TypeScript, not Figma mockups.
+          IAM platform architecture, Non-Human Identity (NHI) governance, CyberArk, Entra ID, HIPAA-compliant access control, NIST frameworks, Zero Trust implementation, PowerShell automation at scale. The credibility layer that makes AI deployment safe enough to actually ship.
         </p>
-        <p class="lf-axe-note">AXE — my mark on the experience side.</p>
-        <span class="lf-link">See Experience work →</span>
-      </a>
+      </div>
 
-      <a href="#work" data-goto-pillar="infra" class="lf-card">
+      <div class="lf-card">
         <div class="lf-tag">Pillar 3</div>
-        <div class="lf-title">Infrastructure &amp; Security</div>
+        <div class="lf-title">Forward Deployed</div>
         <p class="lf-body">
-          The credibility layer — and the foundation for forward deployed AI work. Non-Human Identity governance at Microsoft, HIPAA-compliant IAM at Veradigm, PowerShell security automation across 60+ domains at Starbucks. Why the AI work isn't a demo.
+          Embedded delivery at Microsoft, Wells Fargo, Starbucks, Bank of America, Veradigm. I work in customer environments, learn the domain while shipping, and leave behind systems and documentation that survive past the engagement. PMP-certified. The rare AI engineer who runs the rollout too.
         </p>
-        <span class="lf-link">See Infrastructure &amp; Security work →</span>
-      </a>
+      </div>
 
     </div>
   </div>
 </section>
 
-<!-- ── MANIFESTO ────────────────────────── -->
-<section id="manifesto" aria-label="Point of view">
+<!-- ── STATEMENT ───────────────────────── -->
+<section id="statement" aria-label="What I build">
   <div class="inner">
-    <div class="manifesto-block">
-      <p class="manifesto-lead">Most AI products are dead inside.</p>
-      <p class="manifesto-body">They have a chat box, a "generate" button, and a churn problem. The teams winning the next decade won't be the ones with the best models — they'll be the ones who designed for the loop. Return visits. Mastery. Status. Surprise. The boring behavioral science under the shiny demo.</p>
-      <p class="manifesto-close">That's the layer I build.</p>
-      <p class="manifesto-caption">Engagement systems for AI products.</p>
+    <div class="statement-block">
+      <p class="statement-body">
+        Most enterprise AI deployments fail at the identity layer. The agent has too many permissions. The audit trail is missing. The human-in-the-loop gate never got built. <em>That's the gap I close.</em>
+      </p>
     </div>
   </div>
 </section>
@@ -539,203 +484,104 @@ a:focus-visible, button:focus-visible {
 <section id="work">
   <div class="inner">
     <div class="eyebrow">Work</div>
-    <h2 class="section-h2">Ten projects, three pillars —<br>systems, experience, infrastructure &amp; security.</h2>
-
-    <div class="work-filters" role="group" aria-label="Filter projects by pillar">
-      <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
-      <button type="button" class="chip" data-filter="systems" aria-pressed="false">Systems</button>
-      <button type="button" class="chip" data-filter="experience" aria-pressed="false">Experience</button>
-      <button type="button" class="chip" data-filter="infra" aria-pressed="false">Infrastructure &amp; Security</button>
-    </div>
+    <h2 class="section-h2">Deployed Systems —<br>Agentic AI, IAM, and Security.</h2>
 
     <div class="work-grid">
 
-      <a href="013-axe-provenance.html" class="work-card span-2" data-pillars="experience systems infra" aria-label="AXE Provenance">
-        <div class="work-head">
-          <div class="work-tag">Flagship · Experience · Systems · Infrastructure &amp; Security</div>
-          <span class="axe-mark" aria-label="AI Experience — AXE">AXE</span>
-        </div>
-        <div class="work-name">AXE Provenance</div>
-        <p class="work-desc">
-          A control room for a fleet of AI agents. Six agents investigate a live security incident together — and each one is a distinct identity, with its own permission level, token budget, and accountable owner. When an agent needs more power than it holds, the system stops and asks a human before granting it. Under the hood: a multi-agent Python backend, a React control room whose interface is generated live from the agents' state, and a human-in-the-loop gate on every escalation. The flagship.
-        </p>
-        <div class="work-badges">
-          <span class="badge">Python</span>
-          <span class="badge">React</span>
-          <span class="badge">TypeScript</span>
-          <span class="badge">Generative UI</span>
-          <span class="badge">Multi-agent</span>
-          <span class="badge">Framer Motion</span>
-        </div>
-      </a>
-
-      <a href="014-day-one.html" class="work-card" data-pillars="experience" aria-label="Day One">
-        <div class="work-head">
-          <div class="work-tag">Experience</div>
-          <span class="axe-mark" aria-label="AI Experience — AXE">AXE</span>
-        </div>
-        <div class="work-name">Day One</div>
-        <p class="work-desc">
-          A conversational onboarding experience where the interface assembles itself. Ask in plain language — "what does my first week look like?" — and Claude returns structured data the app renders as real, interactive components: a setup wizard, a progress ring, a benefits picker. Generative UI — the screen is built from the model's output, not hardcoded.
-        </p>
-        <div class="work-badges">
-          <span class="badge">Next.js</span>
-          <span class="badge">React</span>
-          <span class="badge">TypeScript</span>
-          <span class="badge">Generative UI</span>
-          <span class="badge">Claude</span>
-          <span class="badge">Zod</span>
-        </div>
-      </a>
-
-      <a href="007-security-ux-concept.html" class="work-card" data-pillars="experience infra" aria-label="Security UX">
-        <div class="work-head">
-          <div class="work-tag">Experience · Infrastructure &amp; Security</div>
-          <span class="axe-mark" aria-label="AI Experience — AXE">AXE</span>
-        </div>
-        <div class="work-name">Security UX</div>
-        <p class="work-desc">
-          A security awareness training surface redesigned to borrow the visual language of the threat itself — a game-style heads-up display, scan lines, a threat pulse, and a playable "spot the phish" round. Motion, empty states, and behavioral interaction design — applied to a surface that usually skips all three.
-        </p>
-        <div class="work-badges">
-          <span class="badge">GSAP</span>
-          <span class="badge">Web Audio</span>
-          <span class="badge">Vanilla JS</span>
-          <span class="badge">HUD UI</span>
-        </div>
-      </a>
-
-      <a href="002-ai-interface-design-system.html" class="work-card" data-pillars="experience" aria-label="AI Interface Patterns">
-        <div class="work-head">
-          <div class="work-tag">Experience</div>
-          <span class="axe-mark" aria-label="AI Experience — AXE">AXE</span>
-        </div>
-        <div class="work-name">AI Interface Patterns</div>
-        <p class="work-desc">
-          The small screen details that make an AI product feel trustworthy instead of confusing — text that streams in as the AI "types," a clear sign when it's thinking, a warning when it doesn't have enough information to answer well, a flag when it's unsure of an answer, and a graceful recovery when something breaks. Five working interface patterns for AI products — the loading, empty, and error states most AI demos skip, built as live React/TypeScript, not Figma mockups.
-        </p>
-        <div class="work-badges">
-          <span class="badge">React</span>
-          <span class="badge">TypeScript</span>
-          <span class="badge">Streaming</span>
-          <span class="badge">State machines</span>
-        </div>
-      </a>
-
-      <a href="011-sentinel-triage.html" class="work-card" data-pillars="systems infra" aria-label="Sentinel Triage">
-        <div class="work-head">
-          <div class="work-tag">Systems · Infrastructure &amp; Security</div>
-        </div>
+      <a href="011-sentinel-triage.html" class="work-card span-2" aria-label="Sentinel Triage — flagship">
+        <span class="work-flagship">Flagship</span>
+        <div class="work-tag">Agentic AI · Human-in-the-Loop</div>
         <div class="work-name">Sentinel Triage</div>
         <p class="work-desc">
-          An AI assistant for security teams. When an alarm goes off, it reads the logs, works out what happened, and recommends how to contain the threat — then waits for a human to approve anything risky. Under the hood: a ReAct agent loop on Gemini 2.5 Flash with three focused tools, an autonomy dial, and a human-in-the-loop gate. Python and Streamlit.
+          Autonomous SOC triage agent with human-in-the-loop authorization. A ReAct agent loop on Gemini 2.5 Flash — reads logs, enriches threat intelligence, proposes containment actions through function-calling tools. Destructive actions pause for explicit human approval before execution. An autonomy dial controls operational scope. Built for security teams that need AI assistance without surrendering control.
         </p>
         <div class="work-badges">
-          <span class="badge">Gemini 2.5 Flash</span>
-          <span class="badge">ReAct agent</span>
-          <span class="badge">Function calling</span>
           <span class="badge">Python</span>
           <span class="badge">Streamlit</span>
+          <span class="badge">Gemini 2.5 Flash</span>
+          <span class="badge">ReAct</span>
+          <span class="badge">Function Calling</span>
+          <span class="badge">HITL Architecture</span>
         </div>
       </a>
 
-      <a href="009-document-pipeline.html" class="work-card" data-pillars="systems infra" aria-label="Document Pipeline">
-        <div class="work-head">
-          <div class="work-tag">Systems · Infrastructure &amp; Security</div>
+      <a href="013-axe-provenance.html" class="work-card" aria-label="AXE Provenance">
+        <div class="work-tag">Multi-Agent · NHI Governance</div>
+        <div class="work-name">AXE Provenance</div>
+        <p class="work-desc">
+          A multi-agent control room where six AI agents investigate a live security incident — each with its own identity, permission level, token budget, and accountable owner. When an agent needs elevated permissions, the system stops and requests human authorization before granting them. Non-Human Identity governance applied to AI agents.
+        </p>
+        <div class="work-badges">
+          <span class="badge">Python</span>
+          <span class="badge">React</span>
+          <span class="badge">TypeScript</span>
+          <span class="badge">Multi-agent Architecture</span>
+          <span class="badge">NHI</span>
+          <span class="badge">Generative UI</span>
         </div>
+      </a>
+
+      <a href="009-document-pipeline.html" class="work-card" aria-label="Document Pipeline">
+        <div class="work-tag">Regulated Environments · HIPAA</div>
         <div class="work-name">Document Pipeline</div>
         <p class="work-desc">
-          A tool that reads documents and pulls out the important information automatically — while hiding personal details like names and Social Security numbers, and setting aside anything unusual for a person to double-check. Built as a set of Claude tools: extraction, PII masking, validation against a structured JSON schema, human-in-the-loop review for edge cases, and token-cost tracking. Built for regulated environments, where that safety net is the default, not the add-on. Claude tool engineering, end to end.
+          End-to-end document processing pipeline for regulated environments. Claude tool chain handles extraction, PII masking and deidentification, structured JSON output against a validated schema, human-in-the-loop review for edge cases, and token-cost tracking. Built to operate in HIPAA and compliance-sensitive workflows where the audit trail is the deliverable.
         </p>
         <div class="work-badges">
-          <span class="badge">Claude</span>
-          <span class="badge">MCP</span>
+          <span class="badge">MCP SDK</span>
           <span class="badge">Node</span>
-          <span class="badge">JSON Schema</span>
           <span class="badge">Python</span>
+          <span class="badge">Claude Tool Engineering</span>
+          <span class="badge">JSON Schema</span>
+          <span class="badge">PII Governance</span>
         </div>
       </a>
 
-      <a href="010-linear-mcp.html" class="work-card" data-pillars="systems" aria-label="Linear MCP">
-        <div class="work-head">
-          <div class="work-tag">Systems</div>
-        </div>
+      <a href="010-linear-mcp.html" class="work-card" aria-label="Linear MCP">
+        <div class="work-tag">MCP · Threat-Modeled</div>
         <div class="work-name">Linear MCP</div>
         <p class="work-desc">
-          A tool that lets an AI assistant help run Linear, the app many software teams use to track their work. It gives the AI six focused jobs, like sorting your inbox or writing the team's weekly update. I also built a full test suite and a written security review, which is the part projects like this usually skip. Open source.
+          Production MCP server for Linear with a full security review baked in. Six opinionated Claude tools for engineering team operations — notification triage, issue scoping, velocity diagnosis, status reporting. Includes a 30-case evaluation harness, documented threat model, and per-tool cost analysis. Open source. The part most MCP projects skip is the part that makes enterprise adoption possible.
         </p>
         <div class="work-badges">
-          <span class="badge">MCP</span>
           <span class="badge">TypeScript</span>
-          <span class="badge">Claude SDK</span>
-          <span class="badge">Linear API</span>
+          <span class="badge">MCP SDK</span>
+          <span class="badge">Anthropic SDK</span>
+          <span class="badge">Linear GraphQL API</span>
           <span class="badge">Zod</span>
+          <span class="badge">Vitest</span>
         </div>
       </a>
 
-      <a href="004-motion-showcase.html" class="work-card" data-pillars="experience" aria-label="Motion Showcase">
-        <div class="work-head">
-          <div class="work-tag">Experience</div>
-          <span class="axe-mark" aria-label="AI Experience — AXE">AXE</span>
-        </div>
-        <div class="work-name">Motion Showcase</div>
-        <p class="work-desc">
-          Five web motion techniques in one demo — split-text entrances, scroll-driven reveals, magnetic cursor hover, staggered grid reveals, animated typography. Motion as a UX decision, not decoration. Built in GSAP, no framework.
-        </p>
-        <div class="work-badges">
-          <span class="badge">GSAP</span>
-          <span class="badge">Scroll-driven</span>
-          <span class="badge">Canvas</span>
-          <span class="badge">Vanilla JS</span>
-        </div>
-      </a>
-
-      <a href="012-visionary-producer.html" class="work-card" data-pillars="systems" aria-label="Visionary Producer">
-        <div class="work-head">
-          <div class="work-tag">Systems</div>
-        </div>
-        <div class="work-name">Visionary Producer</div>
-        <p class="work-desc">
-          An AI assistant for film planning. Hand it a movie script and it does the early prep — a scene-by-scene breakdown, a VFX-difficulty read, and casting suggestions — then waits for the producer to sign off before locking the package. It runs on the same agent architecture as Sentinel Triage, pointed at a creative problem instead: one pattern, two domains. Python and Streamlit.
-        </p>
-        <div class="work-badges">
-          <span class="badge">Gemini 2.5 Flash</span>
-          <span class="badge">ReAct agent</span>
-          <span class="badge">Function calling</span>
-          <span class="badge">Python</span>
-          <span class="badge">Streamlit</span>
-        </div>
-      </a>
-
-      <a href="008-six-percent-mcp.html" class="work-card" data-pillars="systems" aria-label="Six Percent MCP">
-        <div class="work-head">
-          <div class="work-tag">Systems</div>
-        </div>
+      <a href="008-six-percent-mcp.html" class="work-card" aria-label="Six Percent MCP">
+        <div class="work-tag">Custom MCP Tooling</div>
         <div class="work-name">Six Percent MCP</div>
         <p class="work-desc">
-          A set of custom abilities I gave my own AI assistant so it can pitch in on my real day-to-day work — pulling ideas from my Notion notes, suggesting color palettes, checking my writing's tone, and building out new project pages. It's an MCP server: the standard way to hand an AI assistant its own toolkit.
+          Custom MCP server with five Claude tools powering a real content and research workflow — Notion-backed idea retrieval, tone analysis, page scaffolding, vault capture. A working example of MCP as personal infrastructure, not a demo.
         </p>
         <div class="work-badges">
-          <span class="badge">MCP</span>
-          <span class="badge">Claude SDK</span>
+          <span class="badge">MCP SDK</span>
           <span class="badge">Notion API</span>
           <span class="badge">Zod</span>
           <span class="badge">Node</span>
         </div>
       </a>
 
-    </div>
-  </div>
-</section>
+      <a href="012-visionary-producer.html" class="work-card" aria-label="Visionary Producer">
+        <div class="work-tag">Architecture Proof</div>
+        <div class="work-name">Visionary Producer</div>
+        <p class="work-desc">
+          The same ReAct agent architecture as Sentinel Triage — pointed at film pre-production instead of security triage. Script breakdown, VFX complexity scoring, casting archetypes, producer-approval gate before lock. The point: one agent architecture, validated across two domains. When the pattern travels, you know it's real.
+        </p>
+        <div class="work-badges">
+          <span class="badge">Python</span>
+          <span class="badge">Streamlit</span>
+          <span class="badge">Gemini 2.5 Flash</span>
+          <span class="badge">ReAct</span>
+          <span class="badge">Function Calling</span>
+        </div>
+      </a>
 
-<!-- ── AI TOOLS ─────────────────────────── -->
-<section id="ai-tools">
-  <div class="inner">
-    <div class="ai-tools-grid">
-      <div class="ai-tools-label">How I work with AI tools</div>
-      <p class="ai-tools-body">
-        Claude Code, Cursor, Copilot, v0, Figma Make. Everyday tools, not experiments. <strong>This portfolio is a working example</strong> — built and shipped with Claude Code, the model in the loop on copy and structure. (Yes, including this line.) Same workflow for the engagement layer: structured outputs to drive Generative UI, not another chat box. Microsoft Copilot is older muscle memory — the AI-assisted MVP workflow at Microsoft ran on it. Same move at a pod tomorrow: prompt, prototype, ship, refine. Not a deck. Something clickable.
-      </p>
     </div>
   </div>
 </section>
@@ -744,25 +590,15 @@ a:focus-visible, button:focus-visible {
 <section id="background">
   <div class="inner">
     <div class="bg-grid">
-      <div class="ai-tools-label">Background</div>
-      <p class="bg-body">
-        <strong>Wells Fargo, Microsoft, Starbucks, Bank of America, Veradigm.</strong> Cloud Solutions Architect at Microsoft (Python automation for Entra ID Governance and Non-Human Identity). Senior Security Engineer at Starbucks (PowerShell automation across 60+ domains). Payment infrastructure for SWIFT/CHIPS/Fedwire at Wells Fargo. HIPAA-regulated IAM for 16,000+ users at Veradigm. PMP-certified — I ship the build <em>and</em> run the rollout. Security, identity, and compliance as the floor. The AI work runs on top of it.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- ── FORWARD DEPLOYED ─────────────────── -->
-<section id="forward-deployed">
-  <div class="inner">
-    <div class="bg-grid">
-      <div class="ai-tools-label">Forward Deployed</div>
-      <p class="bg-body">
-        I build AI products with customers in their environments, not for them in mine. <strong>Microsoft AI Factory</strong> — shipped Generative AI MVPs and customer-facing solution designs for enterprise Azure customers. <strong>Veradigm</strong> — built the IAM platform from the ground up for 16,000+ users in HIPAA-regulated healthcare; the customer was the regulator. <strong>Wells Fargo</strong> — payment infrastructure where the audit is the deliverable.
-      </p>
-      <p class="bg-body">
-        <em>Same engine, AI now.</em>
-      </p>
+      <div class="bg-label">Background</div>
+      <div>
+        <p class="bg-body">
+          <strong>Wells Fargo, Microsoft, Starbucks, Bank of America, Veradigm.</strong> Cloud Solutions Architect at Microsoft — Python automation for Entra ID Governance and Non-Human Identity, before NHI governance was a named discipline. Senior Security Engineer at Starbucks — PowerShell automation across 60+ domains. Payment infrastructure for SWIFT/CHIPS/Fedwire at Wells Fargo. HIPAA-regulated IAM for 16,000+ users at Veradigm. PMP-certified — I ship the build <em>and</em> run the rollout.
+        </p>
+        <p class="bg-body">
+          Security, identity, and compliance as the floor — not the footnote. The agentic AI layer runs on top of fifteen years of the thing most AI engineers skip.
+        </p>
+      </div>
     </div>
   </div>
 </section>
@@ -783,42 +619,14 @@ a:focus-visible, button:focus-visible {
 
 <!-- ── FOOTER ───────────────────────────── -->
 <footer>
-  <div>Bruce Davis · Charlotte, NC · 2026 <span class="footer-sig" aria-hidden="true">· AXE // 6%</span></div>
+  <div>Bruce Davis · Charlotte, NC · 2026</div>
   <div class="footer-links">
     <a href="#work">Work</a>
+    <a href="about.html">About</a>
     <a href="bruce-davis-resume.html" target="_blank" rel="noopener">Resume</a>
     <a href="#contact">Contact</a>
-    <a href="other-work.html">Other Work</a>
-    <a href="lab.html">Lab</a>
   </div>
 </footer>
 
-<script>
-/* ─── WORK FILTER — by pillar ───────────────── */
-(function () {
-  var chips = document.querySelectorAll('.chip');
-  var cards = document.querySelectorAll('.work-card');
-  function applyFilter(pillar) {
-    chips.forEach(function (c) {
-      c.setAttribute('aria-pressed', String(c.dataset.filter === pillar));
-    });
-    cards.forEach(function (card) {
-      var pillars = (card.dataset.pillars || '').split(' ');
-      var show = pillar === 'all' || pillars.indexOf(pillar) !== -1;
-      card.style.display = show ? '' : 'none';
-    });
-  }
-  chips.forEach(function (c) {
-    c.addEventListener('click', function () { applyFilter(c.dataset.filter); });
-  });
-  document.querySelectorAll('[data-goto-pillar]').forEach(function (link) {
-    link.addEventListener('click', function () { applyFilter(link.dataset.gotoPillar); });
-  });
-})();
-
-/* ─── 6% — easter egg ───────────────────────── */
-console.log('%c// 6% — small change. whole product.', 'color:#E1261C;font-family:monospace;letter-spacing:.04em;');
-console.log('%c// bruce davis · 2026', 'color:#8A847A;font-family:monospace;letter-spacing:.04em;');
-</script>
 </body>
 </html>
