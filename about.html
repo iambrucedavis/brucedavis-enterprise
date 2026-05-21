@@ -168,9 +168,11 @@ body {
   line-height: 1;
   letter-spacing: .015em;
   color: var(--ink);
-  margin-bottom: clamp(28px,3.5vw,44px);
+  margin: 0 auto clamp(28px,3.5vw,44px);
+  text-align: center;
+  max-width: 64ch;
 }
-.prose { max-width: 64ch; }
+.prose { max-width: 64ch; margin: 0 auto; }
 .prose p {
   font-family: var(--serif);
   font-size: 18px;
@@ -293,11 +295,7 @@ a:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
   <div class="inner">
     <h2 class="section-h2">The Arc</h2>
     <div class="prose">
-      <p>Started at Wells Fargo on payment infrastructure — SWIFT, CHIPS, Fedwire, zero margin for error. Then HIPAA-regulated IAM for 16,000+ users at Veradigm. Security engineering across 60+ Starbucks domains. Cloud Solutions Architect at Microsoft, building Python automation for Entra ID Governance and Non-Human Identity — before NHI governance was a named discipline.</p>
-      <p>Two things ran underneath all of it. The identity thread — who is allowed to do what, how do you prove it, what happens when the answer is wrong. And the systems thread — regulated deployments where the audit documentation is as important as the code.</p>
-      <p>Neither problem shrunk when AI arrived. Non-Human Identity governance — the work at Microsoft — is now the defining problem of secure enterprise AI agent deployment. The same question, scaled: how do you authorize an AI agent? How do you scope its permissions? How do you build the human-in-the-loop gate before something irreversible happens?</p>
-      <p class="turn">The career didn't pivot. It compounded.</p>
-      <p>Today I build agentic AI systems — MCP servers, ReAct agent loops, multi-agent orchestration, RAG pipelines — with the same identity-first, audit-ready instincts that defined the regulated-environment work. The AI layer runs on top of fifteen years of the thing most AI engineers skip.</p>
+      <p>Fifteen years across Wells Fargo, Veradigm, Starbucks, and Microsoft — payment infrastructure, HIPAA-regulated IAM, Non-Human Identity governance before NHI was a named discipline. Two threads ran underneath all of it: identity (who is allowed to do what) and audit (regulated deployments where the documentation matters as much as the code). When AI arrived, neither problem shrunk — they scaled. <span class="turn">The career didn't pivot. It compounded.</span> Today I build agentic AI systems with the same identity-first, audit-ready instincts.</p>
     </div>
   </div>
 </section>
