@@ -30,7 +30,7 @@
   --shadow-lg: 0 0 0 1px var(--hairline-strong), 0 24px 48px -24px rgba(0,0,0,.6);
   --m-fast: 60ms  cubic-bezier(.2,0,0,1);
   --m-base: 140ms cubic-bezier(.2,0,0,1);
-  --maxw: 1500px;
+  --maxw: 1280px;
 }
 
 /* ─── RESET ──────────────────────────────── */
@@ -97,7 +97,7 @@ body {
 /* ─── SECTION SHELL ──────────────────────── */
 .section { padding: clamp(64px,8vw,116px) clamp(22px,5vw,56px); }
 .section + .section { border-top: 1px solid var(--hairline); }
-.inner { max-width: var(--maxw); margin: 0; }
+.inner { max-width: var(--maxw); margin: 0 auto; }
 .eyebrow {
   font-family: var(--mono);
   font-size: 11px; letter-spacing: .2em; text-transform: uppercase;

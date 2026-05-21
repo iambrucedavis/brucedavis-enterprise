@@ -32,7 +32,7 @@
   --shadow-accent: 0 0 0 1px var(--signal);
   --m-fast: 60ms cubic-bezier(.2,0,0,1);
   --m-base: 140ms cubic-bezier(.2,0,0,1);
-  --maxw: 1500px;
+  --maxw: 1280px;
 }
 
 /* ─── RESET ──────────────────────────────── */
@@ -97,13 +97,13 @@ body {
 
 /* ─── SECTION SHELL ──────────────────────── */
 section { padding: clamp(76px,10vw,128px) clamp(22px,5vw,56px); }
-.inner { max-width: var(--maxw); margin: 0; }
-#contact .inner { margin-left: auto; margin-right: auto; }
+.inner { max-width: var(--maxw); margin: 0 auto; }
 .eyebrow {
   font-family: var(--mono);
   font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
   color: var(--mute);
   margin-bottom: 28px;
+  text-align: center;
 }
 
 /* ─── HERO ───────────────────────────────── */
@@ -112,6 +112,9 @@ section { padding: clamp(76px,10vw,128px) clamp(22px,5vw,56px); }
   display:flex; align-items:center;
   padding-top: 132px; padding-bottom: 88px;
 }
+#hero .inner { width: 100%; text-align: center; }
+.hero-tagline, .hero-sub { margin-left: auto; margin-right: auto; }
+.hero-cta { justify-content: center; }
 .hero-name {
   font-family: var(--mono);
   font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
@@ -214,6 +217,7 @@ section { padding: clamp(76px,10vw,128px) clamp(22px,5vw,56px); }
 }
 .statement-block {
   max-width: 64ch;
+  margin: 0 auto;
   border-left: 3px solid var(--signal);
   padding-left: clamp(20px,3vw,40px);
 }
@@ -235,7 +239,8 @@ section { padding: clamp(76px,10vw,128px) clamp(22px,5vw,56px); }
   letter-spacing: .01em;
   color: var(--ink);
   max-width: 36ch;
-  margin-bottom: clamp(40px,5vw,64px);
+  margin: 0 auto clamp(40px,5vw,64px);
+  text-align: center;
 }
 .work-grid {
   display:grid; grid-template-columns:repeat(2,1fr);
@@ -303,7 +308,8 @@ section { padding: clamp(76px,10vw,128px) clamp(22px,5vw,56px); }
   font-size: clamp(17px,1.4vw,20px); line-height: 1.6;
   color: var(--ink-soft);
   max-width: 64ch;
-  margin-bottom: clamp(40px,5vw,60px);
+  margin: 0 auto clamp(40px,5vw,60px);
+  text-align: center;
 }
 .stack-grid {
   display:grid; grid-template-columns:repeat(3,1fr);
