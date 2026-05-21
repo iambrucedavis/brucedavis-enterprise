@@ -626,7 +626,7 @@ footer{
   <div class="hero-pre"><span class="pulse"></span> AI Product Engineer · Experience · Infrastructure &amp; Security</div>
   <h1 id="hero-hl">Security UX Concept</h1>
   <p class="hero-sub">
-    A security awareness training surface that borrows the visual language of the threat itself &mdash; HUD UI, scan lines, threat pulse, a playable &ldquo;spot the phish&rdquo; round. Motion, empty states, and behavioral interaction design &mdash; applied to a surface that usually skips all three.
+    A security awareness training surface that uses the visual language of the threat itself: HUD UI, scan lines, threat pulse, and a playable &ldquo;spot the phish&rdquo; round. Motion, empty states, and behavioral interaction design applied to a surface that usually has none of them.
   </p>
   <div class="hero-meta">
     <span>concept study</span>
@@ -641,14 +641,14 @@ footer{
     <span class="s-label reveal">the argument</span>
     <h2 class="s-title reveal">Compliance Slideshow → <em>Engaged Defender.</em></h2>
     <p class="s-desc reveal">
-      Security awareness training is a category-shaped problem. Real money, real stakes, and a $B+ industry built on the assumption that boring is somehow virtuous. Here's what that gets you, and what it could get you instead.
+      Security awareness training is a $B+ industry built on the assumption that boring is acceptable. Here's what that produces, and what it could produce instead.
     </p>
 
     <div class="argument-grid reveal">
       <div class="arg-cell before">
         <span class="arg-tag">before</span>
         <div class="arg-h">The slideshow.</div>
-        <p class="arg-p">Stock illustrations. A blue header. Bullet lists about "best practices." A quiz at the end. Click through. Mark complete. Forget by Tuesday. The user is positioned as a liability to be managed.</p>
+        <p class="arg-p">Stock illustrations. A blue header. Bullet lists about "best practices." A quiz at the end. The user clicks through, marks it complete, and forgets it. The user is treated as a liability to be managed.</p>
         <div class="fake-before">
           <div class="fake-before-h">Module 4: Recognizing Phishing</div>
           <p>This module will teach you to identify common phishing techniques used by malicious actors.</p>
@@ -660,7 +660,7 @@ footer{
       <div class="arg-cell after">
         <span class="arg-tag">after</span>
         <div class="arg-h">The HUD.</div>
-        <p class="arg-p">A live inbox. Clickable threat indicators. Real-time scoring. Visual feedback that matches the stakes — scan-lines, threat pulse, intrusion alerts. The user is positioned as the operator. Defense made to feel earned.</p>
+        <p class="arg-p">A live inbox. Clickable threat indicators. Real-time scoring. Visual feedback that matches the stakes: scan-lines, threat pulse, intrusion alerts. The user is treated as the operator.</p>
         <div class="fake-after">
           <div class="fake-after-h">THREAT QUEUE — INBOX</div>
           <p>5 messages flagged for inspection.</p>
@@ -679,7 +679,7 @@ footer{
     <span class="s-label reveal">the demo · playable</span>
     <h2 class="s-title reveal">Spot the <em>phish.</em></h2>
     <p class="s-desc reveal">
-      Five inbound messages. Two are phishing. Tap the suspicious words, links, or addresses to flag them. Then either <strong style="color:var(--amber);">REPORT</strong> the message or <strong style="color:var(--ok);">TRUST</strong> it. Catch the threats. Keep the legit mail. End-of-round summary at the close.
+      Five inbound messages. Two are phishing. Tap the suspicious words, links, or addresses to flag them. Then either <strong style="color:var(--amber);">REPORT</strong> the message or <strong style="color:var(--ok);">TRUST</strong> it. A summary appears at the end of the round.
     </p>
 
     <div class="demo-frame reveal">
@@ -733,7 +733,7 @@ footer{
         <div class="round-end" id="round-end" role="dialog" aria-modal="true" aria-labelledby="re-headline">
           <div class="re-mark" id="re-mark">round complete</div>
           <h3 class="re-headline" id="re-headline">Engaged <span class="em">Defender.</span></h3>
-          <p class="re-sub" id="re-sub">Five messages cleared. Threats caught and trusted as expected. The pattern stuck.</p>
+          <p class="re-sub" id="re-sub">Five messages cleared. Threats reported and legit mail trusted, as expected.</p>
           <div class="re-stats">
             <div class="re-stat">
               <div class="re-stat-label">Score</div>
@@ -757,11 +757,11 @@ footer{
     </div>
 
     <div class="callout reveal">
-      <strong>Design move:</strong> the user isn't memorizing a checklist. They're <em>reading</em> the surface — sender, link, language, attachment — the way an operator reads a console. The scan-lines and the threat pulse aren't decoration; they're the visual feedback loop that makes the inspection feel like the work it is.
+      <strong>Design move:</strong> the user isn't memorizing a checklist. They inspect the surface — sender, link, language, attachment — directly. The scan-lines and the threat pulse are the visual feedback loop for that inspection.
     </div>
 
     <div class="honesty reveal">
-      <strong>Honesty check:</strong> this is a concept study with a working interactive demo. Not deployed, not in production, no AI behind the scenes — the threat indicators are hand-authored. The demo proves the design, not the platform.
+      <strong>Honesty check:</strong> this is a concept study with a working interactive demo. It is not deployed or in production, and there is no AI behind it — the threat indicators are hand-authored. The demo shows the design, not a platform.
     </div>
 
   </div>
@@ -771,23 +771,23 @@ footer{
 <section class="s-section">
   <div class="s-inner">
     <span class="s-label reveal">design rationale</span>
-    <h2 class="s-title reveal">Three decisions, <em>one read.</em></h2>
+    <h2 class="s-title reveal">Three design <em>decisions.</em></h2>
 
     <div class="rationale-grid reveal">
       <div class="rat-cell">
         <div class="rat-num">01</div>
-        <div class="rat-h">Borrow the threat's wardrobe.</div>
-        <p class="rat-p">The visual language of intrusion — scan-lines, monospace, threat-pulse, HUD readouts — gets associated with attackers. Use it on the defender's side and the surface starts to feel powerful instead of victimized. Same vocabulary, flipped polarity.</p>
+        <div class="rat-h">Use the threat's visual language.</div>
+        <p class="rat-p">The visual language of intrusion — scan-lines, monospace, threat-pulse, HUD readouts — is usually associated with attackers. Putting it on the defender's side makes the surface feel capable rather than passive.</p>
       </div>
       <div class="rat-cell">
         <div class="rat-num">02</div>
         <div class="rat-h">Make inspection physical.</div>
-        <p class="rat-p">Threat indicators aren't shown in a bullet list — they're embedded in the email itself, hover-revealed, hit-flagged. The user clicks the suspicious sender, the suspicious link, the urgency keywords. The act of <em>looking</em> is the act of <em>learning</em>.</p>
+        <p class="rat-p">Threat indicators aren't shown in a bullet list. They're embedded in the email itself, hover-revealed and hit-flagged. The user clicks the suspicious sender, the suspicious link, and the urgency keywords. Inspecting the message is how the user learns.</p>
       </div>
       <div class="rat-cell">
         <div class="rat-num">03</div>
         <div class="rat-h">Reward over compliance.</div>
-        <p class="rat-p">A score, a streak, a round summary that names you "Engaged Defender" or "Compromised." Behavior change comes from reward signals, not deadline emails. The HUD makes correctness feel earned in the moment, not retroactively assessed in a quiz.</p>
+        <p class="rat-p">A score, a streak, and a round summary that names you "Engaged Defender" or "Compromised." Behavior change comes from reward signals, not deadline emails. The HUD scores correctness in the moment, instead of in a quiz at the end.</p>
       </div>
     </div>
 
@@ -1233,11 +1233,11 @@ function showRoundEnd(){
 
   let mark = '// round complete';
   let headline = `Engaged <span class="em">Defender.</span>`;
-  let sub = 'Five messages cleared. Threats caught and trusted as expected. The pattern stuck.';
+  let sub = 'Five messages cleared. Threats reported and legit mail trusted, as expected.';
   if (caught === total && misses === 0){
     mark = '// perfect inspection';
     headline = `Operator-Grade <span class="em">Read.</span>`;
-    sub = 'Every threat caught. No legit mail mis-flagged. This is what behavior change looks like.';
+    sub = 'Every threat caught. No legit mail mis-flagged.';
   } else if (caught < total) {
     mark = '// breach detected';
     headline = `Compromised, <span class="em">Partly.</span>`;
@@ -1245,7 +1245,7 @@ function showRoundEnd(){
   } else if (misses > 0) {
     mark = '// false positives';
     headline = `Trigger-Happy <span class="em">Defender.</span>`;
-    sub = 'Threats caught — but legit mail flagged. Real users are part of the system. Read before you report.';
+    sub = 'Threats caught, but legit mail flagged too. Read the message before you report it.';
   }
 
   document.getElementById('re-mark').textContent     = mark;

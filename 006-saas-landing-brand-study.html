@@ -334,7 +334,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   <div class="hero-pre">// 006 — SaaS Landing &amp; Brand Study</div>
   <h1 id="hero-hl">SURFACE<br>STUDY.</h1>
   <p class="hero-sub">
-    A visual study of a modern SaaS surface — landing, brand, hierarchy, motion. Designed and built as a concept, not a shipped product. Proof of taste, not proof of users. The move I'd run on any team's SaaS surface stuck on a default template.
+    A visual study of a modern SaaS surface: landing, brand, hierarchy, motion. Designed and built as a concept, not a shipped product. It shows how I'd treat a SaaS surface that's running on a default template.
   </p>
   <div class="hero-meta">
     <span>build.2026.05</span>
@@ -348,9 +348,9 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 <section id="brief" class="reveal">
   <div class="brief-lbl">// The Brief</div>
   <div class="brief-body">
-    <p>The brief was credibility of taste. A SaaS surface that reads like a finished product — not a portfolio exercise, not a static screenshot, not a stock-template dashboard with a logo dropped on top.</p>
-    <p>The decision: design the entire surface — landing, brand mark, deploy state machine, log stream, pricing toggle — as a coherent visual system. Click deploy. Watch the state animate through. Toggle the pricing and watch the value swap. The product narrative compressed into a few small interactions.</p>
-    <p>No backend. No real users. No claim otherwise. This is a study of the surface — the design move I'd run on any SaaS template that needs to stop looking like every other one.</p>
+    <p>Make a SaaS surface that reads like a finished product instead of a portfolio exercise, a static screenshot, or a stock-template dashboard with a logo on top.</p>
+    <p>I designed the whole surface as one visual system: landing, brand mark, deploy state machine, log stream, pricing toggle. Click deploy and the state animates through. Toggle the pricing and the value swaps. The product is shown through a few small interactions.</p>
+    <p>There is no backend and no real users. This is a study of the surface, and the approach I'd use on a SaaS template that needs to stop looking like every other one.</p>
   </div>
 </section>
 
@@ -592,10 +592,10 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
     <div class="review-block">
       <div class="review-sub">// Craft decisions</div>
       <ul class="review-list">
-        <li>The browser chrome wraps the dashboard. The user reads "this is a product" before they read what the product is. The frame does the positioning work the copy doesn't have to.</li>
-        <li>Deploy state machine has three states with three colors: queued (dim), building (yellow + 2.8s progress bar), live (teal). Not status badges — a real fake of a real build.</li>
-        <li>Log stream caps at 6 lines and shifts as new ones arrive. Each line enters with <code>opacity 0→1</code>, <code>x: -4→0</code> over 250ms. Logs feel arrived, not pasted.</li>
-        <li>Pricing toggle animates the digits: out at <code>opacity 0, y: -6</code>, replace text, in at <code>opacity 1, y: 0</code>. The number changes through the transition — value is the thing, the motion reinforces it.</li>
+        <li>The browser chrome wraps the dashboard, so the user reads "this is a product" before they read what the product is. The frame carries some of the positioning.</li>
+        <li>The deploy state machine has three states with three colors: queued (dim), building (yellow + 2.8s progress bar), live (teal).</li>
+        <li>The log stream caps at 6 lines and shifts as new ones arrive. Each line enters with <code>opacity 0→1</code>, <code>x: -4→0</code> over 250ms, so the lines look like they arrived rather than being pasted in.</li>
+        <li>The pricing toggle animates the digits: out at <code>opacity 0, y: -6</code>, replace text, in at <code>opacity 1, y: 0</code>. The number changes during the transition so the motion points at the price.</li>
         <li>Featured pricing card surface differential is mode-specific: dark mode uses <code>--surface-hi</code>, light mode overrides to <code>#D8D8D6</code>. Tokens with the same RGB delta read different at opposite ends of the value scale.</li>
       </ul>
     </div>
@@ -603,7 +603,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
     <div class="review-block">
       <div class="review-sub">// What I'd do differently</div>
       <ul class="review-list">
-        <li>The dashboard is locked at <code>440px</code>. On a 1440 screen there's room for it to breathe to 600+. Fixed height killed a chance to make the product feel substantial.</li>
+        <li>The dashboard is locked at <code>440px</code>. On a 1440 screen there's room for it to grow to 600+. The fixed height makes the product look smaller than it should.</li>
         <li>Log stream is round-robin from a static array. Real production would surface log severity — error lines should look different from info, and recent errors should pin.</li>
         <li>No empty state on the deploy list. First-time signup would see four <code>[ LIVE ]</code> rows as decoration. The product needs an empty state for new accounts — and I didn't design one.</li>
       </ul>

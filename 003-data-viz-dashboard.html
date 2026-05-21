@@ -195,7 +195,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   <div class="hero-pre">// 003 — Interactive Data Visualization</div>
   <h1 id="hero-hl">THE DATA<br>MOVES.</h1>
   <p class="hero-sub">
-    Three D3.js charts built like product interfaces. A live FPS monitor, an interactive scatter plot, a force-directed graph with drag and hover. Real data, real interaction, designed with intention.
+    Three D3.js charts built like product interfaces. A live FPS monitor, an interactive scatter plot, a force-directed graph with drag and hover.
   </p>
   <div class="hero-meta">
     <span>build.2026.05</span>
@@ -209,9 +209,9 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 <section id="brief" class="reveal">
   <div class="brief-lbl">// The Brief</div>
   <div class="brief-body">
-    <p>D3.js is a decision engine disguised as a charting library. Every visual property — axis color, label size, transition timing — is a manual call. The brief forced the question: three chart types, live data, one visual language. What are the actual decisions?</p>
-    <p>The constraint: D3 uses presentation attributes, not CSS. Design tokens don't inherit. Every color, every opacity, every stroke width had to be applied at the render layer — not the style sheet. The result is a tighter coupling between data and design than most component libraries allow.</p>
-    <p>The force graph was the hardest. Nodes, links, labels, and drag state updating at 60fps while staying legible. That's the one worth looking at.</p>
+    <p>In D3, every visual property — axis color, label size, transition timing — is a manual call. The brief: three chart types, live data, one visual language.</p>
+    <p>The constraint: D3 uses presentation attributes, not CSS. Design tokens don't inherit. Every color, opacity, and stroke width had to be applied at the render layer, not the style sheet.</p>
+    <p>The force graph was the hardest. Nodes, links, labels, and drag state update at 60fps while staying legible.</p>
   </div>
 </section>
 
@@ -252,7 +252,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 
     <div class="c-ann">
       <span class="ann-lbl">// Design rationale</span>
-      <span class="ann-txt">Performance data is operational material. A Design Engineer watches this — it's the proof that the interaction craft ships at speed. The signal color tracks the fps line. Drops to red when it drops below 45.</span>
+      <span class="ann-txt">The fps readout tracks the line. It turns yellow below 52 and red below 45.</span>
     </div>
   </div>
 </div>
@@ -282,7 +282,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 
     <div class="c-ann">
       <span class="ann-lbl">// Design rationale</span>
-      <span class="ann-txt">The best decisions cluster top-left: high impact, low complexity. The scroll scrub and streaming text both live there. The force graph is top-right: worth the cost. Showing this data is itself a design decision.</span>
+      <span class="ann-txt">High-impact, low-complexity decisions cluster top-left: the scroll scrub and streaming text both sit there. The force graph is top-right — high impact, high complexity.</span>
     </div>
   </div>
 </div>
@@ -295,7 +295,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <span class="dv-version">D3 force simulation · drag · hover</span>
     </div>
     <h2 class="dv-title">AI Interface Patterns — Dependency Graph</h2>
-    <p class="dv-desc">All 12 nodes of the AI Interface Pattern set. Hover to highlight connections. Drag to explore. The topology is the architecture.</p>
+    <p class="dv-desc">All 12 nodes of the AI Interface Pattern set. Hover to highlight connections. Drag to explore.</p>
 
     <div class="c-frame" style="position:relative">
       <div class="c-bar">
@@ -316,7 +316,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 
     <div class="c-ann">
       <span class="ann-lbl">// Design rationale</span>
-      <span class="ann-txt">Dependency graphs expose architecture visually. This is the real topology of the design system — not a diagram made in Figma, but the actual import structure rendered as a force simulation. The physics are real.</span>
+      <span class="ann-txt">This is the import structure of the design system, rendered as a force simulation rather than drawn by hand in Figma.</span>
     </div>
   </div>
 </div>
@@ -329,7 +329,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <span class="dv-version">build.2026.05</span>
     </div>
     <h2 class="dv-title">By the Numbers</h2>
-    <p class="dv-desc">The portfolio in raw numbers. Every line earned.</p>
+    <p class="dv-desc">The portfolio in raw numbers.</p>
     <div class="stat-grid">
       <div class="stat-cell">
         <div class="stat-num" id="sn-loc">0</div>
@@ -363,10 +363,10 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
     <div class="review-block">
       <div class="review-sub">// Craft decisions</div>
       <ul class="review-list">
-        <li>The FPS line changes color at <code>45fps</code> and <code>52fps</code>. Same data, three meanings — green lane, yellow lane, red lane. You read the health from the color, not the number.</li>
+        <li>The FPS readout changes color at <code>45fps</code> and <code>52fps</code> — green, yellow, red. You read the state from the color, not the number.</li>
         <li>Scatter dots size by <code>√loc × 1.4</code>. Linear sizing buries small items; log sizing exaggerates. Square-root keeps hierarchy readable across 16 points.</li>
-        <li>Force-graph hover dims unconnected nodes to 12% fill and 20% stroke. The connected subgraph stays full opacity. Highlighting by suppression — easier to read than highlighting by addition.</li>
-        <li>Stat counter eases with <code>1 - (1-t)³</code>. Numbers slow as they approach the target. Linear counters feel mechanical; this lands.</li>
+        <li>Force-graph hover dims unconnected nodes to 12% fill and 20% stroke. The connected subgraph stays full opacity. Dimming the rest is easier to read than brightening the match.</li>
+        <li>Stat counter eases with <code>1 - (1-t)³</code>. Numbers slow as they approach the target instead of stopping abruptly.</li>
       </ul>
     </div>
 

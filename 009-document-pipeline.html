@@ -249,7 +249,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   <div class="hero-pre">AI Product Engineer · Systems · Infrastructure &amp; Security</div>
   <h1 id="hero-hl">Document Pipeline</h1>
   <p class="hero-sub">
-    A document pipeline built as a set of Claude tools &mdash; reads a doc, masks PII, validates the extraction with structured JSON outputs, escalates anything unusual to a human reviewer, tracks token cost. In regulated environments, the human-in-the-loop step isn't a checkbox &mdash; it's the engagement loop. The reviewer is the user, and the product has to earn their second pass.
+    A document pipeline built as a set of Claude tools &mdash; reads a doc, masks PII, validates the extraction with structured JSON outputs, escalates anything unusual to a human reviewer, tracks token cost. In regulated environments, the human-in-the-loop step is where the work happens, so the reviewer's queue is built to be fast to act on.
   </p>
   <div class="hero-meta">
     <span>5 stage tools</span>
@@ -265,7 +265,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   <div class="brief-body">
     <p>Document processing pipelines look simple on a slide. Read it. Check it. Hide the personal info. Send anything wrong to a human. Ship. In practice they're a black box with Claude in the middle, doing everything from text extraction (OCR) to business rules to deciding what counts as personal info. Hard to debug, hard to know the cost, hard to swap one piece out.</p>
     <p>This pipeline pulls those concerns apart. Five MCP tools, one per stage. The model is the <strong>conductor</strong>, not the pipeline itself. Each tool owns its piece of the work — <code>doc_extract</code> returns a schema and the rules to follow, <code>pii_mask</code> hides personal info by field path and by pattern matching, <code>doc_validate</code> runs schema + business-rule checks and produces a list of exceptions, <code>hitl_route</code> turns those exceptions into a prioritized queue, <code>cost_report</code> totals the tokens.</p>
-    <p>The interesting design choice: <code>doc_extract</code> doesn't call the model. It returns a <strong>work order</strong> — task, schema, rules — for the conductor to carry out. No API key needed for the demo. Production swaps the work order for a real call against Claude, GPT-4, Gemini, or any other tool-calling model without changing the other stages. The pattern survives the boundary, and survives the model.</p>
+    <p>One design choice worth noting: <code>doc_extract</code> doesn't call the model. It returns a <strong>work order</strong> — task, schema, rules — for the conductor to carry out. No API key needed for the demo. Production swaps the work order for a real call against Claude, GPT-4, Gemini, or any other tool-calling model without changing the other stages.</p>
   </div>
 </section>
 
@@ -277,7 +277,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <span class="dv-version">5 stages · 3 patterns · ~1240 lines of source code</span>
     </div>
     <h2 class="dv-title">Five tools, one conductor.</h2>
-    <p class="dv-desc">Each stage is a separate custom Claude tool, swappable on its own. The conductor is Claude. Three of the five tools change something (extract, mask, route); one is a check (validate); one totals things up (cost). The pipeline is composition.</p>
+    <p class="dv-desc">Each stage is a separate custom Claude tool, swappable on its own. The conductor is Claude. Three of the five tools change something (extract, mask, route); one is a check (validate); one totals things up (cost).</p>
 
     <div class="pl-flow">
       <div class="pl-node">
@@ -314,7 +314,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 
     <div class="c-ann">
       <span class="ann-lbl">Design rationale</span>
-      <span class="ann-txt">Separation by stage is separation by concern. Each tool's input is the previous tool's output — no shared state, no surprises. The pipeline becomes inspectable: drop a tool's trace into Claude, swap one piece for another, test different prompts side by side. The work-order pattern keeps the demo runnable on a Claude Max subscription; production with direct API access plugs in at <code>doc_extract</code> without touching the four downstream tools.</span>
+      <span class="ann-txt">Splitting the work by stage splits it by concern. Each tool's input is the previous tool's output — no shared state. The pipeline stays inspectable: drop a tool's trace into Claude, swap one piece for another, test different prompts side by side. The work-order pattern keeps the demo runnable on a Claude Max subscription; production with direct API access plugs in at <code>doc_extract</code> without touching the four downstream tools.</span>
     </div>
   </div>
 </div>
@@ -361,7 +361,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <span class="dv-version">no API key required · production-portable</span>
     </div>
     <h2 class="dv-title">Tools return contracts, not responses.</h2>
-    <p class="dv-desc">The interesting MCP design choice. <code>doc_extract</code> doesn't call Claude — it's a tool that returns a structured work order for Claude to carry out. Production with direct API access plugs in here without touching any downstream stage.</p>
+    <p class="dv-desc"><code>doc_extract</code> doesn't call Claude — it's a tool that returns a structured work order for Claude to carry out. Production with direct API access plugs in here without touching any downstream stage.</p>
 
     <div class="c-frame">
       <div class="c-bar">
@@ -411,7 +411,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
     <div class="review-block">
       <div class="review-sub">Craft decisions</div>
       <ul class="review-list">
-        <li>Five tools, one per stage. <code>doc_extract</code> / <code>pii_mask</code> / <code>doc_validate</code> / <code>hitl_route</code> / <code>cost_report</code>. Each owns one contract; the pipeline is composition.</li>
+        <li>Five tools, one per stage. <code>doc_extract</code> / <code>pii_mask</code> / <code>doc_validate</code> / <code>hitl_route</code> / <code>cost_report</code>. Each owns one contract.</li>
         <li>The work-order pattern. <code>doc_extract</code> returns a schema + rules + task instead of calling Claude. Claude executes. No API key for the demo; the same plug-in point takes a real API call in production.</li>
         <li>PII masking is two-layer: deterministic regex + path-based redaction first, then a list of free-text fields flagged for Claude to scan as a second pass. The tool draws the line between what can be caught with rules and what can't.</li>
         <li><code>doc_validate</code> is redaction-aware. Format and pattern errors on values that look like <code>[TYPE-REDACTED]</code> are filtered out automatically. Rules that need the original PII (the age check against a redacted DOB, for example) skip with a note that they should run before masking in production.</li>
@@ -428,7 +428,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <li>The human queue is in-memory only. Production would save each entry to a ticket system (Notion, Linear, Jira) and route by team. The shape — <code>queue_id</code>, priority, suggested_resolution — is portable. The persistence layer isn't.</li>
         <li>The second-pass review for <code>pii_mask</code> is documented but not auto-run. The tool returns a list of free-text fields to scan; Claude can scan those. A future tool — <code>pii_review</code> — would close that loop.</li>
         <li>Token cost is estimated via <code>chars / 4</code>. Real API runs return measured token counts; <code>cost_report</code> already accepts a <code>method: 'measured'</code> flag and reports mode accordingly. Demo runs in <code>estimated</code>; production flips it.</li>
-        <li>The way schema validation handles redacted values is to filter errors after the fact. A cleaner version would emit a second schema per doc type — same shape, but with the PII fields allowed to contain placeholder strings. The current approach is shorter; the cleaner version is more honest.</li>
+        <li>The way schema validation handles redacted values is to filter errors after the fact. A cleaner version would emit a second schema per doc type — same shape, but with the PII fields allowed to contain placeholder strings. The current approach is shorter, but the second-schema version is more correct.</li>
         <li>Auto-numbering, edge-case test fixtures, prompt-iteration logging. A second pass would build a proper evaluation system (an "evals harness") around <code>doc_extract</code> — the same kind of system Project 010 (voice_check v2) is going to need.</li>
       </ul>
     </div>

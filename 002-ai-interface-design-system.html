@@ -446,7 +446,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   <div class="hero-pre">AI Product Engineer · Experience</div>
   <h1 id="hero-hl">AI Interface Patterns</h1>
   <p class="hero-sub">
-    Five working interface patterns for AI products: word-by-word streaming, model state indicators, low-context warnings, confidence flags, and error recovery. The loading, empty, and error states most AI demos skip &mdash; built as live React/TypeScript, not Figma mockups.
+    Five working interface patterns for AI products: word-by-word streaming, model state indicators, low-context warnings, confidence flags, and error recovery. The loading, empty, and error states most AI demos skip. Built as live React/TypeScript instead of Figma mockups.
   </p>
   <div class="hero-meta">
     <span>5 patterns</span>
@@ -461,8 +461,8 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   <div class="brief-lbl">The Brief</div>
   <div class="brief-body">
     <p>Most AI interfaces design around the output. This one designs around the states between outputs.</p>
-    <p>The problem: five distinct model behaviors — streaming, thinking, done, uncertain, failed — and most products render all of them the same way. The decision was to treat each state as a separate design problem. Different visual contract, different affordance, different meaning for the user.</p>
-    <p>These are working patterns, not screenshots. The state machine runs. The streaming render is real. The confidence and error treatments are demonstrated, not connected — the patterns exist, not the production wiring. The next version of this page integrates them; this version documents them.</p>
+    <p>There are five distinct model behaviors — streaming, thinking, done, uncertain, failed — and most products render all of them the same way. Each state here is treated as a separate design problem, with its own visual contract, affordance, and meaning for the user.</p>
+    <p>These are working patterns. The state machine runs and the streaming render works. The confidence and error treatments are demonstrated but not connected to production wiring. The next version of this page integrates them; this version documents them.</p>
   </div>
 </section>
 
@@ -474,7 +474,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <span class="ds-version">v1.0.0 · [ STABLE ]</span>
     </div>
     <h2 class="ds-title">StreamingResponse</h2>
-    <p class="ds-desc">The primary output pattern. Text arrives character by character — each arrival is a render event. The cursor shows the model is present. Connected to the prompt input below.</p>
+    <p class="ds-desc">The primary output pattern. Text arrives character by character, and each arrival is a render event. The cursor shows the model is active. Connected to the prompt input below.</p>
 
     <div class="c-frame">
       <div class="c-bar">
@@ -508,7 +508,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 
     <div class="c-ann">
       <span class="ann-lbl">Design rationale</span>
-      <span class="ann-txt">Character-level streaming creates presence — the model feels active rather than blocked. The blinking cursor is the only animation needed. Token counter surfaces system metadata as a UI element rather than hiding it.</span>
+      <span class="ann-txt">Character-level streaming makes the model feel active rather than blocked. The blinking cursor is the only animation needed. The token counter shows system metadata as a UI element rather than hiding it.</span>
     </div>
   </div>
 </div>
@@ -521,7 +521,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <span class="ds-version">v1.0.0 · [ STABLE ]</span>
     </div>
     <h2 class="ds-title">ModelStateIndicator</h2>
-    <p class="ds-desc">Five states. Each a design decision. Idle, thinking, generating, done, error — none of these should look the same. Click advance to step through the machine.</p>
+    <p class="ds-desc">Five states: idle, thinking, generating, done, error. None of them should look the same. Click advance to step through the machine.</p>
 
     <div class="c-frame">
       <div class="c-bar">
@@ -539,7 +539,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 
     <div class="c-ann">
       <span class="ann-lbl">Design rationale</span>
-      <span class="ann-txt">AI states are not loading spinners. Thinking, generating, done, and error each carry different meaning. Design them differently. Show the machine's intent — the user reads confidence from the state before they read the output.</span>
+      <span class="ann-txt">AI states are not loading spinners. Thinking, generating, done, and error each carry different meaning, so they are designed differently. The user reads the state before they read the output.</span>
     </div>
   </div>
 </div>
@@ -572,7 +572,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 
     <div class="c-ann">
       <span class="ann-lbl">Design rationale</span>
-      <span class="ann-txt">Model uncertainty is real signal. Showing confidence at the word level gives users a legibility layer — they can scan for what the model knows vs. guesses. Most products hide this. This exposes it.</span>
+      <span class="ann-txt">Model uncertainty is signal. Showing confidence at the word level lets users scan for what the model knows versus what it guesses. Most products hide this. This exposes it.</span>
     </div>
   </div>
 </div>
@@ -622,7 +622,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 
     <div class="c-ann">
       <span class="ann-lbl">Design rationale</span>
-      <span class="ann-txt">The context window is a finite resource. Surfacing it keeps users oriented — they know how much of the conversation the model can see. Operational reality made legible.</span>
+      <span class="ann-txt">The context window is a finite resource. Showing it keeps users oriented: they know how much of the conversation the model can see.</span>
     </div>
   </div>
 </div>
@@ -635,7 +635,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <span class="ds-version">v1.0.0 · [ STABLE ]</span>
     </div>
     <h2 class="ds-title">ErrorState</h2>
-    <p class="ds-desc">Three classes of AI failure, each with different meaning and different design response. Not generic browser errors — designed AI error states.</p>
+    <p class="ds-desc">Three classes of AI failure, each with different meaning and a different design response. These are AI error states, not generic browser errors.</p>
 
     <div class="c-frame">
       <div class="c-bar">
@@ -667,7 +667,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
             <div class="err-icon e">✕</div>
             <div class="err-body">
               <div class="err-code e">500 · Inference Failed</div>
-              <div class="err-msg">The model returned an empty or malformed completion. The request did not fail — inference did. Check your prompt for adversarial patterns or try rephrasing.</div>
+              <div class="err-msg">The model returned an empty or malformed completion. The request reached the model; inference is what failed. Check your prompt for adversarial patterns or try rephrasing.</div>
               <button class="err-act">Report issue →</button>
             </div>
           </div>
@@ -678,7 +678,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 
     <div class="c-ann">
       <span class="ann-lbl">Design rationale</span>
-      <span class="ann-txt">Rate limits, service unavailability, and inference failures are different problems. The interface should communicate that difference — not collapse them into a red banner. The user deserves to know what failed and what to do about it.</span>
+      <span class="ann-txt">Rate limits, service unavailability, and inference failures are different problems. The interface communicates that difference instead of collapsing them into one red banner. The user needs to know what failed and what to do about it.</span>
     </div>
   </div>
 </div>
@@ -691,18 +691,18 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
     <div class="review-block">
       <div class="review-sub">Craft decisions</div>
       <ul class="review-list">
-        <li>Streaming pauses on punctuation. 65ms after <code>.</code> <code>,</code> <code>—</code> <code>?</code> <code>!</code>. The cursor blinks while writing, goes solid on done. The model finishes a sentence — not a string.</li>
+        <li>Streaming pauses on punctuation. 65ms after <code>.</code> <code>,</code> <code>—</code> <code>?</code> <code>!</code>. The cursor blinks while writing and goes solid on done.</li>
         <li>Streaming region uses <code>aria-live="polite"</code> with <code>aria-busy</code> toggling. Screen readers get the full sentence once on done — no per-character stutter.</li>
         <li>Confidence encodes four levels in two visual properties: opacity and underline style. Readable without the legend, inspectable on hover.</li>
-        <li>The token meter is the same component at three meanings — signal under 75%, warn at 75%, error at 90%. The threshold is the design decision, not the bar.</li>
-        <li>Error states are typed by failure class. 429, 503, 500 — different icons, different colors, different actions. Rate limit gets a queue. Inference failure gets a report. Each maps to user agency in the actual failure mode.</li>
+        <li>The token meter is one component with three meanings: signal under 75%, warn at 75%, error at 90%. The thresholds carry the design decision.</li>
+        <li>Error states are typed by failure class. 429, 503, and 500 each get different icons, colors, and actions. Rate limit gets a queue. Inference failure gets a report. Each action maps to what the user can do in that failure mode.</li>
       </ul>
     </div>
 
     <div class="review-block">
       <div class="review-sub">What I'd do differently</div>
       <ul class="review-list">
-        <li>Confidence is static here. Production needs streaming logprobs and a debounced rerender. Different design problem — the values change while you read them.</li>
+        <li>Confidence is static here. Production needs streaming logprobs and a debounced rerender, which is a different design problem because the values change while you read them.</li>
         <li>Token meter is a single ratio. Real context windows break out system prompt, tools, attached files, history. The bar should be a stack, not a slider.</li>
         <li>Error codes show on the surface. Real users don't read <code>429</code>. Move the code into a collapse and lead with what to do.</li>
       </ul>
@@ -811,7 +811,7 @@ const SAMPLES = [
   },
   {
     label: 'Why does streaming matter?',
-    text: 'Streaming changes the perceived latency of the entire experience. A response that arrives in one block after three seconds feels slow. The same response streaming character by character feels immediate. The interaction starts at token zero. That is a design decision — not an engineering detail.'
+    text: 'Streaming changes the perceived latency of the entire experience. A response that arrives in one block after three seconds feels slow. The same response streaming character by character feels immediate. The interaction starts at token zero. That is a design decision, not just an engineering detail.'
   }
 ];
 
@@ -1014,7 +1014,7 @@ const CONF_WORDS = [
   ['numerical','U','p=0.14 · uncertain'], ['outputs','U','p=0.11 · uncertain'],
   ['—','H'], ['those','H'], ['tokens','H'], ['dim.','H'],
   ['\n'],
-  ['Not','H'], ['hidden.','H'], ['Surfaced.','H']
+  ['The','H'], ['uncertainty','H'], ['stays','H'], ['visible.','H']
 ];
 
 const confLabels = { H: 'p≥0.85 · high', M: 'p≈0.55–0.84 · medium', L: 'p≈0.25–0.54 · low', U: 'p<0.25 · uncertain' };

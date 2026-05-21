@@ -219,7 +219,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   <div class="hero-pre">AI Experience · Generative UI</div>
   <h1 id="hero-hl">Day One</h1>
   <p class="hero-sub">
-    A conversational onboarding experience where the interface assembles itself. A new hire asks in plain language; Claude returns structured data; the app renders the right interactive component — a setup wizard, a progress ring, a benefits picker — not a chat reply.
+    A conversational onboarding experience where the interface is assembled at request time. A new hire asks in plain language; Claude returns structured data; the app renders an interactive component — a setup wizard, a progress ring, a benefits picker — instead of a chat reply.
   </p>
   <div class="hero-meta">
     <span>6 generative components</span>
@@ -237,7 +237,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <span class="dv-version">one take, no narration</span>
     </div>
     <h2 class="dv-title">Type a sentence. Get an interface.</h2>
-    <p class="dv-desc">One pass: a plain-language onboarding request, a structured UI spec from Claude, and a real interactive interface rendered from it — assembled live, never hardcoded.</p>
+    <p class="dv-desc">One pass: a plain-language onboarding request, a structured UI spec from Claude, and an interactive interface rendered from it. The screens are assembled at request time, not hardcoded.</p>
 
     <div class="video-frame">
       <div class="video-bar">
@@ -249,7 +249,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         Your browser does not support the video tag.
       </video>
     </div>
-    <p class="c-cap">A recorded run through the sample prompts — each one assembles a different interface, and every component is genuinely interactive. <a href="https://brucedavis-portfolio.vercel.app" target="_blank" rel="noopener" style="color:var(--signal);border-bottom:1.5px solid var(--signal);">Open the live demo →</a> to try it yourself.</p>
+    <p class="c-cap">A recorded run through the sample prompts. Each one assembles a different interface, and every component is interactive. <a href="https://brucedavis-portfolio.vercel.app" target="_blank" rel="noopener" style="color:var(--signal);border-bottom:1.5px solid var(--signal);">Open the live demo →</a> to try it yourself.</p>
   </div>
 </div>
 
@@ -285,7 +285,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <span class="flow-sub">built from structured data</span>
       </div>
     </div>
-    <p class="flow-cap">The model never returns a chat reply. It returns a typed list of UI blocks; the app validates them with Zod and mounts real interactive components. <strong style="color:var(--ink);font-weight:600;">The interface is generated, not hardcoded.</strong></p>
+    <p class="flow-cap">The model does not return a chat reply. It returns a typed list of UI blocks; the app validates them with Zod and mounts the interactive components. <strong style="color:var(--ink);font-weight:600;">The interface is generated, not hardcoded.</strong></p>
 
     <div class="stats">
       <div class="stat"><div class="stat-num">6</div><div class="stat-label">block types</div></div>
@@ -304,7 +304,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <span class="dv-version">six blocks the model can assemble</span>
     </div>
     <h2 class="dv-title">A vocabulary of UI.</h2>
-    <p class="dv-desc">The model doesn't draw pixels — it picks from a fixed set of interactive components and fills their props. Six block types cover a new hire's first week.</p>
+    <p class="dv-desc">The model does not draw pixels. It picks from a fixed set of interactive components and fills their props. Six block types cover a new hire's first week.</p>
 
     <div class="tool-cards">
       <div class="tool-card">
@@ -385,7 +385,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <span class="dv-version">the data drives the interface</span>
     </div>
     <h2 class="dv-title">The UI is generative.</h2>
-    <p class="dv-desc">No screen in this app is hardcoded. Every interface a visitor sees is rendered from a structured spec — change the request, and the UI changes with it. That is the technical claim the project demonstrates.</p>
+    <p class="dv-desc">No screen in this app is hardcoded. Every interface a visitor sees is rendered from a structured spec; change the request, and the UI changes with it.</p>
 
     <div class="rules">
       <div class="rule">
@@ -394,7 +394,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       </div>
       <div class="rule">
         <div class="rule-name">Schema-validated</div>
-        <div class="rule-body">Tool-use forces the shape; a Zod discriminated union enforces the contract. The envelope and the props are both gated.</div>
+        <div class="rule-body">Tool-use forces the shape; a Zod discriminated union enforces the contract. The envelope and the props are both validated.</div>
       </div>
       <div class="rule">
         <div class="rule-name">Two demo modes</div>
@@ -409,8 +409,8 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   <div class="sec-inner">
     <div class="review-lbl">In review — what I'd do differently</div>
     <ul class="review-list">
-      <li>The five sample prompts are hand-authored UI specs — real shape, curated content — so the demo never needs an API key or spends a cent.</li>
-      <li>The tool's JSON Schema is deliberately permissive on block props; Zod does the real validation after the call. It's the reliable split for deep typed unions.</li>
+      <li>The five sample prompts are hand-authored UI specs with curated content, so the demo runs without an API key or cost.</li>
+      <li>The tool's JSON Schema is deliberately permissive on block props; Zod does the validation after the call. This split is more reliable for deep typed unions.</li>
       <li>Six block types ship today. The registry is built to grow — a seventh component is a schema entry, a line in the prompt, and one file.</li>
     </ul>
   </div>

@@ -227,7 +227,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   <div class="hero-pre">AI Experience · Agent Governance</div>
   <h1 id="hero-hl">AXE<br>Provenance</h1>
   <p class="hero-sub">
-    Real-time identity governance for fleets of autonomous AI agents — the control room operators will need when "AI agent" becomes a real headcount line. Six agents work an enterprise incident. Each one is a governed identity: a permission scope, a token budget, an accountable owner. When an agent needs to act beyond its scope, a human decides.
+    Real-time identity governance for fleets of autonomous AI agents. Six agents work an enterprise incident. Each one is a governed identity: a permission scope, a token budget, an accountable owner. When an agent needs to act beyond its scope, a human decides.
   </p>
   <div class="hero-meta">
     <span>6 governed agents</span>
@@ -245,7 +245,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <span class="dv-version">one take, no narration</span>
     </div>
     <h2 class="dv-title">The operator's seat.</h2>
-    <p class="dv-desc">A full incident, detection to containment, with the human-in-the-loop escalation gate in the middle. A real run — nothing staged.</p>
+    <p class="dv-desc">A full incident, detection to containment, with the human-in-the-loop escalation gate in the middle.</p>
 
     <div class="video-frame">
       <div class="video-bar">
@@ -293,7 +293,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <span class="flow-sub">+ a full audit trail</span>
       </div>
     </div>
-    <p class="flow-cap">Every action is scoped, metered, and logged. The privilege escalation is not a scripted beat — it emerges from a real permission check failing inside the agent loop. <strong style="color:var(--ink);font-weight:600;">Governance that is enforced, not decorative.</strong></p>
+    <p class="flow-cap">Every action is scoped, metered, and logged. The privilege escalation comes from a permission check failing inside the agent loop. <strong style="color:var(--ink);font-weight:600;">Governance is enforced in the agent loop.</strong></p>
 
     <div class="stats">
       <div class="stat"><div class="stat-num">6</div><div class="stat-label">governed agents</div></div>
@@ -312,13 +312,13 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <span class="dv-version">six agents, six identities</span>
     </div>
     <h2 class="dv-title">Every agent is an identity.</h2>
-    <p class="dv-desc">Not a task queue — a fleet of distinct identities. Each holds a standing permission scope, a token budget, and an accountable owner. The interface makes all of it visible at a glance.</p>
+    <p class="dv-desc">A fleet of distinct identities. Each holds a standing permission scope, a token budget, and an accountable owner. The interface shows all of it.</p>
 
     <div class="tool-cards">
       <div class="tool-card">
         <div class="tc-verb">Watchtower</div>
         <div class="tc-name">read-only monitor</div>
-        <div class="tc-desc">Sweeps identity activity for anomalies. Holds no write access — the always-on baseline of the fleet.</div>
+        <div class="tc-desc">Sweeps identity activity for anomalies. Holds no write access. Runs continuously.</div>
         <div class="tc-model">Scope · read-only</div>
       </div>
       <div class="tool-card">
@@ -342,7 +342,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <div class="tool-card">
         <div class="tc-verb">Auditor</div>
         <div class="tc-name">audit &amp; receipts</div>
-        <div class="tc-desc">Logs every action, every escalation, every approval to an append-only trail. The receipt-keeper.</div>
+        <div class="tc-desc">Logs every action, escalation, and approval to an append-only trail.</div>
         <div class="tc-model">Scope · read-only</div>
       </div>
       <div class="tool-card">
@@ -377,7 +377,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <div class="c-line">&nbsp;&nbsp;&rarr; Remediation acts &nbsp;·&nbsp; sessions revoked, credentials rotated</div>
       </div>
     </div>
-    <p class="c-cap">The escalation isn't hardcoded to pause here. It's a real permission check failing inside the agent loop — the gate is the governance, not a scripted demo moment. Approve, and a credential is issued, used, and expires. Deny, and the agent holds at its standing scope.</p>
+    <p class="c-cap">The escalation isn't hardcoded to pause here. It's a permission check failing inside the agent loop. Approve, and a credential is issued, used, and expires. Deny, and the agent holds at its standing scope.</p>
   </div>
 </div>
 
@@ -389,7 +389,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <span class="dv-version">the UI renders the agents, not the reverse</span>
     </div>
     <h2 class="dv-title">The UI is generative.</h2>
-    <p class="dv-desc">The backend emits a structured event stream. The control room renders against that stream and re-renders as it changes — the agents are never hardcoded into the interface. That is the technical claim the project demonstrates.</p>
+    <p class="dv-desc">The backend emits a structured event stream. The control room renders against that stream and re-renders as it changes. The agents are never hardcoded into the interface.</p>
 
     <div class="rules">
       <div class="rule">
@@ -402,7 +402,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       </div>
       <div class="rule">
         <div class="rule-name">One frontend, two transports</div>
-        <div class="rule-body">Demo mode replays a recorded run; live mode streams from the backend. Same UI, same reducer — proof the render is data-driven.</div>
+        <div class="rule-body">Demo mode replays a recorded run; live mode streams from the backend. Same UI, same reducer.</div>
       </div>
     </div>
   </div>
@@ -413,9 +413,9 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   <div class="sec-inner">
     <div class="review-lbl">In review — what I'd do differently</div>
     <ul class="review-list">
-      <li>The agents' decisions are deliberate and legible, not LLM-improvised — the demo is about the system being governable, not the agents being clever.</li>
+      <li>The agents' decisions are deliberate and legible, not LLM-improvised. The demo is about the system being governable.</li>
       <li>One incident scenario ships; the event-stream contract is built to carry many, and the next step is a second one.</li>
-      <li>The backend runs locally by design — the deployed demo replays a recorded run, so there is no key to leak and no per-visit cost to carry.</li>
+      <li>The backend runs locally. The deployed demo replays a recorded run, so there is no key to leak and no per-visit cost to carry.</li>
     </ul>
   </div>
 </section>
