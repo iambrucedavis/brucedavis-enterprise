@@ -292,9 +292,48 @@ section { padding: clamp(76px,10vw,128px) clamp(22px,5vw,56px); }
   padding: 4px 8px;
 }
 
+/* ─── STACK ─────────────────────────────── */
+#stack {
+  background: var(--concrete);
+  border-top: 1px solid var(--hairline-strong);
+  border-bottom: 1px solid var(--hairline-strong);
+}
+.stack-lede {
+  font-family: var(--serif);
+  font-size: clamp(17px,1.4vw,20px); line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 64ch;
+  margin-bottom: clamp(40px,5vw,60px);
+}
+.stack-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap: clamp(28px,3vw,44px);
+}
+.stack-col { display:flex; flex-direction:column; gap:18px; }
+.stack-label {
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--signal);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--hairline-strong);
+}
+.stack-tags { display:flex; flex-wrap:wrap; gap:8px; }
+.stack-tag {
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: .04em;
+  color: var(--ink);
+  border: 1px solid var(--hairline-strong);
+  padding: 6px 11px;
+  transition: border-color var(--m-base), color var(--m-base);
+}
+.stack-tag:hover { border-color: var(--signal); color: var(--signal); }
+@media (max-width: 900px) {
+  .stack-grid { grid-template-columns:1fr; }
+}
+
 /* ─── BACKGROUND BAND ────────────────────── */
 #background {
-  background: var(--concrete);
+  background: var(--paper);
   border-top: 1px solid var(--hairline-strong);
   border-bottom: 1px solid var(--hairline-strong);
 }
@@ -525,7 +564,7 @@ a:focus-visible, button:focus-visible {
         <div class="work-tag">Regulated Environments · HIPAA</div>
         <div class="work-name">Document Pipeline</div>
         <p class="work-desc">
-          End-to-end document processing pipeline for regulated environments. Claude tool chain handles extraction, PII masking and deidentification, structured JSON output against a validated schema, human-in-the-loop review for edge cases, and token-cost tracking. Built to operate in HIPAA and compliance-sensitive workflows where the audit trail is the deliverable.
+          End-to-end document processing pipeline for regulated environments. An MCP tool chain handles extraction, PII masking and deidentification, structured JSON output against a validated schema, human-in-the-loop review for edge cases, and token-cost tracking. Model-agnostic by design — built on Claude, portable to GPT-4, Gemini, or any tool-calling model. HIPAA and compliance-sensitive workflows where the audit trail is the deliverable.
         </p>
         <div class="work-badges">
           <span class="badge">MCP SDK</span>
@@ -581,6 +620,58 @@ a:focus-visible, button:focus-visible {
           <span class="badge">Function Calling</span>
         </div>
       </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── STACK ─────────────────────────────── -->
+<section id="stack" aria-label="Stack and tooling">
+  <div class="inner">
+    <div class="eyebrow">Stack</div>
+    <h2 class="section-h2">Model-Agnostic by Design.</h2>
+    <p class="stack-lede">
+      The patterns above — MCP servers, ReAct loops, RAG pipelines, multi-agent orchestration, human-in-the-loop gates — are portable. I build them with whichever model, framework, and surface the audit, the contract, or the data residency requires.
+    </p>
+
+    <div class="stack-grid">
+
+      <div class="stack-col">
+        <div class="stack-label">Foundation Models</div>
+        <div class="stack-tags">
+          <span class="stack-tag">Anthropic Claude</span>
+          <span class="stack-tag">OpenAI GPT-4 / GPT-5</span>
+          <span class="stack-tag">Google Gemini</span>
+          <span class="stack-tag">Meta Llama</span>
+          <span class="stack-tag">Mistral AI</span>
+          <span class="stack-tag">Hugging Face</span>
+        </div>
+      </div>
+
+      <div class="stack-col">
+        <div class="stack-label">Platforms &amp; Frameworks</div>
+        <div class="stack-tags">
+          <span class="stack-tag">MCP</span>
+          <span class="stack-tag">LangChain</span>
+          <span class="stack-tag">LlamaIndex</span>
+          <span class="stack-tag">Vertex AI</span>
+          <span class="stack-tag">Anthropic SDK</span>
+          <span class="stack-tag">OpenAI SDK</span>
+          <span class="stack-tag">Claude Agent SDK</span>
+          <span class="stack-tag">Vercel AI SDK</span>
+        </div>
+      </div>
+
+      <div class="stack-col">
+        <div class="stack-label">Consumer &amp; Enterprise UI</div>
+        <div class="stack-tags">
+          <span class="stack-tag">Claude</span>
+          <span class="stack-tag">ChatGPT</span>
+          <span class="stack-tag">Gemini</span>
+          <span class="stack-tag">Microsoft Copilot</span>
+          <span class="stack-tag">Notion AI</span>
+        </div>
+      </div>
 
     </div>
   </div>

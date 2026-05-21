@@ -12,7 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
 <style>
-:root { --signal: #E8601C; --signal-rgb: 232,96,28; }
+:root { --signal: #0066FF; --signal-rgb: 0,102,255; }
 
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -20,7 +20,7 @@
 html, body {
   width:100%; height:100%;
   overflow:hidden;
-  background:#08050f;
+  background:#0A0E1A;
   font-family:'Space Mono', monospace;
   user-select:none;
   -webkit-user-select:none;
@@ -58,26 +58,26 @@ html, body {
 
 /* Gallery plaque */
 .exhibit-plaque {
-  background:rgba(8,4,18,0.85);
+  background:rgba(10,14,26,0.85);
   backdrop-filter:blur(8px);
-  border:1px solid #1e0a3a;
-  border-left:3px solid #7C3AED;
+  border:1px solid rgba(255,255,255,.18);
+  border-left:3px solid #0066FF;
   padding:14px 18px 12px;
   max-width:260px;
 }
 .plaque-eyebrow {
   font-size:9px; letter-spacing:.28em;
-  text-transform:uppercase; color:#9B72F0;
+  text-transform:uppercase; color:#C1C7D0;
   margin-bottom:6px;
 }
 .plaque-title {
   font-size:16px; font-weight:700;
-  color:#f0ede8; letter-spacing:.08em;
+  color:#F5F7FA; letter-spacing:.08em;
   margin-bottom:5px;
 }
 .plaque-desc {
   font-family:'Space Grotesk',sans-serif;
-  font-size:11px; color:#9B72F0;
+  font-size:11px; color:#C1C7D0;
   line-height:1.6;
 }
 
@@ -85,21 +85,21 @@ html, body {
 .score-panel { text-align:right; }
 .score-lbl {
   font-size:9px; letter-spacing:.22em;
-  text-transform:uppercase; color:#9B72F0;
+  text-transform:uppercase; color:#C1C7D0;
   margin-bottom:4px;
 }
 .score-num {
   font-size:44px; font-weight:700;
-  color:#9B72F0; line-height:1;
-  text-shadow:0 0 24px rgba(155,114,240,0.5);
+  color:#C1C7D0; line-height:1;
+  text-shadow:0 0 24px rgba(0,102,255,0.5);
   transition:color .2s;
 }
-.score-num.flash { color:var(--signal); text-shadow:0 0 30px rgba(232,96,28,0.7); }
+.score-num.flash { color:var(--signal); text-shadow:0 0 30px rgba(0,102,255,0.7); }
 .combo-row {
   margin-top:6px; font-size:13px; font-weight:700;
   color:var(--signal); letter-spacing:.1em;
   opacity:0; transition:opacity .3s;
-  text-shadow:0 0 12px rgba(232,96,28,0.6);
+  text-shadow:0 0 12px rgba(0,102,255,0.6);
 }
 .combo-row.show { opacity:1; }
 
@@ -119,12 +119,12 @@ html, body {
   font-size:clamp(36px,7vw,72px);
   font-weight:700; line-height:.92;
   color:var(--signal); letter-spacing:-.02em;
-  text-shadow:0 0 60px rgba(232,96,28,.8), 0 0 120px rgba(232,96,28,.4);
+  text-shadow:0 0 60px rgba(0,102,255,.8), 0 0 120px rgba(0,102,255,.4);
 }
 .unlock-sub {
   margin-top:10px;
   font-size:12px; letter-spacing:.22em;
-  color:#A78BFA; text-transform:uppercase;
+  color:#0066FF; text-transform:uppercase;
 }
 
 /* ─── INSTRUCTIONS ───────────────────────── */
@@ -133,7 +133,7 @@ html, body {
   transform:translateX(-50%);
   text-align:center;
   font-size:10px; letter-spacing:.2em;
-  color:#7C6AE0; white-space:nowrap;
+  color:#C1C7D0; white-space:nowrap;
   pointer-events:none; z-index:11;
   transition:opacity 1.2s;
 }
@@ -147,10 +147,10 @@ html, body {
 
 .ctrl {
   padding:10px 18px;
-  background:rgba(8,4,18,0.88);
+  background:rgba(10,14,26,0.88);
   backdrop-filter:blur(6px);
-  border:1px solid #1a0830;
-  color:#9B72F0;
+  border:1px solid #121826;
+  color:#C1C7D0;
   font-family:'Space Mono',monospace;
   font-size:10px; font-weight:700;
   letter-spacing:.14em; text-transform:uppercase;
@@ -159,11 +159,11 @@ html, body {
   -webkit-tap-highlight-color:transparent;
 }
 .ctrl:hover:not(:disabled) {
-  border-color:#7C3AED; color:#A78BFA;
+  border-color:#0066FF; color:#0066FF;
 }
 .ctrl.on {
-  background:#1a0830;
-  border-color:#7C3AED; color:#A78BFA;
+  background:#121826;
+  border-color:#0066FF; color:#0066FF;
 }
 .ctrl:disabled { opacity:.28; cursor:not-allowed; }
 
@@ -172,8 +172,8 @@ html, body {
   animation:chaospulse 1.6s ease-in-out infinite;
 }
 @keyframes chaospulse {
-  0%,100% { box-shadow:0 0 8px rgba(232,96,28,.3); }
-  50%      { box-shadow:0 0 22px rgba(232,96,28,.7); }
+  0%,100% { box-shadow:0 0 8px rgba(0,102,255,.3); }
+  50%      { box-shadow:0 0 22px rgba(0,102,255,.7); }
 }
 
 #btn-audio.on {
@@ -184,20 +184,20 @@ html, body {
 .back-link {
   position:fixed; top:20px; right:24px;
   font-size:9px; letter-spacing:.22em;
-  text-transform:uppercase; color:#9B72F0;
+  text-transform:uppercase; color:#C1C7D0;
   text-decoration:none;
   pointer-events:all;
   transition:color .2s;
   z-index:12;
   display:none; /* shown if referrer is portfolio */
 }
-.back-link:hover { color:#A78BFA; }
+.back-link:hover { color:#0066FF; }
 
 /* ─── WATERMARK ──────────────────────────── */
 .wm {
   position:fixed; bottom:22px; right:24px;
   font-size:10px; letter-spacing:.24em; font-weight:700;
-  color:#140830; pointer-events:none; z-index:11;
+  color:#7A8392; pointer-events:none; z-index:11;
 }
 .wm em { color:var(--signal); font-style:normal; }
 
@@ -318,14 +318,14 @@ World.add(world, mc);
 const SERVICES = [
   { label:'WEB TOYS',    col:'#8B5CF6' },
   { label:'GAMIFY',      col:'#EC4899' },
-  { label:'INTERACTIVE', col:'#7C3AED' },
+  { label:'INTERACTIVE', col:'#0066FF' },
   { label:'PHYSICAL',    col:'#06B6D4' },
-  { label:'MUSEUMS',     col:'#A78BFA' },
+  { label:'MUSEUMS',     col:'#0066FF' },
   { label:'CORPORATE',   col:'#E8601C' },
   { label:'AR / VR',     col:'#EC4899' },
   { label:'BRANDS',      col:'#06B6D4' },
   { label:'AUDIO',       col:'#8B5CF6' },
-  { label:'VISUAL',      col:'#A78BFA' },
+  { label:'VISUAL',      col:'#0066FF' },
   { label:'SIX PERCENT', col:'#E8601C' },
   { label:'UPGRADE',     col:'#EC4899' },
 ];

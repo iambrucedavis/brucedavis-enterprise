@@ -2,10 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "portfolio",
+      "name": "brucedavis-enterprise",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4319"],
-      "port": 4319
+      "runtimeArgs": ["-m", "http.server", "4322", "--directory", "/Users/heyelbe/brucedavis-enterprise"],
+      "port": 4322
     }
   ]
 }
