@@ -29,15 +29,16 @@
   --mono:    'Space Mono', ui-monospace, monospace;
   --shadow:     0 0 0 1px var(--hairline-strong);
   --shadow-lg:  0 0 0 1px var(--hairline-strong), 0 24px 48px -24px rgba(0,0,0,.6);
-  --shadow-accent: 0 0 0 1px var(--signal);
   --m-fast: 60ms cubic-bezier(.2,0,0,1);
   --m-base: 140ms cubic-bezier(.2,0,0,1);
+  --m-slide: 560ms cubic-bezier(.76,0,.24,1);
   --maxw: 1280px;
+  --nav-h: 64px;
 }
 
 /* ─── RESET ──────────────────────────────── */
 *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
+html, body { height: 100%; }
 body {
   background: var(--paper);
   color: var(--ink);
@@ -46,13 +47,13 @@ body {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 /* ─── NAV ────────────────────────────────── */
 #nav {
   position: fixed; top:0; left:0; right:0; z-index:500;
-  height: 64px;
+  height: var(--nav-h);
   display:flex; align-items:center; justify-content:space-between;
   padding: 0 clamp(22px,5vw,56px);
   background: rgba(10,14,26,.85);
@@ -66,6 +67,7 @@ body {
   font-weight: 700; font-size: 13px;
   letter-spacing: .14em; text-transform: uppercase;
   color: var(--ink); text-decoration: none;
+  background:none; border:none; cursor:pointer;
 }
 .nav-status {
   display:inline-flex; align-items:center; gap: 8px;
@@ -87,75 +89,119 @@ body {
   50%     { opacity: .5; }
 }
 .nav-links { display:flex; gap: clamp(20px,3vw,38px); list-style:none; }
-.nav-links a {
+.nav-links a, .nav-links button {
   font-family: var(--mono);
   font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
   color: var(--mute); text-decoration: none;
+  background:none; border:none; cursor:pointer;
   transition: color var(--m-base);
 }
-.nav-links a:hover { color: var(--ink); }
+.nav-links a:hover, .nav-links button:hover { color: var(--ink); }
 
-/* ─── SECTION SHELL ──────────────────────── */
-section { padding: clamp(76px,10vw,128px) clamp(22px,5vw,56px); }
-.inner { max-width: var(--maxw); margin: 0 auto; }
+/* ─── DECK / PANELS ──────────────────────── */
+#deck {
+  display:flex; flex-wrap:nowrap;
+  height: 100vh;
+  transition: transform var(--m-slide);
+  will-change: transform;
+}
+.panel {
+  flex: 0 0 100vw; width: 100vw; height: 100vh;
+  overflow-y: auto; overflow-x: hidden;
+  display: flex;
+  padding: var(--nav-h) clamp(22px,5vw,56px) 86px;
+}
+.panel-inner {
+  margin: auto;
+  width: 100%;
+  max-width: var(--maxw);
+  padding: 22px 0;
+}
 .eyebrow {
   font-family: var(--mono);
   font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
   color: var(--mute);
-  margin-bottom: 28px;
+  margin-bottom: 12px;
   text-align: center;
 }
 
-/* ─── HERO ───────────────────────────────── */
-#hero {
-  min-height: 90vh;
-  display:flex; align-items:center;
-  padding-top: 132px; padding-bottom: 88px;
+/* ─── DECK CONTROLS ──────────────────────── */
+.deck-arrow {
+  position: fixed; top: 50%; z-index: 450;
+  transform: translateY(-50%);
+  width: 46px; height: 46px;
+  display:flex; align-items:center; justify-content:center;
+  background: rgba(10,14,26,.72);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border: 1px solid var(--hairline-strong);
+  color: var(--ink);
+  font-family: var(--serif); font-size: 26px; line-height: 1;
+  cursor: pointer;
+  transition: border-color var(--m-base), color var(--m-base), opacity var(--m-base);
 }
-#hero .inner { width: 100%; text-align: center; }
-.hero-tagline, .hero-sub { margin-left: auto; margin-right: auto; }
-.hero-cta { justify-content: center; }
+.deck-arrow:hover:not(:disabled) { border-color: var(--signal); color: var(--signal); }
+.deck-arrow:disabled { opacity: .22; cursor: default; }
+.deck-arrow.prev { left: clamp(12px,2vw,26px); }
+.deck-arrow.next { right: clamp(12px,2vw,26px); }
+
+.deck-tabs {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 450;
+  display:flex; align-items:center; justify-content:center;
+  gap: clamp(14px,3vw,40px);
+  height: 56px;
+  background: rgba(10,14,26,.85);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border-top: 1px solid var(--hairline-strong);
+}
+.deck-tab {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--mute);
+  background: none; border: none; cursor: pointer;
+  padding: 6px 2px;
+  border-top: 2px solid transparent;
+  transition: color var(--m-base), border-color var(--m-base);
+}
+.deck-tab:hover { color: var(--ink); }
+.deck-tab[aria-current="true"] { color: var(--signal); border-top-color: var(--signal); }
+.deck-tab .tab-num { color: var(--mute); margin-right: 6px; }
+.deck-tab[aria-current="true"] .tab-num { color: var(--signal); }
+
+/* ─── HERO ───────────────────────────────── */
+.intro-inner { display:flex; flex-direction:column; gap: clamp(30px,4vh,56px); }
+.hero { text-align: center; }
 .hero-name {
   font-family: var(--mono);
   font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
   color: var(--mute);
-  margin-bottom: 30px;
+  margin-bottom: 16px;
 }
 .hero-h1 {
   font-family: var(--display); font-weight: 400;
   text-transform: uppercase;
-  font-size: clamp(48px, 8.4vw, 124px);
+  font-size: clamp(40px, 6vw, 88px);
   line-height: .95;
   letter-spacing: .005em;
   color: var(--ink);
-  margin-bottom: 18px;
+  margin-bottom: 14px;
 }
-.hero-h1 .accent { color: var(--signal); }
 .hero-subhead {
   font-family: var(--display); font-weight: 400;
   text-transform: uppercase;
-  font-size: clamp(20px, 2.4vw, 32px);
+  font-size: clamp(17px, 2vw, 26px);
   letter-spacing: .04em;
   color: var(--mute-soft);
-  margin-bottom: 38px;
+  margin-bottom: 22px;
 }
 .hero-tagline {
   font-family: var(--serif); font-weight: 600;
-  font-size: clamp(20px, 2vw, 28px);
+  font-size: clamp(18px, 1.7vw, 24px);
   line-height: 1.35;
   color: var(--ink);
-  max-width: 44ch;
-  margin-bottom: 26px;
+  max-width: 46ch;
+  margin: 0 auto 24px;
 }
-.hero-sub {
-  font-family: var(--serif);
-  font-size: clamp(16px, 1.3vw, 19px);
-  line-height: 1.65;
-  color: var(--ink-soft);
-  max-width: 64ch;
-  margin-bottom: 42px;
-}
-.hero-cta { display:flex; gap:14px; flex-wrap:wrap; }
+.hero-cta { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; }
 
 /* ─── BUTTONS ────────────────────────────── */
 .btn {
@@ -163,31 +209,28 @@ section { padding: clamp(76px,10vw,128px) clamp(22px,5vw,56px); }
   font-family: var(--mono); font-weight: 700;
   font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
   text-decoration: none;
-  padding: 15px 28px;
+  padding: 14px 26px;
   border: 1px solid var(--ink);
   border-radius: 0;
+  cursor: pointer;
   transition: background var(--m-fast), color var(--m-fast), border-color var(--m-fast);
 }
-.btn-primary {
-  background: var(--signal); color: #FFFFFF;
-  border-color: var(--signal);
-}
+.btn-primary { background: var(--signal); color: #FFFFFF; border-color: var(--signal); }
 .btn-primary:hover  { background: #0052CC; border-color: #0052CC; }
 .btn-ghost { background: transparent; color: var(--ink); border-color: var(--hairline-strong); }
 .btn-ghost:hover { border-color: var(--signal); color: var(--signal); }
 
 /* ─── PILLARS ───────────────────────────── */
-#pillars { padding-top: clamp(36px,6vw,68px); }
 .lf-grid {
   display:grid; grid-template-columns:repeat(3,1fr);
-  gap: clamp(20px,2.4vw,32px);
+  gap: clamp(16px,2vw,26px);
 }
 .lf-card {
   background: var(--paper-clean);
   border: 1px solid var(--hairline-strong);
-  padding: clamp(28px,3vw,44px);
-  display:flex; flex-direction:column; gap:16px;
-  transition: border-color var(--m-base), background var(--m-base);
+  padding: clamp(20px,2vw,30px);
+  display:flex; flex-direction:column; gap:12px;
+  transition: border-color var(--m-base);
 }
 .lf-card:hover { border-color: var(--signal); }
 .lf-tag {
@@ -198,44 +241,44 @@ section { padding: clamp(76px,10vw,128px) clamp(22px,5vw,56px); }
 .lf-title {
   font-family: var(--display); font-weight: 400;
   text-transform: uppercase;
-  font-size: clamp(23px,2.5vw,32px); line-height: 1.05;
+  font-size: clamp(19px,1.9vw,26px); line-height: 1.05;
   letter-spacing: .01em;
   color: var(--ink);
 }
 .lf-body {
   font-family: var(--serif);
-  font-size: 16px; line-height: 1.65;
+  font-size: 14.5px; line-height: 1.55;
   color: var(--ink-soft);
-  max-width: 48ch;
 }
 
-/* ─── WORK ───────────────────────────────── */
+/* ─── SECTION HEADING ────────────────────── */
 .section-h2 {
   font-family: var(--display); font-weight: 400;
   text-transform: uppercase;
-  font-size: clamp(28px,3.8vw,54px);
+  font-size: clamp(26px,3.4vw,46px);
   line-height: 1.02;
   letter-spacing: .01em;
   color: var(--ink);
   max-width: 36ch;
-  margin: 0 auto clamp(40px,5vw,64px);
+  margin: 0 auto clamp(20px,2.6vw,32px);
   text-align: center;
 }
+
+/* ─── WORK ───────────────────────────────── */
 .work-grid {
-  display:grid; grid-template-columns:repeat(2,1fr);
-  gap: clamp(20px,2.6vw,34px);
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap: clamp(14px,1.5vw,20px);
 }
 .work-card {
   background: var(--paper-clean);
   border: 1px solid var(--hairline-strong);
-  padding: clamp(26px,2.6vw,38px);
+  padding: clamp(16px,1.5vw,22px);
   display:flex; flex-direction:column;
   text-decoration:none; color:inherit;
-  transition: border-color var(--m-base), transform var(--m-base);
+  transition: border-color var(--m-base);
   position: relative;
 }
 .work-card:hover { border-color: var(--signal); }
-.work-card.span-2 { grid-column: 1 / -1; }
 .work-flagship {
   position: absolute; top: 0; left: 0;
   font-family: var(--mono);
@@ -248,53 +291,48 @@ section { padding: clamp(76px,10vw,128px) clamp(22px,5vw,56px); }
   font-family: var(--mono);
   font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
   color: var(--mute);
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
-.work-card.span-2 .work-tag { margin-top: 24px; }
+.work-card.is-flagship .work-tag { margin-top: 20px; }
 .work-name {
   font-family: var(--display); font-weight: 400;
   text-transform: uppercase;
-  font-size: clamp(22px,2.5vw,32px); line-height: 1.02;
+  font-size: clamp(19px,1.9vw,25px); line-height: 1.02;
   letter-spacing: .01em;
   color: var(--ink);
-  margin-bottom: 14px;
+  margin-bottom: 9px;
   transition: color var(--m-base);
 }
 .work-card:hover .work-name { color: var(--signal); }
 .work-desc {
   font-family: var(--serif);
-  font-size: 15.5px; line-height: 1.65;
+  font-size: 13.5px; line-height: 1.5;
   color: var(--ink-soft);
-  margin-bottom: 22px; flex:1;
+  margin-bottom: 13px; flex:1;
 }
 .work-badges { display:flex; flex-wrap:wrap; gap:6px; margin-top:auto; }
 .badge {
   font-family: var(--mono);
-  font-size: 10px; letter-spacing: .04em;
+  font-size: 9.5px; letter-spacing: .04em;
   color: var(--mute-soft);
   border: 1px solid var(--hairline-strong);
-  padding: 4px 8px;
+  padding: 3px 7px;
 }
 
 /* ─── STACK ─────────────────────────────── */
-#stack {
-  background: var(--concrete);
-  border-top: 1px solid var(--hairline-strong);
-  border-bottom: 1px solid var(--hairline-strong);
-}
 .stack-lede {
   font-family: var(--serif);
-  font-size: clamp(17px,1.4vw,20px); line-height: 1.6;
+  font-size: clamp(16px,1.3vw,19px); line-height: 1.6;
   color: var(--ink-soft);
   max-width: 64ch;
-  margin: 0 auto clamp(40px,5vw,60px);
+  margin: 0 auto clamp(28px,3.5vw,44px);
   text-align: center;
 }
 .stack-grid {
   display:grid; grid-template-columns:repeat(3,1fr);
-  gap: clamp(28px,3vw,44px);
+  gap: clamp(24px,3vw,44px);
 }
-.stack-col { display:flex; flex-direction:column; gap:18px; }
+.stack-col { display:flex; flex-direction:column; gap:16px; }
 .stack-label {
   font-family: var(--mono);
   font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
@@ -312,43 +350,30 @@ section { padding: clamp(76px,10vw,128px) clamp(22px,5vw,56px); }
   transition: border-color var(--m-base), color var(--m-base);
 }
 .stack-tag:hover { border-color: var(--signal); color: var(--signal); }
-@media (max-width: 900px) {
-  .stack-grid { grid-template-columns:1fr; }
-}
 
-/* ─── BACKGROUND BAND ────────────────────── */
-#background {
-  background: var(--paper);
-  border-top: 1px solid var(--hairline-strong);
-  border-bottom: 1px solid var(--hairline-strong);
-}
-.bg-grid {
-  display:grid; grid-template-columns: 220px 1fr;
-  gap: clamp(28px,5vw,80px); align-items:start;
-}
+/* ─── CONTACT PANEL ──────────────────────── */
+.contact-inner { text-align:center; display:flex; flex-direction:column; gap: clamp(28px,4vh,52px); }
+.bg-block { max-width: 70ch; margin: 0 auto; }
 .bg-label {
   font-family: var(--mono);
   font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
   color: var(--signal);
+  margin-bottom: 16px;
 }
 .bg-body {
   font-family: var(--serif);
-  font-size: clamp(18px,1.6vw,22px); line-height: 1.62;
+  font-size: clamp(15px,1.3vw,18px); line-height: 1.6;
   color: var(--ink-soft);
-  max-width: 64ch;
 }
-.bg-body + .bg-body { margin-top: 18px; }
+.bg-body + .bg-body { margin-top: 14px; }
 .bg-body strong { font-weight: 600; color: var(--ink); }
-
-/* ─── CONTACT ────────────────────────────── */
-#contact { text-align:center; }
 .contact-h2 {
   font-family: var(--display); font-weight: 400;
   text-transform: uppercase;
-  font-size: clamp(26px,3.2vw,48px); line-height: 1.02;
+  font-size: clamp(24px,3vw,44px); line-height: 1.02;
   letter-spacing: .01em;
   color: var(--ink);
-  margin-bottom: 28px;
+  margin-bottom: 22px;
 }
 .contact-line {
   font-family: var(--mono);
@@ -362,25 +387,11 @@ section { padding: clamp(76px,10vw,128px) clamp(22px,5vw,56px); }
 }
 .contact-line a:hover { color: var(--signal); border-bottom-color: var(--signal); }
 .contact-sep { color: var(--mute); }
-
-/* ─── FOOTER ─────────────────────────────── */
-footer {
-  background: var(--paper);
-  border-top: 1px solid var(--hairline-strong);
-  padding: 32px clamp(22px,5vw,56px);
-  display:flex; justify-content:space-between; align-items:center;
-  flex-wrap:wrap; gap:16px;
+.colophon {
   font-family: var(--mono);
-  font-size: 11px; letter-spacing: .06em;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
   color: var(--mute);
 }
-.footer-links { display:flex; gap:20px; flex-wrap:wrap; }
-footer a {
-  color: var(--mute); text-decoration:none;
-  letter-spacing: .1em;
-  transition: color var(--m-base);
-}
-footer a:hover { color: var(--ink); }
 
 /* ─── A11Y ───────────────────────────────── */
 .skip-link {
@@ -398,24 +409,24 @@ a:focus-visible, button:focus-visible {
 
 /* ─── RESPONSIVE ─────────────────────────── */
 @media (max-width: 1080px) {
-  .lf-grid { grid-template-columns:1fr; }
+  .work-grid { grid-template-columns:repeat(2,1fr); }
 }
-@media (max-width: 900px) {
+@media (max-width: 880px) {
+  .lf-grid { grid-template-columns:1fr; }
   .work-grid { grid-template-columns:1fr; }
-  .work-card.span-2 { grid-column:1; }
-  .bg-grid { grid-template-columns:1fr; gap:20px; }
-  footer { flex-direction:column; text-align:center; }
+  .stack-grid { grid-template-columns:1fr; }
 }
 @media (max-width: 720px) {
   .nav-status { display:none; }
 }
 @media (max-width: 620px) {
   .nav-links { gap:14px; }
-  .nav-links a { font-size:10px; letter-spacing:.1em; }
+  .nav-links a, .nav-links button { font-size:10px; letter-spacing:.1em; }
+  .deck-arrow { width:40px; height:40px; font-size:22px; }
 }
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { transition-duration:.001ms !important; animation-duration:.001ms !important; }
-  html { scroll-behavior:auto; }
+  #deck { transition: none; }
   .nav-status::before { animation: none; }
 }
 
@@ -423,240 +434,229 @@ a:focus-visible, button:focus-visible {
 </head>
 <body>
 
-<a href="#work" class="skip-link">Skip to work</a>
+<a href="#work" class="skip-link" data-panel="1">Skip to work</a>
 
 <!-- ── NAV ──────────────────────────────── -->
 <nav id="nav">
   <div class="nav-left">
-    <a href="#" class="nav-logo" aria-label="Bruce Davis — home">Bruce Davis</a>
+    <button class="nav-logo" data-panel="0" aria-label="Bruce Davis — intro">Bruce Davis</button>
     <span class="nav-status" aria-label="Availability status">Available for contract &amp; full-time</span>
   </div>
   <ul class="nav-links">
-    <li><a href="#work">Work</a></li>
+    <li><button data-panel="1">Work</button></li>
     <li><a href="about.html">About</a></li>
     <li><a href="bruce-davis-resume.html" target="_blank" rel="noopener">Resume</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><button data-panel="3">Contact</button></li>
   </ul>
 </nav>
 
-<!-- ── HERO ─────────────────────────────── -->
-<section id="hero">
-  <div class="inner">
-    <div class="hero-name">Bruce Davis · Charlotte, NC</div>
-    <h1 class="hero-h1">
-      AI Systems<br>Engineer
-    </h1>
-    <div class="hero-subhead"><span class="accent" style="color:var(--signal);">Agentic AI</span> · IAM · Security</div>
-    <p class="hero-tagline">
-      I build agentic AI infrastructure that enterprise teams can trust.
-    </p>
-    <p class="hero-sub">
-      Fifteen years in regulated environments — Non-Human Identity (NHI) governance at Microsoft, HIPAA-compliant IAM for 16,000+ users at Veradigm, payment infrastructure for SWIFT/CHIPS/Fedwire at Wells Fargo. Deploying an AI agent safely is mostly an identity and authorization problem, which is the work I already know. I've shipped MCP servers with threat models, ReAct agents with human-in-the-loop gates, and orchestration systems that hold up in an audit.
-    </p>
-    <div class="hero-cta">
-      <a href="#work" class="btn btn-primary">See the work</a>
-      <a href="bruce-davis-resume.html" target="_blank" rel="noopener" class="btn btn-ghost">Resume</a>
-    </div>
-  </div>
-</section>
+<!-- ── DECK ─────────────────────────────── -->
+<div id="deck">
 
-<!-- ── PILLARS ──────────────────────────── -->
-<section id="pillars" aria-label="Capabilities">
-  <div class="inner">
-    <div class="lf-grid">
+  <!-- PANEL 1 — INTRO (hero + pillars) -->
+  <section class="panel" id="p-intro" aria-label="Introduction">
+    <div class="panel-inner intro-inner">
 
-      <div class="lf-card">
-        <div class="lf-tag">Pillar 1</div>
-        <div class="lf-title">Agentic AI Systems</div>
-        <p class="lf-body">
-          MCP servers, ReAct agent loops, LLM orchestration, RAG pipelines, multi-agent coordination, human-in-the-loop architecture. Built in Python and TypeScript, with threat models and evaluation harnesses.
+      <div class="hero">
+        <div class="hero-name">Bruce Davis · Charlotte, NC</div>
+        <h1 class="hero-h1">AI Systems<br>Engineer</h1>
+        <div class="hero-subhead"><span style="color:var(--signal);">Agentic AI</span> · IAM · Security</div>
+        <p class="hero-tagline">
+          I build agentic AI infrastructure that enterprise teams can trust.
         </p>
-      </div>
-
-      <div class="lf-card">
-        <div class="lf-tag">Pillar 2</div>
-        <div class="lf-title">Identity &amp; Security</div>
-        <p class="lf-body">
-          IAM platform architecture, Non-Human Identity (NHI) governance, CyberArk, Entra ID, HIPAA-compliant access control, NIST frameworks, Zero Trust implementation, PowerShell automation at scale. This is the security and identity work that makes an AI deployment safe to put in production.
-        </p>
-      </div>
-
-      <div class="lf-card">
-        <div class="lf-tag">Pillar 3</div>
-        <div class="lf-title">Forward Deployed</div>
-        <p class="lf-body">
-          Embedded delivery at Microsoft, Wells Fargo, Starbucks, Bank of America, Veradigm. I work in customer environments, learn the domain while shipping, and leave behind systems and documentation the team can run after I'm gone. PMP-certified, so I can run the rollout as well as the build.
-        </p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ── WORK ─────────────────────────────── -->
-<section id="work">
-  <div class="inner">
-    <div class="eyebrow">Work</div>
-    <h2 class="section-h2">Deployed Systems —<br>Agentic AI, IAM, and Security.</h2>
-
-    <div class="work-grid">
-
-      <a href="011-sentinel-triage.html" class="work-card span-2" aria-label="Sentinel Triage — flagship">
-        <span class="work-flagship">Flagship</span>
-        <div class="work-tag">Agentic AI · Human-in-the-Loop</div>
-        <div class="work-name">Sentinel Triage</div>
-        <p class="work-desc">
-          Autonomous SOC triage agent with human-in-the-loop authorization. A ReAct agent loop on Gemini 2.5 Flash — reads logs, enriches threat intelligence, proposes containment actions through function-calling tools. Destructive actions pause for explicit human approval before execution. An autonomy dial controls how much the agent can do on its own.
-        </p>
-        <div class="work-badges">
-          <span class="badge">Python</span>
-          <span class="badge">Streamlit</span>
-          <span class="badge">Gemini 2.5 Flash</span>
-          <span class="badge">ReAct</span>
-          <span class="badge">Function Calling</span>
-          <span class="badge">HITL Architecture</span>
-        </div>
-      </a>
-
-      <a href="013-axe-provenance.html" class="work-card" aria-label="AXE Provenance">
-        <div class="work-tag">Multi-Agent · NHI Governance</div>
-        <div class="work-name">AXE Provenance</div>
-        <p class="work-desc">
-          A multi-agent control room where six AI agents investigate a live security incident — each with its own identity, permission level, token budget, and accountable owner. When an agent needs elevated permissions, the system stops and requests human authorization before granting them. Non-Human Identity governance applied to AI agents.
-        </p>
-        <div class="work-badges">
-          <span class="badge">Python</span>
-          <span class="badge">React</span>
-          <span class="badge">TypeScript</span>
-          <span class="badge">Multi-agent Architecture</span>
-          <span class="badge">NHI</span>
-          <span class="badge">Generative UI</span>
-        </div>
-      </a>
-
-      <a href="009-document-pipeline.html" class="work-card" aria-label="Document Pipeline">
-        <div class="work-tag">Regulated Environments · HIPAA</div>
-        <div class="work-name">Document Pipeline</div>
-        <p class="work-desc">
-          End-to-end document processing pipeline for regulated environments. An MCP tool chain handles extraction, PII masking and deidentification, structured JSON output against a validated schema, human-in-the-loop review for edge cases, and token-cost tracking. Built on Claude; runs on GPT-4, Gemini, or any other tool-calling model. Made for HIPAA and other compliance-sensitive workflows that need a full audit trail.
-        </p>
-        <div class="work-badges">
-          <span class="badge">MCP SDK</span>
-          <span class="badge">Node</span>
-          <span class="badge">Python</span>
-          <span class="badge">Claude Tool Engineering</span>
-          <span class="badge">JSON Schema</span>
-          <span class="badge">PII Governance</span>
-        </div>
-      </a>
-
-      <a href="010-linear-mcp.html" class="work-card" aria-label="Linear MCP">
-        <div class="work-tag">MCP · Threat-Modeled</div>
-        <div class="work-name">Linear MCP</div>
-        <p class="work-desc">
-          Production MCP server for Linear, with a full security review. Six MCP tools for engineering team operations — notification triage, issue scoping, velocity diagnosis, status reporting. Includes a 30-case evaluation harness, a documented threat model, and per-tool cost analysis. Open source. The harness and threat model are what make it safe to adopt at an enterprise.
-        </p>
-        <div class="work-badges">
-          <span class="badge">TypeScript</span>
-          <span class="badge">MCP SDK</span>
-          <span class="badge">Anthropic SDK</span>
-          <span class="badge">Linear GraphQL API</span>
-          <span class="badge">Zod</span>
-          <span class="badge">Vitest</span>
-        </div>
-      </a>
-
-      <a href="008-six-percent-mcp.html" class="work-card" aria-label="Six Percent MCP">
-        <div class="work-tag">Custom MCP Tooling</div>
-        <div class="work-name">Six Percent MCP</div>
-        <p class="work-desc">
-          Custom MCP server with five tools for a content and research workflow — Notion-backed idea retrieval, tone analysis, page scaffolding, vault capture. I use it day to day.
-        </p>
-        <div class="work-badges">
-          <span class="badge">MCP SDK</span>
-          <span class="badge">Notion API</span>
-          <span class="badge">Zod</span>
-          <span class="badge">Node</span>
-        </div>
-      </a>
-
-      <a href="012-visionary-producer.html" class="work-card" aria-label="Visionary Producer">
-        <div class="work-tag">Architecture Proof</div>
-        <div class="work-name">Visionary Producer</div>
-        <p class="work-desc">
-          The same ReAct agent architecture as Sentinel Triage, pointed at film pre-production instead of security triage. Script breakdown, VFX complexity scoring, casting archetypes, producer-approval gate before lock. It shows the architecture works in more than one domain.
-        </p>
-        <div class="work-badges">
-          <span class="badge">Python</span>
-          <span class="badge">Streamlit</span>
-          <span class="badge">Gemini 2.5 Flash</span>
-          <span class="badge">ReAct</span>
-          <span class="badge">Function Calling</span>
-        </div>
-      </a>
-
-    </div>
-  </div>
-</section>
-
-<!-- ── STACK ─────────────────────────────── -->
-<section id="stack" aria-label="Stack and tooling">
-  <div class="inner">
-    <div class="eyebrow">Stack</div>
-    <h2 class="section-h2">What I Build With.</h2>
-    <p class="stack-lede">
-      The patterns above — MCP servers, ReAct loops, RAG pipelines, multi-agent orchestration, human-in-the-loop gates — aren't tied to one vendor. I pick the model, framework, and tools that fit the project.
-    </p>
-
-    <div class="stack-grid">
-
-      <div class="stack-col">
-        <div class="stack-label">Foundation Models</div>
-        <div class="stack-tags">
-          <span class="stack-tag">Anthropic Claude</span>
-          <span class="stack-tag">OpenAI GPT-4 / GPT-5</span>
-          <span class="stack-tag">Google Gemini</span>
-          <span class="stack-tag">Meta Llama</span>
-          <span class="stack-tag">Mistral AI</span>
-          <span class="stack-tag">Hugging Face</span>
+        <div class="hero-cta">
+          <button class="btn btn-primary" data-panel="1">See the work</button>
+          <a href="bruce-davis-resume.html" target="_blank" rel="noopener" class="btn btn-ghost">Resume</a>
         </div>
       </div>
 
-      <div class="stack-col">
-        <div class="stack-label">Platforms &amp; Frameworks</div>
-        <div class="stack-tags">
-          <span class="stack-tag">MCP</span>
-          <span class="stack-tag">LangChain</span>
-          <span class="stack-tag">LlamaIndex</span>
-          <span class="stack-tag">Vertex AI</span>
-          <span class="stack-tag">Anthropic SDK</span>
-          <span class="stack-tag">OpenAI SDK</span>
-          <span class="stack-tag">Claude Agent SDK</span>
-          <span class="stack-tag">Vercel AI SDK</span>
+      <div class="lf-grid">
+        <div class="lf-card">
+          <div class="lf-tag">Pillar 1</div>
+          <div class="lf-title">Agentic AI Systems</div>
+          <p class="lf-body">
+            MCP servers, ReAct agent loops, LLM orchestration, RAG pipelines, multi-agent coordination, human-in-the-loop architecture. Built in Python and TypeScript, with threat models and evaluation harnesses.
+          </p>
         </div>
-      </div>
-
-      <div class="stack-col">
-        <div class="stack-label">Consumer &amp; Enterprise UI</div>
-        <div class="stack-tags">
-          <span class="stack-tag">Claude</span>
-          <span class="stack-tag">ChatGPT</span>
-          <span class="stack-tag">Gemini</span>
-          <span class="stack-tag">Microsoft Copilot</span>
-          <span class="stack-tag">Notion AI</span>
+        <div class="lf-card">
+          <div class="lf-tag">Pillar 2</div>
+          <div class="lf-title">Identity &amp; Security</div>
+          <p class="lf-body">
+            IAM platform architecture, Non-Human Identity (NHI) governance, CyberArk, Entra ID, HIPAA-compliant access control, NIST frameworks, Zero Trust implementation, PowerShell automation at scale. This is the security and identity work that makes an AI deployment safe to put in production.
+          </p>
+        </div>
+        <div class="lf-card">
+          <div class="lf-tag">Pillar 3</div>
+          <div class="lf-title">Forward Deployed</div>
+          <p class="lf-body">
+            Embedded delivery at Microsoft, Wells Fargo, Starbucks, Bank of America, Veradigm. I work in customer environments, learn the domain while shipping, and leave behind systems and documentation the team can run after I'm gone. PMP-certified, so I can run the rollout as well as the build.
+          </p>
         </div>
       </div>
 
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── BACKGROUND ───────────────────────── -->
-<section id="background">
-  <div class="inner">
-    <div class="bg-grid">
-      <div class="bg-label">Background</div>
-      <div>
+  <!-- PANEL 2 — WORK -->
+  <section class="panel" id="p-work" aria-label="Work">
+    <div class="panel-inner">
+      <div class="eyebrow">Work</div>
+      <h2 class="section-h2">Deployed Systems — Agentic AI, IAM, and Security.</h2>
+
+      <div class="work-grid">
+
+        <a href="011-sentinel-triage.html" class="work-card is-flagship" aria-label="Sentinel Triage — flagship">
+          <span class="work-flagship">Flagship</span>
+          <div class="work-tag">Agentic AI · Human-in-the-Loop</div>
+          <div class="work-name">Sentinel Triage</div>
+          <p class="work-desc">
+            Autonomous SOC triage agent with human-in-the-loop authorization. A ReAct agent loop on Gemini 2.5 Flash — reads logs, enriches threat intelligence, proposes containment actions through function-calling tools. Destructive actions pause for explicit human approval before execution. An autonomy dial controls how much the agent can do on its own.
+          </p>
+          <div class="work-badges">
+            <span class="badge">Python</span>
+            <span class="badge">Streamlit</span>
+            <span class="badge">Gemini 2.5 Flash</span>
+            <span class="badge">ReAct</span>
+            <span class="badge">Function Calling</span>
+            <span class="badge">HITL Architecture</span>
+          </div>
+        </a>
+
+        <a href="013-axe-provenance.html" class="work-card" aria-label="AXE Provenance">
+          <div class="work-tag">Multi-Agent · NHI Governance</div>
+          <div class="work-name">AXE Provenance</div>
+          <p class="work-desc">
+            A multi-agent control room where six AI agents investigate a live security incident — each with its own identity, permission level, token budget, and accountable owner. When an agent needs elevated permissions, the system stops and requests human authorization before granting them. Non-Human Identity governance applied to AI agents.
+          </p>
+          <div class="work-badges">
+            <span class="badge">Python</span>
+            <span class="badge">React</span>
+            <span class="badge">TypeScript</span>
+            <span class="badge">Multi-agent Architecture</span>
+            <span class="badge">NHI</span>
+            <span class="badge">Generative UI</span>
+          </div>
+        </a>
+
+        <a href="009-document-pipeline.html" class="work-card" aria-label="Document Pipeline">
+          <div class="work-tag">Regulated Environments · HIPAA</div>
+          <div class="work-name">Document Pipeline</div>
+          <p class="work-desc">
+            End-to-end document processing pipeline for regulated environments. An MCP tool chain handles extraction, PII masking and deidentification, structured JSON output against a validated schema, human-in-the-loop review for edge cases, and token-cost tracking. Built on Claude; runs on GPT-4, Gemini, or any other tool-calling model. Made for HIPAA and other compliance-sensitive workflows that need a full audit trail.
+          </p>
+          <div class="work-badges">
+            <span class="badge">MCP SDK</span>
+            <span class="badge">Node</span>
+            <span class="badge">Python</span>
+            <span class="badge">Claude Tool Engineering</span>
+            <span class="badge">JSON Schema</span>
+            <span class="badge">PII Governance</span>
+          </div>
+        </a>
+
+        <a href="010-linear-mcp.html" class="work-card" aria-label="Linear MCP">
+          <div class="work-tag">MCP · Threat-Modeled</div>
+          <div class="work-name">Linear MCP</div>
+          <p class="work-desc">
+            Production MCP server for Linear, with a full security review. Six MCP tools for engineering team operations — notification triage, issue scoping, velocity diagnosis, status reporting. Includes a 30-case evaluation harness, a documented threat model, and per-tool cost analysis. Open source. The harness and threat model are what make it safe to adopt at an enterprise.
+          </p>
+          <div class="work-badges">
+            <span class="badge">TypeScript</span>
+            <span class="badge">MCP SDK</span>
+            <span class="badge">Anthropic SDK</span>
+            <span class="badge">Linear GraphQL API</span>
+            <span class="badge">Zod</span>
+            <span class="badge">Vitest</span>
+          </div>
+        </a>
+
+        <a href="008-six-percent-mcp.html" class="work-card" aria-label="Six Percent MCP">
+          <div class="work-tag">Custom MCP Tooling</div>
+          <div class="work-name">Six Percent MCP</div>
+          <p class="work-desc">
+            Custom MCP server with five tools for a content and research workflow — Notion-backed idea retrieval, tone analysis, page scaffolding, vault capture. I use it day to day.
+          </p>
+          <div class="work-badges">
+            <span class="badge">MCP SDK</span>
+            <span class="badge">Notion API</span>
+            <span class="badge">Zod</span>
+            <span class="badge">Node</span>
+          </div>
+        </a>
+
+        <a href="012-visionary-producer.html" class="work-card" aria-label="Visionary Producer">
+          <div class="work-tag">Architecture Proof</div>
+          <div class="work-name">Visionary Producer</div>
+          <p class="work-desc">
+            The same ReAct agent architecture as Sentinel Triage, pointed at film pre-production instead of security triage. Script breakdown, VFX complexity scoring, casting archetypes, producer-approval gate before lock. It shows the architecture works in more than one domain.
+          </p>
+          <div class="work-badges">
+            <span class="badge">Python</span>
+            <span class="badge">Streamlit</span>
+            <span class="badge">Gemini 2.5 Flash</span>
+            <span class="badge">ReAct</span>
+            <span class="badge">Function Calling</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL 3 — STACK -->
+  <section class="panel" id="p-stack" aria-label="Stack and tooling">
+    <div class="panel-inner">
+      <div class="eyebrow">Stack</div>
+      <h2 class="section-h2">What I Build With.</h2>
+      <p class="stack-lede">
+        The patterns above — MCP servers, ReAct loops, RAG pipelines, multi-agent orchestration, human-in-the-loop gates — aren't tied to one vendor. I pick the model, framework, and tools that fit the project.
+      </p>
+
+      <div class="stack-grid">
+        <div class="stack-col">
+          <div class="stack-label">Foundation Models</div>
+          <div class="stack-tags">
+            <span class="stack-tag">Anthropic Claude</span>
+            <span class="stack-tag">OpenAI GPT-4 / GPT-5</span>
+            <span class="stack-tag">Google Gemini</span>
+            <span class="stack-tag">Meta Llama</span>
+            <span class="stack-tag">Mistral AI</span>
+            <span class="stack-tag">Hugging Face</span>
+          </div>
+        </div>
+        <div class="stack-col">
+          <div class="stack-label">Platforms &amp; Frameworks</div>
+          <div class="stack-tags">
+            <span class="stack-tag">MCP</span>
+            <span class="stack-tag">LangChain</span>
+            <span class="stack-tag">LlamaIndex</span>
+            <span class="stack-tag">Vertex AI</span>
+            <span class="stack-tag">Anthropic SDK</span>
+            <span class="stack-tag">OpenAI SDK</span>
+            <span class="stack-tag">Claude Agent SDK</span>
+            <span class="stack-tag">Vercel AI SDK</span>
+          </div>
+        </div>
+        <div class="stack-col">
+          <div class="stack-label">Consumer &amp; Enterprise UI</div>
+          <div class="stack-tags">
+            <span class="stack-tag">Claude</span>
+            <span class="stack-tag">ChatGPT</span>
+            <span class="stack-tag">Gemini</span>
+            <span class="stack-tag">Microsoft Copilot</span>
+            <span class="stack-tag">Notion AI</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL 4 — BACKGROUND + CONTACT -->
+  <section class="panel" id="p-contact" aria-label="Background and contact">
+    <div class="panel-inner contact-inner">
+
+      <div class="bg-block">
+        <div class="bg-label">Background</div>
         <p class="bg-body">
           <strong>Wells Fargo, Microsoft, Starbucks, Bank of America, Veradigm.</strong> Cloud Solutions Architect at Microsoft — Python automation for Entra ID Governance and Non-Human Identity, before NHI governance was a named discipline. Senior Security Engineer at Starbucks — PowerShell automation across 60+ domains. Payment infrastructure for SWIFT/CHIPS/Fedwire at Wells Fargo. HIPAA-regulated IAM for 16,000+ users at Veradigm. PMP-certified — I ship the build <em>and</em> run the rollout.
         </p>
@@ -664,34 +664,109 @@ a:focus-visible, button:focus-visible {
           Security, identity, and compliance come first. The agentic AI work sits on top of fifteen years of it.
         </p>
       </div>
-    </div>
-  </div>
-</section>
 
-<!-- ── CONTACT ──────────────────────────── -->
-<section id="contact">
-  <div class="inner">
-    <h2 class="contact-h2">Open to full-time, contract, and project work.</h2>
-    <div class="contact-line">
-      <a href="mailto:iambrucedavis@gmail.com">iambrucedavis@gmail.com</a>
-      <span class="contact-sep">·</span>
-      <a href="https://linkedin.com/in/bruce3" target="_blank" rel="noopener">LinkedIn</a>
-      <span class="contact-sep">·</span>
-      <a href="https://github.com/iambrucedavis" target="_blank" rel="noopener">GitHub</a>
-    </div>
-  </div>
-</section>
+      <div>
+        <h2 class="contact-h2">Open to full-time, contract, and project work.</h2>
+        <div class="contact-line">
+          <a href="mailto:iambrucedavis@gmail.com">iambrucedavis@gmail.com</a>
+          <span class="contact-sep">·</span>
+          <a href="https://linkedin.com/in/bruce3" target="_blank" rel="noopener">LinkedIn</a>
+          <span class="contact-sep">·</span>
+          <a href="https://github.com/iambrucedavis" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
 
-<!-- ── FOOTER ───────────────────────────── -->
-<footer>
-  <div>Bruce Davis · Charlotte, NC · 2026</div>
-  <div class="footer-links">
-    <a href="#work">Work</a>
-    <a href="about.html">About</a>
-    <a href="bruce-davis-resume.html" target="_blank" rel="noopener">Resume</a>
-    <a href="#contact">Contact</a>
-  </div>
-</footer>
+      <div class="colophon">Bruce Davis · Charlotte, NC · 2026</div>
+
+    </div>
+  </section>
+
+</div>
+
+<!-- ── DECK CONTROLS ────────────────────── -->
+<button class="deck-arrow prev" aria-label="Previous section">&#8249;</button>
+<button class="deck-arrow next" aria-label="Next section">&#8250;</button>
+
+<div class="deck-tabs" role="tablist" aria-label="Site sections">
+  <button class="deck-tab" data-panel="0"><span class="tab-num">01</span>Intro</button>
+  <button class="deck-tab" data-panel="1"><span class="tab-num">02</span>Work</button>
+  <button class="deck-tab" data-panel="2"><span class="tab-num">03</span>Stack</button>
+  <button class="deck-tab" data-panel="3"><span class="tab-num">04</span>Contact</button>
+</div>
+
+<script>
+'use strict';
+(function () {
+  var deck = document.getElementById('deck');
+  if (!deck) return;
+  var panels = Array.prototype.slice.call(deck.querySelectorAll('.panel'));
+  var tabs   = Array.prototype.slice.call(document.querySelectorAll('.deck-tab'));
+  var prev   = document.querySelector('.deck-arrow.prev');
+  var next   = document.querySelector('.deck-arrow.next');
+  var total  = panels.length;
+  var idx    = 0;
+
+  function render() {
+    deck.style.transform = 'translateX(-' + (idx * 100) + 'vw)';
+    prev.disabled = idx === 0;
+    next.disabled = idx === total - 1;
+    tabs.forEach(function (t, i) {
+      t.setAttribute('aria-current', i === idx ? 'true' : 'false');
+    });
+    panels.forEach(function (p, i) {
+      if (i === idx) {
+        p.removeAttribute('inert');
+        p.removeAttribute('aria-hidden');
+      } else {
+        p.setAttribute('inert', '');
+        p.setAttribute('aria-hidden', 'true');
+        p.scrollTop = 0;
+      }
+    });
+  }
+
+  function go(i) {
+    i = Math.max(0, Math.min(total - 1, i));
+    if (i === idx) return;
+    idx = i;
+    render();
+  }
+
+  prev.addEventListener('click', function () { go(idx - 1); });
+  next.addEventListener('click', function () { go(idx + 1); });
+
+  document.querySelectorAll('[data-panel]').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      go(parseInt(el.getAttribute('data-panel'), 10));
+    });
+  });
+
+  document.addEventListener('keydown', function (e) {
+    var tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea') return;
+    if (e.key === 'ArrowRight') { go(idx + 1); }
+    else if (e.key === 'ArrowLeft') { go(idx - 1); }
+  });
+
+  var tsx = 0, tsy = 0;
+  deck.addEventListener('touchstart', function (e) {
+    tsx = e.touches[0].clientX;
+    tsy = e.touches[0].clientY;
+  }, { passive: true });
+  deck.addEventListener('touchend', function (e) {
+    var dx = e.changedTouches[0].clientX - tsx;
+    var dy = e.changedTouches[0].clientY - tsy;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+      go(dx < 0 ? idx + 1 : idx - 1);
+    }
+  }, { passive: true });
+
+  var hashMap = { '#work': 1, '#stack': 2, '#contact': 3 };
+  if (hashMap[location.hash] != null) { idx = hashMap[location.hash]; }
+  render();
+})();
+</script>
 
 </body>
 </html>
