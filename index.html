@@ -213,7 +213,7 @@ body {
   border: 1px solid var(--ink);
   border-radius: 0;
   cursor: pointer;
-  transition: background var(--m-fast), color var(--m-fast), border-color var(--m-fast);
+  transition: background var(--m-fast), color var(--m-fast), border-color var(--m-fast), transform 180ms cubic-bezier(.2,0,0,1);
 }
 .btn-primary { background: var(--signal); color: #FFFFFF; border-color: var(--signal); }
 .btn-primary:hover  { background: #0052CC; border-color: #0052CC; }
@@ -230,7 +230,8 @@ body {
   border: 1px solid var(--hairline-strong);
   padding: clamp(20px,2vw,30px);
   display:flex; flex-direction:column; gap:12px;
-  transition: border-color var(--m-base);
+  transition: border-color var(--m-base), transform 160ms ease;
+  will-change: transform;
 }
 .lf-card:hover { border-color: var(--signal); }
 .lf-tag {
@@ -275,8 +276,9 @@ body {
   padding: clamp(16px,1.5vw,22px);
   display:flex; flex-direction:column;
   text-decoration:none; color:inherit;
-  transition: border-color var(--m-base);
+  transition: border-color var(--m-base), transform 160ms ease;
   position: relative;
+  will-change: transform;
 }
 .work-card:hover { border-color: var(--signal); }
 .work-flagship {
@@ -347,9 +349,10 @@ body {
   color: var(--ink);
   border: 1px solid var(--hairline-strong);
   padding: 6px 11px;
-  transition: border-color var(--m-base), color var(--m-base);
+  cursor: default;
+  transition: border-color var(--m-base), color var(--m-base), transform var(--m-base);
 }
-.stack-tag:hover { border-color: var(--signal); color: var(--signal); }
+.stack-tag:hover { border-color: var(--signal); color: var(--signal); transform: translateY(-2px); }
 
 /* ─── CONTACT PANEL ──────────────────────── */
 .contact-inner { text-align:center; display:flex; flex-direction:column; gap: clamp(28px,4vh,52px); }
@@ -393,6 +396,42 @@ body {
   color: var(--mute);
 }
 
+/* ─── MICRO-INTERACTIONS ─────────────────── */
+.rise {
+  opacity: 0; transform: translateY(22px);
+  transition: opacity .6s cubic-bezier(.2,0,0,1), transform .6s cubic-bezier(.2,0,0,1);
+  transition-delay: calc(var(--i,0) * 70ms);
+}
+.panel.is-active .rise { opacity: 1; transform: none; }
+.scramble { display: inline-block; }
+
+@keyframes arrowHint {
+  0%,100% { transform: translateY(-50%); }
+  35%,72% { transform: translateY(-50%) translateX(7px); }
+}
+.deck-arrow.next.hint { animation: arrowHint 1.15s ease .55s 2; }
+
+.sound-toggle {
+  position: fixed; bottom: 15px; right: clamp(12px,2vw,26px); z-index: 460;
+  display:flex; align-items:center; gap: 7px;
+  font-family: var(--mono);
+  font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--mute);
+  background: rgba(10,14,26,.7);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border: 1px solid var(--hairline-strong);
+  padding: 6px 10px; cursor: pointer;
+  transition: color var(--m-base), border-color var(--m-base);
+}
+.sound-toggle:hover { color: var(--ink); border-color: var(--signal); }
+.sound-toggle .st-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  border: 1px solid currentColor;
+  transition: background var(--m-base);
+}
+.sound-toggle[aria-pressed="true"] { color: var(--ink-soft); }
+.sound-toggle[aria-pressed="true"] .st-dot { background: var(--signal); border-color: var(--signal); }
+
 /* ─── A11Y ───────────────────────────────── */
 .skip-link {
   position:absolute; left:-9999px; top:8px; z-index:10001;
@@ -428,6 +467,8 @@ a:focus-visible, button:focus-visible {
   *,*::before,*::after { transition-duration:.001ms !important; animation-duration:.001ms !important; }
   #deck { transition: none; }
   .nav-status::before { animation: none; }
+  .rise { opacity:1 !important; transform:none !important; }
+  .deck-arrow.next.hint { animation: none; }
 }
 
 </style>
@@ -458,19 +499,19 @@ a:focus-visible, button:focus-visible {
     <div class="panel-inner intro-inner">
 
       <div class="hero">
-        <div class="hero-name">Bruce Davis · Charlotte, NC</div>
-        <h1 class="hero-h1">AI Systems<br>Engineer</h1>
-        <div class="hero-subhead"><span style="color:var(--signal);">Agentic AI</span> · IAM · Security</div>
-        <p class="hero-tagline">
+        <div class="hero-name rise" style="--i:0">Bruce Davis · Charlotte, NC</div>
+        <h1 class="hero-h1 rise" style="--i:1"><span class="scramble" data-final="AI Systems">AI Systems</span><br><span class="scramble" data-final="Engineer">Engineer</span></h1>
+        <div class="hero-subhead rise" style="--i:2"><span style="color:var(--signal);">Agentic AI</span> · IAM · Security</div>
+        <p class="hero-tagline rise" style="--i:3">
           I build agentic AI infrastructure that enterprise teams can trust.
         </p>
-        <div class="hero-cta">
+        <div class="hero-cta rise" style="--i:4">
           <button class="btn btn-primary" data-panel="1">See the work</button>
           <a href="bruce-davis-resume.html" target="_blank" rel="noopener" class="btn btn-ghost">Resume</a>
         </div>
       </div>
 
-      <div class="lf-grid">
+      <div class="lf-grid rise" style="--i:5">
         <div class="lf-card">
           <div class="lf-tag">Pillar 1</div>
           <div class="lf-title">Agentic AI Systems</div>
@@ -500,10 +541,10 @@ a:focus-visible, button:focus-visible {
   <!-- PANEL 2 — WORK -->
   <section class="panel" id="p-work" aria-label="Work">
     <div class="panel-inner">
-      <div class="eyebrow">Work</div>
-      <h2 class="section-h2">Deployed Systems — Agentic AI, IAM, and Security.</h2>
+      <div class="eyebrow rise" style="--i:0">Work</div>
+      <h2 class="section-h2 rise" style="--i:1">Deployed Systems — Agentic AI, IAM, and Security.</h2>
 
-      <div class="work-grid">
+      <div class="work-grid rise" style="--i:2">
 
         <a href="011-sentinel-triage.html" class="work-card is-flagship" aria-label="Sentinel Triage — flagship">
           <span class="work-flagship">Flagship</span>
@@ -606,13 +647,13 @@ a:focus-visible, button:focus-visible {
   <!-- PANEL 3 — STACK -->
   <section class="panel" id="p-stack" aria-label="Stack and tooling">
     <div class="panel-inner">
-      <div class="eyebrow">Stack</div>
-      <h2 class="section-h2">What I Build With.</h2>
-      <p class="stack-lede">
+      <div class="eyebrow rise" style="--i:0">Stack</div>
+      <h2 class="section-h2 rise" style="--i:1">What I Build With.</h2>
+      <p class="stack-lede rise" style="--i:2">
         The patterns above — MCP servers, ReAct loops, RAG pipelines, multi-agent orchestration, human-in-the-loop gates — aren't tied to one vendor. I pick the model, framework, and tools that fit the project.
       </p>
 
-      <div class="stack-grid">
+      <div class="stack-grid rise" style="--i:3">
         <div class="stack-col">
           <div class="stack-label">Foundation Models</div>
           <div class="stack-tags">
@@ -655,7 +696,7 @@ a:focus-visible, button:focus-visible {
   <section class="panel" id="p-contact" aria-label="Background and contact">
     <div class="panel-inner contact-inner">
 
-      <div class="bg-block">
+      <div class="bg-block rise" style="--i:0">
         <div class="bg-label">Background</div>
         <p class="bg-body">
           <strong>Wells Fargo, Microsoft, Starbucks, Bank of America, Veradigm.</strong> Cloud Solutions Architect at Microsoft — Python automation for Entra ID Governance and Non-Human Identity, before NHI governance was a named discipline. Senior Security Engineer at Starbucks — PowerShell automation across 60+ domains. Payment infrastructure for SWIFT/CHIPS/Fedwire at Wells Fargo. HIPAA-regulated IAM for 16,000+ users at Veradigm. PMP-certified — I ship the build <em>and</em> run the rollout.
@@ -665,7 +706,7 @@ a:focus-visible, button:focus-visible {
         </p>
       </div>
 
-      <div>
+      <div class="rise" style="--i:1">
         <h2 class="contact-h2">Open to full-time, contract, and project work.</h2>
         <div class="contact-line">
           <a href="mailto:iambrucedavis@gmail.com">iambrucedavis@gmail.com</a>
@@ -676,7 +717,7 @@ a:focus-visible, button:focus-visible {
         </div>
       </div>
 
-      <div class="colophon">Bruce Davis · Charlotte, NC · 2026</div>
+      <div class="colophon rise" style="--i:2">Bruce Davis · Charlotte, NC · 2026</div>
 
     </div>
   </section>
@@ -694,11 +735,17 @@ a:focus-visible, button:focus-visible {
   <button class="deck-tab" data-panel="3"><span class="tab-num">04</span>Contact</button>
 </div>
 
+<button class="sound-toggle" aria-pressed="true" aria-label="Toggle navigation sound">
+  <span class="st-dot"></span>Audio
+</button>
+
 <script>
 'use strict';
-(function () {
+
+/* ── DECK NAVIGATION ── */
+var bdDeck = (function () {
   var deck = document.getElementById('deck');
-  if (!deck) return;
+  if (!deck) return null;
   var panels = Array.prototype.slice.call(deck.querySelectorAll('.panel'));
   var tabs   = Array.prototype.slice.call(document.querySelectorAll('.deck-tab'));
   var prev   = document.querySelector('.deck-arrow.prev');
@@ -714,6 +761,7 @@ a:focus-visible, button:focus-visible {
       t.setAttribute('aria-current', i === idx ? 'true' : 'false');
     });
     panels.forEach(function (p, i) {
+      p.classList.toggle('is-active', i === idx);
       if (i === idx) {
         p.removeAttribute('inert');
         p.removeAttribute('aria-hidden');
@@ -728,31 +776,29 @@ a:focus-visible, button:focus-visible {
   function go(i) {
     i = Math.max(0, Math.min(total - 1, i));
     if (i === idx) return;
+    var dir = i > idx ? 1 : -1;
     idx = i;
     render();
+    if (window.bdTone) window.bdTone(dir > 0 ? 523 : 392);
   }
 
   prev.addEventListener('click', function () { go(idx - 1); });
   next.addEventListener('click', function () { go(idx + 1); });
-
   document.querySelectorAll('[data-panel]').forEach(function (el) {
     el.addEventListener('click', function (e) {
       e.preventDefault();
       go(parseInt(el.getAttribute('data-panel'), 10));
     });
   });
-
   document.addEventListener('keydown', function (e) {
     var tag = (e.target.tagName || '').toLowerCase();
     if (tag === 'input' || tag === 'textarea') return;
     if (e.key === 'ArrowRight') { go(idx + 1); }
     else if (e.key === 'ArrowLeft') { go(idx - 1); }
   });
-
   var tsx = 0, tsy = 0;
   deck.addEventListener('touchstart', function (e) {
-    tsx = e.touches[0].clientX;
-    tsy = e.touches[0].clientY;
+    tsx = e.touches[0].clientX; tsy = e.touches[0].clientY;
   }, { passive: true });
   deck.addEventListener('touchend', function (e) {
     var dx = e.changedTouches[0].clientX - tsx;
@@ -765,7 +811,97 @@ a:focus-visible, button:focus-visible {
   var hashMap = { '#work': 1, '#stack': 2, '#contact': 3 };
   if (hashMap[location.hash] != null) { idx = hashMap[location.hash]; }
   render();
+
+  /* one-time hint nudge on the next arrow */
+  if (idx < total - 1) { next.classList.add('hint'); }
+
+  return { go: go };
 })();
+
+/* ── MICRO-INTERACTIONS ── */
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* soft navigation sound (Web Audio, no asset files) */
+  var soundOn = localStorage.getItem('bd-sound') !== 'off';
+  var actx = null;
+  window.bdTone = function (freq) {
+    if (!soundOn) return;
+    try {
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      if (actx.state === 'suspended') actx.resume();
+      var o = actx.createOscillator(), g = actx.createGain();
+      o.type = 'sine'; o.frequency.value = freq;
+      o.connect(g); g.connect(actx.destination);
+      var t = actx.currentTime;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.05, t + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.16);
+      o.start(t); o.stop(t + 0.18);
+    } catch (e) {}
+  };
+  var toggle = document.querySelector('.sound-toggle');
+  if (toggle) {
+    var paint = function () { toggle.setAttribute('aria-pressed', soundOn ? 'true' : 'false'); };
+    paint();
+    toggle.addEventListener('click', function () {
+      soundOn = !soundOn;
+      localStorage.setItem('bd-sound', soundOn ? 'on' : 'off');
+      paint();
+      if (soundOn) window.bdTone(523);
+    });
+  }
+
+  if (!reduce) {
+    /* pointer-tilt on cards */
+    Array.prototype.slice.call(document.querySelectorAll('.lf-card, .work-card')).forEach(function (card) {
+      card.addEventListener('mousemove', function (e) {
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = 'perspective(900px) rotateX(' + (-py * 4.5).toFixed(2) + 'deg) rotateY(' + (px * 4.5).toFixed(2) + 'deg)';
+      });
+      card.addEventListener('mouseleave', function () { card.style.transform = ''; });
+    });
+
+    /* magnetic buttons */
+    Array.prototype.slice.call(document.querySelectorAll('.btn')).forEach(function (b) {
+      b.addEventListener('mousemove', function (e) {
+        var r = b.getBoundingClientRect();
+        var x = (e.clientX - r.left - r.width / 2) * 0.22;
+        var y = (e.clientY - r.top - r.height / 2) * 0.32;
+        b.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
+      });
+      b.addEventListener('mouseleave', function () { b.style.transform = ''; });
+    });
+
+    /* hero title scramble-in */
+    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/<>*';
+    Array.prototype.slice.call(document.querySelectorAll('.scramble')).forEach(function (el, n) {
+      var finalText = el.getAttribute('data-final') || el.textContent;
+      var start = performance.now() + n * 160;
+      var dur = 620;
+      function frame(now) {
+        if (now < start) { requestAnimationFrame(frame); return; }
+        var p = Math.min(1, (now - start) / dur);
+        var shown = Math.floor(p * finalText.length);
+        var out = '';
+        for (var i = 0; i < finalText.length; i++) {
+          if (i < shown || finalText[i] === ' ') out += finalText[i];
+          else out += chars[(Math.random() * chars.length) | 0];
+        }
+        el.textContent = out;
+        if (p < 1) requestAnimationFrame(frame);
+        else el.textContent = finalText;
+      }
+      requestAnimationFrame(frame);
+    });
+  }
+})();
+
+/* ── a quiet hello for the curious ── */
+console.log('%c Bruce Davis — AI Systems Engineer ', 'background:#0066FF;color:#fff;font-family:monospace;padding:4px 9px;');
+console.log('%cReading the source? Good instinct. Say hi — iambrucedavis@gmail.com', 'color:#7A8392;font-family:monospace;');
 </script>
 
 </body>
