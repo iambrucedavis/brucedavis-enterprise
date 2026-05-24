@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NHI Credential Risk Classifier — Bruce Davis</title>
+<meta name="description" content="A fine-tuned classifier that scores machine identity credentials by risk state. DistilBERT for production triage; Llama 3.2 1B + LoRA for cachet. Synthetic dataset, real eval harness, side-by-side comparison.">
+<meta property="og:title" content="NHI Credential Risk Classifier — Bruce Davis">
+<meta property="og:description" content="A real ML portfolio project: fine-tune two models on a credential-risk classification task, evaluate them, and compare. The brain of the Agent Governance Console.">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+/* ─── TOKENS — formal register ─────── */
+:root {
+  --paper:        #0A0E1A;
+  --paper-clean:  #121826;
+  --paper-deep:   #1A2236;
+  --ink:          #F5F7FA;
+  --ink-soft:     #C1C7D0;
+  --mute:         #7A8392;
+  --mute-soft:    #9CA3AF;
+  --signal:       #0066FF;
+  --signal-rgb:   0,102,255;
+  --hairline:        rgba(255,255,255,.08);
+  --hairline-strong: rgba(255,255,255,.18);
+  --display: 'Anton', 'Bebas Neue', Impact, sans-serif;
+  --serif:   'EB Garamond', Georgia, serif;
+  --mono:    'Space Mono', ui-monospace, monospace;
+  --shadow:    0 0 0 1px var(--hairline-strong);
+  --shadow-lg: 0 0 0 1px var(--hairline-strong), 0 24px 48px -24px rgba(0,0,0,.6);
+  --m-fast: 60ms  cubic-bezier(.2,0,0,1);
+  --m-base: 140ms cubic-bezier(.2,0,0,1);
+  --bg: var(--paper);
+  --surface: var(--paper-clean);
+  --surface-hi: var(--paper-deep);
+  --border: var(--hairline);
+  --border-hi: var(--hairline-strong);
+  --text: var(--ink);
+  --text-dim: var(--ink-soft);
+  --text-muted: var(--mute);
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+a { color:inherit; text-decoration:none; }
+
+/* ─── NAV ──────────────────────────────────────── */
+#top-nav {
+  position:fixed; top:0; left:0; right:0; z-index:500;
+  height:64px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 clamp(22px,5vw,56px);
+  background:var(--paper);
+  border-bottom:1px solid var(--hairline-strong);
+}
+.nav-back { font-family:var(--mono); font-weight:700; font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); transition:color var(--m-base); }
+.nav-back:hover { color:var(--signal); }
+.nav-links { display:flex; gap:clamp(20px,3vw,38px); }
+.nav-links a { font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--mute); transition:color var(--m-base); }
+.nav-links a:hover { color:var(--ink); }
+
+/* ─── HERO ─────────────────────────────────────── */
+#hero {
+  min-height:80vh;
+  display:flex; flex-direction:column; justify-content:flex-end;
+  padding:132px clamp(22px,5vw,56px) 72px;
+  border-bottom:1px solid var(--hairline-strong);
+}
+.hero-pre { font-family:var(--mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--signal); margin-bottom:22px; }
+#hero-hl { font-family:var(--display); font-weight:400; font-size:clamp(48px,8vw,104px); line-height:.92; letter-spacing:.005em; text-transform:uppercase; color:var(--ink); }
+#hero-hl .h-line { display:block; overflow:hidden; }
+.hero-sub { margin-top:30px; font-family:var(--serif); font-style:italic; font-size:clamp(18px,1.7vw,23px); line-height:1.5; color:var(--ink-soft); max-width:52ch; }
+.hero-meta { margin-top:28px; display:flex; gap:20px; flex-wrap:wrap; font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); }
+
+/* ─── SECTION SCAFFOLD ─────────────────────────── */
+.dv-section { padding:clamp(64px,8vw,100px) clamp(22px,5vw,56px); border-bottom:1px solid var(--hairline-strong); }
+.sec-inner  { max-width:1000px; margin:0 auto; }
+.dv-hdr     { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px; gap:16px; flex-wrap:wrap; }
+.dv-label   { font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); }
+.dv-version { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--mute); }
+.dv-title   { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:clamp(26px,3.6vw,44px); line-height:1; letter-spacing:.01em; color:var(--ink); margin-bottom:14px; }
+.dv-desc    { font-family:var(--serif); font-size:16.5px; color:var(--ink-soft); margin-bottom:32px; max-width:60ch; line-height:1.6; }
+
+/* ─── AT A GLANCE ──────────────────────────────── */
+.glance { display:grid; grid-template-columns:1fr 1fr; gap:32px clamp(28px,4vw,56px); padding:clamp(40px,5vw,56px); background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.glance-col h3 { font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); margin-bottom:14px; }
+.glance-col p { font-family:var(--serif); font-size:16px; line-height:1.55; color:var(--ink); }
+.glance-col ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
+.glance-col li { font-family:var(--serif); font-size:15px; line-height:1.5; color:var(--ink-soft); padding-left:18px; position:relative; }
+.glance-col li::before { content:''; position:absolute; left:0; top:.55em; width:8px; height:1px; background:var(--signal); }
+.glance-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+.glance-chip { font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:6px 11px; border:1px solid var(--hairline-strong); background:var(--paper); }
+.glance-roles { font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--ink); line-height:1.7; }
+.glance-roles span { color:var(--signal); }
+
+/* ─── PIPELINE ─────────────────────────────────── */
+.flow { display:flex; align-items:stretch; border:1px solid var(--hairline-strong); box-shadow:var(--shadow); background:var(--paper-clean); }
+.flow-node { flex:1; background:var(--paper-clean); padding:26px 14px; display:flex; flex-direction:column; gap:5px; text-align:center; justify-content:center; }
+.flow-node.is-signal { box-shadow:inset 0 0 0 2px var(--signal); }
+.flow-kicker { font-family:var(--mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--mute); }
+.flow-name { font-family:var(--serif); font-size:18px; font-weight:600; color:var(--ink); }
+.flow-node.is-signal .flow-name { color:var(--signal); }
+.flow-sub { font-family:var(--serif); font-size:13px; color:var(--ink-soft); }
+.flow-arrow { display:flex; align-items:center; padding:0 8px; background:var(--paper-clean); color:var(--mute); font-size:15px; border-left:1px solid var(--hairline); border-right:1px solid var(--hairline); }
+.flow-cap { font-family:var(--serif); font-size:15px; color:var(--ink-soft); line-height:1.6; margin-top:18px; max-width:66ch; }
+
+/* ─── COMPARISON TABLE ─────────────────────────── */
+.cmp-table { width:100%; border-collapse:collapse; background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); font-family:var(--mono); font-size:13px; }
+.cmp-table th, .cmp-table td { padding:14px 18px; text-align:left; border-bottom:1px solid var(--hairline); }
+.cmp-table tr:last-child td { border-bottom:none; }
+.cmp-table th { color:var(--mute); font-weight:400; font-size:10px; letter-spacing:.16em; text-transform:uppercase; background:var(--paper-deep); }
+.cmp-table td.dim { color:var(--ink-soft); }
+.cmp-table td.signal { color:var(--signal); font-weight:700; }
+.cmp-cap { font-family:var(--serif); font-size:15px; color:var(--ink-soft); line-height:1.6; margin-top:18px; max-width:64ch; }
+
+/* ─── CLASS CARDS ──────────────────────────────── */
+.tool-cards { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.tool-card { background:var(--paper-clean); padding:26px 22px; display:flex; flex-direction:column; gap:10px; }
+.tc-verb { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:21px; letter-spacing:.01em; color:var(--ink); }
+.tc-name { font-family:var(--mono); font-size:11px; color:var(--signal); }
+.tc-desc { font-family:var(--serif); font-size:14.5px; color:var(--ink-soft); line-height:1.6; }
+.tc-model { font-family:var(--mono); font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); margin-top:auto; padding-top:10px; }
+
+/* ─── CODE FRAME ───────────────────────────────── */
+.c-frame { background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.c-bar   { display:flex; align-items:center; justify-content:space-between; padding:11px 18px; border-bottom:1px solid var(--hairline-strong); background:var(--paper-deep); gap:12px; }
+.c-bar-name   { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--ink-soft); }
+.c-bar-status { font-family:var(--mono); font-size:10px; letter-spacing:.06em; color:var(--signal); }
+.c-body { padding:22px; }
+.c-line { font-family:var(--mono); font-size:13px; line-height:1.85; color:var(--ink-soft); }
+.c-line .b { color:var(--signal); }
+.c-line .k { color:var(--ink); font-weight:700; }
+.c-cap  { font-family:var(--serif); font-size:15px; color:var(--ink-soft); line-height:1.6; margin-top:16px; max-width:66ch; }
+
+/* ─── METHODOLOGY RULES ─────────────────────────── */
+.rules { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.rule { background:var(--paper-clean); padding:24px 22px; }
+.rule-name { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:18px; letter-spacing:.01em; color:var(--ink); margin-bottom:11px; }
+.rule-body { font-family:var(--serif); font-size:14.5px; color:var(--ink-soft); line-height:1.65; }
+
+/* ─── FOOTER ───────────────────────────────────── */
+footer { background:var(--paper); border-top:1px solid var(--hairline-strong); }
+#page-footer { padding:36px clamp(22px,5vw,56px); display:flex; justify-content:space-between; align-items:center; max-width:1000px; margin:0 auto; gap:14px; flex-wrap:wrap; }
+.pf-back { font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); transition:color var(--m-base); }
+.pf-back:hover { color:var(--signal); }
+.pf-links { display:flex; gap:22px; flex-wrap:wrap; }
+.pf-links a { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); transition:color var(--m-base); }
+.pf-links a:hover { color:var(--signal); }
+
+/* ─── A11Y + MOTION ────────────────────────────── */
+a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline-offset:2px; }
+.reveal { opacity:0; transform:translateY(20px); }
+
+@media (max-width:760px) {
+  .rules { grid-template-columns:1fr; }
+  .glance { grid-template-columns:1fr; }
+  .tool-cards { grid-template-columns:1fr; }
+  .cmp-table { font-size:11px; }
+  .cmp-table th, .cmp-table td { padding:10px 12px; }
+}
+@media (max-width:600px) {
+  .flow { flex-direction:column; }
+  .flow-arrow { align-self:center; transform:rotate(90deg); padding:8px 0; border:none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { transition-duration:.001ms !important; animation-duration:.001ms !important; }
+  html { scroll-behavior:auto; }
+}
+</style>
+</head>
+<body>
+
+<nav id="top-nav">
+  <a href="index.html" class="nav-back">← Bruce Davis</a>
+  <div class="nav-links">
+    <a href="index.html#work">Work</a>
+    <a href="about.html">About</a>
+    <a href="bruce-davis-resume.html">Resume</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-pre">Machine Learning · Fine-Tuning · Hugging Face</div>
+  <h1 id="hero-hl">NHI Credential<br>Risk Classifier</h1>
+  <p class="hero-sub">
+    A fine-tuned classifier that scores machine identity credentials by risk state. Two models trained on the same task — DistilBERT for production triage, Llama 3.2 1B + LoRA for cachet. Side-by-side comparison with a real eval harness.
+  </p>
+  <div class="hero-meta">
+    <span>Two fine-tuned models</span>
+    <span>3,000-record synthetic dataset</span>
+    <span>4-class classification</span>
+    <span>Open source</span>
+  </div>
+</section>
+
+<!-- AT A GLANCE -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">At a glance</span>
+      <span class="dv-version">30-second read</span>
+    </div>
+    <div class="glance">
+      <div class="glance-col">
+        <h3>What it is</h3>
+        <p>A real ML portfolio piece — synthetic dataset, two fine-tuned models, eval harness with per-class metrics and a cost/latency comparison. Classifies a machine identity credential into one of four risk states (<em>active_legitimate · orphaned · over_scoped · suspicious</em>). The classifier becomes the brain of the AI Agent Governance Console's Triage agent.</p>
+      </div>
+      <div class="glance-col">
+        <h3>Maps to</h3>
+        <p class="glance-roles"><span>Machine Learning Engineer</span> · <span>Applied ML / NLP Engineer</span> · <span>AI Platform Engineer</span> · <span>AI Security Engineer</span></p>
+        <h3 style="margin-top:22px;">Skills demonstrated</h3>
+        <ul>
+          <li>Synthetic dataset design with controlled, learnable patterns</li>
+          <li>Transformer fine-tuning (Hugging Face Trainer)</li>
+          <li>LoRA / PEFT parameter-efficient fine-tuning</li>
+          <li>Eval methodology: per-class P/R/F1, confusion matrix, latency, cost</li>
+          <li>Production-vs-research model trade-off analysis</li>
+          <li>FastAPI inference server, CLI predictor</li>
+        </ul>
+        <div class="glance-chips">
+          <span class="glance-chip">Hugging Face</span>
+          <span class="glance-chip">Transformers</span>
+          <span class="glance-chip">PEFT / LoRA</span>
+          <span class="glance-chip">PyTorch</span>
+          <span class="glance-chip">scikit-learn</span>
+          <span class="glance-chip">FastAPI</span>
+          <span class="glance-chip">Python</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT IT IS — PIPELINE -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">What it is</span>
+    </div>
+
+    <div class="flow">
+      <div class="flow-node">
+        <span class="flow-kicker">Stage 1</span>
+        <span class="flow-name">Dataset</span>
+        <span class="flow-sub">3,000 synthetic records</span>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node is-signal">
+        <span class="flow-kicker">Stage 2</span>
+        <span class="flow-name">Fine-tune</span>
+        <span class="flow-sub">DistilBERT + Llama LoRA</span>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node">
+        <span class="flow-kicker">Stage 3</span>
+        <span class="flow-name">Evaluate</span>
+        <span class="flow-sub">P/R/F1, latency, cost</span>
+      </div>
+      <div class="flow-arrow">&rarr;</div>
+      <div class="flow-node">
+        <span class="flow-kicker">Stage 4</span>
+        <span class="flow-name">Serve</span>
+        <span class="flow-sub">FastAPI · CLI</span>
+      </div>
+    </div>
+    <p class="flow-cap">Most NHI tooling is rules-based or LLM-prompted. <strong style="color:var(--ink);font-weight:600;">Neither scales</strong> — rules miss the long tail, LLM API calls cost too much at enterprise volume. A small fine-tuned classifier sits in the right place: cheap enough to run on every credential, accurate enough to triage.</p>
+  </div>
+</div>
+
+<!-- 01 THE FOUR CLASSES -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">01 — The Task</span>
+      <span class="dv-version">four risk classes</span>
+    </div>
+    <h2 class="dv-title">Four classes. One label per credential.</h2>
+    <p class="dv-desc">Each class is defined by <em>probabilistic</em> signals in the synthetic dataset — not deterministic rules — so the model has to generalize patterns instead of memorizing signatures.</p>
+
+    <div class="tool-cards">
+      <div class="tool-card">
+        <div class="tc-verb">Active Legitimate</div>
+        <div class="tc-name">active_legitimate</div>
+        <div class="tc-desc">Owned, scoped to actual use, rotated within policy, recent activity. The healthy default state. Most credentials should land here.</div>
+        <div class="tc-model">Pattern · known owner · recent use · scope matches frequency</div>
+      </div>
+      <div class="tool-card">
+        <div class="tc-verb">Orphaned</div>
+        <div class="tc-name">orphaned</div>
+        <div class="tc-desc">No owner, no recent use, no documentation — often all three. Created for a project that ended; nobody knows it exists.</div>
+        <div class="tc-model">Pattern · null owner · unused 120+ days · no docs · old or missing rotation</div>
+      </div>
+      <div class="tool-card">
+        <div class="tc-verb">Over-Scoped</div>
+        <div class="tc-name">over_scoped</div>
+        <div class="tc-desc">Elevated or admin scope on a workload that looks read-only. Common after a one-time elevation that was never rolled back.</div>
+        <div class="tc-model">Pattern · scope &gt; observed need · light/infrequent use</div>
+      </div>
+      <div class="tool-card">
+        <div class="tc-verb">Suspicious</div>
+        <div class="tc-name">suspicious</div>
+        <div class="tc-desc">Anomalous pattern — unusual geo, dormant-then-active, elevated+undocumented, fresh+unowned. Surface to a human now.</div>
+        <div class="tc-model">Pattern · geo anomaly · revival · doc gap · ownership gap</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 02 TWO MODELS -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">02 — Two Models</span>
+      <span class="dv-version">production vs. cachet</span>
+    </div>
+    <h2 class="dv-title">Two fine-tunes on the same task.</h2>
+    <p class="dv-desc">Both models see the same input (a serialized credential record), output the same four-way probability distribution, and are scored on the same held-out test set.</p>
+
+    <table class="cmp-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>DistilBERT</th>
+          <th>Llama 3.2 1B + LoRA</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="dim">Parameters</td><td>67M (classification head)</td><td>1B base + 8M LoRA adapter</td></tr>
+        <tr><td class="dim">Train time</td><td>~5 min · CPU</td><td>~hours · single T4 GPU</td></tr>
+        <tr><td class="dim">Inference latency (CPU)</td><td class="signal">~5 ms / record</td><td>~60 ms / record</td></tr>
+        <tr><td class="dim">Adapter size on disk</td><td>~250 MB</td><td class="signal">~30 MB (adapter only)</td></tr>
+        <tr><td class="dim">Cost per 1M predictions</td><td class="signal">$~0.07</td><td>$~0.83</td></tr>
+        <tr><td class="dim">Best use</td><td>Production triage queue</td><td>Hard cases + rationale</td></tr>
+      </tbody>
+    </table>
+    <p class="cmp-cap">Latency and cost are projections from CPU measurements; the eval harness writes the actual numbers from your training run into <code style="font-family:var(--mono);font-size:13px;color:var(--ink);">results/comparison.md</code>. The point of training both isn't to declare a winner — it's to make the production-vs-research trade-off visible.</p>
+  </div>
+</div>
+
+<!-- 03 EVAL METHODOLOGY -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">03 — Eval Methodology</span>
+      <span class="dv-version">scikit-learn + custom latency harness</span>
+    </div>
+    <h2 class="dv-title">What the harness measures.</h2>
+    <p class="dv-desc">Accuracy alone hides per-class collapse and the cost of being wrong on the rare classes. The harness reports the things a deployment review would actually ask about.</p>
+
+    <div class="rules">
+      <div class="rule">
+        <div class="rule-name">Per-class P/R/F1</div>
+        <div class="rule-body">Precision, recall, F1, support per class. Macro F1 is the headline metric — it weights all four classes equally so a model that nails the easy ones and tanks <em>suspicious</em> can't hide.</div>
+      </div>
+      <div class="rule">
+        <div class="rule-name">Confusion matrix</div>
+        <div class="rule-body">Where each class gets misclassified. Suspicious → orphaned is a different failure than suspicious → active_legitimate. The matrix lets you see which mistakes are expensive.</div>
+      </div>
+      <div class="rule">
+        <div class="rule-name">Latency + cost</div>
+        <div class="rule-body">p50 and p95 single-record CPU latency, model size on disk, projected dollar cost per million predictions. The numbers that decide whether you can run this on every credential.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 04 CODE -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">04 — Try it</span>
+      <span class="dv-version">clone &amp; train</span>
+    </div>
+    <h2 class="dv-title">Reproducible end-to-end.</h2>
+    <p class="dv-desc">Four make targets get you from a fresh clone to a trained DistilBERT model with a comparison report. The Llama LoRA fine-tune needs a GPU.</p>
+
+    <div class="c-frame">
+      <div class="c-bar">
+        <span class="c-bar-name">nhi-classifier · setup</span>
+        <span class="c-bar-status">[ COPY/PASTE ]</span>
+      </div>
+      <div class="c-body">
+        <div class="c-line"><span class="b">$</span> git clone https://github.com/iambrucedavis/nhi-classifier</div>
+        <div class="c-line"><span class="b">$</span> cd nhi-classifier &amp;&amp; python -m venv .venv &amp;&amp; source .venv/bin/activate</div>
+        <div class="c-line"><span class="b">$</span> make install</div>
+        <div class="c-line"><span class="b">$</span> make data                <span style="color:var(--mute);">&nbsp;# generate 3,000 records</span></div>
+        <div class="c-line"><span class="b">$</span> make train-distilbert    <span style="color:var(--mute);">&nbsp;# ~5 min CPU</span></div>
+        <div class="c-line"><span class="b">$</span> make eval                <span style="color:var(--mute);">&nbsp;# writes results/comparison.md</span></div>
+        <div class="c-line"><span class="b">$</span> make demo                <span style="color:var(--mute);">&nbsp;# FastAPI at localhost:8000</span></div>
+      </div>
+    </div>
+    <p class="c-cap">The whole thing is &lt;1,500 lines of Python. The training scripts are intentionally vanilla Hugging Face <code style="font-family:var(--mono);font-size:13px;color:var(--ink);">Trainer</code> — no clever wrappers, no proprietary framework. Anyone reading the code can verify what's happening.</p>
+  </div>
+</div>
+
+<!-- 05 HONEST LIMITS -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">05 — Honest Limits</span>
+      <span class="dv-version">what this is not</span>
+    </div>
+    <h2 class="dv-title">A portfolio piece, not a product.</h2>
+    <div class="rules">
+      <div class="rule">
+        <div class="rule-name">Synthetic data</div>
+        <div class="rule-body">The dataset is structurally realistic but generated. A production version needs real credential telemetry — CloudTrail, Entra ID sign-in logs, secrets-manager access patterns — labeled by an identity team.</div>
+      </div>
+      <div class="rule">
+        <div class="rule-name">Four classes is a start</div>
+        <div class="rule-body">Real NHI taxonomies have more: compromised, deprecated, third-party, break-glass. The training pipeline scales by adding rows to the schema; the model architecture doesn't change.</div>
+      </div>
+      <div class="rule">
+        <div class="rule-name">LoRA is the demo, not the deploy</div>
+        <div class="rule-body">The LoRA fine-tune proves the technique. For real-world classification, DistilBERT wins on cost and latency. The LLM has a role for <em>hard cases plus rationale</em>, not bulk triage.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div id="page-footer">
+    <a href="index.html" class="pf-back">← Back to Bruce Davis</a>
+    <div class="pf-links">
+      <a href="index.html#work">Work</a>
+      <a href="bruce-davis-resume.html">Resume</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="https://github.com/iambrucedavis/nhi-classifier" target="_blank" rel="noopener">GitHub Repo</a>
+      <a href="013-axe-provenance.html">→ AI Agent Governance Console</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+'use strict';
+
+const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+gsap.registerPlugin(ScrollTrigger);
+
+/* ── HERO — char-split entrance */
+const hl = document.getElementById('hero-hl');
+hl.innerHTML = hl.innerHTML.split('<br>').map(line =>
+  `<span class="h-line" style="display:block;overflow:hidden">${
+    [...line.trim()].map(ch => ch === ' '
+      ? `<span style="display:inline-block;min-width:.25em"> </span>`
+      : `<span class="h-char" style="display:inline-block">${ch}</span>`
+    ).join('')
+  }</span>`
+).join('');
+if (motionOK) gsap.from('.h-char', { yPercent:110, duration:.7, stagger:.02, ease:'power3.out', delay:.1 });
+
+/* ── REVEAL */
+if (motionOK) {
+  document.querySelectorAll('.reveal').forEach(el => {
+    gsap.to(el, {
+      opacity:1, y:0, duration:.6, ease:'power2.out',
+      scrollTrigger:{ trigger:el, start:'top 84%' },
+    });
+  });
+} else {
+  document.querySelectorAll('.reveal').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+}
+
+/* ── 6% — easter egg */
+console.log('%c// 6% — small change. whole product.', 'color:#E1261C;font-family:monospace;letter-spacing:.04em;');
+console.log('%c// bruce davis · 2026', 'color:#8A847A;font-family:monospace;letter-spacing:.04em;');
+</script>
+
+</body>
+</html>
