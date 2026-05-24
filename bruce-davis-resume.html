@@ -304,59 +304,67 @@ a:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
 
 <!-- SUMMARY -->
 <p class="summary">
-  I build agentic AI systems &mdash; MCP servers, ReAct agent loops, multi-agent orchestration, RAG pipelines. The fifteen years before that were in identity and security: <strong>Non-Human Identity (NHI) governance at Microsoft</strong>, HIPAA-compliant IAM for 16,000+ users at Veradigm, payment infrastructure for SWIFT/CHIPS/Fedwire at Wells Fargo. Deploying an AI agent safely is mostly an identity and authorization problem, which is the work I already know. PMP-certified.
+  I build agentic AI systems &mdash; MCP servers, ReAct agent loops, multi-agent orchestration, fine-tuned classifiers, Microsoft Copilot deployments, RAG pipelines. The fifteen years before that were in identity and security: <strong>Non-Human Identity (NHI) governance at Microsoft</strong>, HIPAA-compliant IAM for 16,000+ users at Veradigm, payment infrastructure for SWIFT/CHIPS/Fedwire at Wells Fargo. Deploying an AI agent safely is mostly an identity and authorization problem, which is the work I already know. PMP-certified.
 </p>
 
 <!-- SELECTED AGENTIC AI PROJECTS -->
 <section class="section">
-  <div class="sec-label">Selected Projects &mdash; Agentic AI, IAM, Security</div>
+  <div class="sec-label">Selected Projects &mdash; Agentic AI, ML, Identity</div>
   <div class="projects">
 
     <div class="project">
       <div class="proj-id">Autonomous Security Triage Agent</div>
       <div>
-        <div class="proj-name">Human-in-the-loop authorization on a ReAct agent loop</div>
-        <div class="proj-desc">ReAct agent loop on Gemini 2.5 Flash &mdash; reads logs, enriches threat intelligence, proposes containment actions through function-calling tools. Destructive actions pause for explicit human approval before execution. An autonomy dial scopes operational reach. Built for security teams that need AI assistance without surrendering control. Python · Streamlit · Gemini 2.5 Flash · google-genai SDK · ReAct · Function Calling · HITL Architecture.</div>
+        <div class="proj-name">ReAct agent loop with human-in-the-loop authorization on destructive actions</div>
+        <div class="proj-desc">ReAct agent on Gemini 2.5 Flash &mdash; reads logs, enriches threat intel, proposes containment through function-calling tools. Destructive actions pause for explicit human approval. An autonomy dial scopes operational reach. Built for security teams that need AI assistance without surrendering control. Python &middot; Streamlit &middot; Gemini 2.5 Flash &middot; google-genai SDK &middot; ReAct &middot; Function Calling &middot; HITL.</div>
       </div>
     </div>
 
     <div class="project">
-      <div class="proj-id">Multi-Agent Incident Investigation System</div>
+      <div class="proj-id">AI Agent Governance Console</div>
       <div>
-        <div class="proj-name">Non-Human Identity (NHI) governance applied to a six-agent system</div>
-        <div class="proj-desc">Six AI agents investigate a live security incident &mdash; each with its own identity, permission level, token budget, and accountable owner. When an agent needs elevated permissions, the system stops and requests human authorization before granting them. Non-Human Identity governance applied directly to AI agents. Python · React · TypeScript · Multi-agent Architecture · NHI · Generative UI.</div>
+        <div class="proj-name">Non-Human Identity governance applied directly to a fleet of AI agents</div>
+        <div class="proj-desc">Six AI agents as discoverable, classified, owned machine identities &mdash; scoped credentials, intake-and-approval workflow, rotation, decommissioning in one trail. Generative UI on a posture event stream. The agent fleet itself becomes an NHI governance surface. Python &middot; React &middot; TypeScript &middot; Multi-agent Architecture &middot; NHI &middot; OAuth &middot; Generative UI.</div>
       </div>
     </div>
 
     <div class="project">
-      <div class="proj-id">Document Processing Pipeline</div>
+      <div class="proj-id">NHI Credential Risk Classifier</div>
       <div>
-        <div class="proj-name">HIPAA-ready extraction, PII masking, validation, and audit trail</div>
-        <div class="proj-desc">An MCP tool chain handles extraction, PII masking and deidentification, structured JSON output against a validated schema, human-in-the-loop review for edge cases, and token-cost tracking. Built on Claude; runs on GPT-4, Gemini, or any other tool-calling model. Made for HIPAA and other compliance-sensitive workflows that need a full audit trail. MCP SDK · Node · Python · ajv · JSON Schema · PII Governance.</div>
+        <div class="proj-name">Fine-tuned DistilBERT classifier &mdash; 99.33% accuracy, 10.8ms / record on CPU</div>
+        <div class="proj-desc">Synthetic dataset, two fine-tuned models (DistilBERT for production triage, Qwen 2.5 1.5B + LoRA for cachet), full eval harness with per-class P/R/F1, confusion matrix, latency, and cost. Becomes the brain of the Governance Console's Triage agent. Hugging Face Transformers &middot; PEFT / LoRA &middot; PyTorch &middot; scikit-learn &middot; FastAPI &middot; Python.</div>
       </div>
     </div>
 
     <div class="project">
-      <div class="proj-id">AI Integration for Linear</div>
+      <div class="proj-id">Entra ID NHI Audit</div>
       <div>
-        <div class="proj-name">Production MCP server with threat model and evaluation harness</div>
-        <div class="proj-desc">Six opinionated MCP tools for engineering team operations &mdash; notification triage, issue scoping, velocity diagnosis, status reporting. Includes a 30-case evaluation harness, a documented threat model, and per-tool cost analysis. Open source. TypeScript · @modelcontextprotocol/sdk · Linear GraphQL API · Zod · Vitest.</div>
+        <div class="proj-name">PowerShell module that audits an Entra ID tenant for non-human identity risk</div>
+        <div class="proj-desc">Four cmdlets (Connect, Get-Inventory, Test-Risk, Export-Report) score every service principal, app registration, and managed identity on eight risk factors. Mock fixtures so it runs offline; <code>GRAPH_MODE=live</code> swaps in real Microsoft Graph via managed identity. Self-contained HTML report + structured JSON for SIEM ingest. PowerShell 7 &middot; Microsoft Graph SDK &middot; Entra ID &middot; Active Directory &middot; Bicep-ready.</div>
       </div>
     </div>
 
     <div class="project">
-      <div class="proj-id">Content &amp; Research Automation</div>
+      <div class="proj-id">IT Support Copilot for Teams</div>
       <div>
-        <div class="proj-name">Custom MCP server — Notion-backed retrieval, tone analysis, scaffolding, vault capture</div>
-        <div class="proj-desc">Custom MCP server with five tools for a content and research workflow &mdash; Notion-backed idea retrieval, tone analysis, page scaffolding, vault capture. I use it day to day. @modelcontextprotocol/sdk · Notion API · Zod · Node.</div>
+        <div class="proj-name">Teams-deployed Microsoft Copilot &mdash; LLM understands, deterministic policy decides</div>
+        <div class="proj-desc">Bot Framework v4 on the Teams side, Azure OpenAI for reasoning, Microsoft Graph for identity. Four tools and four outcomes (self_serve / auto_fulfill / escalate / deny). LLM picks tools; a separate rule-based policy engine decides what happens &mdash; auditable and prompt-injection-resistant. Container Apps + Bicep for production. Bot Framework &middot; Microsoft Graph &middot; Azure OpenAI &middot; Entra ID &middot; FastAPI &middot; Bicep &middot; Python.</div>
       </div>
     </div>
 
     <div class="project">
-      <div class="proj-id">Film Pre-Production Agent</div>
+      <div class="proj-id">Workflow-Driven Triage Agent</div>
       <div>
-        <div class="proj-name">One agent architecture, validated across a second domain</div>
-        <div class="proj-desc">The same ReAct agent loop as the Autonomous Security Triage Agent, pointed at film pre-production &mdash; script breakdown, VFX complexity scoring, casting archetypes, producer-approval gate before lock. The same architecture works in a second domain. Python · Streamlit · Gemini 2.5 Flash · google-genai SDK · ReAct · Function Calling.</div>
+        <div class="proj-name">Three protocols, one stack &mdash; Google ADK + MCP + n8n</div>
+        <div class="proj-desc">n8n receives a support-ticket webhook, calls a Google ADK agent (Gemini 2.5 Flash) over HTTP, agent calls three MCP tools (intent, customer history, KB) over stdio, n8n routes by priority. Each protocol at the layer it's best for. docker-compose stack; no-n8n demo path for fast iteration. Google ADK &middot; MCP / FastMCP &middot; n8n &middot; Gemini 2.5 &middot; FastAPI &middot; Docker Compose.</div>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="proj-id">Linear MCP Server</div>
+      <div>
+        <div class="proj-name">Production MCP server with documented threat model and 30-case eval harness</div>
+        <div class="proj-desc">Six opinionated MCP tools for engineering team operations &mdash; inbox triage, issue scoping, velocity audit, status reporting. 30-case eval harness, documented threat model, per-tool cost analysis. Read-only by design &mdash; destructive operations never written. Open source. TypeScript &middot; @modelcontextprotocol/sdk &middot; Linear GraphQL API &middot; Zod &middot; Vitest.</div>
       </div>
     </div>
 
@@ -459,22 +467,25 @@ a:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
   <div class="sec-label">Stack</div>
   <div class="stack">
     <strong style="color:var(--ink);">Foundation &amp; Small Models:</strong>
-    OpenAI · Google · Anthropic · Meta Llama · Gemini · Mistral · Hugging Face · Open-source models
+    OpenAI · Anthropic Claude · Google Gemini · Meta Llama · Qwen 2.5 · Mistral · DistilBERT · Hugging Face · Open-source models
+    <br>
+    <strong style="color:var(--ink);">ML &amp; Fine-Tuning:</strong>
+    PyTorch · Hugging Face Transformers · PEFT / LoRA · scikit-learn · Eval Harness Design · Synthetic Dataset Generation · Per-Class Metrics &amp; Confusion Matrices
     <br>
     <strong style="color:var(--ink);">Orchestration &amp; Frameworks:</strong>
-    MCP · LangChain · LlamaIndex · Vertex AI · Agent platforms · Workflow orchestration · ReAct · Function Calling · Multi-agent Architecture · RAG · Human-in-the-Loop (HITL) · Anthropic SDK · OpenAI SDK · google-genai SDK · Vercel AI SDK
+    MCP · FastMCP · Google ADK · n8n · Microsoft Bot Framework · LangChain · LlamaIndex · Vertex AI · Azure OpenAI · ReAct · Function Calling · Multi-Agent Architecture · RAG · HITL · Anthropic SDK · OpenAI SDK · google-genai SDK · Vercel AI SDK
     <br>
     <strong style="color:var(--ink);">Application &amp; UI:</strong>
-    Claude · ChatGPT · Gemini · Microsoft Copilot · Notion AI
+    Microsoft Copilot · Microsoft Teams · Claude · ChatGPT · Gemini · Notion AI
     <br>
     <strong style="color:var(--ink);">Cloud &amp; Infrastructure:</strong>
-    Microsoft Azure · Google Cloud Platform · Vercel
+    Microsoft Azure · Azure OpenAI · Azure Container Apps · Azure Bot Service · Application Insights · Bicep · Google Cloud Platform · Vercel · Docker · Docker Compose
     <br>
     <strong style="color:var(--ink);">Identity &amp; Security:</strong>
-    Non-Human Identity (NHI) · Entra ID Governance · CyberArk · Microsoft Identity Manager (MIM) · HashiCorp Vault · Zero Trust · HIPAA · NIST · ISO 20022 · SWIFT · CHIPS · Fedwire · Threat Modeling · ServiceNow
+    Non-Human Identity (NHI) · Entra ID Governance · Microsoft Graph SDK · CyberArk · Microsoft Identity Manager (MIM) · HashiCorp Vault · Active Directory · Zero Trust · HIPAA · NIST · ISO 20022 · SWIFT · CHIPS · Fedwire · Threat Modeling · ServiceNow
     <br>
     <strong style="color:var(--ink);">Engineering:</strong>
-    Python · TypeScript · JavaScript · Node.js · React · Next.js · Streamlit · PowerShell · SQL · GraphQL · Zod · Vitest · Git · Vercel · Tailwind
+    Python · TypeScript · JavaScript · Node.js · PowerShell 7 · React · Next.js · FastAPI · Streamlit · Pydantic · SQL · GraphQL · Zod · Vitest · pytest · Git · Tailwind
     <br>
     <strong style="color:var(--ink);">Delivery:</strong>
     PMP · Scrum (PSM I) · Microsoft AI Factory · Forward Deployed Engineering · Audit-Ready Documentation
