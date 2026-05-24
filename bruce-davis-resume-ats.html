@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bruce Davis — Resume</title>
+<meta name="description" content="Bruce Davis — AI Systems Engineer · Agentic AI · IAM · Security. ATS-friendly resume.">
+<style>
+/* ATS-friendly: light background, single column, standard fonts,
+   real heading hierarchy, plain bullet lists. Designed for clean
+   parsing by job boards + LinkedIn + Greenhouse/Lever/Workday. */
+@page {
+  size: letter;
+  margin: 0.5in 0.6in;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: #ffffff;
+  color: #111111;
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 10.5pt;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+body { padding: 0; max-width: 100%; }
+
+h1 {
+  font-size: 22pt;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 2pt;
+}
+h2 {
+  font-size: 12pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #000;
+  margin: 16pt 0 8pt;
+  padding-bottom: 3pt;
+  border-bottom: 1pt solid #888;
+}
+h3 {
+  font-size: 11pt;
+  font-weight: 700;
+  margin: 0;
+  color: #000;
+}
+h4 {
+  font-size: 10.5pt;
+  font-weight: 600;
+  margin: 0;
+  color: #111;
+}
+p { margin: 0; }
+ul { list-style-type: disc; padding-left: 18pt; margin: 4pt 0 0; }
+li { margin-bottom: 3pt; }
+a { color: #0033cc; text-decoration: none; }
+
+/* ─── HEADER ─────────────────────────────────────── */
+.header { margin-bottom: 10pt; }
+.tagline {
+  font-size: 11pt;
+  font-weight: 600;
+  color: #333;
+  margin-top: 1pt;
+}
+.target {
+  font-size: 9.5pt;
+  color: #444;
+  margin-top: 4pt;
+}
+.target strong { color: #000; }
+.contact {
+  font-size: 9.5pt;
+  color: #222;
+  margin-top: 5pt;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4pt 14pt;
+}
+.contact span { white-space: nowrap; }
+.contact a { color: #0033cc; }
+
+/* ─── SUMMARY ────────────────────────────────────── */
+.summary {
+  font-size: 10.5pt;
+  line-height: 1.5;
+  margin: 0;
+}
+.summary strong { font-weight: 600; }
+
+/* ─── PROJECTS ───────────────────────────────────── */
+.project {
+  margin-bottom: 9pt;
+  page-break-inside: avoid;
+}
+.project-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12pt;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+.project-sub {
+  font-style: italic;
+  font-size: 10pt;
+  color: #444;
+  margin: 1pt 0 3pt;
+}
+.project-body {
+  font-size: 10pt;
+  line-height: 1.45;
+  color: #222;
+}
+.project-tech {
+  font-size: 9.5pt;
+  color: #555;
+  margin-top: 2pt;
+}
+
+/* ─── EXPERIENCE ─────────────────────────────────── */
+.role { margin-bottom: 11pt; page-break-inside: avoid; }
+.role-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12pt;
+  flex-wrap: wrap;
+}
+.role-co {
+  font-size: 10pt;
+  color: #444;
+  font-weight: 400;
+}
+.role-dates {
+  font-size: 9.5pt;
+  color: #444;
+  white-space: nowrap;
+}
+.role-intro {
+  font-size: 10pt;
+  color: #333;
+  font-style: italic;
+  margin: 2pt 0;
+}
+.role-condensed {
+  font-size: 10pt;
+  color: #333;
+  margin-top: 8pt;
+}
+.role-condensed strong { color: #000; }
+
+/* ─── STACK ──────────────────────────────────────── */
+.stack p {
+  font-size: 10pt;
+  line-height: 1.55;
+  margin-bottom: 4pt;
+}
+.stack strong {
+  color: #000;
+  font-weight: 700;
+}
+
+/* ─── EDU + CERTS ────────────────────────────────── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18pt;
+}
+.cert-row, .edu-row { margin-bottom: 5pt; }
+.cert-name, .edu-degree { font-size: 10.5pt; font-weight: 700; color: #000; }
+.cert-body, .edu-school { font-size: 9.5pt; color: #444; }
+.edu-school.italic { font-style: italic; }
+
+/* Print resets */
+@media print {
+  body { font-size: 10pt; }
+  a { color: #0033cc; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <h1>Bruce Davis</h1>
+  <div class="tagline">AI Systems Engineer · Agentic AI · IAM · Security</div>
+  <div class="target">
+    <strong>Target roles:</strong> AI Systems Engineer · Forward Deployed AI Engineer · Applied AI Engineer · Senior AI Engineer (Agentic Systems) · AI Transformation Lead · Microsoft Copilot Engineer
+  </div>
+  <div class="contact">
+    <span><a href="mailto:iambrucedavis@gmail.com">iambrucedavis@gmail.com</a></span>
+    <span>Charlotte, NC</span>
+    <span><a href="https://iambrucedavis.com">iambrucedavis.com</a></span>
+    <span><a href="https://linkedin.com/in/bruce3">linkedin.com/in/bruce3</a></span>
+    <span><a href="https://github.com/iambrucedavis">github.com/iambrucedavis</a></span>
+  </div>
+</header>
+
+<!-- SUMMARY -->
+<h2>Summary</h2>
+<p class="summary">
+  AI Systems Engineer building agentic AI in production environments &mdash; MCP servers, ReAct agent loops, multi-agent orchestration, fine-tuned classifiers, Microsoft Copilot deployments, RAG pipelines. Fifteen years of identity and security engineering before that: <strong>Non-Human Identity (NHI) governance at Microsoft</strong>, HIPAA-compliant IAM for 16,000+ users at Veradigm, payment infrastructure for SWIFT/CHIPS/Fedwire at Wells Fargo. Deploying an AI agent safely is mostly an identity and authorization problem. PMP-certified.
+</p>
+
+<!-- PROJECTS -->
+<h2>Selected Projects</h2>
+
+<div class="project">
+  <div class="project-head"><h3>Autonomous Security Triage Agent</h3></div>
+  <div class="project-sub">ReAct agent loop with human-in-the-loop authorization on destructive actions</div>
+  <div class="project-body">ReAct agent on Gemini 2.5 Flash &mdash; reads logs, enriches threat intel, proposes containment through function-calling tools. Destructive actions pause for explicit human approval. An autonomy dial scopes operational reach. Built for security teams that need AI assistance without surrendering control.</div>
+  <div class="project-tech">Python · Streamlit · Gemini 2.5 Flash · google-genai SDK · ReAct · Function Calling · HITL.</div>
+</div>
+
+<div class="project">
+  <div class="project-head"><h3>AI Agent Governance Console</h3></div>
+  <div class="project-sub">Non-Human Identity governance applied directly to a fleet of AI agents</div>
+  <div class="project-body">Six AI agents as discoverable, classified, owned machine identities &mdash; scoped credentials, intake-and-approval workflow, rotation, decommissioning in one trail. Generative UI on a posture event stream. The agent fleet itself becomes an NHI governance surface.</div>
+  <div class="project-tech">Python · React · TypeScript · Multi-agent Architecture · NHI · OAuth · Generative UI.</div>
+</div>
+
+<div class="project">
+  <div class="project-head"><h3>NHI Credential Risk Classifier</h3></div>
+  <div class="project-sub">Fine-tuned DistilBERT classifier &mdash; 99.33% accuracy, 10.8ms per record on CPU</div>
+  <div class="project-body">Synthetic dataset, two fine-tuned models (DistilBERT for production triage, Qwen 2.5 1.5B + LoRA for cachet), full eval harness with per-class P/R/F1, confusion matrix, latency, and cost. Becomes the brain of the Governance Console's Triage agent.</div>
+  <div class="project-tech">Hugging Face Transformers · PEFT / LoRA · PyTorch · scikit-learn · FastAPI · Python.</div>
+</div>
+
+<div class="project">
+  <div class="project-head"><h3>Entra ID NHI Audit</h3></div>
+  <div class="project-sub">PowerShell module that audits an Entra ID tenant for non-human identity risk</div>
+  <div class="project-body">Four cmdlets (Connect, Get-Inventory, Test-Risk, Export-Report) score every service principal, app registration, and managed identity on eight risk factors. Mock fixtures so it runs offline; live mode swaps in real Microsoft Graph via managed identity. Self-contained HTML report plus structured JSON for SIEM ingest.</div>
+  <div class="project-tech">PowerShell 7 · Microsoft Graph SDK · Entra ID · Active Directory · Bicep-ready.</div>
+</div>
+
+<div class="project">
+  <div class="project-head"><h3>IT Support Copilot for Teams</h3></div>
+  <div class="project-sub">Teams-deployed Microsoft Copilot &mdash; LLM understands, deterministic policy decides</div>
+  <div class="project-body">Bot Framework v4 on the Teams side, Azure OpenAI for reasoning, Microsoft Graph for identity. Four tools and four outcomes (self_serve, auto_fulfill, escalate, deny). LLM picks tools; a separate rule-based policy engine decides what happens &mdash; auditable and prompt-injection-resistant. Container Apps plus Bicep for production.</div>
+  <div class="project-tech">Bot Framework · Microsoft Graph · Azure OpenAI · Entra ID · FastAPI · Bicep · Python.</div>
+</div>
+
+<div class="project">
+  <div class="project-head"><h3>Workflow-Driven Triage Agent</h3></div>
+  <div class="project-sub">Three protocols, one stack &mdash; Google ADK + MCP + n8n</div>
+  <div class="project-body">n8n receives a support-ticket webhook, calls a Google ADK agent (Gemini 2.5 Flash) over HTTP, agent calls three MCP tools (intent, customer history, KB) over stdio, n8n routes by priority. Each protocol at the layer it's best for. Docker-compose stack; no-n8n demo path for fast iteration.</div>
+  <div class="project-tech">Google ADK · MCP / FastMCP · n8n · Gemini 2.5 · FastAPI · Docker Compose.</div>
+</div>
+
+<div class="project">
+  <div class="project-head"><h3>Linear MCP Server</h3></div>
+  <div class="project-sub">Production MCP server with documented threat model and 30-case eval harness</div>
+  <div class="project-body">Six opinionated MCP tools for engineering team operations &mdash; inbox triage, issue scoping, velocity audit, status reporting. 30-case eval harness, documented threat model, per-tool cost analysis. Read-only by design &mdash; destructive operations never written. Open source.</div>
+  <div class="project-tech">TypeScript · @modelcontextprotocol/sdk · Linear GraphQL API · Zod · Vitest.</div>
+</div>
+
+<!-- EXPERIENCE -->
+<h2>Experience</h2>
+
+<div class="role">
+  <div class="role-head">
+    <div><h4>Business Execution Consultant — Solution Design</h4><div class="role-co">Wells Fargo · Contract</div></div>
+    <div class="role-dates">Nov 2024 – Apr 2025</div>
+  </div>
+  <ul>
+    <li>Mapped network dependencies and ran gap analysis across SWIFT, CHIPS, and Fedwire payment infrastructure &mdash; documented system flows that hadn't existed on paper, accelerated regulatory approval, and cut design rework by 25%.</li>
+    <li>Designed NIST-compliant documentation architecture for network security controls; became the cross-team reference layer for incident response.</li>
+    <li>Decomposed executive payment-rail objectives into detailed execution plans for ISO 20022 interoperability and Federal Reserve compliance.</li>
+  </ul>
+</div>
+
+<div class="role">
+  <div class="role-head">
+    <div><h4>Cloud Solutions Architect — AI</h4><div class="role-co">Microsoft · Contract</div></div>
+    <div class="role-dates">May – Nov 2024</div>
+  </div>
+  <p class="role-intro">Forward-deployed Cloud Solutions Architect aligned to Microsoft's AI Factory &mdash; embedded with enterprise customers to design, ship, and deploy Azure AI solutions.</p>
+  <ul>
+    <li>Built Python automation on the Microsoft Graph API for Entra ID Governance &mdash; extracted and normalized identity data into executive-ready dashboards and architecture documentation.</li>
+    <li>Architected and shipped a Generative AI workflow MVP on Microsoft Copilot &mdash; accelerated knowledge transfer and standardized requirements gathering across global delivery teams.</li>
+    <li>Translated Non-Human Identity (NHI) governance capabilities into customer-facing solution designs.</li>
+  </ul>
+</div>
+
+<div class="role">
+  <div class="role-head">
+    <div><h4>Senior Security Engineer</h4><div class="role-co">Starbucks · Contract</div></div>
+    <div class="role-dates">Apr – Sept 2023</div>
+  </div>
+  <ul>
+    <li>Engineered PowerShell automation across 60+ domains for identity lifecycle and access control remediation &mdash; shipped scripts and runbooks at the engineering layer.</li>
+    <li>Closed 50+ vulnerabilities per sprint through automation and scripted remediation rather than manual triage.</li>
+    <li>Hardened identity and access controls across distributed teams &mdash; configured authentication protocols, owned security testing, and ran defect remediation end to end.</li>
+  </ul>
+</div>
+
+<div class="role">
+  <div class="role-head">
+    <div><h4>Project Manager — Privileged Access Management (PAM)</h4><div class="role-co">Bank of America · Contract</div></div>
+    <div class="role-dates">Jul 2021 – Nov 2022</div>
+  </div>
+  <ul>
+    <li>Led zero-downtime IAM and infrastructure modernization for 12+ teams and 60+ engineers across Oracle, CyberArk, Azure, Middleware, and API platforms &mdash; coordinated dependency mapping, change validation, and stakeholder alignment.</li>
+    <li>Directed HashiCorp Vault enterprise rollout and service account password rotation automation &mdash; integration planning, stakeholder communication, and change management.</li>
+    <li>Owned ServiceNow dashboards as operational source of truth for change approvals, release readiness, and migration tracking; ensured all initiatives met stringent audit requirements.</li>
+    <li>Authored runbooks, migration plans, and governance documentation for senior leadership; identified delivery risks through deep-dive requirements workshops.</li>
+  </ul>
+</div>
+
+<div class="role">
+  <div class="role-head">
+    <div><h4>Senior IAM Security Engineer</h4><div class="role-co">Veradigm · Healthcare</div></div>
+    <div class="role-dates">Jan 2019 – Jun 2021</div>
+  </div>
+  <ul>
+    <li>Architected and shipped an IAM platform for 16,000+ users in a HIPAA-regulated healthcare environment &mdash; Entra ID, MIM, and CyberArk integrated end to end.</li>
+    <li>Built Power Platform dashboards that surfaced compliance state across the organization; moved audit compliance from 65% to 95% over the engagement.</li>
+    <li>Designed and executed a multi-year IAM strategy in a regulated healthcare environment, overseeing technology selection and solution architecture.</li>
+  </ul>
+</div>
+
+<div class="role-condensed">
+  <strong>Earlier:</strong> Data Quality Analyst · Wells Fargo (2017&ndash;2018) · IAM Consultant · Cognizant (2016&ndash;2017) · Support Escalation Engineer · Microsoft (2012&ndash;2015)
+</div>
+
+<!-- SKILLS -->
+<h2>Skills</h2>
+<div class="stack">
+  <p><strong>Foundation &amp; Small Models:</strong> OpenAI · Anthropic Claude · Google Gemini · Meta Llama · Qwen 2.5 · Mistral · DistilBERT · Hugging Face · Open-source models</p>
+  <p><strong>ML &amp; Fine-Tuning:</strong> PyTorch · Hugging Face Transformers · PEFT / LoRA · scikit-learn · Eval Harness Design · Synthetic Dataset Generation · Per-Class Metrics &amp; Confusion Matrices</p>
+  <p><strong>Orchestration &amp; Frameworks:</strong> MCP · FastMCP · Google ADK · n8n · Microsoft Bot Framework · LangChain · LlamaIndex · Vertex AI · Azure OpenAI · ReAct · Function Calling · Multi-Agent Architecture · RAG · HITL · Anthropic SDK · OpenAI SDK · google-genai SDK · Vercel AI SDK</p>
+  <p><strong>Application &amp; UI:</strong> Microsoft Copilot · Microsoft Teams · Claude · ChatGPT · Gemini · Notion AI</p>
+  <p><strong>Cloud &amp; Infrastructure:</strong> Microsoft Azure · Azure OpenAI · Azure Container Apps · Azure Bot Service · Application Insights · Bicep · Google Cloud Platform · Vercel · Docker · Docker Compose</p>
+  <p><strong>Identity &amp; Security:</strong> Non-Human Identity (NHI) · Entra ID Governance · Microsoft Graph SDK · CyberArk · Microsoft Identity Manager (MIM) · HashiCorp Vault · Active Directory · Zero Trust · HIPAA · NIST · ISO 20022 · SWIFT · CHIPS · Fedwire · Threat Modeling · ServiceNow</p>
+  <p><strong>Engineering:</strong> Python · TypeScript · JavaScript · Node.js · PowerShell 7 · React · Next.js · FastAPI · Streamlit · Pydantic · SQL · GraphQL · Zod · Vitest · pytest · Git · Tailwind</p>
+  <p><strong>Delivery:</strong> PMP · Scrum (PSM I) · Microsoft AI Factory · Forward Deployed Engineering · Audit-Ready Documentation</p>
+</div>
+
+<!-- CERTS + EDUCATION -->
+<h2>Certifications &amp; Education</h2>
+<div class="two-col">
+  <div>
+    <div class="cert-row">
+      <div class="cert-name">Project Management Professional (PMP)</div>
+      <div class="cert-body">Project Management Institute</div>
+    </div>
+    <div class="cert-row">
+      <div class="cert-name">Professional Scrum Master I (PSM I)</div>
+      <div class="cert-body">Scrum.org</div>
+    </div>
+    <div class="cert-row">
+      <div class="cert-name">Certified in Cybersecurity (CC)</div>
+      <div class="cert-body">ISC2</div>
+    </div>
+    <div class="cert-row">
+      <div class="cert-name">Google UX Design Professional Certificate</div>
+      <div class="cert-body">Google (via Coursera) · 2023</div>
+    </div>
+  </div>
+  <div>
+    <div class="edu-row">
+      <div class="edu-degree">M.S., Computer Graphics Technology</div>
+      <div class="edu-school">Purdue University</div>
+    </div>
+    <div class="edu-row">
+      <div class="edu-degree">B.S., Computer Science</div>
+      <div class="edu-school">Lincoln University</div>
+    </div>
+    <div class="edu-row">
+      <div class="edu-degree">Information Systems</div>
+      <div class="edu-school">Carnegie Mellon University</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

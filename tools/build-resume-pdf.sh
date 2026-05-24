@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
-# Regenerate bruce-davis-resume.pdf from bruce-davis-resume.html.
-# Uses headless Chrome — no extra dependencies. Run after editing the resume.
+# Regenerate a resume PDF from its HTML source via headless Chrome.
+# Pass the slug as $1:
+#   ./tools/build-resume-pdf.sh bruce-davis-resume
+#   ./tools/build-resume-pdf.sh bruce-davis-resume-ats
+# Defaults to "bruce-davis-resume" for backwards compatibility.
 set -euo pipefail
 
+SLUG="${1:-bruce-davis-resume}"
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-SRC="$ROOT/bruce-davis-resume.html"
-OUT="$ROOT/bruce-davis-resume.pdf"
+SRC="$ROOT/$SLUG.html"
+OUT="$ROOT/$SLUG.pdf"
 CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
 if [ ! -x "$CHROME" ]; then
