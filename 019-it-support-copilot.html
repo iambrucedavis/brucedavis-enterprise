@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT Support Copilot for Teams — Bruce Davis</title>
+<meta name="description" content="A Microsoft Teams copilot that handles internal IT requests end-to-end. Bot Framework + Microsoft Graph + Azure OpenAI + a deterministic policy engine. Self-serve, auto-fulfill, escalate, or deny — every decision auditable.">
+<meta property="og:title" content="IT Support Copilot for Teams — Bruce Davis">
+<meta property="og:description" content="A Teams-deployed AI copilot for internal IT support. Microsoft Graph for identity, Azure OpenAI for reasoning, a rules-based policy engine for the access decision.">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper:#0A0E1A; --paper-clean:#121826; --paper-deep:#1A2236;
+  --ink:#F5F7FA; --ink-soft:#C1C7D0; --mute:#7A8392; --mute-soft:#9CA3AF;
+  --signal:#0066FF; --signal-rgb:0,102,255;
+  --hairline:rgba(255,255,255,.08); --hairline-strong:rgba(255,255,255,.18);
+  --display:'Anton','Bebas Neue',Impact,sans-serif;
+  --serif:'EB Garamond',Georgia,serif;
+  --mono:'Space Mono',ui-monospace,monospace;
+  --shadow:0 0 0 1px var(--hairline-strong);
+  --m-base:140ms cubic-bezier(.2,0,0,1);
+  --self:#2F7D4F; --auto:#3A6BA8; --esc:#9A6B12; --deny:#B5302A;
+}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body { background:var(--paper); color:var(--ink); font-family:var(--serif); font-size:17px; line-height:1.55; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+a { color:inherit; text-decoration:none; }
+
+#top-nav { position:fixed; top:0; left:0; right:0; z-index:500; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(22px,5vw,56px); background:var(--paper); border-bottom:1px solid var(--hairline-strong); }
+.nav-back { font-family:var(--mono); font-weight:700; font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); transition:color var(--m-base); }
+.nav-back:hover { color:var(--signal); }
+.nav-links { display:flex; gap:clamp(20px,3vw,38px); }
+.nav-links a { font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--mute); transition:color var(--m-base); }
+.nav-links a:hover { color:var(--ink); }
+
+#hero { min-height:80vh; display:flex; flex-direction:column; justify-content:flex-end; padding:132px clamp(22px,5vw,56px) 72px; border-bottom:1px solid var(--hairline-strong); }
+.hero-pre { font-family:var(--mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--signal); margin-bottom:22px; }
+#hero-hl { font-family:var(--display); font-weight:400; font-size:clamp(48px,8vw,104px); line-height:.92; letter-spacing:.005em; text-transform:uppercase; color:var(--ink); }
+#hero-hl .h-line { display:block; overflow:hidden; }
+.hero-sub { margin-top:30px; font-family:var(--serif); font-style:italic; font-size:clamp(18px,1.7vw,23px); line-height:1.5; color:var(--ink-soft); max-width:54ch; }
+.hero-meta { margin-top:28px; display:flex; gap:20px; flex-wrap:wrap; font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); }
+
+.dv-section { padding:clamp(64px,8vw,100px) clamp(22px,5vw,56px); border-bottom:1px solid var(--hairline-strong); }
+.sec-inner { max-width:1040px; margin:0 auto; }
+.dv-hdr { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px; gap:16px; flex-wrap:wrap; }
+.dv-label { font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); }
+.dv-version { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--mute); }
+.dv-title { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:clamp(26px,3.6vw,44px); line-height:1; letter-spacing:.01em; color:var(--ink); margin-bottom:14px; }
+.dv-desc { font-family:var(--serif); font-size:16.5px; color:var(--ink-soft); margin-bottom:32px; max-width:62ch; line-height:1.6; }
+
+.glance { display:grid; grid-template-columns:1fr 1fr; gap:32px clamp(28px,4vw,56px); padding:clamp(40px,5vw,56px); background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.glance-col h3 { font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); margin-bottom:14px; }
+.glance-col p { font-family:var(--serif); font-size:16px; line-height:1.55; color:var(--ink); }
+.glance-col ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
+.glance-col li { font-family:var(--serif); font-size:15px; line-height:1.5; color:var(--ink-soft); padding-left:18px; position:relative; }
+.glance-col li::before { content:''; position:absolute; left:0; top:.55em; width:8px; height:1px; background:var(--signal); }
+.glance-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+.glance-chip { font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:6px 11px; border:1px solid var(--hairline-strong); background:var(--paper); }
+.glance-roles { font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--ink); line-height:1.7; }
+.glance-roles span { color:var(--signal); }
+
+/* ── OUTCOME CARDS ── */
+.outcome-cards { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.outcome { background:var(--paper-clean); padding:24px 22px; display:flex; flex-direction:column; gap:10px; }
+.outcome.is-self  { border-top:3px solid var(--self); }
+.outcome.is-auto  { border-top:3px solid var(--auto); }
+.outcome.is-esc   { border-top:3px solid var(--esc); }
+.outcome.is-deny  { border-top:3px solid var(--deny); }
+.outcome-tag { font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; }
+.outcome.is-self .outcome-tag { color:var(--self); }
+.outcome.is-auto .outcome-tag { color:var(--auto); }
+.outcome.is-esc .outcome-tag  { color:var(--esc); }
+.outcome.is-deny .outcome-tag { color:var(--deny); }
+.outcome-name { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:18px; letter-spacing:.01em; color:var(--ink); }
+.outcome-when { font-family:var(--serif); font-size:14px; color:var(--ink-soft); line-height:1.5; }
+.outcome-ex { font-family:var(--mono); font-size:11px; color:var(--mute); padding-top:6px; border-top:1px solid var(--hairline); margin-top:auto; line-height:1.6; }
+
+/* ── TEAMS-STYLE CHAT MOCKUP ── */
+.chat-frame { background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.chat-bar { display:flex; align-items:center; justify-content:space-between; padding:11px 18px; border-bottom:1px solid var(--hairline-strong); background:var(--paper-deep); gap:12px; }
+.chat-bar-name { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--ink-soft); }
+.chat-bar-status { font-family:var(--mono); font-size:10px; letter-spacing:.06em; color:var(--signal); }
+.chat-body { padding:30px 22px; }
+.bubble { font-family:'-apple-system',sans-serif; font-size:14px; line-height:1.5; padding:11px 14px; border-radius:8px; max-width:80%; margin-bottom:14px; }
+.bubble.user { background:var(--paper); border:1px solid var(--hairline); color:var(--ink); margin-left:auto; }
+.bubble.bot { background:var(--paper-deep); border:1px solid var(--hairline); color:var(--ink); margin-right:auto; }
+.bubble-meta { font-family:var(--mono); font-size:10px; color:var(--mute); margin-bottom:4px; letter-spacing:.04em; }
+.bubble.user .bubble-meta { text-align:right; }
+.bubble-policy { display:inline-block; font-family:var(--mono); font-size:10px; padding:3px 8px; margin-top:8px; border-radius:3px; letter-spacing:.06em; text-transform:uppercase; }
+.bubble-policy.self  { color:var(--self); background:rgba(47,125,79,.12); border:1px solid var(--self); }
+.bubble-policy.auto  { color:var(--auto); background:rgba(58,107,168,.12); border:1px solid var(--auto); }
+.bubble-policy.esc   { color:var(--esc); background:rgba(154,107,18,.12); border:1px solid var(--esc); }
+.bubble-policy.deny  { color:var(--deny); background:rgba(181,48,42,.12); border:1px solid var(--deny); }
+.bubble-trace { font-family:var(--mono); font-size:10px; color:var(--mute); margin-top:8px; padding-top:8px; border-top:1px dashed var(--hairline); line-height:1.7; }
+
+/* ── SPLIT (LLM vs POLICY) ── */
+.split { display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.split-cell { background:var(--paper-clean); padding:28px 26px; }
+.split-tag { font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--signal); margin-bottom:8px; }
+.split-name { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:22px; letter-spacing:.01em; color:var(--ink); margin-bottom:12px; }
+.split-body { font-family:var(--serif); font-size:15px; color:var(--ink-soft); line-height:1.6; }
+.split-body strong { color:var(--ink); font-weight:600; }
+
+/* ── TOOLS TABLE ── */
+.tool-table { width:100%; border-collapse:collapse; background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); font-family:var(--mono); font-size:13px; }
+.tool-table th, .tool-table td { padding:14px 16px; text-align:left; border-bottom:1px solid var(--hairline); vertical-align:top; }
+.tool-table tr:last-child td { border-bottom:none; }
+.tool-table th { color:var(--mute); font-weight:400; font-size:10px; letter-spacing:.16em; text-transform:uppercase; background:var(--paper-deep); }
+.tool-table td.tname { color:var(--signal); font-weight:700; width:24%; }
+.tool-table td.tdesc { color:var(--ink-soft); font-family:var(--serif); font-size:14.5px; line-height:1.55; }
+.tool-table td.tside { color:var(--ink); width:18%; }
+
+/* ── CODE BLOCK ── */
+.c-frame { background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.c-bar { display:flex; align-items:center; justify-content:space-between; padding:11px 18px; border-bottom:1px solid var(--hairline-strong); background:var(--paper-deep); gap:12px; }
+.c-bar-name { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--ink-soft); }
+.c-bar-status { font-family:var(--mono); font-size:10px; letter-spacing:.06em; color:var(--signal); }
+.c-body { padding:22px; overflow-x:auto; }
+.c-body pre { font-family:var(--mono); font-size:13px; line-height:1.75; color:var(--ink-soft); white-space:pre; }
+.c-body pre .b { color:var(--signal); }
+.c-body pre .c { color:var(--mute); }
+.c-cap { font-family:var(--serif); font-size:15px; color:var(--ink-soft); line-height:1.6; margin-top:18px; max-width:66ch; }
+
+/* ── FOOTER ── */
+footer { background:var(--paper); border-top:1px solid var(--hairline-strong); }
+#page-footer { padding:36px clamp(22px,5vw,56px); display:flex; justify-content:space-between; align-items:center; max-width:1040px; margin:0 auto; gap:14px; flex-wrap:wrap; }
+.pf-back { font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); transition:color var(--m-base); }
+.pf-back:hover { color:var(--signal); }
+.pf-links { display:flex; gap:22px; flex-wrap:wrap; }
+.pf-links a { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); transition:color var(--m-base); }
+.pf-links a:hover { color:var(--signal); }
+
+a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline-offset:2px; }
+.reveal { opacity:0; transform:translateY(20px); }
+
+@media (max-width:900px) {
+  .outcome-cards { grid-template-columns:repeat(2,1fr); }
+  .split { grid-template-columns:1fr; }
+}
+@media (max-width:760px) {
+  .glance { grid-template-columns:1fr; }
+  .outcome-cards { grid-template-columns:1fr; }
+  .tool-table { font-size:11px; }
+  .tool-table th, .tool-table td { padding:10px 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { transition-duration:.001ms !important; animation-duration:.001ms !important; }
+  html { scroll-behavior:auto; }
+}
+</style>
+</head>
+<body>
+
+<nav id="top-nav">
+  <a href="index.html" class="nav-back">← Bruce Davis</a>
+  <div class="nav-links">
+    <a href="index.html#work">Work</a>
+    <a href="about.html">About</a>
+    <a href="bruce-davis-resume.html">Resume</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-pre">Microsoft Teams · Bot Framework · Azure OpenAI · Microsoft Graph</div>
+  <h1 id="hero-hl">IT Support<br>Copilot</h1>
+  <p class="hero-sub">
+    A Teams-deployed copilot that handles internal IT requests end-to-end — password resets, VPN access, group memberships, laptop tickets. Azure OpenAI for reasoning, Microsoft Graph for identity, a deterministic policy engine for the decision. Self-serve, auto-fulfill, escalate, or deny — every outcome auditable.
+  </p>
+  <div class="hero-meta">
+    <span>Bot Framework · Teams</span>
+    <span>Azure OpenAI · Graph SDK</span>
+    <span>Mock + live modes</span>
+    <span>4 tools · 4 outcomes</span>
+  </div>
+</section>
+
+<!-- AT A GLANCE -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">At a glance</span>
+      <span class="dv-version">30-second read</span>
+    </div>
+    <div class="glance">
+      <div class="glance-col">
+        <h3>What it is</h3>
+        <p>A complete internal-IT copilot stack — Teams Bot Framework wraps a FastAPI endpoint that calls Azure OpenAI with four Microsoft-Graph-backed tools. The LLM picks tools; a separate rule-based policy engine decides what happens. Runs offline against fixture data by default so the demo always works; <code style="font-family:var(--mono);font-size:14px;color:var(--ink);">GRAPH_MODE=live</code> swaps in real Microsoft Graph via managed identity.</p>
+      </div>
+      <div class="glance-col">
+        <h3>Maps to</h3>
+        <p class="glance-roles"><span>AI Transformation Lead</span> · <span>Microsoft Copilot Engineer</span> · <span>Enterprise AI Architect</span> · <span>Identity Engineer (Microsoft)</span></p>
+        <h3 style="margin-top:22px;">Skills demonstrated</h3>
+        <ul>
+          <li>Bot Framework v4 adapter + Teams app manifest</li>
+          <li>Microsoft Graph SDK (User, Group, GroupMember APIs)</li>
+          <li>Azure OpenAI with function calling — gpt-4o-mini</li>
+          <li>Deterministic policy engine separated from the LLM</li>
+          <li>Bicep IaC sketch for Container Apps + Bot Service</li>
+          <li>Managed identity for Graph + Azure OpenAI auth</li>
+          <li>End-to-end audit trail for every tool call + decision</li>
+        </ul>
+        <div class="glance-chips">
+          <span class="glance-chip">Bot Framework</span>
+          <span class="glance-chip">Microsoft Graph</span>
+          <span class="glance-chip">Azure OpenAI</span>
+          <span class="glance-chip">Entra ID</span>
+          <span class="glance-chip">FastAPI</span>
+          <span class="glance-chip">Bicep</span>
+          <span class="glance-chip">Python</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 01 FOUR OUTCOMES -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">01 — Four Outcomes</span>
+      <span class="dv-version">one decision per turn</span>
+    </div>
+    <h2 class="dv-title">Every request routes to one of four answers.</h2>
+    <p class="dv-desc">The split between LLM reasoning (what the user is asking for) and rule-based policy (what happens next) is deliberate. The LLM is good at understanding language; rules are good at being audit-defensible.</p>
+
+    <div class="outcome-cards">
+      <div class="outcome is-self">
+        <div class="outcome-tag">SELF_SERVE</div>
+        <div class="outcome-name">Reply with KB</div>
+        <div class="outcome-when">A KB article fully answers the question. Copilot sends the summary inline plus a link to the full article.</div>
+        <div class="outcome-ex">e.g. "How do I reset my password?"</div>
+      </div>
+      <div class="outcome is-auto">
+        <div class="outcome-tag">AUTO_FULFILL</div>
+        <div class="outcome-name">Make the change</div>
+        <div class="outcome-when">User is eligible without approval. Copilot calls Graph to make the change and reports back. Audit log records who/what/when.</div>
+        <div class="outcome-ex">e.g. "I need VPN access"</div>
+      </div>
+      <div class="outcome is-esc">
+        <div class="outcome-tag">ESCALATE</div>
+        <div class="outcome-name">Route to approver</div>
+        <div class="outcome-when">Approval required. Copilot opens the approval request to the named role with full context — user, justification, applicable KB.</div>
+        <div class="outcome-ex">e.g. "Prod deploy access"</div>
+      </div>
+      <div class="outcome is-deny">
+        <div class="outcome-tag">DENY</div>
+        <div class="outcome-name">Hard stop</div>
+        <div class="outcome-when">A rule prevents the request — disabled account, wrong department, missing prerequisite. Copilot explains why; no ticket opened.</div>
+        <div class="outcome-ex">e.g. Sales rep asking for Finance · SOX</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 02 LIVE EXAMPLE -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">02 — A Real Conversation</span>
+      <span class="dv-version">replayed from the committed transcript</span>
+    </div>
+    <h2 class="dv-title">Walk-through.</h2>
+    <p class="dv-desc">Alex Thompson (Software Engineer I) asks for production deploy access. The copilot identifies him, checks the group, sees the elevated-approval policy, and routes the request to the right approver with the right context. One turn.</p>
+
+    <div class="chat-frame">
+      <div class="chat-bar">
+        <span class="chat-bar-name">Teams DM · IT Support Copilot</span>
+        <span class="chat-bar-status">[ TRANSCRIPT ]</span>
+      </div>
+      <div class="chat-body">
+        <div>
+          <div class="bubble-meta">alex.thompson@contoso.com · 10:14 AM</div>
+          <div class="bubble user">I need access to production deploy so I can ship the new build</div>
+        </div>
+        <div>
+          <div class="bubble-meta">IT Support Copilot · 10:14 AM</div>
+          <div class="bubble bot">
+            This needs <strong>engineering-vp</strong> approval — I've routed the request. Reason: Group g-prod-deploy policy 'elevated-approval' requires engineering-vp approval.
+            <span class="bubble-policy esc">ESCALATE</span>
+            <div class="bubble-trace">
+              → lookup_user(user_principal_name='alex.thompson@contoso.com')<br>
+              → check_group_access(user_id='u-007-e52d', group_id='g-prod-deploy')<br>
+              → policy = escalate → engineering-vp
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 03 SPLIT (LLM vs POLICY) -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">03 — The Split</span>
+      <span class="dv-version">where the LLM stops and the rules start</span>
+    </div>
+    <h2 class="dv-title">LLM understands. Rules decide.</h2>
+    <p class="dv-desc">The agent's reasoning is the LLM. The access decision is not. Each layer does what it's best at — and the policy engine is what makes the system audit-defensible against a security review.</p>
+
+    <div class="split">
+      <div class="split-cell">
+        <div class="split-tag">LLM Layer (Azure OpenAI)</div>
+        <div class="split-name">Understand &amp; route</div>
+        <p class="split-body">
+          Reads the user's message in plain language, picks the right tool, refines arguments, asks clarifying questions if needed, drafts the final reply. <strong>What the LLM never does:</strong> approve access, override policy, or short-circuit the gate. Even if a prompt-injection attempt smuggles instructions, the runtime won't call <code style="font-family:var(--mono);font-size:13px;color:var(--ink);">request_access</code> without a matching policy decision.
+        </p>
+      </div>
+      <div class="split-cell">
+        <div class="split-tag">Policy Engine (deterministic)</div>
+        <div class="split-name">Decide &amp; explain</div>
+        <p class="split-body">
+          A pure-Python function with a documented decision table. Same input → same output → same trail of reasoning that ends up in the audit log. <strong>What the policy never does:</strong> understand natural language. It operates on resolved data — a user record, a group with its policy field, an optional KB article — and returns one of four outcomes plus a reason.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 04 TOOLS -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">04 — Four Tools</span>
+      <span class="dv-version">three read · one write</span>
+    </div>
+    <h2 class="dv-title">What the LLM can call.</h2>
+    <p class="dv-desc">Tools are intentionally narrow. Each one does exactly one thing, returns a JSON-shaped result, and is composable with the others.</p>
+
+    <table class="tool-table">
+      <thead>
+        <tr><th>Tool</th><th>Purpose</th><th>Side effects</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="tname">lookup_user</td><td class="tdesc">Resolve a UPN to a user record — department, manager, group memberships, account status. Always the first call.</td><td class="tside">None</td></tr>
+        <tr><td class="tname">check_group_access</td><td class="tdesc">Read the group's policy (auto-on-join, manager-approval, compliance-approval, elevated-approval) and whether the user is already a member.</td><td class="tside">None</td></tr>
+        <tr><td class="tname">search_kb</td><td class="tdesc">Token-set scoring against title + tags + summary. Returns top articles. Used to answer self-service questions before considering a group change.</td><td class="tside">None</td></tr>
+        <tr><td class="tname">request_access</td><td class="tdesc">POST to Microsoft Graph's <code>/groups/{id}/members/$ref</code>. Only callable after the policy engine has returned <strong style="color:var(--auto);">auto_fulfill</strong>.</td><td class="tside" style="color:var(--auto);">Mutates Graph</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 05 USAGE -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">05 — Try it</span>
+      <span class="dv-version">offline demo · no Azure required</span>
+    </div>
+    <h2 class="dv-title">Clone, run, chat.</h2>
+    <p class="dv-desc">The default mode is offline — deterministic router, fixture data, no API keys. Switch to Azure OpenAI + live Microsoft Graph with two env vars.</p>
+
+    <div class="c-frame" style="margin-bottom:24px;">
+      <div class="c-bar">
+        <span class="c-bar-name">offline · fixture data</span>
+        <span class="c-bar-status">[ FAST PATH ]</span>
+      </div>
+      <div class="c-body">
+<pre><span class="b">$</span> git clone https://github.com/iambrucedavis/it-support-copilot
+<span class="b">$</span> cd it-support-copilot
+<span class="b">$</span> python3 -m venv .venv && source .venv/bin/activate
+<span class="b">$</span> pip install -r requirements.txt
+
+<span class="c"># REPL mode — pick a user, ask questions</span>
+<span class="b">$</span> python scripts/demo_chat.py --user bryan.jenkins@contoso.com
+
+<span class="c"># Replay a committed transcript</span>
+<span class="b">$</span> python scripts/demo_chat.py --replay examples/conversations/vpn-self-serve.transcript.json</pre>
+      </div>
+    </div>
+
+    <div class="c-frame">
+      <div class="c-bar">
+        <span class="c-bar-name">live · Azure OpenAI + Microsoft Graph</span>
+        <span class="c-bar-status">[ PRODUCTION PATH ]</span>
+      </div>
+      <div class="c-body">
+<pre><span class="b">$</span> export GRAPH_MODE=live
+<span class="b">$</span> export COPILOT_MODE=azure
+<span class="b">$</span> export AZURE_OPENAI_ENDPOINT=https://your-aoi.openai.azure.com
+<span class="b">$</span> export AZURE_OPENAI_API_KEY=...
+<span class="b">$</span> az login                                                <span class="c"># or service principal env vars</span>
+
+<span class="b">$</span> uvicorn copilot_agent.server:app --port 8000           <span class="c"># /api/messages = Bot Framework webhook</span></pre>
+      </div>
+    </div>
+    <p class="c-cap">Full Teams deployment (Bot Service registration, Container Apps, managed identity, Bicep templates) is documented in <code style="font-family:var(--mono);font-size:13px;color:var(--ink);">deploy/README.md</code>. Sized for a low-volume internal pilot, scales to thousands of users by adjusting Container App replicas.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div id="page-footer">
+    <a href="index.html" class="pf-back">← Back to Bruce Davis</a>
+    <div class="pf-links">
+      <a href="index.html#work">Work</a>
+      <a href="bruce-davis-resume.html">Resume</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="https://github.com/iambrucedavis/it-support-copilot" target="_blank" rel="noopener">GitHub Repo</a>
+      <a href="017-entra-nhi-audit.html">→ Entra ID NHI Audit</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+'use strict';
+const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+gsap.registerPlugin(ScrollTrigger);
+
+const hl = document.getElementById('hero-hl');
+hl.innerHTML = hl.innerHTML.split('<br>').map(line =>
+  `<span class="h-line" style="display:block;overflow:hidden">${
+    [...line.trim()].map(ch => ch === ' '
+      ? `<span style="display:inline-block;min-width:.25em"> </span>`
+      : `<span class="h-char" style="display:inline-block">${ch}</span>`
+    ).join('')
+  }</span>`
+).join('');
+if (motionOK) gsap.from('.h-char', { yPercent:110, duration:.7, stagger:.02, ease:'power3.out', delay:.1 });
+
+if (motionOK) {
+  document.querySelectorAll('.reveal').forEach(el => {
+    gsap.to(el, { opacity:1, y:0, duration:.6, ease:'power2.out', scrollTrigger:{ trigger:el, start:'top 84%' } });
+  });
+} else {
+  document.querySelectorAll('.reveal').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+}
+
+console.log('%c// 6% — small change. whole product.', 'color:#E1261C;font-family:monospace;letter-spacing:.04em;');
+console.log('%c// bruce davis · 2026', 'color:#8A847A;font-family:monospace;letter-spacing:.04em;');
+</script>
+
+</body>
+</html>
