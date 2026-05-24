@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NHI Credential Risk Classifier — Bruce Davis</title>
-<meta name="description" content="A fine-tuned classifier that scores machine identity credentials by risk state. DistilBERT for production triage; Llama 3.2 1B + LoRA for cachet. Synthetic dataset, real eval harness, side-by-side comparison.">
+<meta name="description" content="A fine-tuned classifier that scores machine identity credentials by risk state. DistilBERT for production triage; Qwen 2.5 1.5B + LoRA for cachet. Synthetic dataset, real eval harness, side-by-side comparison.">
 <meta property="og:title" content="NHI Credential Risk Classifier — Bruce Davis">
 <meta property="og:description" content="A real ML portfolio project: fine-tune two models on a credential-risk classification task, evaluate them, and compare. The brain of the Agent Governance Console.">
 <meta property="og:type" content="website">
@@ -196,7 +196,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   <div class="hero-pre">Machine Learning · Fine-Tuning · Hugging Face</div>
   <h1 id="hero-hl">NHI Credential<br>Risk Classifier</h1>
   <p class="hero-sub">
-    A fine-tuned classifier that scores machine identity credentials by risk state. Two models trained on the same task — DistilBERT for production triage, Llama 3.2 1B + LoRA for cachet. Side-by-side comparison with a real eval harness.
+    A fine-tuned classifier that scores machine identity credentials by risk state. Two models trained on the same task — DistilBERT for production triage, Qwen 2.5 1.5B + LoRA for cachet. Side-by-side comparison with a real eval harness.
   </p>
   <div class="hero-meta">
     <span>Two fine-tuned models</span>
@@ -261,7 +261,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <div class="flow-node is-signal">
         <span class="flow-kicker">Stage 2</span>
         <span class="flow-name">Fine-tune</span>
-        <span class="flow-sub">DistilBERT + Llama LoRA</span>
+        <span class="flow-sub">DistilBERT + Qwen LoRA</span>
       </div>
       <div class="flow-arrow">&rarr;</div>
       <div class="flow-node">
@@ -334,11 +334,11 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <tr>
           <th></th>
           <th>DistilBERT <span style="color:var(--signal);font-size:9px;">[ MEASURED ]</span></th>
-          <th>Llama 3.2 1B + LoRA <span style="color:var(--mute);font-size:9px;">[ PROJECTED ]</span></th>
+          <th>Qwen 2.5 1.5B + LoRA <span style="color:var(--mute);font-size:9px;">[ PROJECTED ]</span></th>
         </tr>
       </thead>
       <tbody>
-        <tr><td class="dim">Parameters</td><td>67M (classification head)</td><td>1B base + ~8M LoRA adapter</td></tr>
+        <tr><td class="dim">Parameters</td><td>67M (classification head)</td><td>1.5B base + ~8M LoRA adapter</td></tr>
         <tr><td class="dim">Train time</td><td>~6 min · MacBook CPU</td><td>~hours · single T4 GPU</td></tr>
         <tr><td class="dim">Test accuracy</td><td class="signal">99.33%</td><td>—</td></tr>
         <tr><td class="dim">F1 (macro)</td><td class="signal">0.9933</td><td>—</td></tr>
@@ -348,7 +348,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <tr><td class="dim">Best use</td><td>Production triage queue</td><td>Hard cases + rationale</td></tr>
       </tbody>
     </table>
-    <p class="cmp-cap">DistilBERT numbers are measured on a MacBook CPU (450-record test set). Llama 3.2 1B + LoRA numbers are projections from comparable fine-tunes — the training script ships, but the actual run needs a GPU. The point of training both isn't to declare a winner; it's to make the production-vs-research trade-off visible.</p>
+    <p class="cmp-cap">DistilBERT numbers are measured on a MacBook CPU (450-record test set). Qwen 2.5 numbers are projections from comparable LoRA fine-tunes — the training script ships and runs against any LoRA-compatible base. Qwen 2.5 is the default because it's ungated; swapping to Llama 3.2 1B is a one-flag change once you've requested access from Meta. The point of training both isn't to declare a winner; it's to make the production-vs-research trade-off visible.</p>
 
     <h3 style="font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:clamp(20px,2.4vw,28px);letter-spacing:.01em;color:var(--ink);margin:48px 0 16px;">DistilBERT — per-class breakdown</h3>
 
@@ -408,7 +408,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <span class="dv-version">clone &amp; train</span>
     </div>
     <h2 class="dv-title">Reproducible end-to-end.</h2>
-    <p class="dv-desc">Four make targets get you from a fresh clone to a trained DistilBERT model with a comparison report. The Llama LoRA fine-tune needs a GPU.</p>
+    <p class="dv-desc">Four make targets get you from a fresh clone to a trained DistilBERT model with a comparison report. The Qwen LoRA fine-tune needs a GPU.</p>
 
     <div class="c-frame">
       <div class="c-bar">
