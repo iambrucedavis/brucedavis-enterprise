@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Transformation Playbook — Bruce Davis</title>
+<meta name="description" content="How I lead AI transformation in regulated environments — initiative evaluation rubric, vendor scoring matrix, AI-function maturity model, and four real case studies from Microsoft, Starbucks, Wells Fargo, and Veradigm.">
+<meta property="og:title" content="AI Transformation Playbook — Bruce Davis">
+<meta property="og:description" content="A working playbook for leading AI transformation. Frameworks for evaluating initiatives and vendors, scaling an internal AI function, and the cross-functional partnership model that makes it work.">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+/* ─── TOKENS — formal register ─────── */
+:root {
+  --paper:        #0A0E1A;
+  --paper-clean:  #121826;
+  --paper-deep:   #1A2236;
+  --ink:          #F5F7FA;
+  --ink-soft:     #C1C7D0;
+  --mute:         #7A8392;
+  --mute-soft:    #9CA3AF;
+  --signal:       #0066FF;
+  --signal-rgb:   0,102,255;
+  --hairline:        rgba(255,255,255,.08);
+  --hairline-strong: rgba(255,255,255,.18);
+  --display: 'Anton', 'Bebas Neue', Impact, sans-serif;
+  --serif:   'EB Garamond', Georgia, serif;
+  --mono:    'Space Mono', ui-monospace, monospace;
+  --shadow:    0 0 0 1px var(--hairline-strong);
+  --shadow-lg: 0 0 0 1px var(--hairline-strong), 0 24px 48px -24px rgba(0,0,0,.6);
+  --m-fast: 60ms  cubic-bezier(.2,0,0,1);
+  --m-base: 140ms cubic-bezier(.2,0,0,1);
+  --bg: var(--paper);
+  --surface: var(--paper-clean);
+  --surface-hi: var(--paper-deep);
+  --border: var(--hairline);
+  --border-hi: var(--hairline-strong);
+  --text: var(--ink);
+  --text-dim: var(--ink-soft);
+  --text-muted: var(--mute);
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--paper); color: var(--ink); font-family: var(--serif);
+  font-size: 17px; line-height: 1.55;
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+a { color:inherit; text-decoration:none; }
+
+/* ─── NAV ──────────────────────────────────────── */
+#top-nav { position:fixed; top:0; left:0; right:0; z-index:500; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(22px,5vw,56px); background:var(--paper); border-bottom:1px solid var(--hairline-strong); }
+.nav-back { font-family:var(--mono); font-weight:700; font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); transition:color var(--m-base); }
+.nav-back:hover { color:var(--signal); }
+.nav-links { display:flex; gap:clamp(20px,3vw,38px); }
+.nav-links a { font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--mute); transition:color var(--m-base); }
+.nav-links a:hover { color:var(--ink); }
+
+/* ─── HERO ─────────────────────────────────────── */
+#hero { min-height:80vh; display:flex; flex-direction:column; justify-content:flex-end; padding:132px clamp(22px,5vw,56px) 72px; border-bottom:1px solid var(--hairline-strong); }
+.hero-pre { font-family:var(--mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--signal); margin-bottom:22px; }
+#hero-hl { font-family:var(--display); font-weight:400; font-size:clamp(48px,8vw,104px); line-height:.92; letter-spacing:.005em; text-transform:uppercase; color:var(--ink); }
+#hero-hl .h-line { display:block; overflow:hidden; }
+.hero-sub { margin-top:30px; font-family:var(--serif); font-style:italic; font-size:clamp(18px,1.7vw,23px); line-height:1.5; color:var(--ink-soft); max-width:54ch; }
+.hero-meta { margin-top:28px; display:flex; gap:20px; flex-wrap:wrap; font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); }
+
+/* ─── SECTION SCAFFOLD ─────────────────────────── */
+.dv-section { padding:clamp(64px,8vw,100px) clamp(22px,5vw,56px); border-bottom:1px solid var(--hairline-strong); }
+.sec-inner  { max-width:1040px; margin:0 auto; }
+.dv-hdr     { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px; gap:16px; flex-wrap:wrap; }
+.dv-label   { font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); }
+.dv-version { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--mute); }
+.dv-title   { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:clamp(26px,3.6vw,44px); line-height:1; letter-spacing:.01em; color:var(--ink); margin-bottom:14px; }
+.dv-desc    { font-family:var(--serif); font-size:16.5px; color:var(--ink-soft); margin-bottom:32px; max-width:62ch; line-height:1.6; }
+
+/* ─── AT A GLANCE ──────────────────────────────── */
+.glance { display:grid; grid-template-columns:1fr 1fr; gap:32px clamp(28px,4vw,56px); padding:clamp(40px,5vw,56px); background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.glance-col h3 { font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); margin-bottom:14px; }
+.glance-col p { font-family:var(--serif); font-size:16px; line-height:1.55; color:var(--ink); }
+.glance-col ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
+.glance-col li { font-family:var(--serif); font-size:15px; line-height:1.5; color:var(--ink-soft); padding-left:18px; position:relative; }
+.glance-col li::before { content:''; position:absolute; left:0; top:.55em; width:8px; height:1px; background:var(--signal); }
+.glance-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+.glance-chip { font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:6px 11px; border:1px solid var(--hairline-strong); background:var(--paper); }
+.glance-roles { font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--ink); line-height:1.7; }
+.glance-roles span { color:var(--signal); }
+
+/* ─── RUBRIC / EVAL CARDS ──────────────────────── */
+.rubric-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.rubric-cell { background:var(--paper-clean); padding:22px 18px; display:flex; flex-direction:column; gap:8px; }
+.rubric-score { font-family:var(--display); font-weight:400; font-size:34px; line-height:1; letter-spacing:.01em; color:var(--signal); }
+.rubric-name { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:16px; letter-spacing:.01em; color:var(--ink); }
+.rubric-desc { font-family:var(--serif); font-size:13.5px; color:var(--ink-soft); line-height:1.55; }
+.rubric-cap { font-family:var(--serif); font-size:15px; color:var(--ink-soft); line-height:1.6; margin-top:20px; max-width:66ch; }
+
+/* ─── MATRIX ───────────────────────────────────── */
+.matrix-table { width:100%; border-collapse:collapse; background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); font-family:var(--mono); font-size:13px; }
+.matrix-table th, .matrix-table td { padding:14px 16px; text-align:left; border-bottom:1px solid var(--hairline); vertical-align:top; }
+.matrix-table tr:last-child td { border-bottom:none; }
+.matrix-table th { color:var(--mute); font-weight:400; font-size:10px; letter-spacing:.16em; text-transform:uppercase; background:var(--paper-deep); }
+.matrix-table td.crit { color:var(--ink); font-weight:700; width:22%; }
+.matrix-table td.dim { color:var(--ink-soft); font-family:var(--serif); font-size:14px; line-height:1.55; }
+
+/* ─── CASE STUDY CARDS ─────────────────────────── */
+.case-cards { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.case-card { background:var(--paper-clean); padding:30px 26px; display:flex; flex-direction:column; gap:14px; }
+.case-tag { font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--signal); }
+.case-where { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:24px; letter-spacing:.01em; color:var(--ink); }
+.case-role { font-family:var(--mono); font-size:11px; letter-spacing:.04em; color:var(--mute); margin-top:-6px; }
+.case-body { font-family:var(--serif); font-size:15px; color:var(--ink-soft); line-height:1.65; }
+.case-body strong { color:var(--ink); font-weight:600; }
+.case-takeaway { font-family:var(--serif); font-size:14px; font-style:italic; color:var(--ink); border-left:3px solid var(--signal); padding-left:14px; margin-top:auto; padding-top:0; }
+
+/* ─── MATURITY LADDER ──────────────────────────── */
+.ladder { display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.ladder-step { background:var(--paper-clean); padding:24px 18px; display:flex; flex-direction:column; gap:10px; }
+.ladder-num { font-family:var(--mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; color:var(--mute); }
+.ladder-name { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:17px; letter-spacing:.01em; color:var(--ink); }
+.ladder-desc { font-family:var(--serif); font-size:13.5px; color:var(--ink-soft); line-height:1.55; }
+.ladder-step.is-signal .ladder-name { color:var(--signal); }
+.ladder-cap { font-family:var(--serif); font-size:15px; color:var(--ink-soft); line-height:1.6; margin-top:20px; max-width:66ch; }
+
+/* ─── STANDARDS CARDS ──────────────────────────── */
+.std-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.std-card { background:var(--paper-clean); padding:24px 22px; }
+.std-name { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:18px; letter-spacing:.01em; color:var(--ink); margin-bottom:11px; }
+.std-body { font-family:var(--serif); font-size:14.5px; color:var(--ink-soft); line-height:1.65; }
+.std-body code { font-family:var(--mono); font-size:12.5px; color:var(--ink); }
+
+/* ─── PARTNERSHIP FLOW ─────────────────────────── */
+.partner { display:grid; grid-template-columns:1.4fr 1fr; gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.partner-cell { background:var(--paper-clean); padding:24px 22px; }
+.partner-who { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:16px; letter-spacing:.01em; color:var(--ink); margin-bottom:6px; }
+.partner-what { font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--signal); margin-bottom:10px; }
+.partner-body { font-family:var(--serif); font-size:14.5px; color:var(--ink-soft); line-height:1.6; }
+
+/* ─── PROOF LINKS ──────────────────────────────── */
+.proof { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.proof-link { background:var(--paper-clean); padding:24px 22px; display:flex; flex-direction:column; gap:8px; transition:background var(--m-base); }
+.proof-link:hover { background:var(--paper-deep); }
+.proof-tag { font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--signal); }
+.proof-name { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:20px; letter-spacing:.01em; color:var(--ink); }
+.proof-body { font-family:var(--serif); font-size:14px; color:var(--ink-soft); line-height:1.55; }
+.proof-arrow { font-family:var(--mono); font-size:11px; color:var(--signal); margin-top:auto; padding-top:8px; }
+
+/* ─── FOOTER ───────────────────────────────────── */
+footer { background:var(--paper); border-top:1px solid var(--hairline-strong); }
+#page-footer { padding:36px clamp(22px,5vw,56px); display:flex; justify-content:space-between; align-items:center; max-width:1040px; margin:0 auto; gap:14px; flex-wrap:wrap; }
+.pf-back { font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); transition:color var(--m-base); }
+.pf-back:hover { color:var(--signal); }
+.pf-links { display:flex; gap:22px; flex-wrap:wrap; }
+.pf-links a { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); transition:color var(--m-base); }
+.pf-links a:hover { color:var(--signal); }
+
+/* ─── A11Y + MOTION ────────────────────────────── */
+a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline-offset:2px; }
+.reveal { opacity:0; transform:translateY(20px); }
+
+@media (max-width:900px) {
+  .rubric-grid, .ladder { grid-template-columns:repeat(2,1fr); }
+  .std-cards { grid-template-columns:1fr; }
+  .case-cards { grid-template-columns:1fr; }
+  .partner { grid-template-columns:1fr; }
+  .proof { grid-template-columns:1fr; }
+}
+@media (max-width:600px) {
+  .glance { grid-template-columns:1fr; }
+  .matrix-table { font-size:11px; }
+  .matrix-table th, .matrix-table td { padding:10px 12px; }
+  .rubric-grid, .ladder { grid-template-columns:1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { transition-duration:.001ms !important; animation-duration:.001ms !important; }
+  html { scroll-behavior:auto; }
+}
+</style>
+</head>
+<body>
+
+<nav id="top-nav">
+  <a href="index.html" class="nav-back">← Bruce Davis</a>
+  <div class="nav-links">
+    <a href="index.html#work">Work</a>
+    <a href="about.html">About</a>
+    <a href="bruce-davis-resume.html">Resume</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-pre">Strategy · Frameworks · Operating Model</div>
+  <h1 id="hero-hl">AI Transformation<br>Playbook</h1>
+  <p class="hero-sub">
+    How I lead AI adoption in regulated environments — the rubric I use to triage initiatives, the matrix I score vendors with, the maturity model for scaling an internal AI function, and the four real case studies the playbook came out of.
+  </p>
+  <div class="hero-meta">
+    <span>Initiative rubric</span>
+    <span>Vendor matrix</span>
+    <span>Maturity model</span>
+    <span>4 real case studies</span>
+  </div>
+</section>
+
+<!-- AT A GLANCE -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">At a glance</span>
+      <span class="dv-version">30-second read</span>
+    </div>
+    <div class="glance">
+      <div class="glance-col">
+        <h3>What it is</h3>
+        <p>The operating playbook I bring to an AI transformation role. Concrete frameworks — not principles. A 5-axis rubric for evaluating initiatives, a 7-criterion vendor matrix, a 5-stage AI-function maturity model, and the operational standards that make rollouts repeatable. Backed by four transformation projects from a 15-year career in regulated environments.</p>
+      </div>
+      <div class="glance-col">
+        <h3>Maps to</h3>
+        <p class="glance-roles"><span>AI Transformation Lead</span> · <span>Director / Head of AI</span> · <span>AI Strategy &amp; Operations</span> · <span>Enterprise AI Architect</span></p>
+        <h3 style="margin-top:22px;">What this proves</h3>
+        <ul>
+          <li>I can run an AI rollout end-to-end, not just build the tech</li>
+          <li>I evaluate AI work the same way I evaluate any infra project — risk, ROI, reversibility, governance fit, time-to-value</li>
+          <li>I've shipped transformation programs at Microsoft, Wells Fargo, Starbucks, Veradigm</li>
+          <li>I know what governance-as-an-enabler actually looks like in practice</li>
+          <li>I'm PMP-certified — I run the program as well as the build</li>
+        </ul>
+        <div class="glance-chips">
+          <span class="glance-chip">PMP-Certified</span>
+          <span class="glance-chip">15 yrs · Regulated</span>
+          <span class="glance-chip">Microsoft</span>
+          <span class="glance-chip">Wells Fargo</span>
+          <span class="glance-chip">Starbucks</span>
+          <span class="glance-chip">Veradigm</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 01 INITIATIVE RUBRIC -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">01 — Initiative Rubric</span>
+      <span class="dv-version">five axes · 1–5 each · 25 max</span>
+    </div>
+    <h2 class="dv-title">How I triage an AI proposal.</h2>
+    <p class="dv-desc">Every AI initiative I see gets scored 1–5 on five axes before it gets a yes. A 20+ is a build. A 12–19 is a pilot with a kill criterion. Below 12 is a no — even if the demo is impressive.</p>
+
+    <div class="rubric-grid">
+      <div class="rubric-cell">
+        <div class="rubric-score">01</div>
+        <div class="rubric-name">Business Pain</div>
+        <div class="rubric-desc">Is this a named problem with a known owner and a measurable cost today? If a VP can't name what breaks if we don't build it, it isn't a yes.</div>
+      </div>
+      <div class="rubric-cell">
+        <div class="rubric-score">02</div>
+        <div class="rubric-name">Time to Value</div>
+        <div class="rubric-desc">Can we get a measurable win in &lt;90 days? Transformation programs lose air after the first quarter without a visible deliverable.</div>
+      </div>
+      <div class="rubric-cell">
+        <div class="rubric-score">03</div>
+        <div class="rubric-name">Reversibility</div>
+        <div class="rubric-desc">If this fails, can we roll it back without breaking a downstream system or losing data? AI initiatives that touch identity, money, or PHI need a documented exit path before they ship.</div>
+      </div>
+      <div class="rubric-cell">
+        <div class="rubric-score">04</div>
+        <div class="rubric-name">Governance Fit</div>
+        <div class="rubric-desc">Does this clear identity, security, privacy, and compliance review at the architecture stage — or are we hoping nobody notices? "Hoping" is a no.</div>
+      </div>
+      <div class="rubric-cell">
+        <div class="rubric-score">05</div>
+        <div class="rubric-name">Scale Path</div>
+        <div class="rubric-desc">Does success here unlock the next three things, or is this a one-off? A 20-score initiative usually becomes a platform.</div>
+      </div>
+    </div>
+    <p class="rubric-cap">Concrete example: a customer-support agent scored a <strong style="color:var(--ink);">22 (4·5·4·4·5)</strong> — clear pain, fast pilot, full reversibility via feature flag, governance-cleared because no PHI, and the same architecture would lift sales and ops next. A "let's put AI on the dashboard" idea scored <strong style="color:var(--ink);">8 (2·2·2·1·1)</strong> and got declined; the team built it anyway, and nobody used it. The rubric was right.</p>
+  </div>
+</div>
+
+<!-- 02 VENDOR MATRIX -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">02 — Vendor Evaluation Matrix</span>
+      <span class="dv-version">seven criteria · weighted</span>
+    </div>
+    <h2 class="dv-title">How I score an AI vendor.</h2>
+    <p class="dv-desc">For every shortlisted platform — agent framework, NHI tooling, copilot, model API, automation runtime — the same matrix. I weight criteria differently by domain (identity-sensitive weights compliance heavier; productivity tools weight DX heavier), but the criteria are constant.</p>
+
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th>Criterion</th>
+          <th>What I'm actually asking</th>
+          <th>Typical weight</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="crit">Identity &amp; auth model</td>
+          <td class="dim">How does it authenticate, how are tokens scoped and rotated, does it produce non-human identities and where do they go?</td>
+          <td>15–25%</td>
+        </tr>
+        <tr>
+          <td class="crit">Compliance posture</td>
+          <td class="dim">SOC 2 Type II, HIPAA BAA, data residency, DPA terms, sub-processor list, breach notification SLA.</td>
+          <td>15–20%</td>
+        </tr>
+        <tr>
+          <td class="crit">Integration surface</td>
+          <td class="dim">What APIs, SDKs, MCP/ADK support, identity provider integrations, SCIM, SAML, OIDC. How many days to a working pilot.</td>
+          <td>15%</td>
+        </tr>
+        <tr>
+          <td class="crit">Observability</td>
+          <td class="dim">Logs, traces, metrics, eval hooks, prompt + response capture (with PII handling). If I can't see what it did, I can't govern it.</td>
+          <td>10–15%</td>
+        </tr>
+        <tr>
+          <td class="crit">Total cost of ownership</td>
+          <td class="dim">Pricing model, token economics, autoscaling cost behavior, the cost of integration we own forever.</td>
+          <td>10–15%</td>
+        </tr>
+        <tr>
+          <td class="crit">Roadmap &amp; vendor risk</td>
+          <td class="dim">Funding stage, customer concentration, lock-in (proprietary vs. open formats), exit path, acquisition exposure.</td>
+          <td>10%</td>
+        </tr>
+        <tr>
+          <td class="crit">Developer experience</td>
+          <td class="dim">Docs, examples, support quality, time-to-first-call, debuggability. A bad DX adds permanent integration tax.</td>
+          <td>5–10%</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="rubric-cap">Scoring is 1–5 per criterion, weighted, normalized to a 100-point scale. Anything below 70 is a no; 70–85 is a pilot under a defined contract; 85+ is a yes. The matrix prevents the most common procurement failure — picking the most polished demo instead of the most operable platform.</p>
+  </div>
+</div>
+
+<!-- 03 CASE STUDIES -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">03 — Case Studies</span>
+      <span class="dv-version">four transformation programs, four employers</span>
+    </div>
+    <h2 class="dv-title">Where the playbook came from.</h2>
+    <p class="dv-desc">Real transformation work from a 15-year career in regulated environments. Different domains, same operating pattern — score the work, partner across functions, ship the foundation, leave the runbooks.</p>
+
+    <div class="case-cards">
+      <div class="case-card">
+        <div class="case-tag">Microsoft</div>
+        <div class="case-where">Non-Human Identity Governance</div>
+        <div class="case-role">Cloud Solutions Architect</div>
+        <p class="case-body">Built Python automation for <strong>Entra ID Governance</strong> and Non-Human Identity at scale — before "NHI governance" was a named discipline in the industry. Reduced ungoverned service-account sprawl across multiple business units; integrated discovery and lifecycle ops with the broader IAM platform.</p>
+        <p class="case-takeaway">Lesson: the operating model has to ship before the policy. The policy never gets followed otherwise.</p>
+      </div>
+
+      <div class="case-card">
+        <div class="case-tag">Starbucks</div>
+        <div class="case-where">Identity Automation at Scale</div>
+        <div class="case-role">Senior Security Engineer</div>
+        <p class="case-body">PowerShell automation for identity operations across <strong>60+ Active Directory domains</strong>. Bulk audit, lifecycle, and remediation — replaced thousands of hours of manual ticket work per quarter with a script tree the security team could extend without me.</p>
+        <p class="case-takeaway">Lesson: scale doesn't come from headcount; it comes from leaving the team something they can run when you leave.</p>
+      </div>
+
+      <div class="case-card">
+        <div class="case-tag">Wells Fargo</div>
+        <div class="case-where">Payments Infrastructure</div>
+        <div class="case-role">Engineer · Payment Systems</div>
+        <p class="case-body">Engineering on payment infrastructure for <strong>SWIFT, CHIPS, and Fedwire</strong>. The kind of system where a wrong move is a regulatory event, not a P1. Learned what "reversibility" actually means when the rollback path matters more than the build.</p>
+        <p class="case-takeaway">Lesson: the boring parts — change windows, kill criteria, the rollback rehearsal — are the parts that make the rest possible.</p>
+      </div>
+
+      <div class="case-card">
+        <div class="case-tag">Veradigm</div>
+        <div class="case-where">HIPAA-Regulated IAM</div>
+        <div class="case-role">Identity Platform Engineer</div>
+        <p class="case-body">Designed and operated <strong>HIPAA-regulated IAM for 16,000+ users</strong> across a healthcare-data environment. PHI guardrails, access reviews, joiner-mover-leaver automation, audit-ready trails. The compliance model wasn't a checkbox; it was the architecture.</p>
+        <p class="case-takeaway">Lesson: governance done right speeds the team up. Done wrong, it's the reason nobody ships.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 04 MATURITY LADDER -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">04 — AI Function Maturity</span>
+      <span class="dv-version">five stages</span>
+    </div>
+    <h2 class="dv-title">Scaling an internal AI function.</h2>
+    <p class="dv-desc">Most organizations are at stage 1 or 2 when they hire for AI Transformation Lead. The job is to move them up the ladder — not skip steps. I size the ambition to the stage; over-reaching produces theater, not transformation.</p>
+
+    <div class="ladder">
+      <div class="ladder-step">
+        <div class="ladder-num">Stage 1</div>
+        <div class="ladder-name">Ad-hoc</div>
+        <div class="ladder-desc">Teams using AI tools individually, no standards, no review. Some lift, lots of risk. The starting line.</div>
+      </div>
+      <div class="ladder-step">
+        <div class="ladder-num">Stage 2</div>
+        <div class="ladder-name">Sanctioned</div>
+        <div class="ladder-desc">Approved tool list, basic usage policy, named owner per vendor. Risk goes down; capability gain is incremental.</div>
+      </div>
+      <div class="ladder-step is-signal">
+        <div class="ladder-num">Stage 3</div>
+        <div class="ladder-name">Governed</div>
+        <div class="ladder-desc">Initiative rubric in use, vendor matrix in use, NHI governance for agent credentials, eval harnesses on AI features that ship. Where the playbook lives.</div>
+      </div>
+      <div class="ladder-step">
+        <div class="ladder-num">Stage 4</div>
+        <div class="ladder-name">Platform</div>
+        <div class="ladder-desc">Internal AI platform with shared tools — agent runtime, prompt registry, eval pipeline, vector store, governance plane. Business units ship on top of it.</div>
+      </div>
+      <div class="ladder-step">
+        <div class="ladder-num">Stage 5</div>
+        <div class="ladder-name">Compounding</div>
+        <div class="ladder-desc">Every new initiative inherits the platform. Time to first value is days, not quarters. The AI function pays for itself measurably.</div>
+      </div>
+    </div>
+    <p class="ladder-cap">I aim for stage 2 → 3 in the first six months, stage 3 → 4 in the first twelve to eighteen. Stage 5 is two-plus years of compounded work; promising it in year one is how transformation programs fail their first review.</p>
+  </div>
+</div>
+
+<!-- 05 OPERATIONAL STANDARDS -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">05 — Operational Standards</span>
+      <span class="dv-version">the artifacts I bring</span>
+    </div>
+    <h2 class="dv-title">What ships with every AI initiative.</h2>
+    <p class="dv-desc">Standards are the difference between a portfolio of demos and a function that compounds. I make these mandatory for any AI feature that touches production — non-negotiable, scoped to the stage on the maturity ladder.</p>
+
+    <div class="std-cards">
+      <div class="std-card">
+        <div class="std-name">Threat Model</div>
+        <div class="std-body">One-page document per AI feature. Identifies prompt-injection vectors, data exfiltration paths, NHI exposure, abuse cases. Reviewed at architecture stage by Security and Identity. Example: the threat model that ships with <a href="010-linear-mcp.html" style="color:var(--signal);">Linear MCP Server</a>.</div>
+      </div>
+      <div class="std-card">
+        <div class="std-name">Eval Harness</div>
+        <div class="std-body">Test set, scoring function, regression baseline. Every AI feature gets one before launch. The eval is what makes "AI improvements" measurable instead of vibes. Pattern shown in <a href="009-document-pipeline.html" style="color:var(--signal);">Document Pipeline</a>.</div>
+      </div>
+      <div class="std-card">
+        <div class="std-name">Runbook</div>
+        <div class="std-body">Operational playbook for the on-call team — failure modes, manual override, rollback path, contact tree. Written before launch, not after the first incident.</div>
+      </div>
+      <div class="std-card">
+        <div class="std-name">NHI Registry</div>
+        <div class="std-body">Every service account, OAuth token, API key, and short-lived credential the system uses — discovered, classified, owned, lifecycle-managed. The pattern lives in <a href="013-axe-provenance.html" style="color:var(--signal);">AI Agent Governance Console</a>.</div>
+      </div>
+      <div class="std-card">
+        <div class="std-name">Cost Telemetry</div>
+        <div class="std-body">Token cost per feature, per request, per business unit. Reviewed monthly. AI feature cost has to be observable from day one or it goes uncontrolled fast.</div>
+      </div>
+      <div class="std-card">
+        <div class="std-name">HITL Gate Map</div>
+        <div class="std-body">Which actions require human approval, who approves, what gets logged. Destructive actions, irreversible decisions, high-stakes outputs — none of them ship without an explicit gate.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 06 CROSS-FUNCTIONAL PARTNERSHIP -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">06 — Cross-Functional Partnership</span>
+      <span class="dv-version">how the function actually works</span>
+    </div>
+    <h2 class="dv-title">The operating model.</h2>
+    <p class="dv-desc">An AI function isn't a team — it's a set of standing partnerships. Same six relationships in every org, slightly different names.</p>
+
+    <div class="partner" style="margin-bottom:1px;">
+      <div class="partner-cell">
+        <div class="partner-who">Executive Leadership</div>
+        <div class="partner-what">Quarterly · Strategy alignment</div>
+        <p class="partner-body">Translate the AI roadmap into business outcomes. Defend the rubric. Re-balance investment across stages. Bring the hard "we shouldn't build this" calls upstream early.</p>
+      </div>
+      <div class="partner-cell">
+        <div class="partner-who">Cadence</div>
+        <div class="partner-what">QBR + ad-hoc on initiative scoring</div>
+        <p class="partner-body" style="font-family:var(--mono);font-size:12px;color:var(--ink-soft);">A short deck, never a long one. The rubric and the matrix are the slides.</p>
+      </div>
+    </div>
+
+    <div class="partner" style="margin-bottom:1px;">
+      <div class="partner-cell">
+        <div class="partner-who">Security &amp; Identity</div>
+        <div class="partner-what">Weekly · Architecture review</div>
+        <p class="partner-body">Every AI feature goes through identity and security review at the architecture stage, not at launch. Treat them as design partners, not gatekeepers. They see threat models the engineering team would miss.</p>
+      </div>
+      <div class="partner-cell">
+        <div class="partner-who">Cadence</div>
+        <div class="partner-what">Weekly office hours + threat-model reviews</div>
+        <p class="partner-body" style="font-family:var(--mono);font-size:12px;color:var(--ink-soft);">Standing 30-min weekly. New initiatives book a slot.</p>
+      </div>
+    </div>
+
+    <div class="partner" style="margin-bottom:1px;">
+      <div class="partner-cell">
+        <div class="partner-who">Cloud Operations</div>
+        <div class="partner-what">Ongoing · Platform &amp; cost</div>
+        <p class="partner-body">Capacity, secrets management, deployment patterns, cost attribution. The AI function inherits the existing platform — doesn't build a shadow one — and adds AI-specific layers (NHI, prompt registry, eval pipeline) on top.</p>
+      </div>
+      <div class="partner-cell">
+        <div class="partner-who">Cadence</div>
+        <div class="partner-what">Embedded in deploy reviews</div>
+        <p class="partner-body" style="font-family:var(--mono);font-size:12px;color:var(--ink-soft);">No separate AI-ops org — that's how silos start.</p>
+      </div>
+    </div>
+
+    <div class="partner" style="margin-bottom:1px;">
+      <div class="partner-cell">
+        <div class="partner-who">Lines of Business</div>
+        <div class="partner-what">Continuous · Demand intake</div>
+        <p class="partner-body">Every business unit has named AI requests in flight. Run a structured intake — rubric score on submission, kill-criterion on every pilot, "no" given fast and explained. The fastest way to lose business-unit trust is to leave their requests rotting.</p>
+      </div>
+      <div class="partner-cell">
+        <div class="partner-who">Cadence</div>
+        <div class="partner-what">Bi-weekly intake review</div>
+        <p class="partner-body" style="font-family:var(--mono);font-size:12px;color:var(--ink-soft);">Backlog visible in shared system. No black box.</p>
+      </div>
+    </div>
+
+    <div class="partner" style="margin-bottom:1px;">
+      <div class="partner-cell">
+        <div class="partner-who">Legal &amp; Compliance</div>
+        <div class="partner-what">Per initiative · Risk classification</div>
+        <p class="partner-body">DPA review for vendors, data classification per feature, jurisdiction analysis, audit trail standards. Brought in at the matrix-scoring stage, not the procurement stage.</p>
+      </div>
+      <div class="partner-cell">
+        <div class="partner-who">Cadence</div>
+        <div class="partner-what">Triggered by matrix score</div>
+        <p class="partner-body" style="font-family:var(--mono);font-size:12px;color:var(--ink-soft);">Any vendor scoring &gt;70 enters legal review.</p>
+      </div>
+    </div>
+
+    <div class="partner">
+      <div class="partner-cell">
+        <div class="partner-who">Engineering</div>
+        <div class="partner-what">Continuous · Build &amp; eval</div>
+        <p class="partner-body">The AI function provides the platform; engineering teams build on top. My role is to remove the integration tax — standard SDKs, shared eval harness, prompt registry, NHI plumbing — so the team's surface area is the AI feature itself.</p>
+      </div>
+      <div class="partner-cell">
+        <div class="partner-who">Cadence</div>
+        <div class="partner-what">Daily / continuous</div>
+        <p class="partner-body" style="font-family:var(--mono);font-size:12px;color:var(--ink-soft);">Embedded engineers on big initiatives.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 07 PROOF -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">07 — Where The Playbook Is Already Running</span>
+      <span class="dv-version">portfolio proof</span>
+    </div>
+    <h2 class="dv-title">The standards aren't aspirational.</h2>
+    <p class="dv-desc">Each of these projects implements one of the operational standards above. The playbook isn't a deck — it's the way the projects are actually built.</p>
+
+    <div class="proof">
+      <a href="013-axe-provenance.html" class="proof-link">
+        <div class="proof-tag">NHI Registry</div>
+        <div class="proof-name">AI Agent Governance Console</div>
+        <div class="proof-body">Multi-agent NHI lifecycle: discovery, classification, ownership, intake/approval, rotation, decommissioning. The reference implementation of the NHI standard.</div>
+        <div class="proof-arrow">→ open</div>
+      </a>
+      <a href="015-nhi-classifier.html" class="proof-link">
+        <div class="proof-tag">Eval Harness</div>
+        <div class="proof-name">NHI Credential Risk Classifier</div>
+        <div class="proof-body">Fine-tuned model with a real eval harness: per-class P/R/F1, confusion matrix, latency, cost. 99.33% accuracy at 10.8ms/record. The eval standard, applied.</div>
+        <div class="proof-arrow">→ open</div>
+      </a>
+      <a href="010-linear-mcp.html" class="proof-link">
+        <div class="proof-tag">Threat Model</div>
+        <div class="proof-name">Linear MCP Server</div>
+        <div class="proof-body">Open-source MCP server with a documented threat model and a 30-case eval harness. Read-only by design — destructive ops never written.</div>
+        <div class="proof-arrow">→ open</div>
+      </a>
+      <a href="011-sentinel-triage.html" class="proof-link">
+        <div class="proof-tag">HITL Gate Map</div>
+        <div class="proof-name">Autonomous Security Triage Agent</div>
+        <div class="proof-body">ReAct agent with an explicit autonomy dial and a human-approval gate on every destructive action. The HITL standard, applied.</div>
+        <div class="proof-arrow">→ open</div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div id="page-footer">
+    <a href="index.html" class="pf-back">← Back to Bruce Davis</a>
+    <div class="pf-links">
+      <a href="index.html#work">Work</a>
+      <a href="about.html">About</a>
+      <a href="bruce-davis-resume.html">Resume</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+'use strict';
+
+const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+gsap.registerPlugin(ScrollTrigger);
+
+/* ── HERO — char-split entrance */
+const hl = document.getElementById('hero-hl');
+hl.innerHTML = hl.innerHTML.split('<br>').map(line =>
+  `<span class="h-line" style="display:block;overflow:hidden">${
+    [...line.trim()].map(ch => ch === ' '
+      ? `<span style="display:inline-block;min-width:.25em"> </span>`
+      : `<span class="h-char" style="display:inline-block">${ch}</span>`
+    ).join('')
+  }</span>`
+).join('');
+if (motionOK) gsap.from('.h-char', { yPercent:110, duration:.7, stagger:.02, ease:'power3.out', delay:.1 });
+
+/* ── REVEAL */
+if (motionOK) {
+  document.querySelectorAll('.reveal').forEach(el => {
+    gsap.to(el, {
+      opacity:1, y:0, duration:.6, ease:'power2.out',
+      scrollTrigger:{ trigger:el, start:'top 84%' },
+    });
+  });
+} else {
+  document.querySelectorAll('.reveal').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+}
+
+console.log('%c// 6% — small change. whole product.', 'color:#E1261C;font-family:monospace;letter-spacing:.04em;');
+console.log('%c// bruce davis · 2026', 'color:#8A847A;font-family:monospace;letter-spacing:.04em;');
+</script>
+
+</body>
+</html>
