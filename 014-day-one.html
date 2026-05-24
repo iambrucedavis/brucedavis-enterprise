@@ -166,13 +166,18 @@ a { color:inherit; text-decoration:none; }
 .rule-name { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:18px; letter-spacing:.01em; color:var(--ink); margin-bottom:11px; }
 .rule-body { font-family:var(--serif); font-size:14.5px; color:var(--ink-soft); line-height:1.65; }
 
-/* ─── REVIEW ───────────────────────────────────── */
-#review { padding:clamp(64px,8vw,100px) clamp(22px,5vw,56px); border-bottom:1px solid var(--hairline-strong); }
-#review .sec-inner { max-width:1000px; margin:0 auto; }
-.review-lbl { font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); margin-bottom:22px; }
-.review-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:14px; max-width:68ch; }
-.review-list li { font-family:var(--serif); font-size:16px; color:var(--ink-soft); line-height:1.6; padding-left:28px; position:relative; }
-.review-list li::before { content:'+'; position:absolute; left:0; top:0; font-family:var(--mono); font-size:14px; color:var(--signal); }
+/* ─── AT A GLANCE ──────────────────────────────── */
+.glance { display:grid; grid-template-columns:1fr 1fr; gap:32px clamp(28px,4vw,56px); padding:clamp(40px,5vw,56px); background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.glance-col h3 { font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); margin-bottom:14px; }
+.glance-col p { font-family:var(--serif); font-size:16px; line-height:1.55; color:var(--ink); }
+.glance-col ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
+.glance-col li { font-family:var(--serif); font-size:15px; line-height:1.5; color:var(--ink-soft); padding-left:18px; position:relative; }
+.glance-col li::before { content:''; position:absolute; left:0; top:.55em; width:8px; height:1px; background:var(--signal); }
+.glance-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+.glance-chip { font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:6px 11px; border:1px solid var(--hairline-strong); background:var(--paper); }
+.glance-roles { font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--ink); line-height:1.7; }
+.glance-roles span { color:var(--signal); }
+@media (max-width:760px) { .glance { grid-template-columns:1fr; } }
 
 /* ─── FOOTER ───────────────────────────────────── */
 footer { background:var(--paper); border-top:1px solid var(--hairline-strong); }
@@ -216,18 +221,54 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-pre">AI Experience · Generative UI</div>
+  <div class="hero-pre">Generative UI · Structured Outputs</div>
   <h1 id="hero-hl">Day One</h1>
   <p class="hero-sub">
-    A conversational onboarding experience where the interface is assembled at request time. A new hire asks in plain language; Claude returns structured data; the app renders an interactive component — a setup wizard, a progress ring, a benefits picker — instead of a chat reply.
+    A conversational onboarding experience. The interface is assembled at request time — Claude returns structured data; the app renders an interactive component instead of a chat reply.
   </p>
   <div class="hero-meta">
     <span>6 generative components</span>
-    <span>Generative UI</span>
+    <span>Structured-output rendering</span>
     <span>Next.js · React · TypeScript</span>
-    <span>Live interactive demo</span>
+    <span>Live demo</span>
   </div>
 </section>
+
+<!-- AT A GLANCE -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">At a glance</span>
+      <span class="dv-version">30-second read</span>
+    </div>
+    <div class="glance">
+      <div class="glance-col">
+        <h3>What it is</h3>
+        <p>A generative-UI onboarding experience. The user types a plain-language request; Claude returns structured JSON; the app renders an interactive component (wizard, progress ring, benefits picker) chosen and assembled at request time. Six components compose into many surfaces.</p>
+      </div>
+      <div class="glance-col">
+        <h3>Maps to</h3>
+        <p class="glance-roles"><span>AI Product Engineer</span> · <span>Frontend (AI)</span> · <span>Applied AI Engineer</span> · <span>Design Engineer (AI)</span></p>
+        <h3 style="margin-top:22px;">Skills demonstrated</h3>
+        <ul>
+          <li>Generative UI architecture (LLM → JSON → React render)</li>
+          <li>Structured-output prompt design</li>
+          <li>Component library designed for assembly, not pages</li>
+          <li>Next.js streaming + interactive component handoff</li>
+          <li>Plain-language input → governed UI surface</li>
+        </ul>
+        <div class="glance-chips">
+          <span class="glance-chip">Next.js</span>
+          <span class="glance-chip">React</span>
+          <span class="glance-chip">TypeScript</span>
+          <span class="glance-chip">Anthropic SDK</span>
+          <span class="glance-chip">Structured Output</span>
+          <span class="glance-chip">Generative UI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- SEE IT RUN -->
 <div class="dv-section reveal">
@@ -403,18 +444,6 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
     </div>
   </div>
 </div>
-
-<!-- IN REVIEW -->
-<section id="review" class="reveal">
-  <div class="sec-inner">
-    <div class="review-lbl">In review — what I'd do differently</div>
-    <ul class="review-list">
-      <li>The five sample prompts are hand-authored UI specs with curated content, so the demo runs without an API key or cost.</li>
-      <li>The tool's JSON Schema is deliberately permissive on block props; Zod does the validation after the call. This split is more reliable for deep typed unions.</li>
-      <li>Six block types ship today. The registry is built to grow — a seventh component is a schema entry, a line in the prompt, and one file.</li>
-    </ul>
-  </div>
-</section>
 
 <!-- FOOTER -->
 <footer>

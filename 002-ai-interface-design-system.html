@@ -409,15 +409,18 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 .brief-body { font-family:var(--serif); font-size:18px; color:var(--ink-soft); line-height:1.72; max-width:66ch; }
 .brief-body p + p { margin-top:18px; }
 
-/* ─── REVIEW ───────────────────────────────────── */
-#review { padding:clamp(64px,8vw,100px) clamp(22px,5vw,56px); border-bottom:1px solid var(--hairline-strong); }
-.review-body { max-width:66ch; }
-.review-block + .review-block { margin-top:44px; }
-.review-sub { font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); margin-bottom:22px; }
-.review-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:16px; }
-.review-list li { font-family:var(--serif); font-size:16.5px; color:var(--ink-soft); line-height:1.65; padding-left:30px; position:relative; }
-.review-list li::before { content:'+'; position:absolute; left:0; top:0; font-family:var(--mono); font-size:14px; color:var(--signal); }
-.review-list code { font-family:var(--mono); font-size:13px; color:var(--ink); padding:0 1px; }
+/* ─── AT A GLANCE ──────────────────────────────── */
+.glance { display:grid; grid-template-columns:1fr 1fr; gap:32px clamp(28px,4vw,56px); padding:clamp(40px,5vw,56px); background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.glance-col h3 { font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); margin-bottom:14px; }
+.glance-col p { font-family:var(--serif); font-size:16px; line-height:1.55; color:var(--ink); }
+.glance-col ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
+.glance-col li { font-family:var(--serif); font-size:15px; line-height:1.5; color:var(--ink-soft); padding-left:18px; position:relative; }
+.glance-col li::before { content:''; position:absolute; left:0; top:.55em; width:8px; height:1px; background:var(--signal); }
+.glance-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+.glance-chip { font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:6px 11px; border:1px solid var(--hairline-strong); background:var(--paper); }
+.glance-roles { font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--ink); line-height:1.7; }
+.glance-roles span { color:var(--signal); }
+@media (max-width:760px) { .glance { grid-template-columns:1fr; } }
 
 @media (max-width: 640px) {
   .ci-grid { grid-template-columns:repeat(2,1fr); }
@@ -443,18 +446,53 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-pre">AI Product Engineer · Experience</div>
+  <div class="hero-pre">AI Product UI · Live React Patterns</div>
   <h1 id="hero-hl">AI Interface Patterns</h1>
   <p class="hero-sub">
-    Five working interface patterns for AI products: word-by-word streaming, model state indicators, low-context warnings, confidence flags, and error recovery. The loading, empty, and error states most AI demos skip. Built as live React/TypeScript instead of Figma mockups.
+    Five working interface patterns for AI products — streaming, model state, low-context, confidence, error recovery. The states most AI demos skip. Live React, not Figma.
   </p>
   <div class="hero-meta">
-    <span>5 patterns</span>
-    <span>React &middot; TypeScript</span>
-    <span>Streaming</span>
+    <span>5 working patterns</span>
+    <span>Live React · TypeScript</span>
     <span>State machines</span>
+    <span>Streaming render</span>
   </div>
 </section>
+
+<!-- AT A GLANCE -->
+<div class="ds-section reveal" style="padding:clamp(64px,8vw,100px) clamp(22px,5vw,56px);border-bottom:1px solid var(--hairline-strong);">
+  <div class="sec-inner">
+    <div class="ds-hdr">
+      <span class="ds-label">At a glance</span>
+      <span class="ds-version">30-second read</span>
+    </div>
+    <div class="glance">
+      <div class="glance-col">
+        <h3>What it is</h3>
+        <p>Five production-grade UI patterns for AI products, each a working React/TypeScript implementation: streaming output, model-state indicators, low-context warnings, confidence flags, error recovery. The loading, empty, and error states most AI demos hand-wave past.</p>
+      </div>
+      <div class="glance-col">
+        <h3>Maps to</h3>
+        <p class="glance-roles"><span>AI Product Engineer</span> · <span>Frontend (AI)</span> · <span>Applied AI Engineer</span> · <span>Design Engineer (AI)</span></p>
+        <h3 style="margin-top:22px;">Skills demonstrated</h3>
+        <ul>
+          <li>Streaming UI architecture (token-by-token render)</li>
+          <li>State-machine design for AI lifecycle</li>
+          <li>Uncertainty &amp; confidence surfacing</li>
+          <li>Failure-mode UX (low context, error recovery)</li>
+          <li>Working code, not mockups</li>
+        </ul>
+        <div class="glance-chips">
+          <span class="glance-chip">React</span>
+          <span class="glance-chip">TypeScript</span>
+          <span class="glance-chip">Streaming</span>
+          <span class="glance-chip">State Machines</span>
+          <span class="glance-chip">SSE</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- BRIEF -->
 <section id="brief" class="reveal">
@@ -682,34 +720,6 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
     </div>
   </div>
 </div>
-
-<!-- ── IN REVIEW ──────────────────────────────── -->
-<section id="review" class="reveal">
-  <div class="brief-lbl">In review</div>
-  <div class="review-body">
-
-    <div class="review-block">
-      <div class="review-sub">Craft decisions</div>
-      <ul class="review-list">
-        <li>Streaming pauses on punctuation. 65ms after <code>.</code> <code>,</code> <code>—</code> <code>?</code> <code>!</code>. The cursor blinks while writing and goes solid on done.</li>
-        <li>Streaming region uses <code>aria-live="polite"</code> with <code>aria-busy</code> toggling. Screen readers get the full sentence once on done — no per-character stutter.</li>
-        <li>Confidence encodes four levels in two visual properties: opacity and underline style. Readable without the legend, inspectable on hover.</li>
-        <li>The token meter is one component with three meanings: signal under 75%, warn at 75%, error at 90%. The thresholds carry the design decision.</li>
-        <li>Error states are typed by failure class. 429, 503, and 500 each get different icons, colors, and actions. Rate limit gets a queue. Inference failure gets a report. Each action maps to what the user can do in that failure mode.</li>
-      </ul>
-    </div>
-
-    <div class="review-block">
-      <div class="review-sub">What I'd do differently</div>
-      <ul class="review-list">
-        <li>Confidence is static here. Production needs streaming logprobs and a debounced rerender, which is a different design problem because the values change while you read them.</li>
-        <li>Token meter is a single ratio. Real context windows break out system prompt, tools, attached files, history. The bar should be a stack, not a slider.</li>
-        <li>Error codes show on the surface. Real users don't read <code>429</code>. Move the code into a collapse and lead with what to do.</li>
-      </ul>
-    </div>
-
-  </div>
-</section>
 
 <!-- ── COMPONENT INDEX ────────────────────────── -->
 <section id="comp-index" class="reveal">

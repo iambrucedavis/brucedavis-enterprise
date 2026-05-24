@@ -172,13 +172,18 @@ a { color:inherit; text-decoration:none; }
 .rule-name { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:18px; letter-spacing:.01em; color:var(--ink); margin-bottom:11px; }
 .rule-body { font-family:var(--serif); font-size:14.5px; color:var(--ink-soft); line-height:1.65; }
 
-/* ─── REVIEW ───────────────────────────────────── */
-#review { padding:clamp(64px,8vw,100px) clamp(22px,5vw,56px); border-bottom:1px solid var(--hairline-strong); }
-#review .sec-inner { max-width:1000px; margin:0 auto; }
-.review-lbl { font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); margin-bottom:22px; }
-.review-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:14px; max-width:66ch; }
-.review-list li { font-family:var(--serif); font-size:16px; color:var(--ink-soft); line-height:1.6; padding-left:28px; position:relative; }
-.review-list li::before { content:'+'; position:absolute; left:0; top:0; font-family:var(--mono); font-size:14px; color:var(--signal); }
+/* ─── AT A GLANCE ──────────────────────────────── */
+.glance { display:grid; grid-template-columns:1fr 1fr; gap:32px clamp(28px,4vw,56px); padding:clamp(40px,5vw,56px); background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.glance-col h3 { font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); margin-bottom:14px; }
+.glance-col p { font-family:var(--serif); font-size:16px; line-height:1.55; color:var(--ink); }
+.glance-col ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
+.glance-col li { font-family:var(--serif); font-size:15px; line-height:1.5; color:var(--ink-soft); padding-left:18px; position:relative; }
+.glance-col li::before { content:''; position:absolute; left:0; top:.55em; width:8px; height:1px; background:var(--signal); }
+.glance-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+.glance-chip { font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:6px 11px; border:1px solid var(--hairline-strong); background:var(--paper); }
+.glance-roles { font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--ink); line-height:1.7; }
+.glance-roles span { color:var(--signal); }
+@media (max-width:760px) { .glance { grid-template-columns:1fr; } }
 
 /* ─── FOOTER ───────────────────────────────────── */
 footer { background:var(--paper); border-top:1px solid var(--hairline-strong); }
@@ -222,18 +227,53 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-pre">AI Product Engineer · Systems</div>
+  <div class="hero-pre">Agentic AI · Domain Transfer Proof</div>
   <h1 id="hero-hl">Film Pre-Production<br>Agent</h1>
   <p class="hero-sub">
-    An autonomous pre-production orchestrator. It turns raw script pages into a structured production package — scene breakdown, VFX complexity, casting — and locks it only with a producer's sign-off. Same agent loop as the Autonomous Security Triage Agent, pointed at creative work.
+    Same ReAct architecture as Sentinel, pointed at film pre-production. Script breakdown, VFX scoring, casting archetypes, producer approval gate before lock. Proves the pattern travels across domains.
   </p>
   <div class="hero-meta">
-    <span>4 tools</span>
     <span>ReAct agent</span>
-    <span>Gemini 2.5 Flash</span>
+    <span>4 function-calling tools</span>
+    <span>Producer-approval gate</span>
     <span>Python · Streamlit</span>
   </div>
 </section>
+
+<!-- AT A GLANCE -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">At a glance</span>
+      <span class="dv-version">30-second read</span>
+    </div>
+    <div class="glance">
+      <div class="glance-col">
+        <h3>What it is</h3>
+        <p>A ReAct agent that turns raw script pages into a structured pre-production package — scene breakdown, VFX complexity scoring, casting archetypes — and locks only after a producer approves. Same agent architecture as Sentinel Triage, different domain. The reusable agentic pattern is the artifact.</p>
+      </div>
+      <div class="glance-col">
+        <h3>Maps to</h3>
+        <p class="glance-roles"><span>AI / Agent Engineer</span> · <span>Applied AI Engineer</span> · <span>AI Product Engineer</span> · <span>Forward-Deployed Engineer</span></p>
+        <h3 style="margin-top:22px;">Skills demonstrated</h3>
+        <ul>
+          <li>Domain-transferable ReAct agent architecture</li>
+          <li>Function-calling tool design across creative workflows</li>
+          <li>Approval-gated agent loop (producer sign-off)</li>
+          <li>Structured-output extraction from unstructured text</li>
+          <li>Streamlit operator UI for non-engineer end-users</li>
+        </ul>
+        <div class="glance-chips">
+          <span class="glance-chip">Python</span>
+          <span class="glance-chip">Streamlit</span>
+          <span class="glance-chip">Gemini 2.5 Flash</span>
+          <span class="glance-chip">ReAct</span>
+          <span class="glance-chip">Function Calling</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- WHAT IT IS — DIAGRAM + STATS -->
 <div class="dv-section reveal">
@@ -391,18 +431,6 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
     </div>
   </div>
 </div>
-
-<!-- IN REVIEW -->
-<section id="review" class="reveal">
-  <div class="sec-inner">
-    <div class="review-lbl">In review — what I'd do differently</div>
-    <ul class="review-list">
-      <li>The script parser is heuristic — it expects screenplay-formatted text, and degrades gracefully on freeform input.</li>
-      <li>Casting archetypes are reference vibes, not a real talent database. The structure is built to plug one in.</li>
-      <li>The next step is an export — a breakdown sheet a coordinator could hand to a department.</li>
-    </ul>
-  </div>
-</section>
 
 <!-- FOOTER -->
 <footer>

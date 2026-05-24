@@ -193,15 +193,18 @@ pre.diff .at  { color:var(--signal); }
 .verdict-row strong { color:var(--ink); font-weight:700; }
 .verdict-row .vtag { color:var(--signal); }
 
-/* ─── REVIEW ───────────────────────────────────── */
-#review { padding:clamp(64px,8vw,100px) clamp(22px,5vw,56px); border-bottom:1px solid var(--hairline-strong); }
-.review-body { max-width:66ch; }
-.review-block + .review-block { margin-top:44px; }
-.review-sub { font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); margin-bottom:22px; }
-.review-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:16px; }
-.review-list li { font-family:var(--serif); font-size:16.5px; color:var(--ink-soft); line-height:1.65; padding-left:30px; position:relative; }
-.review-list li::before { content:'+'; position:absolute; left:0; top:0; font-family:var(--mono); font-size:14px; color:var(--signal); }
-.review-list code { font-family:var(--mono); font-size:13px; color:var(--ink); padding:0 1px; }
+/* ─── AT A GLANCE ──────────────────────────────── */
+.glance { display:grid; grid-template-columns:1fr 1fr; gap:32px clamp(28px,4vw,56px); padding:clamp(40px,5vw,56px); background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.glance-col h3 { font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); margin-bottom:14px; }
+.glance-col p { font-family:var(--serif); font-size:16px; line-height:1.55; color:var(--ink); }
+.glance-col ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
+.glance-col li { font-family:var(--serif); font-size:15px; line-height:1.5; color:var(--ink-soft); padding-left:18px; position:relative; }
+.glance-col li::before { content:''; position:absolute; left:0; top:.55em; width:8px; height:1px; background:var(--signal); }
+.glance-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+.glance-chip { font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:6px 11px; border:1px solid var(--hairline-strong); background:var(--paper); }
+.glance-roles { font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--ink); line-height:1.7; }
+.glance-roles span { color:var(--signal); }
+@media (max-width:760px) { .glance { grid-template-columns:1fr; } }
 
 /* ─── FOOTER ───────────────────────────────────── */
 footer { background:var(--paper); border-top:1px solid var(--hairline-strong); }
@@ -239,18 +242,53 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-pre">AI Product Engineer · Systems</div>
-  <h1 id="hero-hl">Content &amp; Research<br>Automation</h1>
+  <div class="hero-pre">Custom MCP · Three-Pattern Architecture</div>
+  <h1 id="hero-hl">Content &amp; Research<br>MCP Server</h1>
   <p class="hero-sub">
-    Five custom Claude tools running on an MCP server I built to extend my own workflow &mdash; pulling ideas from a Notion vault, suggesting palettes, voice-checking copy, scaffolding project pages, capturing new ideas.
+    A custom MCP server I built and use daily. Five tools, three deliberate patterns — retrieval, critique, mutation. Claude decides; the tools enforce the rules.
   </p>
   <div class="hero-meta">
-    <span>5 tools</span>
-    <span>MCP server</span>
-    <span>Zod schemas</span>
-    <span>Notion API</span>
+    <span>5 MCP tools</span>
+    <span>3 deliberate patterns</span>
+    <span>Notion-backed</span>
+    <span>Node · TypeScript</span>
   </div>
 </section>
+
+<!-- AT A GLANCE -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">At a glance</span>
+      <span class="dv-version">30-second read</span>
+    </div>
+    <div class="glance">
+      <div class="glance-col">
+        <h3>What it is</h3>
+        <p>A custom MCP server in daily use. Five Notion-backed tools across three patterns: retrieval (returns options for Claude to choose), critique (flags what's wrong), mutation (writes the change). Tools enforce constraints; Claude reasons.</p>
+      </div>
+      <div class="glance-col">
+        <h3>Maps to</h3>
+        <p class="glance-roles"><span>AI / Agent Engineer</span> · <span>Applied AI Engineer</span> · <span>AI Tooling Engineer</span> · <span>Developer Experience (AI)</span></p>
+        <h3 style="margin-top:22px;">Skills demonstrated</h3>
+        <ul>
+          <li>Custom MCP server design from scratch</li>
+          <li>Three-pattern architecture: retrieval / critique / mutation</li>
+          <li>Tool-as-constraint thinking (Claude as decision-maker)</li>
+          <li>Notion API integration with structured data modeling</li>
+          <li>Dry-run / preview pattern for safe mutations</li>
+        </ul>
+        <div class="glance-chips">
+          <span class="glance-chip">MCP SDK</span>
+          <span class="glance-chip">Node</span>
+          <span class="glance-chip">TypeScript</span>
+          <span class="glance-chip">Notion API</span>
+          <span class="glance-chip">Zod</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- BRIEF -->
 <section id="brief" class="reveal">
@@ -495,35 +533,6 @@ taste as rules rather than agents.</pre></div>
     </div>
   </div>
 </div>
-
-<!-- IN REVIEW -->
-<section id="review" class="reveal">
-  <div class="brief-lbl">In review</div>
-  <div class="review-body">
-
-    <div class="review-block">
-      <div class="review-sub">Craft decisions</div>
-      <ul class="review-list">
-        <li>Three patterns named first, five tools fit into them. The three patterns are the structure. Claude picks the right tool when it knows whether it's asking for <code>retrieval</code> versus <code>mutation</code>.</li>
-        <li><code>palette_suggest</code> doesn't rank — it returns options and lets Claude reason. The options already carry their author's notes. Ranking would discard the notes; reasoning over them is the value.</li>
-        <li><code>voice_check</code> refuses to rewrite. The split between "what's wrong" (tool) and "what to write instead" (Claude) is intentional. Rewriting is taste; flagging is rules. They don't belong in the same tool.</li>
-        <li><code>project_scaffold</code> is mutation-with-preview. <code>dry_run: true</code> returns the proposed change first. Claude sees the change, decides, then re-calls without the flag. Two steps in one tool — preview, then commit.</li>
-        <li>Notion's data structure is flatter than its UI. Vault entries are stored as flat <code>child_page</code> blocks; section headings are decorative <code>heading_2</code> blocks that don't actually contain the entries underneath. The tool encodes the truth, not the UI metaphor — sections live in a <code>[section-key]</code> tag inside the title.</li>
-      </ul>
-    </div>
-
-    <div class="review-block">
-      <div class="review-sub">What I'd do differently</div>
-      <ul class="review-list">
-        <li><code>vault_capture</code> still saves entries directly to the Vault root and tags the section name in the title. A more honest version would create real section pages and save the entries under those — restructuring the Vault, not working around it.</li>
-        <li>No real tests. The smoke test in the README is the test. Day 2 of the build adds Vitest, with mocked Notion data for the test cases.</li>
-        <li>Suggestion text in <code>voice_check</code> violations is the same boilerplate each time. A v0.2 would route suggestions through Claude with the rule and excerpt as context — rules for flagging, Claude for the rewrite hint. Hybrid.</li>
-        <li>The <code>palette_suggest</code> output gets large when the lab grows. Beyond ~30 palettes, returning every option wastes context. The fix: pre-sort options by mood similarity (a vector-embedding pass on the server) and return the top few — still letting Claude make the final pick.</li>
-        <li><code>project_scaffold</code> writes only into <code>six-percent-studio/index.html</code>. Single target. A repo-aware version would take the gallery file as an input, opening the door to other portfolio pages or even other projects entirely.</li>
-      </ul>
-    </div>
-  </div>
-</section>
 
 <!-- FOOTER -->
 <footer>

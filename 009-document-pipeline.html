@@ -200,15 +200,18 @@ pre.code .n    { color:var(--code-num); }
 pre.code .b    { color:var(--code-bool); }
 pre.code .c    { color:var(--mute); }
 
-/* ─── REVIEW ───────────────────────────────────── */
-#review { padding:clamp(64px,8vw,100px) clamp(22px,5vw,56px); border-bottom:1px solid var(--hairline-strong); }
-.review-body { max-width:66ch; }
-.review-block + .review-block { margin-top:44px; }
-.review-sub { font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); margin-bottom:22px; }
-.review-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:16px; }
-.review-list li { font-family:var(--serif); font-size:16.5px; color:var(--ink-soft); line-height:1.65; padding-left:30px; position:relative; }
-.review-list li::before { content:'+'; position:absolute; left:0; top:0; font-family:var(--mono); font-size:14px; color:var(--signal); }
-.review-list code { font-family:var(--mono); font-size:13px; color:var(--ink); padding:0 1px; }
+/* ─── AT A GLANCE ──────────────────────────────── */
+.glance { display:grid; grid-template-columns:1fr 1fr; gap:32px clamp(28px,4vw,56px); padding:clamp(40px,5vw,56px); background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.glance-col h3 { font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); margin-bottom:14px; }
+.glance-col p { font-family:var(--serif); font-size:16px; line-height:1.55; color:var(--ink); }
+.glance-col ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
+.glance-col li { font-family:var(--serif); font-size:15px; line-height:1.5; color:var(--ink-soft); padding-left:18px; position:relative; }
+.glance-col li::before { content:''; position:absolute; left:0; top:.55em; width:8px; height:1px; background:var(--signal); }
+.glance-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+.glance-chip { font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:6px 11px; border:1px solid var(--hairline-strong); background:var(--paper); }
+.glance-roles { font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--ink); line-height:1.7; }
+.glance-roles span { color:var(--signal); }
+@media (max-width:760px) { .glance { grid-template-columns:1fr; } }
 
 /* ─── FOOTER ───────────────────────────────────── */
 footer { background:var(--paper); }
@@ -246,28 +249,56 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-pre">AI Product Engineer · Systems · Infrastructure &amp; Security</div>
+  <div class="hero-pre">Regulated AI · MCP · HIPAA-Grade</div>
   <h1 id="hero-hl">Document Processing<br>Pipeline</h1>
   <p class="hero-sub">
-    A document pipeline built as a set of Claude tools &mdash; reads a doc, masks PII, validates the extraction with structured JSON outputs, escalates anything unusual to a human reviewer, tracks token cost. In regulated environments, the human-in-the-loop step is where the work happens, so the reviewer's queue is built to be fast to act on.
+    Five MCP tools, one per stage. Extract, PII mask, validate, route to human review, report cost. Model-agnostic — runs on Claude, GPT, Gemini, or any tool-calling model.
   </p>
   <div class="hero-meta">
-    <span>5 stage tools</span>
-    <span>MCP server</span>
-    <span>ajv validation</span>
-    <span>Python &middot; Node</span>
+    <span>5 MCP tools</span>
+    <span>PII masking + schema validation</span>
+    <span>HITL queue</span>
+    <span>Python · Node</span>
   </div>
 </section>
 
-<!-- BRIEF -->
-<section id="brief" class="reveal">
-  <div class="brief-lbl">The Brief</div>
-  <div class="brief-body">
-    <p>Document processing pipelines look simple on a slide. Read it. Check it. Hide the personal info. Send anything wrong to a human. Ship. In practice they're a black box with Claude in the middle, doing everything from text extraction (OCR) to business rules to deciding what counts as personal info. Hard to debug, hard to know the cost, hard to swap one piece out.</p>
-    <p>This pipeline pulls those concerns apart. Five MCP tools, one per stage. The model is the <strong>conductor</strong>, not the pipeline itself. Each tool owns its piece of the work — <code>doc_extract</code> returns a schema and the rules to follow, <code>pii_mask</code> hides personal info by field path and by pattern matching, <code>doc_validate</code> runs schema + business-rule checks and produces a list of exceptions, <code>hitl_route</code> turns those exceptions into a prioritized queue, <code>cost_report</code> totals the tokens.</p>
-    <p>One design choice worth noting: <code>doc_extract</code> doesn't call the model. It returns a <strong>work order</strong> — task, schema, rules — for the conductor to carry out. No API key needed for the demo. Production swaps the work order for a real call against Claude, GPT-4, Gemini, or any other tool-calling model without changing the other stages.</p>
+<!-- AT A GLANCE -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">At a glance</span>
+      <span class="dv-version">30-second read</span>
+    </div>
+    <div class="glance">
+      <div class="glance-col">
+        <h3>What it is</h3>
+        <p>A document-processing MCP server for regulated environments. Five composable tools, one per stage, with deterministic PII masking, schema + business-rule validation, an HITL queue for exceptions, and per-document token-cost reporting. Built on Claude; portable to any tool-calling model.</p>
+      </div>
+      <div class="glance-col">
+        <h3>Maps to</h3>
+        <p class="glance-roles"><span>AI / Agent Engineer</span> · <span>Applied AI Engineer</span> · <span>AI Platform Engineer</span> · <span>Forward-Deployed Engineer (regulated)</span></p>
+        <h3 style="margin-top:22px;">Skills demonstrated</h3>
+        <ul>
+          <li>MCP tool design — one stage per tool, no shared state</li>
+          <li>Two-layer PII masking (path-based + regex + free-text flagging)</li>
+          <li>JSON Schema + business-rule validation (ajv)</li>
+          <li>Human-in-the-loop queue with auto-prioritization</li>
+          <li>Token-cost telemetry and per-doc cost forecasting</li>
+          <li>Work-order pattern — model-agnostic at the seam</li>
+        </ul>
+        <div class="glance-chips">
+          <span class="glance-chip">MCP SDK</span>
+          <span class="glance-chip">Python</span>
+          <span class="glance-chip">Node</span>
+          <span class="glance-chip">JSON Schema</span>
+          <span class="glance-chip">ajv</span>
+          <span class="glance-chip">PII Masking</span>
+          <span class="glance-chip">HIPAA-Grade</span>
+        </div>
+      </div>
+    </div>
   </div>
-</section>
+</div>
 
 <!-- 01 THE PIPELINE -->
 <div class="dv-section reveal" id="s01">
@@ -402,38 +433,6 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
     </div>
   </div>
 </div>
-
-<!-- IN REVIEW -->
-<section id="review" class="reveal">
-  <div class="brief-lbl">In review</div>
-  <div class="review-body">
-
-    <div class="review-block">
-      <div class="review-sub">Craft decisions</div>
-      <ul class="review-list">
-        <li>Five tools, one per stage. <code>doc_extract</code> / <code>pii_mask</code> / <code>doc_validate</code> / <code>hitl_route</code> / <code>cost_report</code>. Each owns one contract.</li>
-        <li>The work-order pattern. <code>doc_extract</code> returns a schema + rules + task instead of calling Claude. Claude executes. No API key for the demo; the same plug-in point takes a real API call in production.</li>
-        <li>PII masking is two-layer: deterministic regex + path-based redaction first, then a list of free-text fields flagged for Claude to scan as a second pass. The tool draws the line between what can be caught with rules and what can't.</li>
-        <li><code>doc_validate</code> is redaction-aware. Format and pattern errors on values that look like <code>[TYPE-REDACTED]</code> are filtered out automatically. Rules that need the original PII (the age check against a redacted DOB, for example) skip with a note that they should run before masking in production.</li>
-        <li>Business rules live alongside the schema (a <code>businessRules</code> array in the JSON Schema file). One file per doc type. The functions that evaluate them live in the validator file. Adding a rule is two changes: schema entry plus evaluator function.</li>
-        <li>The pipeline runner (<code>scripts/run-pipeline.mjs</code>) composes all five tools end-to-end and emits a single trace per fixture. Those traces — checked into the repo — are the source-of-truth for the playback on this page.</li>
-        <li>Exceptions get auto-prioritized in <code>hitl_route</code> based on rule type. Missing required fields are high; business rule failures with monetary impact are high; other schema issues are medium; everything else is low.</li>
-      </ul>
-    </div>
-
-    <div class="review-block">
-      <div class="review-sub">What I'd do differently</div>
-      <ul class="review-list">
-        <li>PDF / OCR is not in the loop. Fixtures are plain text. A real version takes a PDF, reads the text from it (OCR), then enters at <code>doc_extract</code>. The OCR tool is the obvious next addition — and a clean MCP shape: take a PDF, return the text plus a confidence score per page.</li>
-        <li>The human queue is in-memory only. Production would save each entry to a ticket system (Notion, Linear, Jira) and route by team. The shape — <code>queue_id</code>, priority, suggested_resolution — is portable. The persistence layer isn't.</li>
-        <li>The second-pass review for <code>pii_mask</code> is documented but not auto-run. The tool returns a list of free-text fields to scan; Claude can scan those. A future tool — <code>pii_review</code> — would close that loop.</li>
-        <li>Token cost is estimated via <code>chars / 4</code>. Real API runs return measured token counts; <code>cost_report</code> already accepts a <code>method: 'measured'</code> flag and reports mode accordingly. Demo runs in <code>estimated</code>; production flips it.</li>
-        <li>The way schema validation handles redacted values is to filter errors after the fact. A cleaner version would emit a second schema per doc type — same shape, but with the PII fields allowed to contain placeholder strings. The current approach is shorter, but the second-schema version is more correct.</li>
-        <li>Auto-numbering, edge-case test fixtures, prompt-iteration logging. A second pass would build a proper evaluation system (an "evals harness") around <code>doc_extract</code> — the same kind of system Project 010 (voice_check v2) is going to need.</li>
-      </ul>
-    </div>
-  </div>
-</section>
 
 <!-- FOOTER -->
 <footer>

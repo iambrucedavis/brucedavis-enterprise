@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Multi-Agent Incident Investigation System — Bruce Davis</title>
-<meta name="description" content="Real-time identity governance for fleets of autonomous AI agents — a control room where six agents work an enterprise incident, each a governed identity with a permission scope, a token budget, and a human-in-the-loop gate on every escalation.">
-<meta property="og:title" content="Multi-Agent Incident Investigation System — Bruce Davis">
-<meta property="og:description" content="A control room for fleets of AI agents with real identity governance — scope rings, token budgets, generative UI, and a human-in-the-loop gate on every privilege escalation.">
+<title>Non-Human Identity Governance for Agent Fleets — Bruce Davis</title>
+<meta name="description" content="A working operating model for non-human identity (NHI) governance — fleets of AI agents as discoverable, classified, owned machine identities. Scoped credentials, lifecycle in the loop, human-in-the-loop approval on every escalation.">
+<meta property="og:title" content="Non-Human Identity Governance for Agent Fleets — Bruce Davis">
+<meta property="og:description" content="An operational NHI governance surface for autonomous AI agents — discovery, classification, ownership, lifecycle, and approval workflows, with a human-in-the-loop gate on every privilege escalation.">
 <meta property="og:type" content="website">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -174,13 +174,18 @@ a { color:inherit; text-decoration:none; }
 .rule-name { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:18px; letter-spacing:.01em; color:var(--ink); margin-bottom:11px; }
 .rule-body { font-family:var(--serif); font-size:14.5px; color:var(--ink-soft); line-height:1.65; }
 
-/* ─── REVIEW ───────────────────────────────────── */
-#review { padding:clamp(64px,8vw,100px) clamp(22px,5vw,56px); border-bottom:1px solid var(--hairline-strong); }
-#review .sec-inner { max-width:1000px; margin:0 auto; }
-.review-lbl { font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); margin-bottom:22px; }
-.review-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:14px; max-width:68ch; }
-.review-list li { font-family:var(--serif); font-size:16px; color:var(--ink-soft); line-height:1.6; padding-left:28px; position:relative; }
-.review-list li::before { content:'+'; position:absolute; left:0; top:0; font-family:var(--mono); font-size:14px; color:var(--signal); }
+/* ─── AT A GLANCE ──────────────────────────────── */
+.glance { display:grid; grid-template-columns:1fr 1fr; gap:32px clamp(28px,4vw,56px); padding:clamp(40px,5vw,56px); background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.glance-col h3 { font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); margin-bottom:14px; }
+.glance-col p { font-family:var(--serif); font-size:16px; line-height:1.55; color:var(--ink); }
+.glance-col ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
+.glance-col li { font-family:var(--serif); font-size:15px; line-height:1.5; color:var(--ink-soft); padding-left:18px; position:relative; }
+.glance-col li::before { content:''; position:absolute; left:0; top:.55em; width:8px; height:1px; background:var(--signal); }
+.glance-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+.glance-chip { font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:6px 11px; border:1px solid var(--hairline-strong); background:var(--paper); }
+.glance-roles { font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--ink); line-height:1.7; }
+.glance-roles span { color:var(--signal); }
+@media (max-width:760px) { .glance { grid-template-columns:1fr; } }
 
 /* ─── FOOTER ───────────────────────────────────── */
 footer { background:var(--paper); border-top:1px solid var(--hairline-strong); }
@@ -197,6 +202,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 
 @media (max-width:760px) {
   .rules { grid-template-columns:1fr; }
+  .glance { grid-template-columns:1fr; }
 }
 @media (max-width:600px) {
   .flow { flex-direction:column; }
@@ -224,18 +230,56 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-pre">AI Experience · Agent Governance</div>
-  <h1 id="hero-hl">Multi-Agent Incident<br>Investigation System</h1>
+  <div class="hero-pre">Non-Human Identity · Agentic AI Governance</div>
+  <h1 id="hero-hl">Non-Human Identity<br>for Agent Fleets</h1>
   <p class="hero-sub">
-    Real-time identity governance for fleets of autonomous AI agents. Six agents work an enterprise incident. Each one is a governed identity: a permission scope, a token budget, an accountable owner. When an agent needs to act beyond its scope, a human decides.
+    Every AI agent is a non-human identity. Each one carries a scoped credential, a token budget, and an accountable owner. The fleet is discoverable, classified, and lifecycle-managed in the loop. When an agent needs to act beyond its scope, the operator decides — governance as an enabler, not a bottleneck.
   </p>
   <div class="hero-meta">
-    <span>6 governed agents</span>
-    <span>Generative UI</span>
-    <span>Python · React · TypeScript</span>
+    <span>NHI governance surface</span>
+    <span>6 machine identities</span>
+    <span>Lifecycle &amp; approval workflows</span>
     <span>Live interactive demo</span>
   </div>
 </section>
+
+<!-- AT A GLANCE -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">At a glance</span>
+      <span class="dv-version">30-second read</span>
+    </div>
+    <div class="glance">
+      <div class="glance-col">
+        <h3>What it is</h3>
+        <p>A working NHI governance surface for AI agent fleets. Six agents run as discoverable, classified, owned machine identities with scoped credentials. New credentials run an intake-and-approval workflow. Escalations route to a human. Rotation and decommissioning are in the same trail.</p>
+      </div>
+      <div class="glance-col">
+        <h3>Maps to</h3>
+        <p class="glance-roles"><span>Sr. NHI Governance Engineer</span> · <span>AI / Agent Engineer</span> · <span>Identity Platform Engineer</span> · <span>Agentic AI Lead</span></p>
+        <h3 style="margin-top:22px;">Skills demonstrated</h3>
+        <ul>
+          <li>Multi-agent orchestration, scoped per-agent credentials</li>
+          <li>Lifecycle: provisioning, rotation, access reviews, decommissioning</li>
+          <li>Intake → assessment → approval workflows</li>
+          <li>Real-time posture event stream + dashboards</li>
+          <li>Human-in-the-loop privilege escalation</li>
+        </ul>
+        <div class="glance-chips">
+          <span class="glance-chip">Python</span>
+          <span class="glance-chip">React</span>
+          <span class="glance-chip">TypeScript</span>
+          <span class="glance-chip">OAuth</span>
+          <span class="glance-chip">Service accounts</span>
+          <span class="glance-chip">API keys</span>
+          <span class="glance-chip">Generative UI</span>
+          <span class="glance-chip">SSE event stream</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- SEE IT RUN -->
 <div class="dv-section reveal">
@@ -244,8 +288,8 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <span class="dv-label">See it run</span>
       <span class="dv-version">one take, no narration</span>
     </div>
-    <h2 class="dv-title">The operator's seat.</h2>
-    <p class="dv-desc">A full incident, detection to containment, with the human-in-the-loop escalation gate in the middle.</p>
+    <h2 class="dv-title">Full incident, detection to containment.</h2>
+    <p class="dv-desc">Discovery, classification, scope check, intake, approval, credential issued, action taken, credential decommissioned.</p>
 
     <div class="video-frame">
       <div class="video-bar">
@@ -272,34 +316,34 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <div class="flow-node">
         <span class="flow-kicker">Person</span>
         <span class="flow-name">Operator</span>
-        <span class="flow-sub">governs the fleet</span>
+        <span class="flow-sub">approves &amp; owns</span>
       </div>
       <div class="flow-arrow">&rarr;</div>
       <div class="flow-node">
-        <span class="flow-kicker">AI</span>
+        <span class="flow-kicker">Non-human</span>
         <span class="flow-name">Agent fleet</span>
-        <span class="flow-sub">six identities act</span>
+        <span class="flow-sub">six machine identities</span>
       </div>
       <div class="flow-arrow">&rarr;</div>
       <div class="flow-node is-signal">
         <span class="flow-kicker">This project</span>
-        <span class="flow-name">provenance</span>
-        <span class="flow-sub">the governance layer</span>
+        <span class="flow-name">NHI control plane</span>
+        <span class="flow-sub">scope · lifecycle · approval</span>
       </div>
       <div class="flow-arrow">&rarr;</div>
       <div class="flow-node">
         <span class="flow-kicker">Output</span>
-        <span class="flow-name">Contained incident</span>
-        <span class="flow-sub">+ a full audit trail</span>
+        <span class="flow-name">Posture &amp; receipts</span>
+        <span class="flow-sub">+ full audit trail</span>
       </div>
     </div>
-    <p class="flow-cap">Every action is scoped, metered, and logged. The privilege escalation comes from a permission check failing inside the agent loop. <strong style="color:var(--ink);font-weight:600;">Governance is enforced in the agent loop.</strong></p>
+    <p class="flow-cap">Every action is scoped, metered, and logged. Privilege escalation surfaces as a permission check failing inside the agent loop — not a hardcoded pause. <strong style="color:var(--ink);font-weight:600;">Governance is enforced where the credential is used.</strong></p>
 
     <div class="stats">
-      <div class="stat"><div class="stat-num">6</div><div class="stat-label">governed agents</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">machine identities</div></div>
       <div class="stat is-signal"><div class="stat-num">3</div><div class="stat-label">permission scopes</div></div>
-      <div class="stat"><div class="stat-num">1</div><div class="stat-label">human-in-the-loop gate</div></div>
-      <div class="stat"><div class="stat-num">0</div><div class="stat-label">escalations granted without a person</div></div>
+      <div class="stat"><div class="stat-num">1</div><div class="stat-label">approval gate</div></div>
+      <div class="stat"><div class="stat-num">0</div><div class="stat-label">orphaned credentials</div></div>
     </div>
   </div>
 </div>
@@ -309,47 +353,47 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   <div class="sec-inner">
     <div class="dv-hdr">
       <span class="dv-label">01 — The Fleet</span>
-      <span class="dv-version">six agents, six identities</span>
+      <span class="dv-version">six agents, six machine identities</span>
     </div>
-    <h2 class="dv-title">Every agent is an identity.</h2>
-    <p class="dv-desc">A fleet of distinct identities. Each holds a standing permission scope, a token budget, and an accountable owner. The interface shows all of it.</p>
+    <h2 class="dv-title">Six agents. Six machine identities.</h2>
+    <p class="dv-desc">Each agent has a standing scope, a credential type (service account, API key, or short-lived token), and an accountable owner. Discovery, classification, and lifecycle state are visible in the surface.</p>
 
     <div class="tool-cards">
       <div class="tool-card">
         <div class="tc-verb">Watchtower</div>
-        <div class="tc-name">read-only monitor</div>
-        <div class="tc-desc">Sweeps identity activity for anomalies. Holds no write access. Runs continuously.</div>
-        <div class="tc-model">Scope · read-only</div>
+        <div class="tc-name">posture monitor</div>
+        <div class="tc-desc">Continuously discovers and watches machine-identity activity for anomalies. Holds no write access.</div>
+        <div class="tc-model">Scope · read-only · service account</div>
       </div>
       <div class="tool-card">
         <div class="tc-verb">Analyst</div>
         <div class="tc-name">signal enrichment</div>
-        <div class="tc-desc">Pulls behavior profiles and correlates credential use across regions. Turns a raw signal into evidence.</div>
-        <div class="tc-model">Scope · read-write</div>
+        <div class="tc-desc">Correlates credential use across regions and pulls behavior profiles. Turns a raw signal into evidence.</div>
+        <div class="tc-model">Scope · read-write · OAuth token</div>
       </div>
       <div class="tool-card">
         <div class="tc-verb">Triage</div>
-        <div class="tc-name">risk classification</div>
-        <div class="tc-desc">Weighs the evidence, assigns a severity, and routes the incident to the agent that should act on it.</div>
-        <div class="tc-model">Scope · read-only</div>
+        <div class="tc-name">classification &amp; routing</div>
+        <div class="tc-desc">Weighs the evidence, assigns a severity, and routes the incident to the identity that should act on it.</div>
+        <div class="tc-model">Scope · read-only · service account</div>
       </div>
       <div class="tool-card">
         <div class="tc-verb">Remediation</div>
         <div class="tc-name">containment actor</div>
-        <div class="tc-desc">Revokes sessions and rotates credentials. Its standing scope can't do that — so it has to ask.</div>
+        <div class="tc-desc">Revokes sessions and rotates credentials. Its standing scope can't — so it has to escalate and ask.</div>
         <div class="tc-model">Scope · read-write · escalates</div>
       </div>
       <div class="tool-card">
         <div class="tc-verb">Auditor</div>
-        <div class="tc-name">audit &amp; receipts</div>
-        <div class="tc-desc">Logs every action, escalation, and approval to an append-only trail.</div>
-        <div class="tc-model">Scope · read-only</div>
+        <div class="tc-name">receipts &amp; access reviews</div>
+        <div class="tc-desc">Logs every action, escalation, and approval to an append-only trail that feeds access reviews.</div>
+        <div class="tc-model">Scope · read-only · service account</div>
       </div>
       <div class="tool-card">
         <div class="tc-verb">Provisioner</div>
         <div class="tc-name">credential issuer</div>
-        <div class="tc-desc">Mints single-agent, time-boxed credentials — but only once the operator has approved an escalation.</div>
-        <div class="tc-model">Scope · elevated</div>
+        <div class="tc-desc">Mints single-agent, time-boxed credentials — and decommissions them on expiry. Only acts after operator approval.</div>
+        <div class="tc-model">Scope · elevated · short-lived API key</div>
       </div>
     </div>
   </div>
@@ -360,10 +404,10 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   <div class="sec-inner">
     <div class="dv-hdr">
       <span class="dv-label">02 — The Gate</span>
-      <span class="dv-version">the agent asks; the person decides</span>
+      <span class="dv-version">intake · assessment · approval</span>
     </div>
-    <h2 class="dv-title">It asks before it acts.</h2>
-    <p class="dv-desc">Remediation needs to revoke a compromised credential. Its standing scope doesn't allow it. The system does not override the rule — it stops the agent and asks the operator.</p>
+    <h2 class="dv-title">Intake, approval, then act.</h2>
+    <p class="dv-desc">Remediation needs to revoke a compromised credential. Its standing scope doesn't allow it. The system routes an intake request, attaches the assessment, and waits for the operator. New agent credentials use the same workflow.</p>
 
     <div class="c-frame">
       <div class="c-bar">
@@ -372,12 +416,13 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       </div>
       <div class="c-body">
         <div class="c-line"><span class="b">scope check</span> &nbsp;revoke_sessions requires <span class="k">elevated</span>; Remediation holds read_write</div>
-        <div class="c-line"><span class="b">escalation</span> &nbsp;Remediation requests elevated scope — operator approval required</div>
-        <div class="c-line">&nbsp;&nbsp;&rarr; operator approves &nbsp;·&nbsp; Provisioner mints a time-boxed credential</div>
+        <div class="c-line"><span class="b">intake</span> &nbsp;Remediation requests elevated scope — assessment attached, owner notified</div>
+        <div class="c-line">&nbsp;&nbsp;&rarr; operator approves &nbsp;·&nbsp; Provisioner issues a time-boxed credential</div>
         <div class="c-line">&nbsp;&nbsp;&rarr; Remediation acts &nbsp;·&nbsp; sessions revoked, credentials rotated</div>
+        <div class="c-line">&nbsp;&nbsp;&rarr; credential expires &nbsp;·&nbsp; decommissioned, logged for access review</div>
       </div>
     </div>
-    <p class="c-cap">The escalation isn't hardcoded to pause here. It's a permission check failing inside the agent loop. Approve, and a credential is issued, used, and expires. Deny, and the agent holds at its standing scope.</p>
+    <p class="c-cap">The escalation isn't hardcoded to pause here — it's a permission check failing inside the agent loop. Approve, and a credential is provisioned, used, rotated on expiry, and decommissioned. Deny, and the identity holds at its standing scope. The full lifecycle stays in the trail.</p>
   </div>
 </div>
 
@@ -386,39 +431,27 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   <div class="sec-inner">
     <div class="dv-hdr">
       <span class="dv-label">03 — The Interface</span>
-      <span class="dv-version">the UI renders the agents, not the reverse</span>
+      <span class="dv-version">posture, dashboards, receipts</span>
     </div>
-    <h2 class="dv-title">The UI is generative.</h2>
-    <p class="dv-desc">The backend emits a structured event stream. The control room renders against that stream and re-renders as it changes. The agents are never hardcoded into the interface.</p>
+    <h2 class="dv-title">Generative UI on a posture stream.</h2>
+    <p class="dv-desc">The backend emits a structured event stream of identities, scopes, credentials, and approvals. The control room renders against it — real-time posture visibility with no interface coupling to any one agent.</p>
 
     <div class="rules">
       <div class="rule">
         <div class="rule-name">Generative, not hardcoded</div>
-        <div class="rule-body">The control room is a projection of the backend's JSON state. Change the fleet on the backend and the UI renders the change — no interface edits.</div>
+        <div class="rule-body">A projection of the backend's JSON state. Add a machine identity on the backend and it appears, classified and scoped, with no interface edits.</div>
       </div>
       <div class="rule">
         <div class="rule-name">Human-in-the-loop</div>
-        <div class="rule-body">Every privilege escalation pauses the fleet. Nothing elevates, and nothing destructive runs, until a person approves it.</div>
+        <div class="rule-body">Every privilege escalation pauses the fleet. Nothing elevates, and nothing destructive runs, until a person approves it. Governance as an enabler — not a bottleneck.</div>
       </div>
       <div class="rule">
-        <div class="rule-name">One frontend, two transports</div>
-        <div class="rule-body">Demo mode replays a recorded run; live mode streams from the backend. Same UI, same reducer.</div>
+        <div class="rule-name">Posture &amp; receipts</div>
+        <div class="rule-body">Every action, approval, rotation, and decommission is logged to an append-only trail. The same stream feeds dashboards, alerting, and the audit record.</div>
       </div>
     </div>
   </div>
 </div>
-
-<!-- IN REVIEW -->
-<section id="review" class="reveal">
-  <div class="sec-inner">
-    <div class="review-lbl">In review — what I'd do differently</div>
-    <ul class="review-list">
-      <li>The agents' decisions are deliberate and legible, not LLM-improvised. The demo is about the system being governable.</li>
-      <li>One incident scenario ships; the event-stream contract is built to carry many, and the next step is a second one.</li>
-      <li>The backend runs locally. The deployed demo replays a recorded run, so there is no key to leak and no per-visit cost to carry.</li>
-    </ul>
-  </div>
-</section>
 
 <!-- FOOTER -->
 <footer>

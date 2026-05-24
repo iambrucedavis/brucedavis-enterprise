@@ -459,15 +459,19 @@ a:focus-visible { outline:2px solid var(--signal); outline-offset:3px; }
 .brief-body { font-size:15px; color:var(--text-dim); line-height:1.8; max-width:640px; }
 .brief-body p + p { margin-top:16px; }
 
-/* ─── REVIEW ───────────────────────────── */
-#review { padding:72px 32px; border-bottom:1px solid var(--border); background:var(--bg); }
-.review-body { max-width:640px; }
-.review-block + .review-block { margin-top:40px; }
-.review-sub { font-family:'Space Mono', monospace; font-size:11px; letter-spacing:.10em; color:var(--signal); margin-bottom:20px; }
-.review-list { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:16px; }
-.review-list li { font-size:15px; color:var(--text-dim); line-height:1.7; padding-left:28px; position:relative; }
-.review-list li::before { content:'//'; position:absolute; left:0; top:0; font-family:'Space Mono', monospace; font-size:12px; color:var(--text-muted); line-height:1.7; }
-.review-list code { font-family:'Space Mono', monospace; font-size:13px; color:var(--text); padding:0 1px; }
+/* ─── AT A GLANCE ──────────────────────── */
+#glance-sec { padding:72px 32px; border-bottom:1px solid var(--border); background:var(--bg); }
+.glance { display:grid; grid-template-columns:1fr 1fr; gap:32px 48px; padding:40px; background:var(--surface, #121826); border:1px solid var(--border); }
+.glance-col h3 { font-family:'Space Mono', monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); margin-bottom:14px; }
+.glance-col p { font-size:15px; line-height:1.6; color:var(--text); }
+.glance-col ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
+.glance-col li { font-size:14px; line-height:1.5; color:var(--text-dim); padding-left:18px; position:relative; }
+.glance-col li::before { content:''; position:absolute; left:0; top:.55em; width:8px; height:1px; background:var(--signal); }
+.glance-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+.glance-chip { font-family:'Space Mono', monospace; font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--text-dim); padding:6px 11px; border:1px solid var(--border); background:var(--bg); }
+.glance-roles { font-family:'Space Mono', monospace; font-size:11px; letter-spacing:.06em; color:var(--text); line-height:1.7; }
+.glance-roles span { color:var(--signal); }
+@media (max-width:760px) { .glance { grid-template-columns:1fr; padding:28px; } }
 
 @media (max-width:900px) {
   #hero { padding:112px 28px 72px; }
@@ -523,13 +527,39 @@ a:focus-visible { outline:2px solid var(--signal); outline-offset:3px; }
 
 </section>
 
+<!-- AT A GLANCE -->
+<section id="glance-sec">
+  <div class="glance">
+    <div class="glance-col">
+      <h3>What it is</h3>
+      <p>Five production motion techniques in one demo — split-text entrances, scroll-driven reveals, magnetic cursor hover, staggered grid reveals, kinetic type. The motion vocabulary AI product surfaces use to feel alive without feeling busy. Built in GSAP, no framework.</p>
+    </div>
+    <div class="glance-col">
+      <h3>Maps to</h3>
+      <p class="glance-roles"><span>Design Engineer</span> · <span>Frontend (AI products)</span> · <span>Motion Engineer</span> · <span>Product UI Engineer</span></p>
+      <h3 style="margin-top:22px;">Skills demonstrated</h3>
+      <ul>
+        <li>GSAP + ScrollTrigger — five production patterns</li>
+        <li>No-framework architecture — the source is the spec</li>
+        <li>Reduced-motion handling baked in</li>
+        <li>Performance-aware: 60fps under scrub</li>
+      </ul>
+      <div class="glance-chips">
+        <span class="glance-chip">GSAP</span>
+        <span class="glance-chip">ScrollTrigger</span>
+        <span class="glance-chip">Vanilla JS</span>
+        <span class="glance-chip">CSS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- BRIEF -->
 <section id="brief">
   <div class="brief-lbl">The Brief</div>
   <div class="brief-body">
     <p>Five techniques. One file. No framework.</p>
     <p>Each technique is a production approach for a specific use: split-text for hero entrances, scroll scrub for narrative pacing, magnetic hover for interaction depth, stagger for list reveals, kinetic type for emphasis.</p>
-    <p>No framework because a framework would obscure the motion. The code is the only thing between you and how it works.</p>
   </div>
 </section>
 
@@ -655,35 +685,6 @@ a:focus-visible { outline:2px solid var(--signal); outline-offset:3px; }
     <span id="k-line3">SHIPPED.</span>
   </div>
 
-</section>
-
-
-<!-- ── IN REVIEW ──────────────────────────────── -->
-<section id="review">
-  <div class="brief-lbl">In review</div>
-  <div class="review-body">
-
-    <div class="review-block">
-      <div class="review-sub">Craft decisions</div>
-      <ul class="review-list">
-        <li>Hero stagger is <code>22ms</code> per character with <code>power3.out</code>. The mask is an <code>overflow:hidden</code> line wrapper — characters slide up from <code>yPercent: 110</code>. Browser-native CSS clipping. No SVG, no plugin.</li>
-        <li>Magnetic cards pull <code>13/10px</code> on the wrapper and <code>22/16px</code> on the inner label. Inner moves further than outer — parallax depth inside a 2D animation. On exit, both spring back with <code>elastic.out(1, .45)</code>.</li>
-        <li>Magnetic respects <code>prefers-reduced-motion</code>. The CSS hover state stays; the cursor chase and elastic spring are skipped.</li>
-        <li>Scroll scrub pins the section and steps each word on at <code>i × .42s</code>, dimming the previous to 28% opacity. The spotlight moves with reading speed — not animation speed.</li>
-        <li>Kinetic type pins for <code>2.8×</code> the section height. Long pin = slow scrub = the user reads each line at the pace of their own scroll. Pin distance is the design knob.</li>
-      </ul>
-    </div>
-
-    <div class="review-block">
-      <div class="review-sub">What I'd do differently</div>
-      <ul class="review-list">
-        <li>Hero stagger uses character index. Long headlines create a wave that runs too long. Real implementation would group by word and stagger words, characters within word.</li>
-        <li>Magnetic effect runs on every <code>mousemove</code> with no throttling. Fine on a fresh page; on a heavier page it would jank. <code>gsap.quickTo</code> would smooth the hot path.</li>
-        <li>Kinetic section pins without a scroll prompt. First-time visitors stop, think the page froze. A subtle <code>// scroll to advance</code> annotation would solve it.</li>
-      </ul>
-    </div>
-
-  </div>
 </section>
 
 

@@ -181,6 +181,19 @@ body::before{
 .s-title em{color:var(--amber);font-style:normal;}
 .s-desc{font-size:15px;color:var(--text-dim);max-width:620px;line-height:1.75;margin-bottom:48px;}
 
+/* ─── AT A GLANCE ────────────────────────────── */
+.glance{display:grid;grid-template-columns:1fr 1fr;gap:32px 48px;padding:40px;background:var(--surface);border:1px solid var(--border);}
+.glance-col h3{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:14px;}
+.glance-col p{font-size:15px;line-height:1.6;color:var(--text);}
+.glance-col ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;}
+.glance-col li{font-size:14px;line-height:1.5;color:var(--text-dim);padding-left:18px;position:relative;}
+.glance-col li::before{content:'';position:absolute;left:0;top:.55em;width:8px;height:1px;background:var(--amber);}
+.glance-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+.glance-chip{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-dim);padding:6px 11px;border:1px solid var(--border);background:var(--bg);}
+.glance-roles{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--text);line-height:1.7;}
+.glance-roles span{color:var(--amber);}
+@media (max-width:760px){.glance{grid-template-columns:1fr;padding:28px;}}
+
 /* ─── BEFORE/AFTER ARGUMENT ──────────────────── */
 .argument-grid{
   display:grid;grid-template-columns:1fr 1fr;gap:1px;
@@ -623,15 +636,46 @@ footer{
     SURFACE: PHISHING TRAINING<br>
     STATUS: CONCEPT STUDY
   </div>
-  <div class="hero-pre"><span class="pulse"></span> AI Product Engineer · Experience · Infrastructure &amp; Security</div>
+  <div class="hero-pre"><span class="pulse"></span> Security UX · Behavioral Design</div>
   <h1 id="hero-hl">Security UX Concept</h1>
   <p class="hero-sub">
-    A security awareness training surface that uses the visual language of the threat itself: HUD UI, scan lines, threat pulse, and a playable &ldquo;spot the phish&rdquo; round. Motion, empty states, and behavioral interaction design applied to a surface that usually has none of them.
+    A security awareness training surface that uses the visual language of the threat itself — HUD UI, scan lines, threat pulse, and a playable "spot the phish" round. Behavioral UX applied where there usually is none.
   </p>
   <div class="hero-meta">
-    <span>concept study</span>
-    <span>playable demo</span>
-    <span>vanilla JS &middot; GSAP &middot; Web Audio</span>
+    <span>Playable demo</span>
+    <span>Behavioral interaction</span>
+    <span>Vanilla JS · GSAP · Web Audio</span>
+  </div>
+</section>
+
+<!-- ── AT A GLANCE ─────────────────────────── -->
+<section class="s-section">
+  <div class="s-inner">
+    <span class="s-label">at a glance</span>
+    <h2 class="s-title" style="font-size:clamp(22px,2.6vw,30px);margin-bottom:24px;">30-second read.</h2>
+    <div class="glance">
+      <div class="glance-col">
+        <h3>What it is</h3>
+        <p>A concept study that turns security awareness training from a compliance slideshow into a playable operator surface. HUD visual language, behavioral interaction design, real-time scoring, sensory feedback that matches the stakes. Adjacent to the safety UX AI products need.</p>
+      </div>
+      <div class="glance-col">
+        <h3>Maps to</h3>
+        <p class="glance-roles"><span>Design Engineer (security/AI)</span> · <span>Frontend Engineer</span> · <span>AI Safety UX</span> · <span>Product UI Engineer</span></p>
+        <h3 style="margin-top:22px;">Skills demonstrated</h3>
+        <ul>
+          <li>Behavioral UX for a domain that usually has none</li>
+          <li>HUD / dashboard motion vocabulary</li>
+          <li>Playable interaction with real-time scoring</li>
+          <li>Web Audio for sensory feedback (no asset files)</li>
+        </ul>
+        <div class="glance-chips">
+          <span class="glance-chip">Vanilla JS</span>
+          <span class="glance-chip">GSAP</span>
+          <span class="glance-chip">Web Audio</span>
+          <span class="glance-chip">CSS</span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
