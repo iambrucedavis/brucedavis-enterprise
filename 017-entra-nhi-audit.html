@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entra ID NHI Audit — Bruce Davis</title>
+<meta name="description" content="A PowerShell module that audits Microsoft Entra ID for non-human identity risk. Eight scored risk factors, HTML + JSON reports, works against a real tenant or a mock fixture.">
+<meta property="og:title" content="Entra ID NHI Audit — Bruce Davis">
+<meta property="og:description" content="Working PowerShell + Microsoft Graph code for auditing Entra ID non-human identities. Discovery, scoring, reporting — production patterns, ungated mock fixture, real-tenant entry point.">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper:#0A0E1A; --paper-clean:#121826; --paper-deep:#1A2236;
+  --ink:#F5F7FA; --ink-soft:#C1C7D0; --mute:#7A8392; --mute-soft:#9CA3AF;
+  --signal:#0066FF; --signal-rgb:0,102,255;
+  --hairline:rgba(255,255,255,.08); --hairline-strong:rgba(255,255,255,.18);
+  --display:'Anton','Bebas Neue',Impact,sans-serif;
+  --serif:'EB Garamond',Georgia,serif;
+  --mono:'Space Mono',ui-monospace,monospace;
+  --shadow:0 0 0 1px var(--hairline-strong);
+  --m-base:140ms cubic-bezier(.2,0,0,1);
+  --crit:#B5302A; --high:#C7611A; --med:#9A6B12; --low:#3A6BA8; --healthy:#2F7D4F;
+}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body { background:var(--paper); color:var(--ink); font-family:var(--serif); font-size:17px; line-height:1.55; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+a { color:inherit; text-decoration:none; }
+
+#top-nav { position:fixed; top:0; left:0; right:0; z-index:500; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(22px,5vw,56px); background:var(--paper); border-bottom:1px solid var(--hairline-strong); }
+.nav-back { font-family:var(--mono); font-weight:700; font-size:13px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); transition:color var(--m-base); }
+.nav-back:hover { color:var(--signal); }
+.nav-links { display:flex; gap:clamp(20px,3vw,38px); }
+.nav-links a { font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--mute); transition:color var(--m-base); }
+.nav-links a:hover { color:var(--ink); }
+
+#hero { min-height:80vh; display:flex; flex-direction:column; justify-content:flex-end; padding:132px clamp(22px,5vw,56px) 72px; border-bottom:1px solid var(--hairline-strong); }
+.hero-pre { font-family:var(--mono); font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--signal); margin-bottom:22px; }
+#hero-hl { font-family:var(--display); font-weight:400; font-size:clamp(48px,8vw,104px); line-height:.92; letter-spacing:.005em; text-transform:uppercase; color:var(--ink); }
+#hero-hl .h-line { display:block; overflow:hidden; }
+.hero-sub { margin-top:30px; font-family:var(--serif); font-style:italic; font-size:clamp(18px,1.7vw,23px); line-height:1.5; color:var(--ink-soft); max-width:54ch; }
+.hero-meta { margin-top:28px; display:flex; gap:20px; flex-wrap:wrap; font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); }
+
+.dv-section { padding:clamp(64px,8vw,100px) clamp(22px,5vw,56px); border-bottom:1px solid var(--hairline-strong); }
+.sec-inner { max-width:1000px; margin:0 auto; }
+.dv-hdr { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:14px; gap:16px; flex-wrap:wrap; }
+.dv-label { font-family:var(--mono); font-size:11px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); }
+.dv-version { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--mute); }
+.dv-title { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:clamp(26px,3.6vw,44px); line-height:1; letter-spacing:.01em; color:var(--ink); margin-bottom:14px; }
+.dv-desc { font-family:var(--serif); font-size:16.5px; color:var(--ink-soft); margin-bottom:32px; max-width:62ch; line-height:1.6; }
+
+.glance { display:grid; grid-template-columns:1fr 1fr; gap:32px clamp(28px,4vw,56px); padding:clamp(40px,5vw,56px); background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.glance-col h3 { font-family:var(--mono); font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); margin-bottom:14px; }
+.glance-col p { font-family:var(--serif); font-size:16px; line-height:1.55; color:var(--ink); }
+.glance-col ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
+.glance-col li { font-family:var(--serif); font-size:15px; line-height:1.5; color:var(--ink-soft); padding-left:18px; position:relative; }
+.glance-col li::before { content:''; position:absolute; left:0; top:.55em; width:8px; height:1px; background:var(--signal); }
+.glance-chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+.glance-chip { font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); padding:6px 11px; border:1px solid var(--hairline-strong); background:var(--paper); }
+.glance-roles { font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--ink); line-height:1.7; }
+.glance-roles span { color:var(--signal); }
+
+/* ── SAMPLE REPORT MOCK ── */
+.report-frame { background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.report-bar { display:flex; align-items:center; justify-content:space-between; padding:11px 18px; border-bottom:1px solid var(--hairline-strong); background:var(--paper-deep); gap:12px; }
+.report-bar-name { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--ink-soft); }
+.report-bar-status { font-family:var(--mono); font-size:10px; letter-spacing:.06em; color:var(--signal); }
+.report-body { padding:32px; }
+.report-h1 { font-family:'-apple-system',sans-serif; font-size:24px; font-weight:600; color:var(--ink); margin-bottom:6px; }
+.report-sub { font-family:var(--mono); font-size:11px; color:var(--mute); letter-spacing:.04em; margin-bottom:28px; }
+.report-summary { display:grid; grid-template-columns:repeat(6,1fr); gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); margin-bottom:24px; }
+.rs-cell { background:var(--paper-clean); padding:14px 12px; text-align:left; }
+.rs-num { font-family:'-apple-system',sans-serif; font-size:24px; font-weight:600; line-height:1; }
+.rs-lbl { font-family:var(--mono); font-size:9px; color:var(--mute); text-transform:uppercase; letter-spacing:.12em; margin-top:5px; }
+.rs-cell.crit .rs-num { color:var(--crit); }
+.rs-cell.high .rs-num { color:var(--high); }
+.rs-cell.med  .rs-num { color:var(--med); }
+.rs-cell.low  .rs-num { color:var(--low); }
+.rs-cell.healthy .rs-num { color:var(--healthy); }
+.rs-cell.total .rs-num { color:var(--signal); }
+.report-card { background:var(--paper-clean); border:1px solid var(--hairline); border-left:3px solid var(--healthy); padding:14px 16px; margin-bottom:8px; }
+.report-card.crit { border-left-color:var(--crit); }
+.report-card.high { border-left-color:var(--high); }
+.report-card.med  { border-left-color:var(--med); }
+.report-card.healthy { border-left-color:var(--healthy); }
+.rc-head { display:flex; justify-content:space-between; align-items:baseline; gap:12px; flex-wrap:wrap; }
+.rc-name { font-family:'-apple-system',sans-serif; font-size:14px; font-weight:600; color:var(--ink); }
+.rc-score { font-family:var(--mono); font-size:11px; }
+.rc-meta { font-family:var(--mono); font-size:10px; color:var(--mute); margin-top:4px; }
+.rc-finding { font-family:'-apple-system',sans-serif; font-size:12px; color:var(--ink-soft); margin-top:8px; line-height:1.5; padding-left:14px; border-left:1px solid var(--hairline); }
+.rc-finding strong { color:var(--ink); font-family:var(--mono); font-size:10px; letter-spacing:.06em; }
+.rc-finding em { color:var(--mute); font-style:italic; }
+.report-link { display:inline-block; font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--signal); margin-top:18px; border-bottom:1.5px solid var(--signal); }
+
+/* ── RISK FACTOR TABLE ── */
+.factor-table { width:100%; border-collapse:collapse; background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); font-family:var(--mono); font-size:13px; }
+.factor-table th, .factor-table td { padding:14px 16px; text-align:left; border-bottom:1px solid var(--hairline); vertical-align:top; }
+.factor-table tr:last-child td { border-bottom:none; }
+.factor-table th { color:var(--mute); font-weight:400; font-size:10px; letter-spacing:.16em; text-transform:uppercase; background:var(--paper-deep); }
+.factor-table td.code { color:var(--signal); font-weight:700; width:14%; }
+.factor-table td.sev.crit { color:var(--crit); font-weight:700; }
+.factor-table td.sev.high { color:var(--high); font-weight:700; }
+.factor-table td.sev.med  { color:var(--med); font-weight:700; }
+.factor-table td.what { color:var(--ink-soft); font-family:var(--serif); font-size:14.5px; line-height:1.55; }
+
+/* ── CODE BLOCK ── */
+.c-frame { background:var(--paper-clean); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.c-bar { display:flex; align-items:center; justify-content:space-between; padding:11px 18px; border-bottom:1px solid var(--hairline-strong); background:var(--paper-deep); gap:12px; }
+.c-bar-name { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--ink-soft); }
+.c-bar-status { font-family:var(--mono); font-size:10px; letter-spacing:.06em; color:var(--signal); }
+.c-body { padding:22px; }
+.c-line { font-family:var(--mono); font-size:13px; line-height:1.85; color:var(--ink-soft); white-space:pre; }
+.c-line .b { color:var(--signal); }
+.c-line .k { color:var(--ink); font-weight:700; }
+.c-line .c { color:var(--mute); }
+.c-cap { font-family:var(--serif); font-size:15px; color:var(--ink-soft); line-height:1.6; margin-top:16px; max-width:66ch; }
+
+/* ── PIPELINE INTEGRATION CARDS ── */
+.rules { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
+.rule { background:var(--paper-clean); padding:24px 22px; }
+.rule-name { font-family:var(--display); font-weight:400; text-transform:uppercase; font-size:18px; letter-spacing:.01em; color:var(--ink); margin-bottom:11px; }
+.rule-body { font-family:var(--serif); font-size:14.5px; color:var(--ink-soft); line-height:1.65; }
+
+/* ── FOOTER ── */
+footer { background:var(--paper); border-top:1px solid var(--hairline-strong); }
+#page-footer { padding:36px clamp(22px,5vw,56px); display:flex; justify-content:space-between; align-items:center; max-width:1000px; margin:0 auto; gap:14px; flex-wrap:wrap; }
+.pf-back { font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); transition:color var(--m-base); }
+.pf-back:hover { color:var(--signal); }
+.pf-links { display:flex; gap:22px; flex-wrap:wrap; }
+.pf-links a { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--mute); transition:color var(--m-base); }
+.pf-links a:hover { color:var(--signal); }
+
+a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline-offset:2px; }
+.reveal { opacity:0; transform:translateY(20px); }
+
+@media (max-width:760px) {
+  .glance, .rules { grid-template-columns:1fr; }
+  .report-summary { grid-template-columns:repeat(3,1fr); }
+  .factor-table { font-size:11px; }
+  .factor-table th, .factor-table td { padding:10px 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { transition-duration:.001ms !important; animation-duration:.001ms !important; }
+  html { scroll-behavior:auto; }
+}
+</style>
+</head>
+<body>
+
+<nav id="top-nav">
+  <a href="index.html" class="nav-back">← Bruce Davis</a>
+  <div class="nav-links">
+    <a href="index.html#work">Work</a>
+    <a href="about.html">About</a>
+    <a href="bruce-davis-resume.html">Resume</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-pre">PowerShell · Microsoft Graph · NHI Governance</div>
+  <h1 id="hero-hl">Entra ID<br>NHI Audit</h1>
+  <p class="hero-sub">
+    A PowerShell module that audits a Microsoft Entra ID tenant for non-human identity risk. Discovers every service principal, app registration, and managed identity; scores each on eight factors; writes an HTML + JSON report your IAM team can act on.
+  </p>
+  <div class="hero-meta">
+    <span>PowerShell 7</span>
+    <span>Microsoft Graph SDK</span>
+    <span>8 risk factors</span>
+    <span>Mock + live modes</span>
+  </div>
+</section>
+
+<!-- AT A GLANCE -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">At a glance</span>
+      <span class="dv-version">30-second read</span>
+    </div>
+    <div class="glance">
+      <div class="glance-col">
+        <h3>What it is</h3>
+        <p>A focused, opinionated audit tool. Four cmdlets: <code style="font-family:var(--mono);font-size:14px;color:var(--ink);">Connect</code>, <code style="font-family:var(--mono);font-size:14px;color:var(--ink);">Get-Inventory</code>, <code style="font-family:var(--mono);font-size:14px;color:var(--ink);">Test-Risk</code>, <code style="font-family:var(--mono);font-size:14px;color:var(--ink);">Export-Report</code>. Runs offline against a 28-record mock tenant for demos; connects to a real tenant via Microsoft.Graph SDK when given a tenant GUID. Same risk-scoring logic both ways. Ships a sample report so you can preview the output without installing anything.</p>
+      </div>
+      <div class="glance-col">
+        <h3>Maps to</h3>
+        <p class="glance-roles"><span>Identity Engineer</span> · <span>NHI Governance Engineer</span> · <span>Cloud Identity (Microsoft)</span> · <span>Security Engineer (IAM)</span></p>
+        <h3 style="margin-top:22px;">Skills demonstrated</h3>
+        <ul>
+          <li>PowerShell 7 module design (manifest, public/private structure)</li>
+          <li>Microsoft Graph SDK integration (delegated + app-only auth patterns)</li>
+          <li>Entra ID NHI taxonomy: SP, app registration, managed identity</li>
+          <li>Eight-factor risk scoring with explainable findings</li>
+          <li>Self-contained HTML report + structured JSON for SIEM / ticketing</li>
+          <li>Mock-vs-live mode for testability</li>
+        </ul>
+        <div class="glance-chips">
+          <span class="glance-chip">PowerShell 7</span>
+          <span class="glance-chip">Microsoft Graph</span>
+          <span class="glance-chip">Entra ID</span>
+          <span class="glance-chip">Active Directory</span>
+          <span class="glance-chip">NHI</span>
+          <span class="glance-chip">IAM</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 01 SAMPLE REPORT -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">01 — Sample Output</span>
+      <span class="dv-version">28 mock NHIs · auto-scored</span>
+    </div>
+    <h2 class="dv-title">A real audit, written for an IAM team.</h2>
+    <p class="dv-desc">What the report looks like — exec-summary counts at the top, per-identity cards sorted by risk, each finding paired with a specific remediation. The full HTML is self-contained, drop it on a fileshare or attach it to a ticket.</p>
+
+    <div class="report-frame">
+      <div class="report-bar">
+        <span class="report-bar-name">reports/sample-report.html</span>
+        <span class="report-bar-status">[ ACTUAL OUTPUT ]</span>
+      </div>
+      <div class="report-body">
+        <div class="report-h1">Contoso (mock) — NHI Audit</div>
+        <div class="report-sub">Tenant: Contoso (mock) · Mode: mock · Generated: 2026-05-24 12:00 UTC</div>
+
+        <div class="report-summary">
+          <div class="rs-cell crit"><div class="rs-num">5</div><div class="rs-lbl">Critical</div></div>
+          <div class="rs-cell high"><div class="rs-num">4</div><div class="rs-lbl">High</div></div>
+          <div class="rs-cell med"><div class="rs-num">2</div><div class="rs-lbl">Medium</div></div>
+          <div class="rs-cell low"><div class="rs-num">4</div><div class="rs-lbl">Low</div></div>
+          <div class="rs-cell healthy"><div class="rs-num">13</div><div class="rs-lbl">Healthy</div></div>
+          <div class="rs-cell total"><div class="rs-num">28</div><div class="rs-lbl">Total</div></div>
+        </div>
+
+        <div class="report-card crit">
+          <div class="rc-head">
+            <div class="rc-name">legacy-payroll-sync</div>
+            <div class="rc-score" style="color:var(--crit);">100 / 100 · Critical</div>
+          </div>
+          <div class="rc-meta">Application · 0 owners · Last sign-in: 2024-12-08</div>
+          <div class="rc-finding"><strong>[High] NHI001</strong> — No owner assigned<br><em>→ Assign a team owner via az ad sp owner add or Entra portal.</em></div>
+          <div class="rc-finding"><strong>[Critical] NHI004</strong> — Credential expired 251 days ago but identity still enabled<br><em>→ Rotate immediately or disable identity if no longer needed.</em></div>
+          <div class="rc-finding"><strong>[High] NHI008</strong> — Marked 'legacy' and still enabled<br><em>→ Confirm migration plan; set decommission date.</em></div>
+        </div>
+
+        <div class="report-card high">
+          <div class="rc-head">
+            <div class="rc-name">intern-poc-api-2024</div>
+            <div class="rc-score" style="color:var(--high);">85 / 100 · Critical</div>
+          </div>
+          <div class="rc-meta">Application · 0 owners · Last sign-in: 2024-08-22</div>
+          <div class="rc-finding"><strong>[High] NHI001</strong> — No owner assigned</div>
+          <div class="rc-finding"><strong>[Critical] NHI004</strong> — Credential expired 343 days ago but identity still enabled</div>
+        </div>
+
+        <div class="report-card healthy">
+          <div class="rc-head">
+            <div class="rc-name">datadog-monitor</div>
+            <div class="rc-score" style="color:var(--healthy);">0 / 100 · Healthy</div>
+          </div>
+          <div class="rc-meta">Application · 1 owner · Last sign-in: 2026-05-24</div>
+          <div class="rc-finding"><em>No findings — healthy</em></div>
+        </div>
+
+        <a href="https://github.com/iambrucedavis/entra-id-nhi-audit/blob/main/reports/sample-report.html" target="_blank" rel="noopener" class="report-link">Open the full sample report on GitHub →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 02 RISK FACTORS -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">02 — Risk Factors</span>
+      <span class="dv-version">eight scored signals</span>
+    </div>
+    <h2 class="dv-title">What the scorer looks for.</h2>
+    <p class="dv-desc">Each factor produces a finding with a severity, a one-sentence description, and a specific remediation. The factors are deliberately opinionated — the kind of things an IAM lead would call out in a quarterly review.</p>
+
+    <table class="factor-table">
+      <thead>
+        <tr><th>Code</th><th>Factor</th><th>Severity</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="code">NHI001</td><td class="what">No owner assigned</td><td class="sev high">High</td></tr>
+        <tr><td class="code">NHI002</td><td class="what">Created &gt;14 days ago, never signed in</td><td class="sev high">High</td></tr>
+        <tr><td class="code">NHI003</td><td class="what">No sign-in for &gt;90 days (180+ → High; 90–180 → Medium)</td><td class="sev high">High / Med</td></tr>
+        <tr><td class="code">NHI004</td><td class="what">Credential expired but identity still enabled</td><td class="sev crit">Critical</td></tr>
+        <tr><td class="code">NHI005</td><td class="what">Credential expires within 30 days</td><td class="sev med">Medium</td></tr>
+        <tr><td class="code">NHI006</td><td class="what">Oldest credential &gt;365 days (rotation policy breach)</td><td class="sev med">Medium</td></tr>
+        <tr><td class="code">NHI007</td><td class="what">Account disabled but credentials still present</td><td class="sev med">Medium</td></tr>
+        <tr><td class="code">NHI008</td><td class="what">Tagged 'legacy' and still enabled</td><td class="sev high">High</td></tr>
+      </tbody>
+    </table>
+    <p class="c-cap">Adding a factor is a function in <code style="font-family:var(--mono);font-size:13px;color:var(--ink);">Test-NhiRisk.ps1</code>. The scoring is linear (per-factor weights add to 0–100) so individual contributions stay readable in a report — no opaque ML model.</p>
+  </div>
+</div>
+
+<!-- 03 USAGE -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">03 — Try it</span>
+      <span class="dv-version">mock mode · no tenant required</span>
+    </div>
+    <h2 class="dv-title">Clone, run, open the report.</h2>
+    <p class="dv-desc">PowerShell 7+ on macOS, Linux, or Windows. No Microsoft Graph SDK needed for the mock demo — only for live-tenant mode.</p>
+
+    <div class="c-frame">
+      <div class="c-bar">
+        <span class="c-bar-name">entra-id-nhi-audit · demo</span>
+        <span class="c-bar-status">[ COPY/PASTE ]</span>
+      </div>
+      <div class="c-body">
+        <div class="c-line"><span class="b">$</span> git clone https://github.com/iambrucedavis/entra-id-nhi-audit</div>
+        <div class="c-line"><span class="b">$</span> cd entra-id-nhi-audit</div>
+        <div class="c-line"><span class="b">$</span> pwsh scripts/run-demo.ps1            <span class="c"># mock mode, no tenant</span></div>
+        <div class="c-line"><span class="b">$</span> open reports/nhi-audit.html</div>
+        <div class="c-line"></div>
+        <div class="c-line"><span class="c"># Real tenant — requires Microsoft.Graph SDK + user consent</span></div>
+        <div class="c-line"><span class="b">$</span> Install-Module Microsoft.Graph -Scope CurrentUser -Force</div>
+        <div class="c-line"><span class="b">$</span> pwsh scripts/connect-live-tenant.ps1 -TenantId &lt;guid&gt;</div>
+      </div>
+    </div>
+    <p class="c-cap">The cmdlets pipe naturally. <code style="font-family:var(--mono);font-size:13px;color:var(--ink);">Get-EntraNhiInventory | Test-NhiRisk | Where-Object RiskLevel -eq 'Critical'</code> gives you just the critical findings; <code style="font-family:var(--mono);font-size:13px;color:var(--ink);">| Export-NhiAuditReport</code> writes the report.</p>
+  </div>
+</div>
+
+<!-- 04 PIPELINE INTEGRATION -->
+<div class="dv-section reveal">
+  <div class="sec-inner">
+    <div class="dv-hdr">
+      <span class="dv-label">04 — Downstream</span>
+      <span class="dv-version">JSON is shaped for ingestion</span>
+    </div>
+    <h2 class="dv-title">Built to plug into the rest of the stack.</h2>
+    <p class="dv-desc">The HTML report is for humans. The JSON output is for everything else.</p>
+
+    <div class="rules">
+      <div class="rule">
+        <div class="rule-name">SIEM Alerts</div>
+        <div class="rule-body">Pipe the JSON to Splunk / Sentinel / Datadog. Alert on any record with <code style="font-family:var(--mono);font-size:13px;color:var(--ink);">RiskLevel: Critical</code> — auto-page the on-call IAM engineer with the remediation already attached.</div>
+      </div>
+      <div class="rule">
+        <div class="rule-name">Ticketing</div>
+        <div class="rule-body">One JIRA / Linear ticket per Critical or High finding. The <code style="font-family:var(--mono);font-size:13px;color:var(--ink);">Remediation</code> field becomes the ticket description; the owner team gets assigned automatically.</div>
+      </div>
+      <div class="rule">
+        <div class="rule-name">Slack Digest</div>
+        <div class="rule-body">Group findings by owner team, surface the top three risks per team, post daily. The owner team sees their NHI hygiene before the security team has to ask.</div>
+      </div>
+      <div class="rule">
+        <div class="rule-name">Trend Tracking</div>
+        <div class="rule-body">Archive each run's JSON; diff against the previous run. The metric that matters isn't today's count — it's whether the count is going down month over month.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div id="page-footer">
+    <a href="index.html" class="pf-back">← Back to Bruce Davis</a>
+    <div class="pf-links">
+      <a href="index.html#work">Work</a>
+      <a href="bruce-davis-resume.html">Resume</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="https://github.com/iambrucedavis/entra-id-nhi-audit" target="_blank" rel="noopener">GitHub Repo</a>
+      <a href="013-axe-provenance.html">→ AI Agent Governance Console</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+'use strict';
+const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+gsap.registerPlugin(ScrollTrigger);
+
+const hl = document.getElementById('hero-hl');
+hl.innerHTML = hl.innerHTML.split('<br>').map(line =>
+  `<span class="h-line" style="display:block;overflow:hidden">${
+    [...line.trim()].map(ch => ch === ' '
+      ? `<span style="display:inline-block;min-width:.25em"> </span>`
+      : `<span class="h-char" style="display:inline-block">${ch}</span>`
+    ).join('')
+  }</span>`
+).join('');
+if (motionOK) gsap.from('.h-char', { yPercent:110, duration:.7, stagger:.02, ease:'power3.out', delay:.1 });
+
+if (motionOK) {
+  document.querySelectorAll('.reveal').forEach(el => {
+    gsap.to(el, { opacity:1, y:0, duration:.6, ease:'power2.out', scrollTrigger:{ trigger:el, start:'top 84%' } });
+  });
+} else {
+  document.querySelectorAll('.reveal').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+}
+
+console.log('%c// 6% — small change. whole product.', 'color:#E1261C;font-family:monospace;letter-spacing:.04em;');
+console.log('%c// bruce davis · 2026', 'color:#8A847A;font-family:monospace;letter-spacing:.04em;');
+</script>
+
+</body>
+</html>
