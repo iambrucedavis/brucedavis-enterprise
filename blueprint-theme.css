@@ -1,7 +1,7 @@
 /* ─── BLUEPRINT THEME — site-wide overlay ─────────────────────
    Linked from every page after the inline <style> block so it wins
    on cascade. Overrides the existing palette + body bg, and adds
-   the grid, scanlines, and glitch-on-text behaviour.
+   the grid, schematic, scanlines, and glitch-on-text behaviour.
    ──────────────────────────────────────────────────────────── */
 
 :root {
@@ -9,10 +9,10 @@
   --paper-clean:  #103257;
   --paper-deep:   #081d36;
   --ink:          #e6f3ff;
-  --ink-soft:     #b8d4ee;
+  --ink-soft:     #c4dbf2;
   --concrete:     #061525;
-  --mute:         #6c8caf;
-  --mute-soft:    #92aecd;
+  --mute:         #7a99b8;
+  --mute-soft:    #a0bcd9;
   --signal:       #5cd5ff;
   --signal-rgb:   92,213,255;
   --hairline:        rgba(220, 235, 255, .10);
@@ -34,7 +34,24 @@ body {
     radial-gradient(ellipse at 50% 50%, transparent 0%, rgba(0,0,0,.35) 100%) !important;
   background-size: 24px 24px, 24px 24px, 120px 120px, 120px 120px, 100% 100% !important;
   background-attachment: fixed, fixed, fixed, fixed, fixed !important;
+  font-size: 19px !important;
 }
+
+/* Schematic layer — fixed full-viewport SVG behind content */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none;
+  background-image: url('blueprint-schematic.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: .32;
+  z-index: 0;
+}
+
+/* Make sure foreground content sits above the schematic */
+body > * { position: relative; z-index: 1; }
 
 /* Scanline overlay with periodic flicker */
 body::after {
@@ -54,17 +71,59 @@ body::after {
   99% { opacity: .12; }
 }
 
+/* ─── TYPOGRAPHY BUMP — bigger text site-wide ───────────────── */
+
+/* Body / description text */
+.work-desc, .lf-body, .bg-body,
+.dv-desc, .rule-body, .tc-desc, .flow-cap, .c-cap, .cmp-cap {
+  font-size: 17.5px !important;
+  line-height: 1.65 !important;
+}
+
+/* Hero subtitles + leads */
+.hero-tagline, .hero-sub, .stack-lede, .stack-footnote {
+  font-size: clamp(19px, 1.9vw, 24px) !important;
+  line-height: 1.55 !important;
+}
+
+/* Card titles bumped */
+.lf-title, .work-name, .tc-name, .rule-name {
+  font-size: clamp(22px, 2.1vw, 28px) !important;
+}
+
+/* Detail-page hero h1 */
+#hero-hl {
+  font-size: clamp(54px, 8.6vw, 116px) !important;
+}
+
+/* Index hero h1 */
+.hero-h1 {
+  font-size: clamp(38px, 5vw, 76px) !important;
+}
+
+/* Section h2 */
+.section-h2, .dv-title {
+  font-size: clamp(30px, 3.8vw, 50px) !important;
+}
+
+/* Flow node text */
+.flow-name { font-size: 21px !important; }
+.flow-sub { font-size: 15px !important; }
+
+/* Background block label */
+.bg-label { font-size: 13px !important; }
+
 /* ─── GLITCH on description text ─────────────────────────────
-   Continuous subtle RGB-split, periodic jitter pulse. Hover any
-   parent card (or the element itself) pauses everything so the
-   reader can read.
+   Continuous subtle RGB-split, periodic jitter pulse. Hover the
+   parent panel/section/card pauses everything so the reader can
+   read.
    ────────────────────────────────────────────────────────── */
 
 /* Index-page selectors */
 .work-desc, .lf-body, .hero-tagline, .bg-body, .lf-title, .work-name,
 /* Detail-page selectors */
 .dv-desc, .hero-sub, .flow-cap, .c-cap, .cmp-cap, .rule-body, .tc-desc,
-.flow-name, .flow-sub, .rule-name, .tc-name, .tc-desc {
+.flow-name, .flow-sub, .rule-name, .tc-name {
   text-shadow:
     .6px 0 0 rgba(255, 80, 110, .35),
     -.6px 0 0 rgba(80, 220, 255, .35);
@@ -149,26 +208,36 @@ body::after {
   }
 }
 
-/* HOVER — stop, settle, and crisp the text */
-.work-card:hover .work-desc,
-.work-card:hover .work-name,
-.lf-card:hover .lf-body,
-.lf-card:hover .lf-title,
-.tool-card:hover .tc-desc,
-.tool-card:hover .tc-name,
-.rule:hover .rule-body,
-.rule:hover .rule-name,
-.hero-tagline:hover,
-.hero-h1:hover,
-.hero-sub:hover,
-.section-h2:hover,
-.dv-title:hover,
-.dv-desc:hover,
-.flow-cap:hover,
-.c-cap:hover,
-.cmp-cap:hover,
-.bg-body:hover,
-#hero-hl:hover {
+/* ─── HOVER PAUSE — hover the PANEL / SECTION / CARD ────────
+   Hovering the whole containing region pauses all the glitch
+   text inside it. Reading becomes effortless once the cursor
+   lands on a region of interest.
+   ────────────────────────────────────────────────────────── */
+
+/* Index: hover the deck panel pauses everything in it */
+.panel:hover .work-desc,
+.panel:hover .work-name,
+.panel:hover .lf-body,
+.panel:hover .lf-title,
+.panel:hover .hero-tagline,
+.panel:hover .hero-h1,
+.panel:hover .section-h2,
+.panel:hover .bg-body,
+/* Detail page: hover the dv-section pauses everything in it */
+.dv-section:hover .dv-desc,
+.dv-section:hover .dv-title,
+.dv-section:hover .flow-cap,
+.dv-section:hover .c-cap,
+.dv-section:hover .cmp-cap,
+.dv-section:hover .flow-name,
+.dv-section:hover .flow-sub,
+.dv-section:hover .tc-desc,
+.dv-section:hover .tc-name,
+.dv-section:hover .rule-body,
+.dv-section:hover .rule-name,
+/* Detail page hero: hover the hero pauses everything in it */
+#hero:hover #hero-hl,
+#hero:hover .hero-sub {
   text-shadow: none !important;
   animation: none !important;
   transform: none !important;

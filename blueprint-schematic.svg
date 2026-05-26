@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <style>
+      .ln { fill: none; stroke: #b8d4ee; stroke-width: 1; }
+      .ln-thin { fill: none; stroke: #b8d4ee; stroke-width: .5; opacity: .7; }
+      .ln-thick { fill: none; stroke: #b8d4ee; stroke-width: 1.5; }
+      .ln-dash { fill: none; stroke: #b8d4ee; stroke-width: 1; stroke-dasharray: 6 4; }
+      .ln-center { fill: none; stroke: #b8d4ee; stroke-width: .8; stroke-dasharray: 14 3 2 3; }
+      .lbl { font-family: 'Space Mono', monospace; font-size: 9px; fill: #b8d4ee; letter-spacing: .15em; text-transform: uppercase; }
+      .lbl-sm { font-family: 'Space Mono', monospace; font-size: 7.5px; fill: #b8d4ee; letter-spacing: .12em; }
+      .lbl-num { font-family: 'Space Mono', monospace; font-size: 8.5px; fill: #b8d4ee; letter-spacing: .04em; }
+      .arr { fill: #b8d4ee; }
+    </style>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" class="arr"/>
+    </marker>
+    <marker id="tic" viewBox="-2 -4 4 8" refX="0" refY="0" markerWidth="4" markerHeight="8" orient="auto">
+      <line x1="0" y1="-4" x2="0" y2="4" class="ln"/>
+    </marker>
+  </defs>
+
+  <!-- ─── UPPER-LEFT: SYSTEM BLOCK DIAGRAM ────────────────── -->
+  <g transform="translate(60, 80)">
+    <text class="lbl" x="0" y="-10">FIG.01 — SYSTEM TOPOLOGY</text>
+    <rect x="0" y="0" width="60" height="32" class="ln"/>
+    <text class="lbl-sm" x="6" y="13">INTAKE</text>
+    <text class="lbl-sm" x="6" y="25">NODE A</text>
+    <line x1="60" y1="16" x2="100" y2="16" class="ln" marker-end="url(#arr)"/>
+    <rect x="100" y="0" width="60" height="32" class="ln"/>
+    <text class="lbl-sm" x="106" y="13">REASON</text>
+    <text class="lbl-sm" x="106" y="25">NODE B</text>
+    <line x1="160" y1="16" x2="200" y2="16" class="ln" marker-end="url(#arr)"/>
+    <rect x="200" y="0" width="60" height="32" class="ln-thick"/>
+    <text class="lbl-sm" x="206" y="13">GATE</text>
+    <text class="lbl-sm" x="206" y="25">HITL —</text>
+    <line x1="260" y1="16" x2="300" y2="16" class="ln" marker-end="url(#arr)"/>
+    <rect x="300" y="0" width="60" height="32" class="ln"/>
+    <text class="lbl-sm" x="306" y="13">EXEC</text>
+    <text class="lbl-sm" x="306" y="25">NODE D</text>
+
+    <!-- feedback loop -->
+    <path d="M 330 32 L 330 56 L 130 56 L 130 32" class="ln-dash"/>
+    <line x1="130" y1="38" x2="130" y2="32" class="ln" marker-end="url(#arr)"/>
+    <text class="lbl-sm" x="180" y="68">OBSERVE · LOOP</text>
+  </g>
+
+  <!-- ─── UPPER-RIGHT: ARCHITECTURAL FLOOR PLAN ──────────── -->
+  <g transform="translate(1180, 80)">
+    <text class="lbl" x="0" y="-10">PLAN — LVL 02 · SCALE 1:48</text>
+    <!-- outer wall -->
+    <rect x="0" y="0" width="340" height="220" class="ln-thick"/>
+    <!-- inner walls -->
+    <line x1="180" y1="0" x2="180" y2="130" class="ln-thick"/>
+    <line x1="0" y1="130" x2="340" y2="130" class="ln-thick"/>
+    <line x1="240" y1="130" x2="240" y2="220" class="ln-thick"/>
+    <!-- door arcs -->
+    <path d="M 180 90 A 30 30 0 0 0 210 60" class="ln-thin"/>
+    <line x1="180" y1="90" x2="180" y2="60" class="ln-thin"/>
+    <path d="M 130 130 A 28 28 0 0 1 102 158" class="ln-thin"/>
+    <line x1="130" y1="130" x2="102" y2="130" class="ln-thin"/>
+    <path d="M 240 170 A 26 26 0 0 0 266 196" class="ln-thin"/>
+    <line x1="240" y1="170" x2="266" y2="170" class="ln-thin"/>
+    <!-- door openings (gaps in wall, marked) -->
+    <line x1="180" y1="60" x2="180" y2="90" stroke="#0d2747" stroke-width="2"/>
+    <line x1="102" y1="130" x2="130" y2="130" stroke="#0d2747" stroke-width="2"/>
+    <line x1="240" y1="170" x2="240" y2="196" stroke="#0d2747" stroke-width="2"/>
+    <!-- room labels -->
+    <text class="lbl-sm" x="60" y="60">A — 12×14</text>
+    <text class="lbl-sm" x="240" y="60">B — 9×10</text>
+    <text class="lbl-sm" x="60" y="175">C — 14×18</text>
+    <text class="lbl-sm" x="280" y="175">D — 7×9</text>
+    <!-- dimension lines (top) -->
+    <line x1="0" y1="-22" x2="180" y2="-22" class="ln-thin" marker-start="url(#tic)" marker-end="url(#tic)"/>
+    <text class="lbl-num" x="80" y="-26">12' — 0"</text>
+    <line x1="180" y1="-22" x2="340" y2="-22" class="ln-thin" marker-start="url(#tic)" marker-end="url(#tic)"/>
+    <text class="lbl-num" x="252" y="-26">10' — 8"</text>
+    <!-- dimension (right) -->
+    <line x1="362" y1="0" x2="362" y2="130" class="ln-thin" marker-start="url(#tic)" marker-end="url(#tic)"/>
+    <text class="lbl-num" x="368" y="68">9' — 6"</text>
+    <line x1="362" y1="130" x2="362" y2="220" class="ln-thin" marker-start="url(#tic)" marker-end="url(#tic)"/>
+    <text class="lbl-num" x="368" y="178">6' — 0"</text>
+    <!-- N arrow -->
+    <g transform="translate(20, 200)">
+      <circle r="10" class="ln-thin"/>
+      <path d="M 0 -7 L 4 4 L 0 1 L -4 4 Z" class="arr"/>
+      <text class="lbl-sm" x="-3" y="22">N</text>
+    </g>
+  </g>
+
+  <!-- ─── CENTER: ELEVATION / CROSS-SECTION ────────────────── -->
+  <g transform="translate(560, 360)">
+    <text class="lbl" x="0" y="-10">ELEV — SECT A-A · SCALE 1:24</text>
+    <!-- ground line -->
+    <line x1="-20" y1="170" x2="500" y2="170" class="ln-thick"/>
+    <text class="lbl-sm" x="-18" y="184">G.L. ± 0' — 0"</text>
+    <!-- building outline -->
+    <path d="M 30 170 L 30 110 L 30 70 L 80 30 L 180 30 L 230 70 L 230 110 L 280 110 L 280 50 L 360 50 L 360 110 L 400 110 L 400 170" class="ln-thick"/>
+    <!-- floor lines -->
+    <line x1="30" y1="110" x2="230" y2="110" class="ln-thin"/>
+    <line x1="280" y1="110" x2="400" y2="110" class="ln-thin"/>
+    <!-- windows -->
+    <rect x="50" y="125" width="20" height="30" class="ln-thin"/>
+    <rect x="90" y="125" width="20" height="30" class="ln-thin"/>
+    <rect x="150" y="125" width="20" height="30" class="ln-thin"/>
+    <rect x="190" y="125" width="20" height="30" class="ln-thin"/>
+    <rect x="50" y="80" width="14" height="22" class="ln-thin"/>
+    <rect x="80" y="80" width="14" height="22" class="ln-thin"/>
+    <rect x="140" y="80" width="14" height="22" class="ln-thin"/>
+    <rect x="180" y="80" width="14" height="22" class="ln-thin"/>
+    <rect x="295" y="125" width="20" height="30" class="ln-thin"/>
+    <rect x="335" y="125" width="20" height="30" class="ln-thin"/>
+    <rect x="295" y="65" width="20" height="30" class="ln-thin"/>
+    <rect x="335" y="65" width="20" height="30" class="ln-thin"/>
+    <!-- door -->
+    <rect x="110" y="115" width="24" height="55" class="ln-thick"/>
+    <!-- roof hatching -->
+    <line x1="40" y1="60" x2="50" y2="50" class="ln-thin"/>
+    <line x1="55" y1="60" x2="65" y2="50" class="ln-thin"/>
+    <line x1="70" y1="60" x2="80" y2="50" class="ln-thin"/>
+    <line x1="120" y1="40" x2="130" y2="30" class="ln-thin"/>
+    <line x1="135" y1="40" x2="145" y2="30" class="ln-thin"/>
+    <line x1="150" y1="40" x2="160" y2="30" class="ln-thin"/>
+    <!-- height dimensions -->
+    <line x1="-10" y1="30" x2="-10" y2="170" class="ln-thin" marker-start="url(#tic)" marker-end="url(#tic)"/>
+    <text class="lbl-num" x="-50" y="100">22' — 0"</text>
+    <line x1="420" y1="50" x2="420" y2="170" class="ln-thin" marker-start="url(#tic)" marker-end="url(#tic)"/>
+    <text class="lbl-num" x="426" y="110">18' — 6"</text>
+    <!-- center axis -->
+    <line x1="240" y1="0" x2="240" y2="200" class="ln-center"/>
+    <text class="lbl-sm" x="244" y="-2">℄</text>
+  </g>
+
+  <!-- ─── BOTTOM-LEFT: CIRCUIT / DATA-FLOW SCHEMATIC ──────── -->
+  <g transform="translate(80, 760)">
+    <text class="lbl" x="0" y="-10">SCHEM — DATAPATH · REV.B</text>
+    <!-- input -->
+    <circle cx="0" cy="20" r="6" class="ln"/>
+    <line x1="6" y1="20" x2="40" y2="20" class="ln"/>
+    <!-- splitter -->
+    <line x1="40" y1="20" x2="40" y2="56" class="ln"/>
+    <line x1="40" y1="20" x2="80" y2="20" class="ln"/>
+    <!-- top branch -->
+    <rect x="80" y="8" width="40" height="24" class="ln"/>
+    <text class="lbl-sm" x="86" y="23">⨁ AGG</text>
+    <line x1="120" y1="20" x2="160" y2="20" class="ln"/>
+    <!-- bottom branch -->
+    <rect x="20" y="56" width="40" height="24" class="ln"/>
+    <text class="lbl-sm" x="26" y="71">⊜ CACHE</text>
+    <line x1="60" y1="68" x2="100" y2="68" class="ln"/>
+    <!-- gate (X) -->
+    <circle cx="170" cy="44" r="14" class="ln-thick"/>
+    <line x1="160" y1="34" x2="180" y2="54" class="ln-thin"/>
+    <line x1="180" y1="34" x2="160" y2="54" class="ln-thin"/>
+    <line x1="160" y1="20" x2="170" y2="30" class="ln"/>
+    <line x1="100" y1="68" x2="170" y2="58" class="ln"/>
+    <!-- output -->
+    <line x1="184" y1="44" x2="220" y2="44" class="ln" marker-end="url(#arr)"/>
+    <text class="lbl-sm" x="226" y="48">→ OUT</text>
+    <!-- ground -->
+    <line x1="115" y1="90" x2="115" y2="104" class="ln"/>
+    <line x1="105" y1="104" x2="125" y2="104" class="ln"/>
+    <line x1="108" y1="108" x2="122" y2="108" class="ln"/>
+    <line x1="111" y1="112" x2="119" y2="112" class="ln"/>
+  </g>
+
+  <!-- ─── BOTTOM-RIGHT: TITLE BLOCK ──────────────────────── -->
+  <g transform="translate(1200, 820)">
+    <rect x="0" y="0" width="340" height="120" class="ln-thick"/>
+    <line x1="0" y1="30" x2="340" y2="30" class="ln"/>
+    <line x1="0" y1="60" x2="340" y2="60" class="ln"/>
+    <line x1="0" y1="90" x2="340" y2="90" class="ln"/>
+    <line x1="170" y1="0" x2="170" y2="120" class="ln"/>
+    <line x1="240" y1="0" x2="240" y2="120" class="ln"/>
+    <text class="lbl" x="8" y="20">PROJECT</text>
+    <text class="lbl-sm" x="178" y="20">REV</text>
+    <text class="lbl-sm" x="248" y="20">DATE</text>
+    <text class="lbl-sm" x="8" y="50">BD — ENTERPRISE</text>
+    <text class="lbl-sm" x="178" y="50">A.04</text>
+    <text class="lbl-sm" x="248" y="50">2026 / 05</text>
+    <text class="lbl-sm" x="8" y="80">DRAWN · BD</text>
+    <text class="lbl-sm" x="178" y="80">CHK</text>
+    <text class="lbl-sm" x="248" y="80">APPV</text>
+    <text class="lbl-sm" x="8" y="110">SCALE — VARIES</text>
+    <text class="lbl-sm" x="178" y="110">DR.001</text>
+    <text class="lbl-sm" x="248" y="110">SHT 1 / 1</text>
+  </g>
+
+  <!-- ─── EDGE DIMENSION TICKS ───────────────────────────── -->
+  <g>
+    <!-- left edge ruler -->
+    <line x1="20" y1="40" x2="20" y2="960" class="ln-thin"/>
+    <g class="ln-thin">
+      <line x1="14" y1="100" x2="26" y2="100"/>
+      <line x1="14" y1="200" x2="26" y2="200"/>
+      <line x1="14" y1="300" x2="26" y2="300"/>
+      <line x1="14" y1="400" x2="26" y2="400"/>
+      <line x1="14" y1="500" x2="26" y2="500"/>
+      <line x1="14" y1="600" x2="26" y2="600"/>
+      <line x1="14" y1="700" x2="26" y2="700"/>
+      <line x1="14" y1="800" x2="26" y2="800"/>
+      <line x1="14" y1="900" x2="26" y2="900"/>
+    </g>
+    <text class="lbl-num" transform="translate(8 100) rotate(-90)">0' — 0"</text>
+    <text class="lbl-num" transform="translate(8 300) rotate(-90)">10' — 0"</text>
+    <text class="lbl-num" transform="translate(8 500) rotate(-90)">20' — 0"</text>
+    <text class="lbl-num" transform="translate(8 700) rotate(-90)">30' — 0"</text>
+    <text class="lbl-num" transform="translate(8 900) rotate(-90)">40' — 0"</text>
+    <!-- bottom edge ruler -->
+    <line x1="60" y1="980" x2="1540" y2="980" class="ln-thin"/>
+    <g class="ln-thin">
+      <line x1="200" y1="974" x2="200" y2="986"/>
+      <line x1="400" y1="974" x2="400" y2="986"/>
+      <line x1="600" y1="974" x2="600" y2="986"/>
+      <line x1="800" y1="974" x2="800" y2="986"/>
+      <line x1="1000" y1="974" x2="1000" y2="986"/>
+      <line x1="1200" y1="974" x2="1200" y2="986"/>
+      <line x1="1400" y1="974" x2="1400" y2="986"/>
+    </g>
+  </g>
+
+  <!-- ─── CROSSHAIR TARGETS ──────────────────────────────── -->
+  <g class="ln-thin">
+    <circle cx="800" cy="180" r="14"/>
+    <line x1="780" y1="180" x2="820" y2="180"/>
+    <line x1="800" y1="160" x2="800" y2="200"/>
+    <text class="lbl-sm" x="824" y="182">PT.01</text>
+  </g>
+  <g class="ln-thin">
+    <circle cx="1080" cy="620" r="14"/>
+    <line x1="1060" y1="620" x2="1100" y2="620"/>
+    <line x1="1080" y1="600" x2="1080" y2="640"/>
+    <text class="lbl-sm" x="1104" y="622">PT.02</text>
+  </g>
+  <g class="ln-thin">
+    <circle cx="380" cy="500" r="14"/>
+    <line x1="360" y1="500" x2="400" y2="500"/>
+    <line x1="380" y1="480" x2="380" y2="520"/>
+    <text class="lbl-sm" x="404" y="502">PT.03</text>
+  </g>
+
+  <!-- ─── RANDOM ANNOTATIONS ─────────────────────────────── -->
+  <text class="lbl-sm" x="900" y="700">∅ 1/2"</text>
+  <text class="lbl-sm" x="640" y="240">TYP.</text>
+  <text class="lbl-sm" x="980" y="430">SEE DR.002</text>
+  <text class="lbl-sm" x="540" y="780">F.F.E.</text>
+  <text class="lbl-sm" x="1080" y="290">U.O.N.</text>
+
+</svg>
