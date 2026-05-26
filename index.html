@@ -408,31 +408,25 @@ body::after {
   flex: 0 0 100%;
   width: 100%;
   height: 100%;
-  padding: clamp(26px, 3vw, 46px) clamp(28px, 6vw, 90px);
-  display: grid;
-  grid-template-columns: 1fr auto;
-  column-gap: clamp(28px, 4vw, 56px);
-  row-gap: clamp(12px, 1.6vw, 20px);
-  align-content: start;
+  /* Right padding reserves space for the absolutely-positioned CTA */
+  padding: clamp(26px, 3vw, 46px) clamp(220px, 22vw, 320px) clamp(26px, 3vw, 46px) clamp(28px, 6vw, 90px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.6vw, 20px);
+  justify-content: center;
   position: relative;
   background: linear-gradient(145deg, rgba(16, 50, 87, .55), rgba(8, 29, 54, .35));
   border: 1px solid var(--hairline-strong);
   box-shadow: var(--shadow-lg);
   overflow: auto;
 }
-/* All copy lives in the left column; the CTA pins to the right */
-.proj-slide > .proj-meta,
-.proj-slide > .proj-name,
-.proj-slide > .proj-desc,
-.proj-slide > .receipt,
-.proj-slide > .proj-badges { grid-column: 1; }
+/* CTA sits in the right rail, vertically centered to the entire slide */
 .proj-slide > .proj-cta {
-  grid-column: 2;
-  grid-row: 1 / -1;
-  align-self: center;
-  justify-self: end;
-  margin-top: 0;
-  white-space: nowrap;
+  position: absolute;
+  top: 50%;
+  right: clamp(40px, 5vw, 80px);
+  transform: translateY(-50%);
+  margin: 0;
 }
 /* Corner brackets — each card looks like a drafting plate */
 .proj-slide::before, .proj-slide::after {
@@ -482,22 +476,24 @@ body::after {
 
 .proj-cta {
   font-family: var(--mono); font-weight: 700;
-  font-size: clamp(12px, 1.05vw, 14px); letter-spacing: .18em; text-transform: uppercase;
+  font-size: clamp(13px, 1.15vw, 16px); letter-spacing: .2em; text-transform: uppercase;
   color: var(--signal);
   text-decoration: none;
-  padding: clamp(16px, 1.6vw, 22px) clamp(20px, 2vw, 28px);
-  border: 1px solid var(--signal);
-  transition: background var(--m-base), color var(--m-base), box-shadow var(--m-base), transform var(--m-base);
-  display: inline-flex; align-items: center; gap: 10px;
-  max-width: 16ch;
+  padding: clamp(20px, 2vw, 28px) clamp(24px, 2.4vw, 36px);
+  border: 1.5px solid var(--signal);
+  transition: background var(--m-base), color var(--m-base), box-shadow var(--m-base);
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-width: 200px;
   text-align: center;
 }
 .proj-cta:hover {
   background: var(--signal);
   color: var(--paper);
   box-shadow: 0 0 28px -4px rgba(var(--signal-rgb), .65), var(--lift-md);
-  transform: translateY(-1px);
 }
+/* Hover lift handled via top instead of transform so translateY(-50%) centering stays intact */
+.proj-slide > .proj-cta { transition: background var(--m-base), color var(--m-base), box-shadow var(--m-base), top var(--m-base); }
+.proj-slide > .proj-cta:hover { top: calc(50% - 2px); }
 
 /* Side arrows */
 .proj-arrow {
@@ -551,14 +547,16 @@ body::after {
 @media (max-width: 880px) {
   .proj-slide {
     padding: 26px 22px;
-    grid-template-columns: 1fr;
+    justify-content: flex-start;
   }
   .proj-slide > .proj-cta {
-    grid-column: 1;
-    grid-row: auto;
-    justify-self: start;
+    position: static;
+    transform: none;
+    align-self: flex-start;
     margin-top: 8px;
+    min-width: 0;
   }
+  .proj-slide > .proj-cta:hover { top: auto; }
   .proj-prev { left: 4px; }
   .proj-next { right: 4px; }
 }
