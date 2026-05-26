@@ -586,6 +586,54 @@ body::after {
   text-align: center;
 }
 
+/* ─── TECHNICAL STACK SUBSECTION ────────────────────────── */
+.tech-stack {
+  margin-top: clamp(36px, 4vw, 56px);
+  padding-top: clamp(28px, 3vw, 40px);
+  border-top: 1px dashed var(--hairline-strong);
+  display: flex; flex-direction: column;
+  gap: clamp(16px, 1.8vw, 22px);
+}
+.tech-row {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: clamp(20px, 2.5vw, 36px);
+  align-items: start;
+}
+.tech-label {
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--signal);
+  padding-top: 6px;
+  border-right: 1px solid var(--hairline);
+  padding-right: 16px;
+}
+.tech-tags {
+  display: flex; flex-wrap: wrap;
+  gap: 8px;
+}
+.tech-tag {
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: .04em;
+  color: var(--ink-soft);
+  border: 1px solid var(--hairline-strong);
+  padding: 5px 10px;
+  cursor: default;
+  transition: border-color var(--m-base), color var(--m-base), transform var(--m-base);
+}
+.tech-tag:hover {
+  border-color: var(--signal);
+  color: var(--signal);
+  transform: translateY(-2px);
+}
+@media (max-width: 880px) {
+  .tech-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .tech-label { border-right: none; border-bottom: 1px solid var(--hairline); padding-bottom: 6px; padding-right: 0; }
+}
+
 /* ─── CONTACT PANEL ──────────────────────── */
 .contact-inner { text-align:center; display:flex; flex-direction:column; gap: clamp(28px,4vh,52px); }
 .bg-block { max-width: 70ch; margin: 0 auto; }
@@ -1153,9 +1201,95 @@ body::after { animation: flicker-bg 6s steps(1, end) infinite; }
         </div>
       </div>
 
-      <p class="stack-footnote rise" style="--i:3">
-        Models: Claude, GPT, Gemini, Llama, Hugging Face. Frameworks: MCP, Google ADK, LangChain, Vercel AI SDK, n8n.
-      </p>
+      <div class="tech-stack rise" style="--i:3">
+        <div class="tech-row">
+          <div class="tech-label">Languages</div>
+          <div class="tech-tags">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">TypeScript</span>
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">Node.js</span>
+            <span class="tech-tag">PowerShell 7</span>
+            <span class="tech-tag">Bash</span>
+            <span class="tech-tag">SQL</span>
+            <span class="tech-tag">JSON</span>
+            <span class="tech-tag">JSON Schema</span>
+          </div>
+        </div>
+        <div class="tech-row">
+          <div class="tech-label">AI Frameworks &amp; SDKs</div>
+          <div class="tech-tags">
+            <span class="tech-tag">MCP</span>
+            <span class="tech-tag">FastMCP</span>
+            <span class="tech-tag">Google ADK</span>
+            <span class="tech-tag">LangChain</span>
+            <span class="tech-tag">LlamaIndex</span>
+            <span class="tech-tag">Anthropic SDK</span>
+            <span class="tech-tag">OpenAI SDK</span>
+            <span class="tech-tag">google-genai SDK</span>
+            <span class="tech-tag">Vercel AI SDK</span>
+            <span class="tech-tag">n8n</span>
+            <span class="tech-tag">Microsoft Bot Framework</span>
+          </div>
+        </div>
+        <div class="tech-row">
+          <div class="tech-label">Machine Learning</div>
+          <div class="tech-tags">
+            <span class="tech-tag">Hugging Face</span>
+            <span class="tech-tag">Transformers</span>
+            <span class="tech-tag">PyTorch</span>
+            <span class="tech-tag">scikit-learn</span>
+            <span class="tech-tag">PEFT / LoRA</span>
+            <span class="tech-tag">FastAPI</span>
+            <span class="tech-tag">Pydantic</span>
+            <span class="tech-tag">NumPy</span>
+            <span class="tech-tag">Pandas</span>
+          </div>
+        </div>
+        <div class="tech-row">
+          <div class="tech-label">Models</div>
+          <div class="tech-tags">
+            <span class="tech-tag">Claude</span>
+            <span class="tech-tag">GPT</span>
+            <span class="tech-tag">Gemini</span>
+            <span class="tech-tag">Llama</span>
+            <span class="tech-tag">Qwen 2.5</span>
+            <span class="tech-tag">Mistral</span>
+            <span class="tech-tag">DistilBERT</span>
+          </div>
+        </div>
+        <div class="tech-row">
+          <div class="tech-label">Cloud &amp; Identity</div>
+          <div class="tech-tags">
+            <span class="tech-tag">Microsoft Azure</span>
+            <span class="tech-tag">Azure OpenAI</span>
+            <span class="tech-tag">Microsoft Power Platform</span>
+            <span class="tech-tag">Microsoft Graph</span>
+            <span class="tech-tag">Entra ID</span>
+            <span class="tech-tag">CyberArk</span>
+            <span class="tech-tag">Google Cloud</span>
+            <span class="tech-tag">Vercel</span>
+            <span class="tech-tag">Docker</span>
+            <span class="tech-tag">Bicep</span>
+          </div>
+        </div>
+        <div class="tech-row">
+          <div class="tech-label">Web &amp; Tooling</div>
+          <div class="tech-tags">
+            <span class="tech-tag">React</span>
+            <span class="tech-tag">Next.js</span>
+            <span class="tech-tag">Tailwind</span>
+            <span class="tech-tag">Streamlit</span>
+            <span class="tech-tag">REST</span>
+            <span class="tech-tag">OAuth</span>
+            <span class="tech-tag">Git</span>
+            <span class="tech-tag">CLI tooling</span>
+            <span class="tech-tag">pytest</span>
+            <span class="tech-tag">Vitest</span>
+            <span class="tech-tag">Zod</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
