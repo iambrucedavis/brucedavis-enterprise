@@ -409,14 +409,30 @@ body::after {
   width: 100%;
   height: 100%;
   padding: clamp(26px, 3vw, 46px) clamp(28px, 6vw, 90px);
-  display: flex;
-  flex-direction: column;
-  gap: clamp(12px, 1.6vw, 20px);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: clamp(28px, 4vw, 56px);
+  row-gap: clamp(12px, 1.6vw, 20px);
+  align-content: start;
   position: relative;
   background: linear-gradient(145deg, rgba(16, 50, 87, .55), rgba(8, 29, 54, .35));
   border: 1px solid var(--hairline-strong);
   box-shadow: var(--shadow-lg);
   overflow: auto;
+}
+/* All copy lives in the left column; the CTA pins to the right */
+.proj-slide > .proj-meta,
+.proj-slide > .proj-name,
+.proj-slide > .proj-desc,
+.proj-slide > .receipt,
+.proj-slide > .proj-badges { grid-column: 1; }
+.proj-slide > .proj-cta {
+  grid-column: 2;
+  grid-row: 1 / -1;
+  align-self: center;
+  justify-self: end;
+  margin-top: 0;
+  white-space: nowrap;
 }
 /* Corner brackets — each card looks like a drafting plate */
 .proj-slide::before, .proj-slide::after {
@@ -465,20 +481,22 @@ body::after {
 .proj-badges { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 4px; }
 
 .proj-cta {
-  align-self: flex-start;
-  margin-top: auto;
-  font-family: var(--mono);
-  font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+  font-family: var(--mono); font-weight: 700;
+  font-size: clamp(12px, 1.05vw, 14px); letter-spacing: .18em; text-transform: uppercase;
   color: var(--signal);
   text-decoration: none;
-  padding: 12px 22px;
+  padding: clamp(16px, 1.6vw, 22px) clamp(20px, 2vw, 28px);
   border: 1px solid var(--signal);
-  transition: background var(--m-base), color var(--m-base), box-shadow var(--m-base);
+  transition: background var(--m-base), color var(--m-base), box-shadow var(--m-base), transform var(--m-base);
+  display: inline-flex; align-items: center; gap: 10px;
+  max-width: 16ch;
+  text-align: center;
 }
 .proj-cta:hover {
   background: var(--signal);
   color: var(--paper);
-  box-shadow: 0 0 24px -4px rgba(var(--signal-rgb), .6);
+  box-shadow: 0 0 28px -4px rgba(var(--signal-rgb), .65), var(--lift-md);
+  transform: translateY(-1px);
 }
 
 /* Side arrows */
@@ -531,7 +549,16 @@ body::after {
 }
 
 @media (max-width: 880px) {
-  .proj-slide { padding: 26px 22px; }
+  .proj-slide {
+    padding: 26px 22px;
+    grid-template-columns: 1fr;
+  }
+  .proj-slide > .proj-cta {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: start;
+    margin-top: 8px;
+  }
   .proj-prev { left: 4px; }
   .proj-next { right: 4px; }
 }
