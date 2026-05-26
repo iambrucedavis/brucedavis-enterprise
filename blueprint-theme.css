@@ -1,0 +1,189 @@
+/* ─── BLUEPRINT THEME — site-wide overlay ─────────────────────
+   Linked from every page after the inline <style> block so it wins
+   on cascade. Overrides the existing palette + body bg, and adds
+   the grid, scanlines, and glitch-on-text behaviour.
+   ──────────────────────────────────────────────────────────── */
+
+:root {
+  --paper:        #0d2747;
+  --paper-clean:  #103257;
+  --paper-deep:   #081d36;
+  --ink:          #e6f3ff;
+  --ink-soft:     #b8d4ee;
+  --concrete:     #061525;
+  --mute:         #6c8caf;
+  --mute-soft:    #92aecd;
+  --signal:       #5cd5ff;
+  --signal-rgb:   92,213,255;
+  --hairline:        rgba(220, 235, 255, .10);
+  --hairline-strong: rgba(220, 235, 255, .22);
+  --grid-fine:       rgba(220, 235, 255, .045);
+  --grid-major:      rgba(220, 235, 255, .12);
+  --glitch-r:     rgba(255, 80, 110, .55);
+  --glitch-c:     rgba(80, 220, 255, .55);
+}
+
+/* Body — blueprint grid background, fixed to viewport */
+body {
+  background-color: var(--paper) !important;
+  background-image:
+    linear-gradient(var(--grid-fine) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-fine) 1px, transparent 1px),
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    radial-gradient(ellipse at 50% 50%, transparent 0%, rgba(0,0,0,.35) 100%) !important;
+  background-size: 24px 24px, 24px 24px, 120px 120px, 120px 120px, 100% 100% !important;
+  background-attachment: fixed, fixed, fixed, fixed, fixed !important;
+}
+
+/* Scanline overlay with periodic flicker */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(0,0,0,.18) 50%, transparent 50%);
+  background-size: 100% 3px;
+  opacity: .22;
+  z-index: 1000;
+  mix-blend-mode: overlay;
+  animation: bp-flicker 6s steps(1, end) infinite;
+}
+@keyframes bp-flicker {
+  0%, 97%, 100% { opacity: .22; }
+  98% { opacity: .35; }
+  99% { opacity: .12; }
+}
+
+/* ─── GLITCH on description text ─────────────────────────────
+   Continuous subtle RGB-split, periodic jitter pulse. Hover any
+   parent card (or the element itself) pauses everything so the
+   reader can read.
+   ────────────────────────────────────────────────────────── */
+
+/* Index-page selectors */
+.work-desc, .lf-body, .hero-tagline, .bg-body, .lf-title, .work-name,
+/* Detail-page selectors */
+.dv-desc, .hero-sub, .flow-cap, .c-cap, .cmp-cap, .rule-body, .tc-desc,
+.flow-name, .flow-sub, .rule-name, .tc-name, .tc-desc {
+  text-shadow:
+    .6px 0 0 rgba(255, 80, 110, .35),
+    -.6px 0 0 rgba(80, 220, 255, .35);
+  animation: bp-glitch 5.4s steps(1, end) infinite;
+  transition: text-shadow 160ms ease, transform 160ms ease, color 160ms ease, filter 160ms ease;
+}
+
+/* Hero headlines — bolder, slower variant */
+.hero-h1, #hero-hl, .section-h2, .dv-title {
+  text-shadow:
+    1.5px 0 0 rgba(255, 80, 110, .45),
+    -1.5px 0 0 rgba(80, 220, 255, .45);
+  animation: bp-glitch-bold 6.2s steps(1, end) infinite;
+  transition: text-shadow 160ms ease, transform 160ms ease, color 160ms ease, filter 160ms ease;
+}
+
+@keyframes bp-glitch {
+  0%, 86%, 100% {
+    text-shadow:
+      .6px 0 0 rgba(255, 80, 110, .35),
+      -.6px 0 0 rgba(80, 220, 255, .35);
+    transform: translate(0, 0);
+  }
+  87% {
+    text-shadow:
+      3px 0 0 rgba(255, 80, 110, .75),
+      -3px 0 0 rgba(80, 220, 255, .75);
+    transform: translate(-1px, 0);
+  }
+  88.5% {
+    text-shadow:
+      -2px 0 0 rgba(255, 80, 110, .65),
+      2px 0 0 rgba(80, 220, 255, .65);
+    transform: translate(2px, -1px);
+  }
+  90% {
+    text-shadow:
+      1px 1px 0 rgba(255, 80, 110, .55),
+      -1px -1px 0 rgba(80, 220, 255, .55);
+    transform: translate(-1px, 1px);
+  }
+  91.5% {
+    text-shadow:
+      .6px 0 0 rgba(255, 80, 110, .35),
+      -.6px 0 0 rgba(80, 220, 255, .35);
+    transform: translate(0);
+  }
+}
+
+@keyframes bp-glitch-bold {
+  0%, 88%, 100% {
+    text-shadow:
+      1.5px 0 0 rgba(255, 80, 110, .45),
+      -1.5px 0 0 rgba(80, 220, 255, .45);
+    transform: translate(0);
+    filter: none;
+  }
+  89% {
+    text-shadow:
+      5px 0 0 rgba(255, 80, 110, .85),
+      -5px 0 0 rgba(80, 220, 255, .85);
+    transform: translate(-2px, 1px) skewX(-1deg);
+    filter: brightness(1.15);
+  }
+  91% {
+    text-shadow:
+      -4px 0 0 rgba(255, 80, 110, .75),
+      4px 0 0 rgba(80, 220, 255, .75);
+    transform: translate(3px, -1px);
+  }
+  93% {
+    text-shadow:
+      2px 2px 0 rgba(255, 80, 110, .65),
+      -2px -2px 0 rgba(80, 220, 255, .65);
+    transform: translate(-1px, 2px);
+  }
+  95% {
+    text-shadow:
+      1.5px 0 0 rgba(255, 80, 110, .45),
+      -1.5px 0 0 rgba(80, 220, 255, .45);
+    transform: translate(0);
+  }
+}
+
+/* HOVER — stop, settle, and crisp the text */
+.work-card:hover .work-desc,
+.work-card:hover .work-name,
+.lf-card:hover .lf-body,
+.lf-card:hover .lf-title,
+.tool-card:hover .tc-desc,
+.tool-card:hover .tc-name,
+.rule:hover .rule-body,
+.rule:hover .rule-name,
+.hero-tagline:hover,
+.hero-h1:hover,
+.hero-sub:hover,
+.section-h2:hover,
+.dv-title:hover,
+.dv-desc:hover,
+.flow-cap:hover,
+.c-cap:hover,
+.cmp-cap:hover,
+.bg-body:hover,
+#hero-hl:hover {
+  text-shadow: none !important;
+  animation: none !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after { animation: none !important; opacity: .1 !important; }
+  .work-desc, .lf-body, .hero-tagline, .bg-body, .lf-title, .work-name,
+  .dv-desc, .hero-sub, .flow-cap, .c-cap, .cmp-cap, .rule-body, .tc-desc,
+  .flow-name, .flow-sub, .rule-name, .tc-name,
+  .hero-h1, #hero-hl, .section-h2, .dv-title {
+    animation: none !important;
+    text-shadow: none !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}
