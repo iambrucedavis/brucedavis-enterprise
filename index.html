@@ -3,317 +3,1225 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bruce Davis</title>
-<meta name="description" content="Bruce Davis — engineer working on operational AI, identity governance, and enterprise rollout. Fifteen years in regulated environments.">
-<meta property="og:title" content="Bruce Davis">
-<meta property="og:description" content="Engineer working on operational AI, identity governance, and enterprise rollout. Fifteen years in regulated environments.">
+<title>Bruce Davis — AI Systems Engineer | Agentic AI · IAM · Security</title>
+<meta name="description" content="AI Systems Engineer with 15 years in regulated environments — NHI governance at Microsoft, HIPAA-compliant IAM, payment infrastructure. Now building MCP servers, ReAct agents, and agentic AI systems that enterprise teams can trust.">
+<meta property="og:title" content="Bruce Davis — AI Systems Engineer | Agentic AI · IAM · Security">
+<meta property="og:description" content="AI Systems Engineer with 15 years in regulated environments — NHI governance at Microsoft, HIPAA-compliant IAM, payment infrastructure. Now building MCP servers, ReAct agents, and agentic AI systems that enterprise teams can trust.">
 <meta property="og:type" content="website">
 
-<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 
+/* ─── TOKENS — blueprint register ─── */
 :root {
-  --paper:     #0A0E1A;
-  --ink:       #E8ECF2;
-  --ink-soft:  #B8BFC9;
-  --mute:      #7A8392;
-  --rule:      rgba(255,255,255,.10);
-  --signal:    #6FA8FF;
-  --serif:     'EB Garamond', Georgia, serif;
-  --mono:      'Space Mono', ui-monospace, Menlo, monospace;
+  --paper:        #0d2747;            /* blueprint blue */
+  --paper-clean:  #103257;            /* surface */
+  --paper-deep:   #081d36;            /* deeper */
+  --ink:          #e6f3ff;            /* draft white */
+  --ink-soft:     #b8d4ee;
+  --concrete:     #061525;
+  --mute:         #6c8caf;
+  --mute-soft:    #92aecd;
+  --signal:       #5cd5ff;            /* blueprint cyan */
+  --signal-rgb:   92,213,255;
+  --glitch-r:     rgba(255, 80, 110, .55);
+  --glitch-c:     rgba(80, 220, 255, .55);
+  --hairline:        rgba(220, 235, 255, .10);
+  --hairline-strong: rgba(220, 235, 255, .22);
+  --grid-fine:       rgba(220, 235, 255, .045);
+  --grid-major:      rgba(220, 235, 255, .12);
+  --display: 'Anton', 'Bebas Neue', Impact, sans-serif;
+  --serif:   'EB Garamond', Georgia, serif;
+  --mono:    'Space Mono', ui-monospace, monospace;
+  --shadow:     0 0 0 1px var(--hairline-strong);
+  --shadow-lg:  0 0 0 1px var(--hairline-strong), 0 24px 48px -24px rgba(0,0,0,.6);
+  --m-fast: 60ms cubic-bezier(.2,0,0,1);
+  --m-base: 140ms cubic-bezier(.2,0,0,1);
+  --m-slide: 560ms cubic-bezier(.76,0,.24,1);
+  --maxw: 1280px;
+  --nav-h: 64px;
 }
 
+/* ─── RESET ──────────────────────────────── */
 *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html, body { height: 100%; }
 body {
-  background: var(--paper);
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid-fine) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-fine) 1px, transparent 1px),
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    radial-gradient(ellipse at 50% 50%, transparent 0%, rgba(0,0,0,.35) 100%);
+  background-size: 24px 24px, 24px 24px, 120px 120px, 120px 120px, 100% 100%;
+  background-attachment: fixed, fixed, fixed, fixed, fixed;
   color: var(--ink);
   font-family: var(--serif);
   font-size: 17px;
-  line-height: 1.65;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+/* Scanline + paper-grain overlay */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(0,0,0,.18) 50%, transparent 50%);
+  background-size: 100% 3px;
+  opacity: .22;
+  z-index: 1000;
+  mix-blend-mode: overlay;
 }
 
-a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule); transition: color 120ms, border-color 120ms; }
-a:hover { color: var(--signal); border-bottom-color: var(--signal); }
-
-main {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: clamp(56px, 9vw, 96px) clamp(22px, 5vw, 32px) clamp(80px, 12vw, 120px);
+/* ─── NAV ────────────────────────────────── */
+#nav {
+  position: fixed; top:0; left:0; right:0; z-index:500;
+  height: var(--nav-h);
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 0 clamp(22px,5vw,56px);
+  background: rgba(10,14,26,.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--hairline-strong);
 }
-
-header { margin-bottom: clamp(40px, 5vw, 56px); }
-.h-name {
+.nav-left { display:flex; align-items:center; gap: clamp(16px,3vw,28px); }
+.nav-logo {
   font-family: var(--mono);
-  font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
-  color: var(--ink);
-  margin-bottom: 6px;
+  font-weight: 700; font-size: 13px;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink); text-decoration: none;
+  background:none; border:none; cursor:pointer;
 }
-.h-role {
+.nav-status {
+  display:inline-flex; align-items:center; gap: 8px;
   font-family: var(--mono);
-  font-size: 11.5px; letter-spacing: .12em;
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-soft);
+  padding: 5px 10px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 100px;
+}
+.nav-status::before {
+  content:''; width:7px; height:7px; border-radius:50%;
+  background: #22C55E;
+  box-shadow: 0 0 8px rgba(34,197,94,.7);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50%     { opacity: .5; }
+}
+.nav-links { display:flex; gap: clamp(20px,3vw,38px); list-style:none; }
+.nav-links a, .nav-links button {
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--mute); text-decoration: none;
+  background:none; border:none; cursor:pointer;
+  transition: color var(--m-base);
+}
+.nav-links a:hover, .nav-links button:hover { color: var(--ink); }
+
+/* ─── DECK / PANELS ──────────────────────── */
+#deck {
+  display:flex; flex-wrap:nowrap;
+  height: 100vh;
+  transition: transform var(--m-slide);
+  will-change: transform;
+}
+.panel {
+  flex: 0 0 100vw; width: 100vw; height: 100vh;
+  overflow-y: auto; overflow-x: hidden;
+  display: flex;
+  padding: var(--nav-h) clamp(22px,5vw,56px) 86px;
+}
+.panel-inner {
+  margin: auto;
+  width: 100%;
+  max-width: var(--maxw);
+  padding: 22px 0;
+}
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
   color: var(--mute);
+  margin-bottom: 12px;
+  text-align: center;
 }
 
-.intro {
-  margin-bottom: clamp(48px, 6vw, 68px);
-}
-.intro p {
-  font-size: 18.5px;
-  line-height: 1.6;
+/* ─── DECK CONTROLS ──────────────────────── */
+.deck-arrow {
+  position: fixed; top: 50%; z-index: 450;
+  transform: translateY(-50%);
+  width: 46px; height: 46px;
+  display:flex; align-items:center; justify-content:center;
+  background: rgba(10,14,26,.72);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border: 1px solid var(--hairline-strong);
   color: var(--ink);
+  font-family: var(--serif); font-size: 26px; line-height: 1;
+  cursor: pointer;
+  transition: border-color var(--m-base), color var(--m-base), opacity var(--m-base);
 }
-.intro p + p { margin-top: 16px; color: var(--ink-soft); font-size: 17px; }
+.deck-arrow:hover:not(:disabled) { border-color: var(--signal); color: var(--signal); }
+.deck-arrow:disabled { opacity: .22; cursor: default; }
+.deck-arrow.prev { left: clamp(12px,2vw,26px); }
+.deck-arrow.next { right: clamp(12px,2vw,26px); }
 
-section { margin-top: clamp(44px, 5vw, 60px); }
-
-h2 {
+.deck-tabs {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 450;
+  display:flex; align-items:center; justify-content:center;
+  gap: clamp(14px,3vw,40px);
+  height: 56px;
+  background: rgba(10,14,26,.85);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border-top: 1px solid var(--hairline-strong);
+}
+.deck-tab {
   font-family: var(--mono);
-  font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
-  font-weight: 700;
+  font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
   color: var(--mute);
+  background: none; border: none; cursor: pointer;
+  padding: 6px 2px;
+  border-top: 2px solid transparent;
+  transition: color var(--m-base), border-color var(--m-base);
+}
+.deck-tab:hover { color: var(--ink); }
+.deck-tab[aria-current="true"] { color: var(--signal); border-top-color: var(--signal); }
+.deck-tab .tab-num { color: var(--mute); margin-right: 6px; }
+.deck-tab[aria-current="true"] .tab-num { color: var(--signal); }
+
+/* ─── HERO ───────────────────────────────── */
+.intro-inner { display:flex; flex-direction:column; gap: clamp(30px,4vh,56px); }
+.hero { text-align: center; }
+.hero-name {
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: 16px;
+}
+.hero-h1 {
+  font-family: var(--display); font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(30px, 4.2vw, 60px);
+  line-height: 1.0;
+  letter-spacing: .005em;
+  color: var(--ink);
+  margin-bottom: 18px;
+  max-width: 18ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero-subhead {
+  font-family: var(--display); font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(17px, 2vw, 26px);
+  letter-spacing: .04em;
+  color: var(--mute-soft);
   margin-bottom: 22px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--rule);
 }
-
-/* WORK LIST */
-.work-list { list-style: none; }
-.work-list > li {
-  padding: 14px 0;
-  border-bottom: 1px solid var(--rule);
-}
-.work-list > li:last-child { border-bottom: none; }
-.w-line {
-  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
-  margin-bottom: 4px;
-}
-.w-line a {
-  font-family: var(--serif);
-  font-weight: 600;
-  font-size: 17px;
-  border-bottom: none;
+.hero-tagline {
+  font-family: var(--serif); font-weight: 600;
+  font-size: clamp(18px, 1.7vw, 24px);
+  line-height: 1.35;
   color: var(--ink);
+  max-width: 46ch;
+  margin: 0 auto 24px;
 }
-.w-line a:hover { color: var(--signal); }
-.w-flag {
+.hero-cta { display:flex; gap:14px; flex-wrap:wrap; justify-content:center; }
+
+/* ─── BUTTONS ────────────────────────────── */
+.btn {
+  display:inline-flex; align-items:center;
+  font-family: var(--mono); font-weight: 700;
+  font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+  text-decoration: none;
+  padding: 14px 26px;
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  cursor: pointer;
+  transition: background var(--m-fast), color var(--m-fast), border-color var(--m-fast), transform 180ms cubic-bezier(.2,0,0,1);
+}
+.btn-primary { background: var(--signal); color: #FFFFFF; border-color: var(--signal); }
+.btn-primary:hover  { background: #0052CC; border-color: #0052CC; }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--hairline-strong); }
+.btn-ghost:hover { border-color: var(--signal); color: var(--signal); }
+
+/* ─── PILLARS ───────────────────────────── */
+.lf-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap: clamp(16px,2vw,26px);
+}
+.lf-card {
+  background: var(--paper-clean);
+  border: 1px solid var(--hairline-strong);
+  padding: clamp(20px,2vw,30px);
+  display:flex; flex-direction:column; gap:12px;
+  transition: border-color var(--m-base), transform 160ms ease;
+  will-change: transform;
+}
+.lf-card:hover { border-color: var(--signal); }
+.lf-tag {
   font-family: var(--mono);
-  font-size: 9.5px; letter-spacing: .18em; text-transform: uppercase;
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
   color: var(--signal);
 }
-.w-desc {
-  font-size: 15.5px;
-  color: var(--ink-soft);
-  line-height: 1.55;
+.lf-title {
+  font-family: var(--display); font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(19px,1.9vw,26px); line-height: 1.05;
+  letter-spacing: .01em;
+  color: var(--ink);
 }
-.w-meta {
+.lf-body {
+  font-family: var(--serif);
+  font-size: 14.5px; line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+/* ─── SECTION HEADING ────────────────────── */
+.section-h2 {
+  font-family: var(--display); font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(26px,3.4vw,46px);
+  line-height: 1.02;
+  letter-spacing: .01em;
+  color: var(--ink);
+  max-width: 36ch;
+  margin: 0 auto clamp(20px,2.6vw,32px);
+  text-align: center;
+}
+
+/* ─── WORK ───────────────────────────────── */
+.work-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap: clamp(14px,1.5vw,20px);
+}
+.work-card {
+  background: var(--paper-clean);
+  border: 1px solid var(--hairline-strong);
+  padding: clamp(16px,1.5vw,22px);
+  display:flex; flex-direction:column;
+  text-decoration:none; color:inherit;
+  transition: border-color var(--m-base), transform 160ms ease;
+  position: relative;
+  will-change: transform;
+}
+.work-card:hover { border-color: var(--signal); }
+.work-flagship {
+  position: absolute; top: 0; left: 0;
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 9px; letter-spacing: .22em; text-transform: uppercase;
+  color: #FFFFFF; background: var(--signal);
+  padding: 5px 9px 4px;
+}
+.work-tag {
+  font-family: var(--mono);
+  font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: 12px;
+}
+.work-card.is-flagship .work-tag { margin-top: 20px; }
+.work-name {
+  font-family: var(--display); font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(19px,1.9vw,25px); line-height: 1.02;
+  letter-spacing: .01em;
+  color: var(--ink);
+  margin-bottom: 9px;
+  transition: color var(--m-base);
+}
+.work-card:hover .work-name { color: var(--signal); }
+.work-desc {
+  font-family: var(--serif);
+  font-size: 13.5px; line-height: 1.5;
+  color: var(--ink-soft);
+  margin-bottom: 13px; flex:1;
+}
+/* receipt strip — operational evidence per card */
+.receipt {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: .06em;
+  color: var(--mute-soft);
+  padding: 10px 0;
+  margin: 0 0 13px;
+  border-top: 1px dashed var(--hairline-strong);
+  border-bottom: 1px dashed var(--hairline-strong);
+  display: flex; flex-wrap: wrap; align-items: center; gap: 7px;
+  line-height: 1.4;
+}
+.r-label {
+  font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--mute); margin-right: 2px;
+}
+.r-stat { color: var(--ink-soft); }
+.r-stat b { color: var(--signal); font-weight: 600; }
+.r-sep { color: var(--mute); }
+.r-node {
+  border: 1px solid var(--hairline-strong);
+  padding: 2px 6px;
+  color: var(--ink-soft);
+  font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase;
+}
+.r-node.is-gate {
+  border-color: var(--signal);
+  color: var(--signal);
+  background: rgba(0,102,255,.06);
+}
+.r-arrow { color: var(--mute); font-size: 10px; }
+.r-chip {
+  border: 1px solid var(--hairline-strong);
+  padding: 2px 6px;
+  color: var(--ink-soft);
+  font-size: 9.5px; letter-spacing: .04em;
+}
+.work-card:hover .r-node, .work-card:hover .r-chip { border-color: var(--hairline-strong); }
+.work-card:hover .r-node.is-gate { border-color: var(--signal); }
+
+.work-badges { display:flex; flex-wrap:wrap; gap:6px; margin-top:auto; }
+.badge {
+  font-family: var(--mono);
+  font-size: 9.5px; letter-spacing: .04em;
+  color: var(--mute-soft);
+  border: 1px solid var(--hairline-strong);
+  padding: 3px 7px;
+}
+
+/* ─── STACK ─────────────────────────────── */
+.stack-lede {
+  font-family: var(--serif);
+  font-size: clamp(16px,1.3vw,19px); line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 64ch;
+  margin: 0 auto clamp(28px,3.5vw,44px);
+  text-align: center;
+}
+.stack-grid {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap: clamp(24px,3vw,44px);
+}
+.stack-col { display:flex; flex-direction:column; gap:16px; }
+.stack-label {
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--signal);
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--hairline-strong);
+}
+.stack-tags { display:flex; flex-wrap:wrap; gap:8px; }
+.stack-tag {
   font-family: var(--mono);
   font-size: 11px; letter-spacing: .04em;
-  color: var(--mute);
-  margin-top: 4px;
-}
-
-/* CAPABILITIES */
-.cap dt {
-  font-family: var(--mono);
-  font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase;
   color: var(--ink);
-  margin-top: 18px;
-  margin-bottom: 4px;
+  border: 1px solid var(--hairline-strong);
+  padding: 6px 11px;
+  cursor: default;
+  transition: border-color var(--m-base), color var(--m-base), transform var(--m-base);
 }
-.cap dt:first-of-type { margin-top: 0; }
-.cap dd {
-  font-size: 15.5px;
-  color: var(--ink-soft);
-  line-height: 1.6;
-}
-.cap-tools {
-  margin-top: 24px;
-  padding-top: 18px;
-  border-top: 1px solid var(--rule);
+.stack-tag:hover { border-color: var(--signal); color: var(--signal); transform: translateY(-2px); }
+.stack-footnote {
   font-family: var(--mono);
-  font-size: 11.5px; letter-spacing: .02em;
+  font-size: 11px; letter-spacing: .04em; line-height: 1.7;
   color: var(--mute);
-  line-height: 1.65;
+  max-width: 80ch;
+  margin: clamp(28px,3.5vw,44px) auto 0;
+  text-align: center;
 }
 
-/* BACKGROUND */
-.bg p { color: var(--ink-soft); font-size: 16px; line-height: 1.65; }
-.bg p + p { margin-top: 12px; }
-.bg strong { color: var(--ink); font-weight: 600; }
-
-/* CONTACT */
-.contact p {
+/* ─── CONTACT PANEL ──────────────────────── */
+.contact-inner { text-align:center; display:flex; flex-direction:column; gap: clamp(28px,4vh,52px); }
+.bg-block { max-width: 70ch; margin: 0 auto; }
+.bg-label {
   font-family: var(--mono);
-  font-size: 12px; letter-spacing: .04em;
+  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--signal);
+  margin-bottom: 16px;
+}
+.bg-body {
+  font-family: var(--serif);
+  font-size: clamp(15px,1.3vw,18px); line-height: 1.6;
   color: var(--ink-soft);
 }
-.contact a { color: var(--ink); }
-
-/* FOOTER */
-footer {
-  margin-top: clamp(72px, 10vw, 100px);
-  padding-top: 22px;
-  border-top: 1px solid var(--rule);
+.bg-body + .bg-body { margin-top: 14px; }
+.bg-body strong { font-weight: 600; color: var(--ink); }
+.contact-h2 {
+  font-family: var(--display); font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(24px,3vw,44px); line-height: 1.02;
+  letter-spacing: .01em;
+  color: var(--ink);
+  margin-bottom: 22px;
+}
+.contact-line {
   font-family: var(--mono);
-  font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase;
+  font-size: clamp(13px,1.2vw,15px); letter-spacing: .06em;
+  display:inline-flex; gap:16px; flex-wrap:wrap; justify-content:center;
+}
+.contact-line a {
+  color: var(--ink); text-decoration:none;
+  border-bottom: 1.5px solid var(--hairline-strong);
+  transition: color var(--m-base), border-color var(--m-base);
+}
+.contact-line a:hover { color: var(--signal); border-bottom-color: var(--signal); }
+.contact-sep { color: var(--mute); }
+.colophon {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
   color: var(--mute);
 }
 
-@media (max-width: 480px) {
-  .intro p { font-size: 17px; }
-  .w-line a { font-size: 16px; }
+/* ─── MICRO-INTERACTIONS ─────────────────── */
+.rise {
+  opacity: 0; transform: translateY(22px);
+  transition: opacity .6s cubic-bezier(.2,0,0,1), transform .6s cubic-bezier(.2,0,0,1);
+  transition-delay: calc(var(--i,0) * 70ms);
+}
+.panel.is-active .rise { opacity: 1; transform: none; }
+.scramble { display: inline-block; }
+
+@keyframes arrowHint {
+  0%,100% { transform: translateY(-50%); }
+  35%,72% { transform: translateY(-50%) translateX(7px); }
+}
+.deck-arrow.next.hint { animation: arrowHint 1.15s ease .55s 2; }
+
+.sound-toggle {
+  position: fixed; bottom: 15px; right: clamp(12px,2vw,26px); z-index: 460;
+  display:flex; align-items:center; gap: 7px;
+  font-family: var(--mono);
+  font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--mute);
+  background: rgba(10,14,26,.7);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border: 1px solid var(--hairline-strong);
+  padding: 6px 10px; cursor: pointer;
+  transition: color var(--m-base), border-color var(--m-base);
+}
+.sound-toggle:hover { color: var(--ink); border-color: var(--signal); }
+.sound-toggle .st-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  border: 1px solid currentColor;
+  transition: background var(--m-base);
+}
+.sound-toggle[aria-pressed="true"] { color: var(--ink-soft); }
+.sound-toggle[aria-pressed="true"] .st-dot { background: var(--signal); border-color: var(--signal); }
+
+/* ─── A11Y ───────────────────────────────── */
+.skip-link {
+  position:absolute; left:-9999px; top:8px; z-index:10001;
+  background: var(--paper); color: var(--signal);
+  padding: 10px 16px; border: 2px solid var(--signal);
+  font-family: var(--mono); font-size: 11px; letter-spacing: .14em;
+  text-transform: uppercase; text-decoration: none;
+}
+.skip-link:focus { left: 8px; }
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
 }
 
-::selection { background: rgba(111,168,255,.25); color: var(--ink); }
+/* ─── RESPONSIVE ─────────────────────────── */
+@media (max-width: 1080px) {
+  .work-grid { grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width: 880px) {
+  .lf-grid { grid-template-columns:1fr; }
+  .work-grid { grid-template-columns:1fr; }
+  .stack-grid { grid-template-columns:1fr; }
+}
+@media (max-width: 720px) {
+  .nav-status { display:none; }
+}
+@media (max-width: 620px) {
+  .nav-links { gap:14px; }
+  .nav-links a, .nav-links button { font-size:10px; letter-spacing:.1em; }
+  .deck-arrow { width:40px; height:40px; font-size:22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after { transition-duration:.001ms !important; animation-duration:.001ms !important; }
+  #deck { transition: none; }
+  .nav-status::before { animation: none; }
+  .rise { opacity:1 !important; transform:none !important; }
+  .deck-arrow.next.hint { animation: none; }
+  .glitch { animation: none !important; text-shadow: none !important; }
+  .glitch::before, .glitch::after { display: none !important; }
+}
+
+/* ─── BLUEPRINT DECORATION ─────────────────── */
+/* Corner brackets on every panel — CAD target style */
+.panel-inner { position: relative; }
+.panel-inner::before, .panel-inner::after {
+  content: '';
+  position: absolute;
+  width: 22px; height: 22px;
+  border: 1px solid var(--signal);
+  opacity: .55;
+  pointer-events: none;
+}
+.panel-inner::before { top: 0; left: 0; border-right: none; border-bottom: none; }
+.panel-inner::after  { bottom: 0; right: 0; border-left: none; border-top: none; }
+
+/* Subtle title-block strip top-right of each panel */
+.panel { position: relative; }
+.panel::after {
+  content: 'REV — A · DRG · BD-2026';
+  position: absolute;
+  top: calc(var(--nav-h) + 14px);
+  right: clamp(22px, 5vw, 56px);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .18em;
+  color: var(--mute);
+  opacity: .5;
+  pointer-events: none;
+  text-transform: uppercase;
+}
+
+/* Cyan accents for active states */
+.deck-tab[aria-current="true"] { color: var(--signal); border-top-color: var(--signal); }
+.lf-card:hover, .work-card:hover { border-color: var(--signal); box-shadow: 0 0 0 1px var(--signal), 0 0 24px -8px rgba(var(--signal-rgb), .35); }
+
+/* Dashed underlines on key terms — drafting style */
+.hero-h1, .section-h2, .dv-title {
+  position: relative;
+}
+
+/* ─── GLITCH ANIMATIONS ─────────────────────── */
+/* Applied to description / body text. Hover stops everything so the reader can read. */
+
+.glitch {
+  position: relative;
+  display: inline-block;
+  text-shadow:
+    1px 0 0 var(--glitch-r),
+    -1px 0 0 var(--glitch-c);
+  animation: glitch-rgb 4.6s steps(1, end) infinite;
+  transition: text-shadow 160ms ease, transform 160ms ease, color 160ms ease;
+  will-change: transform, text-shadow;
+}
+
+.work-desc, .lf-body, .hero-tagline, .bg-body, .lf-title, .work-name {
+  text-shadow:
+    .6px 0 0 rgba(255, 80, 110, .35),
+    -.6px 0 0 rgba(80, 220, 255, .35);
+  animation: glitch-rgb 5.4s steps(1, end) infinite;
+  transition: text-shadow 160ms ease, transform 160ms ease, color 160ms ease;
+}
+
+/* The headliner h1 gets a bolder, slower glitch */
+.hero-h1 {
+  text-shadow:
+    1.5px 0 0 rgba(255, 80, 110, .45),
+    -1.5px 0 0 rgba(80, 220, 255, .45);
+  animation: glitch-rgb-bold 6s steps(1, end) infinite;
+}
+
+@keyframes glitch-rgb {
+  0%, 86%, 100% {
+    text-shadow:
+      .6px 0 0 rgba(255, 80, 110, .35),
+      -.6px 0 0 rgba(80, 220, 255, .35);
+    transform: translate(0, 0);
+  }
+  87% {
+    text-shadow:
+      3px 0 0 rgba(255, 80, 110, .75),
+      -3px 0 0 rgba(80, 220, 255, .75);
+    transform: translate(-1px, 0);
+  }
+  88.5% {
+    text-shadow:
+      -2px 0 0 rgba(255, 80, 110, .65),
+      2px 0 0 rgba(80, 220, 255, .65);
+    transform: translate(2px, -1px);
+  }
+  90% {
+    text-shadow:
+      1px 1px 0 rgba(255, 80, 110, .55),
+      -1px -1px 0 rgba(80, 220, 255, .55);
+    transform: translate(-1px, 1px);
+  }
+  91.5% {
+    text-shadow:
+      .6px 0 0 rgba(255, 80, 110, .35),
+      -.6px 0 0 rgba(80, 220, 255, .35);
+    transform: translate(0);
+  }
+}
+
+@keyframes glitch-rgb-bold {
+  0%, 88%, 100% {
+    text-shadow:
+      1.5px 0 0 rgba(255, 80, 110, .45),
+      -1.5px 0 0 rgba(80, 220, 255, .45);
+    transform: translate(0);
+    filter: none;
+  }
+  89% {
+    text-shadow:
+      5px 0 0 rgba(255, 80, 110, .85),
+      -5px 0 0 rgba(80, 220, 255, .85);
+    transform: translate(-2px, 1px) skewX(-1deg);
+    filter: brightness(1.15);
+  }
+  91% {
+    text-shadow:
+      -4px 0 0 rgba(255, 80, 110, .75),
+      4px 0 0 rgba(80, 220, 255, .75);
+    transform: translate(3px, -1px);
+  }
+  93% {
+    text-shadow:
+      2px 2px 0 rgba(255, 80, 110, .65),
+      -2px -2px 0 rgba(80, 220, 255, .65);
+    transform: translate(-1px, 2px);
+  }
+  95% {
+    text-shadow:
+      1.5px 0 0 rgba(255, 80, 110, .45),
+      -1.5px 0 0 rgba(80, 220, 255, .45);
+    transform: translate(0);
+  }
+}
+
+/* HOVER — stop and crisp.
+   Hover anywhere on the parent card stops the description glitch. */
+.work-card:hover .work-desc,
+.work-card:hover .work-name,
+.lf-card:hover .lf-body,
+.lf-card:hover .lf-title,
+.hero-tagline:hover,
+.hero:hover .hero-h1,
+.bg-body:hover,
+.hero-h1:hover {
+  text-shadow: none !important;
+  animation: none !important;
+  transform: none !important;
+  filter: none !important;
+  color: var(--ink) !important;
+}
+
+/* Optional — periodic full-screen scan flicker, very subtle */
+@keyframes flicker-bg {
+  0%, 97%, 100% { opacity: .22; }
+  98% { opacity: .35; }
+  99% { opacity: .12; }
+}
+body::after { animation: flicker-bg 6s steps(1, end) infinite; }
 
 </style>
 </head>
 <body>
 
-<main>
+<a href="#work" class="skip-link" data-panel="1">Skip to work</a>
 
-  <header>
-    <div class="h-name">Bruce Davis</div>
-    <div class="h-role">AI Systems Engineer &middot; Charlotte, NC</div>
-  </header>
-
-  <div class="intro">
-    <p>Fifteen years building systems in regulated environments &mdash; IAM, identity governance, payment infrastructure. Currently focused on operational AI: human-in-the-loop workflows, NHI governance, evaluation harnesses, and the trust layer that makes enterprise AI deployable.</p>
-    <p>Work below. <a href="bruce-davis-resume.html">R&eacute;sum&eacute;</a>, <a href="https://github.com/iambrucedavis" target="_blank" rel="noopener">GitHub</a>, <a href="mailto:iambrucedavis@gmail.com">email</a>.</p>
+<!-- ── NAV ──────────────────────────────── -->
+<nav id="nav">
+  <div class="nav-left">
+    <button class="nav-logo" data-panel="0" aria-label="Bruce Davis — intro">Bruce Davis</button>
+    <span class="nav-status" aria-label="Availability status">Available for contract &amp; full-time</span>
   </div>
+  <ul class="nav-links">
+    <li><button data-panel="1">Work</button></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="bruce-davis-resume.html" target="_blank" rel="noopener">Resume</a></li>
+    <li><button data-panel="3">Contact</button></li>
+  </ul>
+</nav>
 
-  <section>
-    <h2>Selected work</h2>
-    <ul class="work-list">
+<!-- ── DECK ─────────────────────────────── -->
+<div id="deck">
 
-      <li>
-        <div class="w-line">
-          <a href="011-sentinel-triage.html">Autonomous Security Triage Agent</a>
-          <span class="w-flag">Flagship</span>
+  <!-- PANEL 1 — INTRO (hero + pillars) -->
+  <section class="panel" id="p-intro" aria-label="Introduction">
+    <div class="panel-inner intro-inner">
+
+      <div class="hero">
+        <div class="hero-name rise" style="--i:0">Bruce Davis · Charlotte, NC</div>
+        <h1 class="hero-h1 rise" style="--i:1">Enterprise AI fails operationally<br><span class="scramble" data-final="long before it fails technically.">long before it fails technically.</span></h1>
+        <div class="hero-cta rise" style="--i:2">
+          <button class="btn btn-primary" data-panel="1">See the work</button>
+          <a href="bruce-davis-resume.html" target="_blank" rel="noopener" class="btn btn-ghost">Resume</a>
         </div>
-        <p class="w-desc">ReAct agent loop that reads logs, enriches threat intel, and proposes containment. Destructive actions pause for human approval. Autonomy dial controls how far it can go alone.</p>
-        <p class="w-meta">ReAct &middot; Function Calling &middot; HITL &middot; Python &middot; Gemini 2.5</p>
-      </li>
+      </div>
 
-      <li>
-        <div class="w-line">
-          <a href="013-axe-provenance.html">AI Agent Governance Console</a>
+      <div class="lf-grid rise" style="--i:4">
+        <div class="lf-card">
+          <div class="lf-title">Agentic AI &amp; ML</div>
+          <p class="lf-body">
+            MCP servers, ReAct agent loops, multi-agent orchestration, RAG, human-in-the-loop gates. Fine-tuned transformers (Hugging Face, LoRA) where APIs don&rsquo;t fit. Python and TypeScript. Eval harnesses on every project.
+          </p>
         </div>
-        <p class="w-desc">Six AI agents as machine identities. Scoped credentials, intake-and-approval workflow, rotation and decommission in one trail. Generative UI on a posture event stream.</p>
-        <p class="w-meta">NHI &middot; Multi-Agent &middot; OAuth &middot; React &middot; Python</p>
-      </li>
-
-      <li>
-        <div class="w-line">
-          <a href="015-nhi-classifier.html">NHI Credential Risk Classifier</a>
+        <div class="lf-card">
+          <div class="lf-title">Identity &amp; Security</div>
+          <p class="lf-body">
+            IAM and Non-Human Identity (NHI) governance, Entra ID, CyberArk, HIPAA, Zero Trust, PowerShell automation at scale. The identity work that makes an AI deployment safe in production.
+          </p>
         </div>
-        <p class="w-desc">Fine-tuned DistilBERT classifies machine identities by risk state at 99.33% accuracy, 10.8ms per record on CPU. Synthetic dataset, real eval harness, Qwen 2.5 1.5B + LoRA comparison.</p>
-        <p class="w-meta">Hugging Face &middot; PEFT / LoRA &middot; PyTorch &middot; FastAPI</p>
-      </li>
-
-      <li>
-        <div class="w-line">
-          <a href="016-ai-transformation-playbook.html">AI Transformation Playbook</a>
+        <div class="lf-card">
+          <div class="lf-title">Forward Deployed</div>
+          <p class="lf-body">
+            Microsoft, Wells Fargo, Starbucks, Bank of America, Veradigm. I learn the domain, ship the build, leave the runbooks. PMP-certified.
+          </p>
         </div>
-        <p class="w-desc">Operating model and vendor-evaluation framework for AI rollouts in regulated environments. Initiative rubric, AI-function maturity model, four case studies from Microsoft, Starbucks, Wells Fargo, Veradigm.</p>
-        <p class="w-meta">Strategy &middot; PMP &middot; Vendor Evaluation</p>
-      </li>
+      </div>
 
-      <li>
-        <div class="w-line">
-          <a href="017-entra-nhi-audit.html">Entra ID NHI Audit</a>
-        </div>
-        <p class="w-desc">PowerShell module that audits an Entra ID tenant for non-human identity risk. Eight-factor scoring, HTML and JSON reports, runs against a real tenant or a 28-NHI mock fixture.</p>
-        <p class="w-meta">PowerShell 7 &middot; Microsoft Graph &middot; Entra ID</p>
-      </li>
-
-      <li>
-        <div class="w-line">
-          <a href="009-document-pipeline.html">Document Pipeline (HIPAA-grade)</a>
-        </div>
-        <p class="w-desc">MCP tool chain: extraction, PII masking, schema-validated JSON, HITL review, token-cost tracking. Model-agnostic &mdash; runs on Claude, GPT, Gemini.</p>
-        <p class="w-meta">MCP &middot; PII Masking &middot; JSON Schema &middot; Python</p>
-      </li>
-
-      <li>
-        <div class="w-line">
-          <a href="018-adk-mcp-n8n-flow.html">Workflow-Driven Triage Agent</a>
-        </div>
-        <p class="w-desc">n8n receives a support ticket; Google ADK agent on Gemini 2.5 Flash calls three MCP tools; n8n routes by priority. Three protocols, each at the layer it&rsquo;s best for. Docker-compose stack.</p>
-        <p class="w-meta">Google ADK &middot; Gemini 2.5 &middot; MCP &middot; n8n &middot; FastAPI</p>
-      </li>
-
-      <li>
-        <div class="w-line">
-          <a href="010-linear-mcp.html">Linear MCP Server</a>
-        </div>
-        <p class="w-desc">Production MCP server, open source. Six tools, 30-case eval harness, documented threat model, per-tool cost.</p>
-        <p class="w-meta">MCP &middot; TypeScript &middot; Anthropic SDK</p>
-      </li>
-
-      <li>
-        <div class="w-line">
-          <a href="019-it-support-copilot.html">IT Support Copilot for Teams</a>
-        </div>
-        <p class="w-desc">A Teams-deployed copilot for internal IT. Azure OpenAI for reasoning, Microsoft Graph for identity, a deterministic policy engine for the access decision.</p>
-        <p class="w-meta">Bot Framework &middot; Microsoft Graph &middot; Azure OpenAI</p>
-      </li>
-
-      <li>
-        <div class="w-line">
-          <a href="008-six-percent-mcp.html">Content &amp; Research MCP</a>
-        </div>
-        <p class="w-desc">Custom MCP server with five Notion-backed tools &mdash; idea retrieval, tone analysis, page scaffolding, vault capture. In daily use.</p>
-        <p class="w-meta">MCP &middot; Notion API &middot; Node &middot; Zod</p>
-      </li>
-
-    </ul>
+    </div>
   </section>
 
-  <section>
-    <h2>Capabilities</h2>
-    <dl class="cap">
-      <dt>Agentic systems</dt>
-      <dd>Multi-agent orchestration &middot; human-in-the-loop workflows &middot; retrieval and provenance pipelines &middot; evaluation harnesses and confidence scoring.</dd>
+  <!-- PANEL 2 — WORK -->
+  <section class="panel" id="p-work" aria-label="Work">
+    <div class="panel-inner">
+      <div class="eyebrow rise" style="--i:0">Work</div>
+      <h2 class="section-h2 rise" style="--i:1">Selected work.</h2>
 
-      <dt>Identity &amp; governance</dt>
-      <dd>AI identity and access (NHI) governance &middot; escalation and approval routing &middot; audit trails and trust infrastructure &middot; regulated-environment deployment.</dd>
+      <div class="work-grid rise" style="--i:2">
 
-      <dt>Forward-deployed engineering</dt>
-      <dd>Embedded enterprise integration &middot; PowerShell and Python automation at scale &middot; domain learning and runbook handoff &middot; rollout leadership (PMP).</dd>
-    </dl>
-    <p class="cap-tools">
-      Models: Claude, GPT, Gemini, Llama, Hugging Face.<br>
-      Frameworks: MCP, Google ADK, LangChain, Vercel AI SDK, n8n.
-    </p>
+        <a href="016-ai-transformation-playbook.html" class="work-card" aria-label="AI Transformation Playbook" style="border-color:var(--signal);">
+          <div class="work-tag">Strategy · Operating Model</div>
+          <div class="work-name">AI Transformation Playbook</div>
+          <p class="work-desc">
+            How I lead AI rollouts in regulated environments. Initiative rubric, vendor-evaluation matrix, AI-function maturity model, operational standards, four real case studies from Microsoft, Starbucks, Wells Fargo, Veradigm.
+          </p>
+          <div class="work-badges">
+            <span class="badge">PMP-Certified</span>
+            <span class="badge">15 yrs · Regulated</span>
+            <span class="badge">Frameworks</span>
+            <span class="badge">Vendor Eval</span>
+            <span class="badge">Maturity Model</span>
+          </div>
+        </a>
+
+        <a href="011-sentinel-triage.html" class="work-card is-flagship" aria-label="Autonomous Security Triage Agent — flagship">
+          <span class="work-flagship">Flagship</span>
+          <div class="work-tag">Agentic AI · HITL</div>
+          <div class="work-name">Autonomous Security Triage Agent</div>
+          <p class="work-desc">
+            ReAct agent loop that reads logs, enriches threat intel, and proposes containment. Destructive actions pause for human approval. Autonomy dial controls how far it can go alone.
+          </p>
+          <div class="receipt">
+            <span class="r-label">Flow</span>
+            <span class="r-node">Detect</span>
+            <span class="r-arrow">&rarr;</span>
+            <span class="r-node">Reason</span>
+            <span class="r-arrow">&rarr;</span>
+            <span class="r-node is-gate">HITL</span>
+            <span class="r-arrow">&rarr;</span>
+            <span class="r-node">Act</span>
+          </div>
+          <div class="work-badges">
+            <span class="badge">ReAct</span>
+            <span class="badge">Function Calling</span>
+            <span class="badge">HITL</span>
+            <span class="badge">Python</span>
+            <span class="badge">Gemini 2.5</span>
+          </div>
+        </a>
+
+        <a href="013-axe-provenance.html" class="work-card" aria-label="AI Agent Governance Console">
+          <div class="work-tag">NHI Governance · Multi-Agent</div>
+          <div class="work-name">AI Agent Governance Console</div>
+          <p class="work-desc">
+            Six AI agents as machine identities. Scoped credentials, intake-and-approval workflow, rotation and decommission in one trail. Generative UI on a posture event stream.
+          </p>
+          <div class="receipt">
+            <span class="r-label">Fleet</span>
+            <span class="r-chip">Watchtower</span>
+            <span class="r-chip">Analyst</span>
+            <span class="r-chip">Triage</span>
+            <span class="r-chip">Remediation</span>
+            <span class="r-chip">Auditor</span>
+            <span class="r-chip">Provisioner</span>
+          </div>
+          <div class="work-badges">
+            <span class="badge">NHI</span>
+            <span class="badge">Lifecycle</span>
+            <span class="badge">Multi-Agent</span>
+            <span class="badge">OAuth</span>
+            <span class="badge">React</span>
+            <span class="badge">Python</span>
+          </div>
+        </a>
+
+        <a href="017-entra-nhi-audit.html" class="work-card" aria-label="Entra ID NHI Audit">
+          <div class="work-tag">PowerShell · Microsoft Graph</div>
+          <div class="work-name">Entra ID NHI Audit</div>
+          <p class="work-desc">
+            PowerShell module that audits an Entra ID tenant for non-human identity risk. Eight-factor scoring, HTML + JSON reports, works against a real tenant or a 28-NHI mock fixture. The working-code companion to the Governance Console.
+          </p>
+          <div class="work-badges">
+            <span class="badge">PowerShell 7</span>
+            <span class="badge">Microsoft Graph</span>
+            <span class="badge">Entra ID</span>
+            <span class="badge">Active Directory</span>
+            <span class="badge">NHI</span>
+            <span class="badge">IAM</span>
+          </div>
+        </a>
+
+        <a href="015-nhi-classifier.html" class="work-card" aria-label="NHI Credential Risk Classifier">
+          <div class="work-tag">Machine Learning · Fine-Tuning</div>
+          <div class="work-name">NHI Credential Risk Classifier</div>
+          <p class="work-desc">
+            Fine-tuned DistilBERT classifies machine identities by risk state. Synthetic dataset, real eval harness, Qwen 2.5 1.5B + LoRA comparison. Becomes the brain of the Governance Console's Triage agent.
+          </p>
+          <div class="receipt">
+            <span class="r-label">Benchmark</span>
+            <span class="r-stat"><b>99.33%</b> acc</span>
+            <span class="r-sep">&middot;</span>
+            <span class="r-stat"><b>10.8ms</b> /record</span>
+            <span class="r-sep">&middot;</span>
+            <span class="r-stat">on <b>CPU</b></span>
+          </div>
+          <div class="work-badges">
+            <span class="badge">Hugging Face</span>
+            <span class="badge">PEFT / LoRA</span>
+            <span class="badge">PyTorch</span>
+            <span class="badge">scikit-learn</span>
+            <span class="badge">FastAPI</span>
+            <span class="badge">Python</span>
+          </div>
+        </a>
+
+        <a href="009-document-pipeline.html" class="work-card" aria-label="Document Processing Pipeline">
+          <div class="work-tag">Regulated AI · HIPAA</div>
+          <div class="work-name">Document Pipeline (HIPAA-grade)</div>
+          <p class="work-desc">
+            MCP tool chain: extraction, PII masking, schema-validated JSON, HITL review, token-cost tracking. Model-agnostic — runs on Claude, GPT, Gemini.
+          </p>
+          <div class="work-badges">
+            <span class="badge">MCP</span>
+            <span class="badge">PII Masking</span>
+            <span class="badge">JSON Schema</span>
+            <span class="badge">Python</span>
+            <span class="badge">Node</span>
+          </div>
+        </a>
+
+        <a href="018-adk-mcp-n8n-flow.html" class="work-card" aria-label="Workflow-Driven Triage Agent — ADK + MCP + n8n">
+          <div class="work-tag">Google ADK · MCP · n8n</div>
+          <div class="work-name">Workflow-Driven Triage Agent</div>
+          <p class="work-desc">
+            n8n receives a support ticket → Google ADK agent on Gemini 2.5 Flash calls three MCP tools (intent, customer history, KB) → n8n routes by priority. Three protocols, each at the layer it's best for. Docker-compose stack, no-n8n demo path.
+          </p>
+          <div class="work-badges">
+            <span class="badge">Google ADK</span>
+            <span class="badge">Gemini 2.5</span>
+            <span class="badge">MCP</span>
+            <span class="badge">n8n</span>
+            <span class="badge">FastAPI</span>
+            <span class="badge">Docker</span>
+          </div>
+        </a>
+
+        <a href="010-linear-mcp.html" class="work-card" aria-label="AI Integration for Linear">
+          <div class="work-tag">MCP · Threat-Modeled</div>
+          <div class="work-name">Linear MCP Server</div>
+          <p class="work-desc">
+            Production MCP server, open source. Six tools, 30-case eval harness, documented threat model, per-tool cost. The harness and threat model are what make it enterprise-adoptable.
+          </p>
+          <div class="work-badges">
+            <span class="badge">MCP</span>
+            <span class="badge">TypeScript</span>
+            <span class="badge">Anthropic SDK</span>
+            <span class="badge">Eval Harness</span>
+            <span class="badge">Threat Model</span>
+          </div>
+        </a>
+
+        <a href="008-six-percent-mcp.html" class="work-card" aria-label="Content &amp; Research Automation">
+          <div class="work-tag">Custom MCP</div>
+          <div class="work-name">Content &amp; Research MCP</div>
+          <p class="work-desc">
+            Custom MCP server with five Notion-backed tools — idea retrieval, tone analysis, page scaffolding, vault capture. In daily use.
+          </p>
+          <div class="work-badges">
+            <span class="badge">MCP</span>
+            <span class="badge">Notion API</span>
+            <span class="badge">Node</span>
+            <span class="badge">Zod</span>
+          </div>
+        </a>
+
+        <a href="019-it-support-copilot.html" class="work-card" aria-label="IT Support Copilot for Teams">
+          <div class="work-tag">Microsoft Copilot · Bot Framework · Graph</div>
+          <div class="work-name">IT Support Copilot for Teams</div>
+          <p class="work-desc">
+            A Teams-deployed copilot for internal IT — password resets, VPN, group access, laptop tickets. Azure OpenAI for reasoning, Microsoft Graph for identity, a deterministic policy engine for the access decision. Auto-fulfills self-service, escalates approvals, denies on rule violation.
+          </p>
+          <div class="work-badges">
+            <span class="badge">Bot Framework</span>
+            <span class="badge">Microsoft Graph</span>
+            <span class="badge">Azure OpenAI</span>
+            <span class="badge">Entra ID</span>
+            <span class="badge">Bicep</span>
+            <span class="badge">Python</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
   </section>
 
-  <section class="bg">
-    <h2>Background</h2>
-    <p><strong>Microsoft</strong> &mdash; Cloud Solutions Architect. Python automation for Entra ID Governance and Non-Human Identity, before NHI was a named discipline.</p>
-    <p><strong>Starbucks</strong> &mdash; Senior Security Engineer. PowerShell automation across 60+ domains.</p>
-    <p><strong>Wells Fargo</strong> &mdash; Payment infrastructure for SWIFT, CHIPS, Fedwire.</p>
-    <p><strong>Veradigm</strong> &mdash; HIPAA-regulated IAM for 16,000+ users.</p>
-    <p><strong>Bank of America</strong> &mdash; IAM platform engineering.</p>
-    <p>PMP-certified. Security, identity, and compliance first. Agentic AI on top of fifteen years of it.</p>
+  <!-- PANEL 3 — STACK -->
+  <section class="panel" id="p-stack" aria-label="Stack and tooling">
+    <div class="panel-inner">
+      <div class="eyebrow rise" style="--i:0">Capabilities</div>
+      <h2 class="section-h2 rise" style="--i:1">What I work on.</h2>
+
+      <div class="stack-grid rise" style="--i:2">
+        <div class="stack-col">
+          <div class="stack-label">Agentic Systems</div>
+          <div class="stack-tags">
+            <span class="stack-tag">Multi-agent orchestration</span>
+            <span class="stack-tag">Human-in-the-loop workflows</span>
+            <span class="stack-tag">Retrieval &amp; provenance pipelines</span>
+            <span class="stack-tag">Evaluation harnesses &amp; confidence scoring</span>
+          </div>
+        </div>
+        <div class="stack-col">
+          <div class="stack-label">Identity &amp; Governance</div>
+          <div class="stack-tags">
+            <span class="stack-tag">AI identity &amp; access (NHI) governance</span>
+            <span class="stack-tag">Escalation &amp; approval routing</span>
+            <span class="stack-tag">Audit trails &amp; trust infrastructure</span>
+            <span class="stack-tag">Regulated-environment deployment</span>
+          </div>
+        </div>
+        <div class="stack-col">
+          <div class="stack-label">Forward Deployed</div>
+          <div class="stack-tags">
+            <span class="stack-tag">Embedded enterprise integration</span>
+            <span class="stack-tag">PowerShell / Python automation at scale</span>
+            <span class="stack-tag">Domain learning, runbook handoff</span>
+            <span class="stack-tag">Rollout leadership (PMP)</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="stack-footnote rise" style="--i:3">
+        Models: Claude, GPT, Gemini, Llama, Hugging Face. Frameworks: MCP, Google ADK, LangChain, Vercel AI SDK, n8n.
+      </p>
+    </div>
   </section>
 
-  <section class="contact">
-    <h2>Contact</h2>
-    <p>
-      <a href="mailto:iambrucedavis@gmail.com">iambrucedavis@gmail.com</a><br>
-      <a href="https://linkedin.com/in/bruce3" target="_blank" rel="noopener">LinkedIn</a> &middot; <a href="https://github.com/iambrucedavis" target="_blank" rel="noopener">GitHub</a> &middot; <a href="bruce-davis-resume.html">R&eacute;sum&eacute;</a>
-    </p>
+  <!-- PANEL 4 — BACKGROUND + CONTACT -->
+  <section class="panel" id="p-contact" aria-label="Background and contact">
+    <div class="panel-inner contact-inner">
+
+      <div class="bg-block rise" style="--i:0">
+        <div class="bg-label">Background — 15 years, regulated environments</div>
+        <p class="bg-body">
+          <strong>Microsoft</strong> — Cloud Solutions Architect, Python automation for Entra ID Governance and Non-Human Identity (before NHI was a named discipline).<br>
+          <strong>Starbucks</strong> — Senior Security Engineer, PowerShell automation across 60+ domains.<br>
+          <strong>Wells Fargo</strong> — Payment infrastructure for SWIFT, CHIPS, Fedwire.<br>
+          <strong>Veradigm</strong> — HIPAA-regulated IAM for 16,000+ users.<br>
+          <strong>Bank of America</strong> — IAM platform engineering.
+        </p>
+        <p class="bg-body">
+          PMP-certified. Security, identity, and compliance first. Agentic AI on top of fifteen years of it.
+        </p>
+      </div>
+
+      <div class="rise" style="--i:1">
+        <h2 class="contact-h2">Open to full-time, contract, and project work.</h2>
+        <div class="contact-line">
+          <a href="mailto:iambrucedavis@gmail.com">iambrucedavis@gmail.com</a>
+          <span class="contact-sep">·</span>
+          <a href="https://linkedin.com/in/bruce3" target="_blank" rel="noopener">LinkedIn</a>
+          <span class="contact-sep">·</span>
+          <a href="https://github.com/iambrucedavis" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+
+      <div class="colophon rise" style="--i:2">Bruce Davis · Charlotte, NC · 2026</div>
+
+    </div>
   </section>
 
-  <footer>
-    Bruce Davis &middot; Charlotte, NC &middot; 2026
-  </footer>
+</div>
 
-</main>
+<!-- ── DECK CONTROLS ────────────────────── -->
+<button class="deck-arrow prev" aria-label="Previous section">&#8249;</button>
+<button class="deck-arrow next" aria-label="Next section">&#8250;</button>
+
+<div class="deck-tabs" role="tablist" aria-label="Site sections">
+  <button class="deck-tab" data-panel="0"><span class="tab-num">01</span>Intro</button>
+  <button class="deck-tab" data-panel="1"><span class="tab-num">02</span>Work</button>
+  <button class="deck-tab" data-panel="2"><span class="tab-num">03</span>Stack</button>
+  <button class="deck-tab" data-panel="3"><span class="tab-num">04</span>Contact</button>
+</div>
+
+<button class="sound-toggle" aria-pressed="true" aria-label="Toggle navigation sound">
+  <span class="st-dot"></span>Audio
+</button>
+
+<script>
+'use strict';
+
+/* ── DECK NAVIGATION ── */
+var bdDeck = (function () {
+  var deck = document.getElementById('deck');
+  if (!deck) return null;
+  var panels = Array.prototype.slice.call(deck.querySelectorAll('.panel'));
+  var tabs   = Array.prototype.slice.call(document.querySelectorAll('.deck-tab'));
+  var prev   = document.querySelector('.deck-arrow.prev');
+  var next   = document.querySelector('.deck-arrow.next');
+  var total  = panels.length;
+  var idx    = 0;
+
+  function render() {
+    deck.style.transform = 'translateX(-' + (idx * 100) + 'vw)';
+    prev.disabled = idx === 0;
+    next.disabled = idx === total - 1;
+    tabs.forEach(function (t, i) {
+      t.setAttribute('aria-current', i === idx ? 'true' : 'false');
+    });
+    panels.forEach(function (p, i) {
+      p.classList.toggle('is-active', i === idx);
+      if (i === idx) {
+        p.removeAttribute('inert');
+        p.removeAttribute('aria-hidden');
+      } else {
+        p.setAttribute('inert', '');
+        p.setAttribute('aria-hidden', 'true');
+        p.scrollTop = 0;
+      }
+    });
+  }
+
+  function go(i) {
+    i = Math.max(0, Math.min(total - 1, i));
+    if (i === idx) return;
+    var dir = i > idx ? 1 : -1;
+    idx = i;
+    render();
+    if (window.bdTone) window.bdTone(dir > 0 ? 523 : 392);
+  }
+
+  prev.addEventListener('click', function () { go(idx - 1); });
+  next.addEventListener('click', function () { go(idx + 1); });
+  document.querySelectorAll('[data-panel]').forEach(function (el) {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      go(parseInt(el.getAttribute('data-panel'), 10));
+    });
+  });
+  document.addEventListener('keydown', function (e) {
+    var tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea') return;
+    if (e.key === 'ArrowRight') { go(idx + 1); }
+    else if (e.key === 'ArrowLeft') { go(idx - 1); }
+  });
+  var tsx = 0, tsy = 0;
+  deck.addEventListener('touchstart', function (e) {
+    tsx = e.touches[0].clientX; tsy = e.touches[0].clientY;
+  }, { passive: true });
+  deck.addEventListener('touchend', function (e) {
+    var dx = e.changedTouches[0].clientX - tsx;
+    var dy = e.changedTouches[0].clientY - tsy;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+      go(dx < 0 ? idx + 1 : idx - 1);
+    }
+  }, { passive: true });
+
+  var hashMap = { '#work': 1, '#stack': 2, '#contact': 3 };
+  if (hashMap[location.hash] != null) { idx = hashMap[location.hash]; }
+  render();
+
+  /* one-time hint nudge on the next arrow */
+  if (idx < total - 1) { next.classList.add('hint'); }
+
+  return { go: go };
+})();
+
+/* ── MICRO-INTERACTIONS ── */
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* soft navigation sound (Web Audio, no asset files) */
+  var soundOn = localStorage.getItem('bd-sound') !== 'off';
+  var actx = null;
+  window.bdTone = function (freq) {
+    if (!soundOn) return;
+    try {
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      if (actx.state === 'suspended') actx.resume();
+      var o = actx.createOscillator(), g = actx.createGain();
+      o.type = 'sine'; o.frequency.value = freq;
+      o.connect(g); g.connect(actx.destination);
+      var t = actx.currentTime;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.05, t + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.16);
+      o.start(t); o.stop(t + 0.18);
+    } catch (e) {}
+  };
+  var toggle = document.querySelector('.sound-toggle');
+  if (toggle) {
+    var paint = function () { toggle.setAttribute('aria-pressed', soundOn ? 'true' : 'false'); };
+    paint();
+    toggle.addEventListener('click', function () {
+      soundOn = !soundOn;
+      localStorage.setItem('bd-sound', soundOn ? 'on' : 'off');
+      paint();
+      if (soundOn) window.bdTone(523);
+    });
+  }
+
+  if (!reduce) {
+    /* pointer-tilt on cards */
+    Array.prototype.slice.call(document.querySelectorAll('.lf-card, .work-card')).forEach(function (card) {
+      card.addEventListener('mousemove', function (e) {
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = 'perspective(900px) rotateX(' + (-py * 4.5).toFixed(2) + 'deg) rotateY(' + (px * 4.5).toFixed(2) + 'deg)';
+      });
+      card.addEventListener('mouseleave', function () { card.style.transform = ''; });
+    });
+
+    /* magnetic buttons */
+    Array.prototype.slice.call(document.querySelectorAll('.btn')).forEach(function (b) {
+      b.addEventListener('mousemove', function (e) {
+        var r = b.getBoundingClientRect();
+        var x = (e.clientX - r.left - r.width / 2) * 0.22;
+        var y = (e.clientY - r.top - r.height / 2) * 0.32;
+        b.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
+      });
+      b.addEventListener('mouseleave', function () { b.style.transform = ''; });
+    });
+
+    /* hero title scramble-in */
+    var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/<>*';
+    Array.prototype.slice.call(document.querySelectorAll('.scramble')).forEach(function (el, n) {
+      var finalText = el.getAttribute('data-final') || el.textContent;
+      var start = performance.now() + n * 160;
+      var dur = 620;
+      function frame(now) {
+        if (now < start) { requestAnimationFrame(frame); return; }
+        var p = Math.min(1, (now - start) / dur);
+        var shown = Math.floor(p * finalText.length);
+        var out = '';
+        for (var i = 0; i < finalText.length; i++) {
+          if (i < shown || finalText[i] === ' ') out += finalText[i];
+          else out += chars[(Math.random() * chars.length) | 0];
+        }
+        el.textContent = out;
+        if (p < 1) requestAnimationFrame(frame);
+        else el.textContent = finalText;
+      }
+      requestAnimationFrame(frame);
+    });
+  }
+})();
+
+/* ── a quiet hello for the curious ── */
+console.log('%c Bruce Davis — AI Systems Engineer ', 'background:#0066FF;color:#fff;font-family:monospace;padding:4px 9px;');
+console.log('%cReading the source? Good instinct. Say hi — iambrucedavis@gmail.com', 'color:#7A8392;font-family:monospace;');
+</script>
 
 </body>
 </html>
