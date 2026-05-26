@@ -179,11 +179,14 @@ body {
 .hero-h1 {
   font-family: var(--display); font-weight: 400;
   text-transform: uppercase;
-  font-size: clamp(40px, 6vw, 88px);
-  line-height: .95;
+  font-size: clamp(30px, 4.2vw, 60px);
+  line-height: 1.0;
   letter-spacing: .005em;
   color: var(--ink);
-  margin-bottom: 14px;
+  margin-bottom: 18px;
+  max-width: 18ch;
+  margin-left: auto;
+  margin-right: auto;
 }
 .hero-subhead {
   font-family: var(--display); font-weight: 400;
@@ -312,6 +315,46 @@ body {
   color: var(--ink-soft);
   margin-bottom: 13px; flex:1;
 }
+/* receipt strip — operational evidence per card */
+.receipt {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: .06em;
+  color: var(--mute-soft);
+  padding: 10px 0;
+  margin: 0 0 13px;
+  border-top: 1px dashed var(--hairline-strong);
+  border-bottom: 1px dashed var(--hairline-strong);
+  display: flex; flex-wrap: wrap; align-items: center; gap: 7px;
+  line-height: 1.4;
+}
+.r-label {
+  font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--mute); margin-right: 2px;
+}
+.r-stat { color: var(--ink-soft); }
+.r-stat b { color: var(--signal); font-weight: 600; }
+.r-sep { color: var(--mute); }
+.r-node {
+  border: 1px solid var(--hairline-strong);
+  padding: 2px 6px;
+  color: var(--ink-soft);
+  font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase;
+}
+.r-node.is-gate {
+  border-color: var(--signal);
+  color: var(--signal);
+  background: rgba(0,102,255,.06);
+}
+.r-arrow { color: var(--mute); font-size: 10px; }
+.r-chip {
+  border: 1px solid var(--hairline-strong);
+  padding: 2px 6px;
+  color: var(--ink-soft);
+  font-size: 9.5px; letter-spacing: .04em;
+}
+.work-card:hover .r-node, .work-card:hover .r-chip { border-color: var(--hairline-strong); }
+.work-card:hover .r-node.is-gate { border-color: var(--signal); }
+
 .work-badges { display:flex; flex-wrap:wrap; gap:6px; margin-top:auto; }
 .badge {
   font-family: var(--mono);
@@ -353,6 +396,14 @@ body {
   transition: border-color var(--m-base), color var(--m-base), transform var(--m-base);
 }
 .stack-tag:hover { border-color: var(--signal); color: var(--signal); transform: translateY(-2px); }
+.stack-footnote {
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: .04em; line-height: 1.7;
+  color: var(--mute);
+  max-width: 80ch;
+  margin: clamp(28px,3.5vw,44px) auto 0;
+  text-align: center;
+}
 
 /* ─── CONTACT PANEL ──────────────────────── */
 .contact-inner { text-align:center; display:flex; flex-direction:column; gap: clamp(28px,4vh,52px); }
@@ -500,12 +551,11 @@ a:focus-visible, button:focus-visible {
 
       <div class="hero">
         <div class="hero-name rise" style="--i:0">Bruce Davis · Charlotte, NC</div>
-        <h1 class="hero-h1 rise" style="--i:1"><span class="scramble" data-final="AI Systems">AI Systems</span><br><span class="scramble" data-final="Engineer">Engineer</span></h1>
-        <div class="hero-subhead rise" style="--i:2"><span style="color:var(--signal);">Agentic AI</span> · IAM · Security</div>
-        <p class="hero-tagline rise" style="--i:3">
-          I build agentic AI infrastructure that enterprise teams can trust.
+        <h1 class="hero-h1 rise" style="--i:1">Enterprise AI fails operationally<br><span class="scramble" data-final="long before it fails technically.">long before it fails technically.</span></h1>
+        <p class="hero-tagline rise" style="--i:2">
+          I build the systems that keep it from failing.
         </p>
-        <div class="hero-cta rise" style="--i:4">
+        <div class="hero-cta rise" style="--i:3">
           <button class="btn btn-primary" data-panel="1">See the work</button>
           <a href="bruce-davis-resume.html" target="_blank" rel="noopener" class="btn btn-ghost">Resume</a>
         </div>
@@ -568,6 +618,16 @@ a:focus-visible, button:focus-visible {
           <p class="work-desc">
             ReAct agent loop that reads logs, enriches threat intel, and proposes containment. Destructive actions pause for human approval. Autonomy dial controls how far it can go alone.
           </p>
+          <div class="receipt">
+            <span class="r-label">Flow</span>
+            <span class="r-node">Detect</span>
+            <span class="r-arrow">&rarr;</span>
+            <span class="r-node">Reason</span>
+            <span class="r-arrow">&rarr;</span>
+            <span class="r-node is-gate">HITL</span>
+            <span class="r-arrow">&rarr;</span>
+            <span class="r-node">Act</span>
+          </div>
           <div class="work-badges">
             <span class="badge">ReAct</span>
             <span class="badge">Function Calling</span>
@@ -583,6 +643,15 @@ a:focus-visible, button:focus-visible {
           <p class="work-desc">
             Six AI agents as machine identities. Scoped credentials, intake-and-approval workflow, rotation and decommission in one trail. Generative UI on a posture event stream.
           </p>
+          <div class="receipt">
+            <span class="r-label">Fleet</span>
+            <span class="r-chip">Watchtower</span>
+            <span class="r-chip">Analyst</span>
+            <span class="r-chip">Triage</span>
+            <span class="r-chip">Remediation</span>
+            <span class="r-chip">Auditor</span>
+            <span class="r-chip">Provisioner</span>
+          </div>
           <div class="work-badges">
             <span class="badge">NHI</span>
             <span class="badge">Lifecycle</span>
@@ -613,8 +682,16 @@ a:focus-visible, button:focus-visible {
           <div class="work-tag">Machine Learning · Fine-Tuning</div>
           <div class="work-name">NHI Credential Risk Classifier</div>
           <p class="work-desc">
-            Fine-tuned DistilBERT classifies machine identities by risk state at <strong style="color:var(--ink);font-weight:600;">99.33% accuracy, 10.8ms / record on CPU</strong>. Synthetic dataset, real eval harness, Qwen 2.5 1.5B + LoRA comparison. Becomes the brain of the Governance Console's Triage agent.
+            Fine-tuned DistilBERT classifies machine identities by risk state. Synthetic dataset, real eval harness, Qwen 2.5 1.5B + LoRA comparison. Becomes the brain of the Governance Console's Triage agent.
           </p>
+          <div class="receipt">
+            <span class="r-label">Benchmark</span>
+            <span class="r-stat"><b>99.33%</b> acc</span>
+            <span class="r-sep">&middot;</span>
+            <span class="r-stat"><b>10.8ms</b> /record</span>
+            <span class="r-sep">&middot;</span>
+            <span class="r-stat">on <b>CPU</b></span>
+          </div>
           <div class="work-badges">
             <span class="badge">Hugging Face</span>
             <span class="badge">PEFT / LoRA</span>
@@ -708,54 +785,45 @@ a:focus-visible, button:focus-visible {
   <!-- PANEL 3 — STACK -->
   <section class="panel" id="p-stack" aria-label="Stack and tooling">
     <div class="panel-inner">
-      <div class="eyebrow rise" style="--i:0">Stack</div>
-      <h2 class="section-h2 rise" style="--i:1">What I Build With.</h2>
+      <div class="eyebrow rise" style="--i:0">Capabilities</div>
+      <h2 class="section-h2 rise" style="--i:1">What I Actually Solve.</h2>
       <p class="stack-lede rise" style="--i:2">
-        Model-agnostic. I pick what fits the project.
+        Capabilities, not logos. Tools are interchangeable. These aren&rsquo;t.
       </p>
 
       <div class="stack-grid rise" style="--i:3">
         <div class="stack-col">
-          <div class="stack-label">Foundation Models</div>
+          <div class="stack-label">Agentic Systems</div>
           <div class="stack-tags">
-            <span class="stack-tag">Anthropic Claude</span>
-            <span class="stack-tag">OpenAI GPT-4 / GPT-5</span>
-            <span class="stack-tag">Google Gemini</span>
-            <span class="stack-tag">Meta Llama</span>
-            <span class="stack-tag">Qwen 2.5</span>
-            <span class="stack-tag">Mistral AI</span>
-            <span class="stack-tag">DistilBERT</span>
-            <span class="stack-tag">Hugging Face</span>
+            <span class="stack-tag">Multi-agent orchestration</span>
+            <span class="stack-tag">Human-in-the-loop workflows</span>
+            <span class="stack-tag">Retrieval &amp; provenance pipelines</span>
+            <span class="stack-tag">Evaluation harnesses &amp; confidence scoring</span>
           </div>
         </div>
         <div class="stack-col">
-          <div class="stack-label">Platforms &amp; Frameworks</div>
+          <div class="stack-label">Identity &amp; Governance</div>
           <div class="stack-tags">
-            <span class="stack-tag">MCP</span>
-            <span class="stack-tag">Google ADK</span>
-            <span class="stack-tag">LangChain</span>
-            <span class="stack-tag">LlamaIndex</span>
-            <span class="stack-tag">Vertex AI</span>
-            <span class="stack-tag">Anthropic SDK</span>
-            <span class="stack-tag">OpenAI SDK</span>
-            <span class="stack-tag">Claude Agent SDK</span>
-            <span class="stack-tag">Vercel AI SDK</span>
-            <span class="stack-tag">n8n</span>
-            <span class="stack-tag">Hugging Face</span>
-            <span class="stack-tag">PEFT / LoRA</span>
+            <span class="stack-tag">AI identity &amp; access (NHI) governance</span>
+            <span class="stack-tag">Escalation &amp; approval routing</span>
+            <span class="stack-tag">Audit trails &amp; trust infrastructure</span>
+            <span class="stack-tag">Regulated-environment deployment</span>
           </div>
         </div>
         <div class="stack-col">
-          <div class="stack-label">Consumer &amp; Enterprise UI</div>
+          <div class="stack-label">Forward Deployed</div>
           <div class="stack-tags">
-            <span class="stack-tag">Claude</span>
-            <span class="stack-tag">ChatGPT</span>
-            <span class="stack-tag">Gemini</span>
-            <span class="stack-tag">Microsoft Copilot</span>
-            <span class="stack-tag">Notion AI</span>
+            <span class="stack-tag">Embedded enterprise integration</span>
+            <span class="stack-tag">PowerShell / Python automation at scale</span>
+            <span class="stack-tag">Domain learning, runbook handoff</span>
+            <span class="stack-tag">Rollout leadership (PMP)</span>
           </div>
         </div>
       </div>
+
+      <p class="stack-footnote rise" style="--i:4">
+        Built on Claude, GPT, Gemini, Llama, Hugging Face &middot; MCP, Google ADK, LangChain, Vercel AI SDK, n8n &middot; whichever fits the constraint.
+      </p>
     </div>
   </section>
 

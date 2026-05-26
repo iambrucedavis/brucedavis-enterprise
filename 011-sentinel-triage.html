@@ -171,6 +171,48 @@ a { color:inherit; text-decoration:none; }
 .c-body { padding:22px; }
 .c-cap  { font-family:var(--serif); font-size:15px; color:var(--ink-soft); line-height:1.6; margin-top:16px; max-width:64ch; }
 
+/* ─── REACT REASONING TRACE ─────────────────── */
+.rx-frame { margin-top: 32px; }
+.rx-row {
+  display: grid;
+  grid-template-columns: 70px 88px 1fr;
+  gap: 16px;
+  align-items: baseline;
+  padding: 12px 22px;
+  border-bottom: 1px solid var(--hairline);
+  font-family: var(--mono);
+  font-size: 13px; line-height: 1.55;
+  color: var(--ink-soft);
+}
+.rx-row:last-child { border-bottom: none; }
+.rx-row.is-gate    { background: rgba(var(--signal-rgb), .06); }
+.rx-row.is-approve { background: rgba(var(--signal-rgb), .10); }
+.rx-step {
+  color: var(--mute);
+  font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase;
+}
+.rx-kind {
+  font-size: 9.5px; letter-spacing: .16em; text-transform: uppercase;
+  padding: 2px 7px; border: 1px solid var(--hairline-strong);
+  text-align: center;
+  color: var(--ink-soft);
+}
+.rx-kind.k-think    { color: var(--ink); }
+.rx-kind.k-act      { color: var(--ink-soft); }
+.rx-kind.k-observe  { color: var(--mute-soft); }
+.rx-kind.k-propose  { color: #ffb86b; border-color: rgba(255,184,107,.4); }
+.rx-kind.k-approve  { color: var(--signal); border-color: rgba(var(--signal-rgb),.5); }
+.rx-body { color: var(--ink-soft); }
+.rx-body em  { font-style: italic; color: var(--ink); font-family: var(--serif); font-size: 14px; }
+.rx-body .arrow { color: var(--mute); margin-right: 6px; }
+.rx-body .tool { color: var(--signal); }
+.rx-body .k { color: var(--ink); font-weight: 700; }
+.rx-body .ok  { color: #6ee7a4; }
+.rx-body .bad { color: #ff9c9c; }
+@media (max-width: 720px) {
+  .rx-row { grid-template-columns: 1fr; gap: 4px; padding: 14px 16px; }
+}
+
 /* ─── RULE CARDS ───────────────────────────────── */
 .rules { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
 .rule { background:var(--paper-clean); padding:24px 22px; }
@@ -402,7 +444,67 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <p style="font-family:var(--serif);font-size:16px;color:var(--ink-soft);line-height:1.7;margin-top:12px;">Abnormal traffic volume — 188 connections, 1,920,044 bytes egress — to port 4444. The node was quarantined after operator approval.</p>
       </div>
     </div>
-    <p class="c-cap">The agent produced that verdict on its own — three tool calls, then a containment proposal a human approved. The <code style="font-family:var(--mono);font-size:13px;color:var(--ink);">Autonomy Dial</code> sets how far it can go: Advisory is chat-only; Active lets it run tools.</p>
+    <p class="c-cap">The verdict above. The full run that produced it, below.</p>
+
+    <div class="c-frame rx-frame">
+      <div class="c-bar">
+        <span class="c-bar-name">INC-4471 &middot; reasoning trace</span>
+        <span class="c-bar-status">[ THINK &middot; ACT &middot; OBSERVE &middot; GATE ]</span>
+      </div>
+      <div>
+        <div class="rx-row">
+          <span class="rx-step">Step 1</span>
+          <span class="rx-kind k-think">think</span>
+          <span class="rx-body"><em>Outbound traffic to 185.220.101.47 looks unusual for a finance workstation. I should check threat intel before doing anything else.</em></span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-step">Step 2</span>
+          <span class="rx-kind k-act">act</span>
+          <span class="rx-body"><span class="arrow">&rarr;</span><span class="tool">query_threat_intel</span>(ip=<span class="k">"185.220.101.47"</span>)</span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-step">Step 3</span>
+          <span class="rx-kind k-observe">observe</span>
+          <span class="rx-body"><span class="arrow">&larr;</span>{ match: <span class="ok">true</span>, type: <span class="k">"Tor exit / C2 relay"</span>, confidence: 0.94 }</span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-step">Step 4</span>
+          <span class="rx-kind k-think">think</span>
+          <span class="rx-body"><em>Confirmed malicious destination. I need volume and duration to assess scope before proposing containment.</em></span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-step">Step 5</span>
+          <span class="rx-kind k-act">act</span>
+          <span class="rx-body"><span class="arrow">&rarr;</span><span class="tool">query_logs</span>(host=<span class="k">"FIN-WKSTN-08"</span>, dst=<span class="k">"185.220.101.47"</span>, window=<span class="k">"24h"</span>)</span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-step">Step 6</span>
+          <span class="rx-kind k-observe">observe</span>
+          <span class="rx-body"><span class="arrow">&larr;</span>{ connections: 188, bytes_egress: <span class="k">1,920,044</span>, port: 4444, sustained: <span class="ok">true</span> }</span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-step">Step 7</span>
+          <span class="rx-kind k-think">think</span>
+          <span class="rx-body"><em>Sustained beaconing, large egress volume to a confirmed C2 relay. Proposing host quarantine. This is destructive &mdash; I have to stop and ask.</em></span>
+        </div>
+        <div class="rx-row is-gate">
+          <span class="rx-step">Step 8</span>
+          <span class="rx-kind k-propose">propose</span>
+          <span class="rx-body"><span class="arrow">&rarr;</span><span class="tool">quarantine_host</span>(<span class="k">"FIN-WKSTN-08"</span>) &middot; <span class="bad">destructive &mdash; HITL required</span></span>
+        </div>
+        <div class="rx-row is-approve">
+          <span class="rx-step">Step 9</span>
+          <span class="rx-kind k-approve">approve</span>
+          <span class="rx-body"><span class="arrow">&larr;</span>operator: <span class="k">bdavis</span> &middot; signed 14:08:22 &middot; reason: <span class="k">"confirmed active C2"</span></span>
+        </div>
+        <div class="rx-row">
+          <span class="rx-step">Step 10</span>
+          <span class="rx-kind k-act">act</span>
+          <span class="rx-body"><span class="arrow">&rarr;</span><span class="tool">quarantine_host</span>(<span class="k">"FIN-WKSTN-08"</span>) &mdash; <span class="ok">success</span></span>
+        </div>
+      </div>
+    </div>
+    <p class="c-cap">Ten steps &middot; three tool calls &middot; one approval. The agent reasoned through the evidence before proposing the destructive action &mdash; and <strong style="color:var(--ink);font-weight:600;">the loop stopped on its own</strong> at step 8 because <code style="font-family:var(--mono);font-size:13px;color:var(--ink);">quarantine_host</code> is declared destructive in the tool schema. The model didn&rsquo;t bypass the gate; the schema made it unreachable without approval.</p>
   </div>
 </div>
 

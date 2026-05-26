@@ -168,6 +168,42 @@ a { color:inherit; text-decoration:none; }
 .c-line .k { color:var(--ink); font-weight:700; }
 .c-cap  { font-family:var(--serif); font-size:15px; color:var(--ink-soft); line-height:1.6; margin-top:16px; max-width:66ch; }
 
+/* ─── PROVENANCE RECEIPT (audit timeline) ──── */
+.pv-frame { margin-top: 32px; }
+.pv-row {
+  display: grid;
+  grid-template-columns: 86px 88px 110px 1fr;
+  gap: 14px;
+  align-items: baseline;
+  font-family: var(--mono);
+  font-size: 12.5px; line-height: 1.45;
+  padding: 9px 18px;
+  border-bottom: 1px solid var(--hairline);
+  color: var(--ink-soft);
+}
+.pv-row:last-child { border-bottom: none; }
+.pv-row.is-gate { background: rgba(var(--signal-rgb), .06); }
+.pv-ts   { color: var(--mute); font-size: 11.5px; letter-spacing: .04em; }
+.pv-tag  {
+  font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase;
+  padding: 2px 7px; border: 1px solid var(--hairline-strong);
+  text-align: center;
+}
+.pv-tag.t-issued    { color: var(--ink); }
+.pv-tag.t-used      { color: var(--ink-soft); }
+.pv-tag.t-escalate  { color: #ffb86b; border-color: rgba(255,184,107,.4); }
+.pv-tag.t-approved  { color: var(--signal); border-color: rgba(var(--signal-rgb),.5); }
+.pv-tag.t-expired   { color: var(--mute); }
+.pv-tag.t-receipt   { color: var(--mute-soft); border-style: dashed; }
+.pv-actor { color: var(--ink); }
+.pv-actor.is-none { color: var(--mute); }
+.pv-detail { color: var(--ink-soft); }
+.pv-detail .k { color: var(--ink); font-weight: 700; }
+.pv-detail .b { color: var(--signal); }
+@media (max-width: 720px) {
+  .pv-row { grid-template-columns: 1fr; gap: 4px; padding: 12px 14px; }
+}
+
 /* ─── RULE CARDS ───────────────────────────────── */
 .rules { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
 .rule { background:var(--paper-clean); padding:24px 22px; }
@@ -233,7 +269,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   <div class="hero-pre">Non-Human Identity · Agentic AI Governance</div>
   <h1 id="hero-hl">AI Agent<br>Governance Console</h1>
   <p class="hero-sub">
-    Every AI agent is a non-human identity. Each one carries a scoped credential, a token budget, and an accountable owner. The fleet is discoverable, classified, and lifecycle-managed in the loop. When an agent needs to act beyond its scope, the operator decides — governance as an enabler, not a bottleneck.
+    Every AI agent is a non-human identity. Each one carries a scoped credential, a token budget, and an accountable owner. When an agent needs to act beyond its scope, it stops and asks. The operator decides.
   </p>
   <div class="hero-meta">
     <span>NHI governance surface</span>
@@ -422,7 +458,71 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <div class="c-line">&nbsp;&nbsp;&rarr; credential expires &nbsp;·&nbsp; decommissioned, logged for access review</div>
       </div>
     </div>
-    <p class="c-cap">The escalation isn't hardcoded to pause here — it's a permission check failing inside the agent loop. Approve, and a credential is provisioned, used, rotated on expiry, and decommissioned. Deny, and the identity holds at its standing scope. The full lifecycle stays in the trail.</p>
+    <p class="c-cap">The pause isn&rsquo;t hardcoded &mdash; it&rsquo;s a permission check failing inside the agent loop. What happens after approval is logged the same way:</p>
+
+    <div class="c-frame pv-frame">
+      <div class="c-bar">
+        <span class="c-bar-name">CRED-1043 &middot; full lifecycle from the audit log</span>
+        <span class="c-bar-status">[ APPEND-ONLY TRAIL ]</span>
+      </div>
+      <div>
+        <div class="pv-row">
+          <span class="pv-ts">14:02:07</span>
+          <span class="pv-tag t-issued">issued</span>
+          <span class="pv-actor">Provisioner</span>
+          <span class="pv-detail">short-lived API key &middot; scope=<span class="k">read_write</span> &middot; ttl=4h</span>
+        </div>
+        <div class="pv-row">
+          <span class="pv-ts">14:03:18</span>
+          <span class="pv-tag t-used">used</span>
+          <span class="pv-actor">Remediation</span>
+          <span class="pv-detail"><span class="b">revoke_sessions</span>(acct=7731) &mdash; <span class="k">denied</span> by scope check</span>
+        </div>
+        <div class="pv-row is-gate">
+          <span class="pv-ts">14:03:18</span>
+          <span class="pv-tag t-escalate">escalate</span>
+          <span class="pv-actor">Remediation</span>
+          <span class="pv-detail">needs scope=<span class="k">elevated</span> &middot; assessment attached &middot; owner notified</span>
+        </div>
+        <div class="pv-row is-gate">
+          <span class="pv-ts">14:03:42</span>
+          <span class="pv-tag t-approved">approved</span>
+          <span class="pv-actor">Operator</span>
+          <span class="pv-detail">reason: &ldquo;active C2 callback confirmed&rdquo;</span>
+        </div>
+        <div class="pv-row">
+          <span class="pv-ts">14:03:43</span>
+          <span class="pv-tag t-issued">reissued</span>
+          <span class="pv-actor">Provisioner</span>
+          <span class="pv-detail">scope=<span class="k">elevated</span> &middot; ttl=15m &middot; single-use</span>
+        </div>
+        <div class="pv-row">
+          <span class="pv-ts">14:03:55</span>
+          <span class="pv-tag t-used">used</span>
+          <span class="pv-actor">Remediation</span>
+          <span class="pv-detail"><span class="b">revoke_sessions</span>(acct=7731) &mdash; <span class="k">success</span></span>
+        </div>
+        <div class="pv-row">
+          <span class="pv-ts">14:04:01</span>
+          <span class="pv-tag t-used">used</span>
+          <span class="pv-actor">Remediation</span>
+          <span class="pv-detail"><span class="b">rotate_credential</span>(acct=7731) &mdash; <span class="k">success</span></span>
+        </div>
+        <div class="pv-row">
+          <span class="pv-ts">14:18:43</span>
+          <span class="pv-tag t-expired">expired</span>
+          <span class="pv-actor is-none">&mdash;</span>
+          <span class="pv-detail">credential auto-decommissioned &middot; sessions invalidated</span>
+        </div>
+        <div class="pv-row">
+          <span class="pv-ts">14:18:43</span>
+          <span class="pv-tag t-receipt">receipt</span>
+          <span class="pv-actor">Auditor</span>
+          <span class="pv-detail">written to access-review log &middot; entry=<span class="k">AXE-9921</span></span>
+        </div>
+      </div>
+    </div>
+    <p class="c-cap">Nine events &middot; one credential &middot; ~16 minutes. Every line is the system's own record &mdash; not commentary. <strong style="color:var(--ink);font-weight:600;">Approval, action, expiry, and the receipt are all in the same trail</strong>, so an access review sees the whole chain of custody in one query.</p>
   </div>
 </div>
 

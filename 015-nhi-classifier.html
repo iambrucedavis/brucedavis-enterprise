@@ -124,6 +124,64 @@ a { color:inherit; text-decoration:none; }
 .cmp-table td.signal { color:var(--signal); font-weight:700; }
 .cmp-cap { font-family:var(--serif); font-size:15px; color:var(--ink-soft); line-height:1.6; margin-top:18px; max-width:64ch; }
 
+/* ─── CONFUSION MATRIX ──────────────────────── */
+.cm-wrap {
+  background: var(--paper-clean);
+  border: 1px solid var(--hairline-strong);
+  padding: clamp(20px,2.6vw,36px);
+  margin-top: 24px;
+}
+.cm-axes {
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--mute); margin-bottom: 14px;
+}
+.cm-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr 1fr 1fr;
+  gap: 4px;
+}
+.cm-cell {
+  font-family: var(--mono);
+  font-size: clamp(13px,1.4vw,17px);
+  padding: clamp(14px,1.6vw,22px) 10px;
+  text-align: center;
+  background: var(--paper-deep);
+  color: var(--ink-soft);
+}
+.cm-head { background: transparent; }
+.cm-col-head, .cm-row-head {
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--mute); background: transparent;
+  padding: 8px 6px;
+}
+.cm-row-head { text-align: right; }
+.cm-zero { color: var(--mute); opacity: .35; }
+.cm-diag {
+  background: rgba(var(--signal-rgb),.16);
+  color: var(--ink);
+  font-weight: 700;
+}
+.cm-diag.cm-perfect {
+  background: rgba(var(--signal-rgb),.30);
+}
+.cm-err {
+  background: rgba(255,90,90,.18);
+  color: #ff9c9c;
+  font-weight: 700;
+}
+.cm-legend {
+  display: flex; flex-wrap: wrap; gap: 18px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--mute);
+  margin-top: 18px; padding-top: 16px;
+  border-top: 1px dashed var(--hairline-strong);
+}
+.cm-swatch { display: inline-block; width: 12px; height: 12px; vertical-align: middle; margin-right: 6px; }
+.cm-sw-diag { background: rgba(var(--signal-rgb),.30); }
+.cm-sw-err  { background: rgba(255,90,90,.18); }
+.cm-sw-zero { background: var(--paper-deep); opacity: .55; }
+
 /* ─── CLASS CARDS ──────────────────────────────── */
 .tool-cards { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--hairline-strong); border:1px solid var(--hairline-strong); box-shadow:var(--shadow); }
 .tool-card { background:var(--paper-clean); padding:26px 22px; display:flex; flex-direction:column; gap:10px; }
@@ -348,7 +406,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <tr><td class="dim">Best use</td><td>Production triage queue</td><td>Hard cases + rationale</td></tr>
       </tbody>
     </table>
-    <p class="cmp-cap">DistilBERT numbers are measured on a MacBook CPU (450-record test set). Qwen 2.5 numbers are projections from comparable LoRA fine-tunes — the training script ships and runs against any LoRA-compatible base. Qwen 2.5 is the default because it's ungated; swapping to Llama 3.2 1B is a one-flag change once you've requested access from Meta. The point of training both isn't to declare a winner; it's to make the production-vs-research trade-off visible.</p>
+    <p class="cmp-cap">DistilBERT numbers are measured on a MacBook CPU (450-record test set). Qwen 2.5 numbers are projections from comparable LoRA fine-tunes — the training script ships and runs against any LoRA-compatible base. The point of training both isn&rsquo;t to declare a winner; it&rsquo;s to make the production-vs-research trade-off visible.</p>
 
     <h3 style="font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:clamp(20px,2.4vw,28px);letter-spacing:.01em;color:var(--ink);margin:48px 0 16px;">DistilBERT — per-class breakdown</h3>
 
@@ -369,7 +427,53 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <tr><td class="dim">suspicious</td><td class="signal">1.0000</td><td>0.9922</td><td>0.9961</td><td>128</td></tr>
       </tbody>
     </table>
-    <p class="cmp-cap">Three misclassifications out of 450 test records. <em>orphaned</em> was learned perfectly — the signal is unambiguous (no owner, no recent use, no docs). The harder boundary is <em>active_legitimate</em> ↔ <em>over_scoped</em>, which is also where a human reviewer would hesitate.</p>
+    <p class="cmp-cap">Three misses out of 450. The matrix below shows where they went.</p>
+
+    <h3 style="font-family:var(--display);font-weight:400;text-transform:uppercase;font-size:clamp(20px,2.4vw,28px);letter-spacing:.01em;color:var(--ink);margin:48px 0 16px;">Confusion matrix &mdash; 450 held-out records</h3>
+
+    <div class="cm-wrap">
+      <div class="cm-axes">
+        <span>&darr; actual</span>
+        <span>predicted &rarr;</span>
+      </div>
+      <div class="cm-grid">
+        <div class="cm-cell cm-head"></div>
+        <div class="cm-cell cm-col-head">active_legit.</div>
+        <div class="cm-cell cm-col-head">orphaned</div>
+        <div class="cm-cell cm-col-head">over_scoped</div>
+        <div class="cm-cell cm-col-head">suspicious</div>
+
+        <div class="cm-cell cm-row-head">active_legit.</div>
+        <div class="cm-cell cm-diag">108</div>
+        <div class="cm-cell cm-zero">0</div>
+        <div class="cm-cell cm-err">1</div>
+        <div class="cm-cell cm-zero">0</div>
+
+        <div class="cm-cell cm-row-head">orphaned</div>
+        <div class="cm-cell cm-zero">0</div>
+        <div class="cm-cell cm-diag cm-perfect">103</div>
+        <div class="cm-cell cm-zero">0</div>
+        <div class="cm-cell cm-zero">0</div>
+
+        <div class="cm-cell cm-row-head">over_scoped</div>
+        <div class="cm-cell cm-err">1</div>
+        <div class="cm-cell cm-zero">0</div>
+        <div class="cm-cell cm-diag">109</div>
+        <div class="cm-cell cm-zero">0</div>
+
+        <div class="cm-cell cm-row-head">suspicious</div>
+        <div class="cm-cell cm-err">1</div>
+        <div class="cm-cell cm-zero">0</div>
+        <div class="cm-cell cm-zero">0</div>
+        <div class="cm-cell cm-diag cm-perfect">127</div>
+      </div>
+      <div class="cm-legend">
+        <span><span class="cm-swatch cm-sw-diag"></span>correct (447)</span>
+        <span><span class="cm-swatch cm-sw-err"></span>misclassification (3)</span>
+        <span><span class="cm-swatch cm-sw-zero"></span>zero</span>
+      </div>
+    </div>
+    <p class="cmp-cap">Two of the three errors cross the <em>active_legitimate ↔ over_scoped</em> boundary &mdash; the same boundary a human reviewer would hesitate at. One <em>suspicious</em> credential was miscalled <em>active_legitimate</em> &mdash; the highest-cost error type, and the one to monitor in production. Nothing was ever miscalled <em>suspicious</em> or <em>orphaned</em>; the model errs toward the less alarming label, not the more.</p>
   </div>
 </div>
 
