@@ -409,7 +409,7 @@ body::after {
   width: 100%;
   height: 100%;
   /* Right padding reserves space for the absolutely-positioned CTA */
-  padding: clamp(26px, 3vw, 46px) clamp(220px, 22vw, 320px) clamp(26px, 3vw, 46px) clamp(28px, 6vw, 90px);
+  padding: clamp(26px, 3vw, 46px) clamp(180px, 18vw, 240px) clamp(26px, 3vw, 46px) clamp(28px, 6vw, 90px);
   display: flex;
   flex-direction: column;
   gap: clamp(12px, 1.6vw, 20px);
@@ -476,15 +476,14 @@ body::after {
 
 .proj-cta {
   font-family: var(--mono); font-weight: 700;
-  font-size: clamp(13px, 1.15vw, 16px); letter-spacing: .2em; text-transform: uppercase;
+  font-size: clamp(11px, .95vw, 13px); letter-spacing: .18em; text-transform: uppercase;
   color: var(--signal);
   text-decoration: none;
-  padding: clamp(20px, 2vw, 28px) clamp(24px, 2.4vw, 36px);
-  border: 1.5px solid var(--signal);
+  padding: 12px 20px;
+  border: 1px solid var(--signal);
   transition: background var(--m-base), color var(--m-base), box-shadow var(--m-base);
-  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  min-width: 200px;
-  text-align: center;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  white-space: nowrap;
 }
 .proj-cta:hover {
   background: var(--signal);
