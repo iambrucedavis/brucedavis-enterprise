@@ -8,19 +8,27 @@
   --paper:        #0d2747;
   --paper-clean:  #103257;
   --paper-deep:   #081d36;
-  --ink:          #e6f3ff;
-  --ink-soft:     #c4dbf2;
+  --ink:          #f6fbff;
+  --ink-soft:     #dceaf7;
   --concrete:     #061525;
-  --mute:         #7a99b8;
-  --mute-soft:    #a0bcd9;
+  --mute:         #9ab6d4;
+  --mute-soft:    #b6cee8;
   --signal:       #5cd5ff;
   --signal-rgb:   92,213,255;
-  --hairline:        rgba(220, 235, 255, .10);
-  --hairline-strong: rgba(220, 235, 255, .22);
+  --hairline:        rgba(220, 235, 255, .14);
+  --hairline-strong: rgba(220, 235, 255, .28);
   --grid-fine:       rgba(220, 235, 255, .045);
   --grid-major:      rgba(220, 235, 255, .12);
-  --glitch-r:     rgba(255, 80, 110, .55);
-  --glitch-c:     rgba(80, 220, 255, .55);
+  --glitch-r:     rgba(255, 80, 110, .5);
+  --glitch-c:     rgba(80, 220, 255, .5);
+  /* Reusable surface tokens */
+  --surface-bg:   rgba(8, 24, 46, .88);
+  --surface-bg-hi: rgba(13, 39, 71, .92);
+  --halo-text:    0 1px 2px rgba(0, 0, 0, .55), 0 0 1px rgba(0, 0, 0, .4);
+  --lift-sm:      inset 0 1px 0 rgba(220,235,255,.10), 0 1px 0 rgba(0,0,0,.35), 0 6px 14px -4px rgba(0,0,0,.5);
+  --lift-md:      inset 0 1px 0 rgba(220,235,255,.12), 0 1px 0 rgba(0,0,0,.45), 0 14px 32px -8px rgba(0,0,0,.6), 0 4px 12px -2px rgba(0,0,0,.35);
+  --lift-lg:      inset 0 1px 0 rgba(220,235,255,.14), 0 1px 0 rgba(0,0,0,.45), 0 24px 48px -12px rgba(0,0,0,.65), 0 6px 18px -4px rgba(0,0,0,.4);
+  --glow-signal:  0 0 28px -4px rgba(var(--signal-rgb),.55), 0 0 0 1px var(--signal);
 }
 
 /* Body — blueprint grid background, fixed to viewport */
@@ -46,7 +54,7 @@ body::before {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: .32;
+  opacity: .22;
   z-index: 0;
 }
 
@@ -256,4 +264,158 @@ body::after {
     transform: none !important;
     filter: none !important;
   }
+}
+
+/* ─── ELEVATION + CONTRAST ─────────────────────────────────────
+   Cards, panels, and tags get an opaque surface backing plus a
+   multi-layer drop shadow so they visibly float above the
+   schematic. Body text gets a dark halo so copy reads against the
+   busy background. Buttons + arrows get filled cyan + glow so
+   they pop as interactive elements.
+   ───────────────────────────────────────────────────────────── */
+
+/* Floating panels — every card-like surface */
+.lf-card,
+.work-card,
+.proj-slide,
+.tool-card,
+.rule,
+.c-frame,
+.cm-wrap,
+.video-frame,
+.stack-col,
+.tech-stack,
+.cmp-table {
+  background: var(--surface-bg) !important;
+  border: 1px solid var(--hairline-strong) !important;
+  box-shadow: var(--lift-md) !important;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+/* Hero project slide gets bigger lift */
+.proj-slide.is-active {
+  box-shadow: var(--lift-lg) !important;
+}
+
+/* Stack columns get inner light edge instead of solid bg if you want */
+.stack-col { padding: clamp(18px,2vw,24px); }
+.tech-stack { padding: clamp(20px,2.4vw,32px); }
+
+/* Tech rows — subtle band, no double shadow */
+.tech-row {
+  background: rgba(13, 39, 71, .55);
+  padding: 14px 18px;
+  box-shadow: inset 0 1px 0 rgba(220,235,255,.08), 0 1px 0 rgba(0,0,0,.25);
+}
+
+/* Tags — readable chips, not blending */
+.tech-tag, .badge, .stack-tag, .r-node, .r-chip, .pv-tag, .rx-kind {
+  background: rgba(13, 39, 71, .85);
+  box-shadow: inset 0 1px 0 rgba(220,235,255,.08), 0 1px 2px rgba(0,0,0,.4);
+}
+
+/* Body text — bright + dark halo for legibility on busy bg */
+.work-desc, .lf-body, .bg-body, .dv-desc, .rule-body, .tc-desc,
+.flow-cap, .c-cap, .cmp-cap, .proj-desc {
+  color: #f5fbff !important;
+  text-shadow:
+    .35px 0 0 rgba(255, 80, 110, .28),
+    -.35px 0 0 rgba(80, 220, 255, .28),
+    0 1px 2px rgba(0, 0, 0, .55),
+    0 0 1px rgba(0, 0, 0, .4) !important;
+}
+
+/* Card titles + section titles — bigger pop */
+.lf-title, .work-name, .proj-name, .tc-name, .rule-name,
+.section-h2, .dv-title {
+  color: #ffffff !important;
+  text-shadow:
+    1px 0 0 rgba(255, 80, 110, .35),
+    -1px 0 0 rgba(80, 220, 255, .35),
+    0 2px 6px rgba(0, 0, 0, .55) !important;
+}
+
+/* Hero headlines — biggest pop, with subtle backlight */
+.hero-h1, #hero-hl {
+  color: #ffffff !important;
+  text-shadow:
+    1.5px 0 0 rgba(255, 80, 110, .4),
+    -1.5px 0 0 rgba(80, 220, 255, .4),
+    0 3px 14px rgba(0, 0, 0, .7),
+    0 0 60px rgba(var(--signal-rgb), .15) !important;
+}
+
+/* Labels, eyebrows, meta — short text gets halo too */
+.eyebrow, .dv-label, .stack-label, .tech-label, .lf-tag, .work-tag,
+.hero-name, .proj-idx, .proj-tag, .bg-label, .h-name, .h-role,
+.flow-kicker, .stat-label, .pv-ts, .pv-actor, .rx-step,
+.cm-row-head, .cm-col-head, .cm-axes {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .55), 0 0 1px rgba(0, 0, 0, .4);
+}
+
+/* Primary buttons — filled cyan with glow + lift */
+.btn-primary,
+.proj-cta {
+  background: var(--surface-bg) !important;
+  color: var(--signal) !important;
+  border: 1px solid var(--signal) !important;
+  box-shadow: var(--lift-sm), 0 0 16px -4px rgba(var(--signal-rgb), .35) !important;
+  font-weight: 700 !important;
+  letter-spacing: .14em !important;
+  transition: background var(--m-base), color var(--m-base), box-shadow var(--m-base), transform var(--m-base) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .5) !important;
+}
+.btn-primary:hover, .proj-cta:hover {
+  background: var(--signal) !important;
+  color: var(--paper) !important;
+  box-shadow: var(--glow-signal), 0 8px 18px -4px rgba(0,0,0,.55) !important;
+  transform: translateY(-1px);
+  text-shadow: none !important;
+}
+
+/* Ghost / secondary buttons */
+.btn-ghost {
+  background: var(--surface-bg) !important;
+  border: 1px solid var(--hairline-strong) !important;
+  box-shadow: var(--lift-sm) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .5) !important;
+}
+.btn-ghost:hover {
+  border-color: var(--signal) !important;
+  color: var(--signal) !important;
+}
+
+/* Carousel arrows — also lifted */
+.proj-arrow, .deck-arrow {
+  background: var(--surface-bg-hi) !important;
+  box-shadow: var(--lift-md) !important;
+}
+.proj-arrow:hover:not(:disabled),
+.deck-arrow:hover:not(:disabled) {
+  box-shadow: var(--lift-md), 0 0 22px -4px rgba(var(--signal-rgb), .55) !important;
+}
+
+/* Nav status pill + nav itself float over content */
+#nav, #top-nav {
+  background: var(--surface-bg-hi) !important;
+  box-shadow: 0 6px 24px -8px rgba(0, 0, 0, .55), 0 1px 0 rgba(220,235,255,.06) inset;
+}
+
+/* Deck tabs strip + side arrow chrome */
+.deck-tabs {
+  background: var(--surface-bg-hi) !important;
+  box-shadow: 0 -6px 24px -8px rgba(0,0,0,.55), 0 -1px 0 rgba(220,235,255,.06) inset !important;
+}
+
+/* Audio toggle / sound button */
+.sound-toggle {
+  background: var(--surface-bg-hi) !important;
+  box-shadow: var(--lift-sm) !important;
+}
+
+/* Hover on cards bumps the lift to suggest interactivity */
+.lf-card:hover, .work-card:hover, .tool-card:hover, .rule:hover, .proj-slide:hover {
+  box-shadow: var(--lift-lg), 0 0 22px -8px rgba(var(--signal-rgb), .4) !important;
+  border-color: var(--signal) !important;
 }
