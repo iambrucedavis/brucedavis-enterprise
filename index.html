@@ -611,12 +611,47 @@ body::after {
 }
 
 /* ─── TECHNICAL STACK SUBSECTION ────────────────────────── */
-.tech-stack {
+.tech-disclosure {
   margin-top: clamp(36px, 4vw, 56px);
   padding-top: clamp(28px, 3vw, 40px);
   border-top: 1px dashed var(--hairline-strong);
+}
+.tech-disclosure[open] .tech-summary-icon { transform: rotate(45deg); }
+.tech-summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 14px;
+  border: 1px solid var(--hairline-strong);
+  background: rgba(13, 39, 71, .35);
+  transition: border-color var(--m-base), background var(--m-base);
+}
+.tech-summary::-webkit-details-marker { display: none; }
+.tech-summary:hover { border-color: var(--signal); background: rgba(13, 39, 71, .55); }
+.tech-summary-label {
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--signal);
+}
+.tech-summary-hint {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: .08em;
+  color: var(--mute);
+  flex: 1;
+}
+.tech-summary-icon {
+  font-family: var(--mono);
+  font-size: 18px; color: var(--signal);
+  width: 18px; line-height: 1; text-align: center;
+  transition: transform var(--m-base);
+}
+.tech-stack {
+  margin-top: clamp(20px, 2.4vw, 32px);
   display: flex; flex-direction: column;
   gap: clamp(16px, 1.8vw, 22px);
+}
+@media (max-width: 620px) {
+  .tech-summary-hint { display: none; }
 }
 .tech-row {
   display: grid;
@@ -748,6 +783,258 @@ body::after {
 a:focus-visible, button:focus-visible {
   outline: 2px solid var(--signal);
   outline-offset: 2px;
+}
+
+/* ─── LIVE PANEL — Sentinel Triage demo + architecture ─── */
+.live-inner { display: flex; flex-direction: column; gap: clamp(20px, 2.4vw, 32px); }
+.live-header { text-align: center; }
+.live-blurb {
+  font-family: var(--serif);
+  font-size: clamp(15px, 1.2vw, 17px); line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 64ch;
+  margin: 12px auto 0;
+}
+.live-stage {
+  display: grid;
+  grid-template-columns: 1.1fr 1.3fr 1fr;
+  gap: clamp(12px, 1.4vw, 18px);
+  align-items: stretch;
+}
+.stage-col {
+  background: var(--paper-clean);
+  border: 1px solid var(--hairline-strong);
+  padding: clamp(14px, 1.4vw, 18px);
+  display: flex; flex-direction: column; gap: 10px;
+  min-height: 260px;
+  position: relative;
+}
+.stage-col::before {
+  content: '';
+  position: absolute; top: 6px; left: 6px;
+  width: 12px; height: 12px;
+  border: 1px solid var(--signal);
+  border-right: none; border-bottom: none;
+  opacity: .55;
+}
+.stage-label {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--signal);
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--hairline-strong);
+}
+.event-log { list-style: none; display: flex; flex-direction: column; gap: 7px; padding: 0; margin: 0; flex: 1; overflow-y: auto; }
+.event-item {
+  font-family: var(--mono);
+  font-size: 11px; line-height: 1.45;
+  color: var(--ink-soft);
+  padding: 8px 10px;
+  border: 1px solid var(--hairline);
+  background: rgba(8, 29, 54, .55);
+  display: flex; gap: 8px; align-items: flex-start;
+  opacity: 0;
+  animation: ev-in .3s ease forwards;
+}
+@keyframes ev-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+.event-item.is-current { border-color: var(--signal); background: rgba(0, 102, 255, .08); }
+.event-item.is-done { opacity: .5; }
+.ev-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  margin-top: 5px; flex-shrink: 0;
+  background: #F5A623;
+}
+.event-item[data-sev="high"] .ev-dot { background: #FF5070; box-shadow: 0 0 6px rgba(255,80,112,.7); }
+.event-item[data-sev="med"]  .ev-dot { background: #F5A623; }
+.event-item[data-sev="low"]  .ev-dot { background: #5cd5ff; }
+.ev-meta {
+  font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--mute);
+  margin-top: 4px;
+  display: block;
+}
+
+.agent-trace {
+  flex: 1;
+  font-family: var(--mono);
+  font-size: 12px; line-height: 1.55;
+  color: var(--ink-soft);
+  display: flex; flex-direction: column; gap: 8px;
+  min-height: 0;
+  overflow-y: auto;
+}
+.trace-step { opacity: 0; animation: ev-in .3s ease forwards; }
+.trace-step .ts-label {
+  font-size: 9px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--signal);
+  margin-right: 6px;
+}
+.trace-step.is-thought .ts-label { color: var(--mute-soft); }
+.trace-step.is-action  .ts-label { color: var(--signal); }
+.trace-step.is-obs     .ts-label { color: #F5A623; }
+.trace-empty { color: var(--mute); font-style: italic; }
+.cursor::after {
+  content: '▌';
+  color: var(--signal);
+  animation: blink 1s steps(1, end) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+.gate-card {
+  flex: 1;
+  display: flex; flex-direction: column; gap: 14px; justify-content: space-between;
+}
+.gate-proposed {
+  font-family: var(--mono);
+  font-size: 12px; line-height: 1.5;
+  color: var(--ink);
+  padding: 10px 12px;
+  border: 1px solid var(--hairline-strong);
+  background: rgba(8, 29, 54, .55);
+  min-height: 80px;
+}
+.gate-proposed.is-armed { border-color: var(--signal); background: rgba(0,102,255,.08); }
+.gate-proposed.is-idle { color: var(--mute); font-style: italic; }
+.gate-actions { display: flex; gap: 8px; }
+.gate-btn {
+  flex: 1;
+  font-family: var(--mono); font-weight: 700;
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  padding: 11px 10px;
+  background: transparent;
+  border: 1px solid var(--hairline-strong);
+  color: var(--mute);
+  cursor: pointer;
+  transition: background var(--m-fast), color var(--m-fast), border-color var(--m-fast);
+}
+.gate-btn:disabled { cursor: not-allowed; opacity: .4; }
+.gate-btn.gate-approve:not(:disabled) { color: var(--signal); border-color: var(--signal); }
+.gate-btn.gate-approve:not(:disabled):hover { background: var(--signal); color: var(--paper); }
+.gate-btn.gate-deny:not(:disabled) { color: #FF5070; border-color: rgba(255,80,112,.6); }
+.gate-btn.gate-deny:not(:disabled):hover { background: #FF5070; color: var(--paper); border-color: #FF5070; }
+
+.live-meta {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) 1.4fr;
+  gap: clamp(14px, 1.6vw, 22px);
+  align-items: start;
+}
+.autonomy-row {
+  border: 1px solid var(--hairline-strong);
+  padding: 14px;
+  background: var(--paper-clean);
+}
+.autonomy-label {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--signal);
+  display: block;
+  margin-bottom: 10px;
+}
+.autonomy-dial { display: flex; gap: 4px; }
+.dial-step {
+  flex: 1;
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: .08em; text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--hairline-strong);
+  color: var(--mute-soft);
+  padding: 9px 6px;
+  cursor: pointer;
+  transition: background var(--m-fast), color var(--m-fast), border-color var(--m-fast);
+}
+.dial-step:hover:not(:disabled) { color: var(--ink); border-color: var(--ink-soft); }
+.dial-step.is-active { background: var(--signal); color: var(--paper); border-color: var(--signal); }
+.dial-step:disabled { opacity: .35; cursor: not-allowed; }
+.dial-note {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: .04em;
+  color: var(--mute);
+  margin-top: 10px;
+  line-height: 1.45;
+  min-height: 1.45em;
+}
+
+.audit-log {
+  list-style: none;
+  margin: 0; padding: 12px 14px;
+  border: 1px solid var(--hairline-strong);
+  background: var(--paper-clean);
+  font-family: var(--mono);
+  font-size: 11px; line-height: 1.5;
+  color: var(--ink-soft);
+  max-height: 180px;
+  overflow-y: auto;
+}
+.audit-log li {
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--hairline);
+  display: flex; gap: 10px; align-items: baseline;
+}
+.audit-log li:last-child { border-bottom: none; }
+.audit-empty { color: var(--mute); font-style: italic; }
+.audit-time { color: var(--mute); font-size: 10px; letter-spacing: .1em; flex-shrink: 0; min-width: 56px; }
+.audit-tag {
+  font-size: 9px; letter-spacing: .18em; text-transform: uppercase;
+  padding: 1px 6px;
+  border: 1px solid var(--hairline-strong);
+  flex-shrink: 0;
+}
+.audit-log li.is-approved .audit-tag { color: var(--signal); border-color: var(--signal); }
+.audit-log li.is-denied   .audit-tag { color: #FF5070; border-color: rgba(255,80,112,.6); }
+.audit-log li.is-auto     .audit-tag { color: #F5A623; border-color: rgba(245,166,35,.6); }
+.audit-msg { color: var(--ink); }
+
+/* Architecture diagram */
+.live-arch {
+  border: 1px solid var(--hairline-strong);
+  background: var(--paper-clean);
+  padding: clamp(16px, 1.8vw, 24px);
+  display: flex; flex-direction: column; gap: 12px;
+}
+.arch-svg { width: 100%; height: auto; display: block; }
+.arch-svg .arch-node-bg { fill: rgba(8, 29, 54, .9); stroke: rgba(220, 235, 255, .22); stroke-width: 1; }
+.arch-svg .arch-node-bg.is-gate { stroke: var(--signal); stroke-width: 1.4; }
+.arch-svg .arch-node-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  fill: var(--ink);
+}
+.arch-svg .arch-node-sub {
+  font-family: 'Space Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: .08em;
+  fill: var(--mute);
+}
+.arch-svg .arch-edge { stroke: var(--signal); stroke-width: 1.2; fill: none; opacity: .7; }
+.arch-svg .arch-edge-feedback { stroke: var(--mute); stroke-width: 1; stroke-dasharray: 3 3; fill: none; opacity: .55; }
+.arch-svg .arch-edge-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  fill: var(--mute-soft);
+}
+.arch-caption {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: .12em;
+  color: var(--mute);
+  text-align: center;
+}
+
+@media (max-width: 1080px) {
+  .live-stage { grid-template-columns: 1fr 1fr; }
+  .stage-gate { grid-column: span 2; }
+}
+@media (max-width: 720px) {
+  .live-stage { grid-template-columns: 1fr; }
+  .stage-gate { grid-column: auto; }
+  .live-meta { grid-template-columns: 1fr; }
 }
 
 /* ─── RESPONSIVE ─────────────────────────── */
@@ -956,7 +1243,7 @@ body::after { animation: flicker-bg 6s steps(1, end) infinite; }
     <li><button data-panel="1">Work</button></li>
     <li><a href="about.html">About</a></li>
     <li><a href="bruce-davis-resume.html" target="_blank" rel="noopener">Resume</a></li>
-    <li><button data-panel="3">Contact</button></li>
+    <li><button data-panel="4">Contact</button></li>
   </ul>
 </nav>
 
@@ -971,7 +1258,7 @@ body::after { animation: flicker-bg 6s steps(1, end) infinite; }
         <div class="hero-name rise" style="--i:0">Bruce Davis · Charlotte, NC</div>
         <h1 class="hero-h1 rise" style="--i:1">Forward-Deployed<br><span class="scramble" data-final="AI Engineer.">AI Engineer.</span></h1>
         <p class="hero-tagline rise" style="--i:2">
-          AI Design &amp; Development.
+          Fifteen years in enterprise IAM and payments infrastructure. Now identity and governance for production AI.
         </p>
         <div class="hero-cta rise" style="--i:3">
           <button class="btn btn-primary" data-panel="1">See the work</button>
@@ -1192,7 +1479,132 @@ body::after { animation: flicker-bg 6s steps(1, end) infinite; }
     </div>
   </section>
 
-  <!-- PANEL 3 — STACK -->
+  <!-- PANEL 3 — LIVE DEMO + ARCHITECTURE -->
+  <section class="panel" id="p-live" aria-label="Live demo and architecture">
+    <div class="panel-inner live-inner">
+
+      <div class="live-header">
+        <div class="eyebrow rise" style="--i:0">Live · Sentinel Triage</div>
+        <h2 class="section-h2 rise" style="--i:1">Watch the loop ask permission.</h2>
+        <p class="live-blurb rise" style="--i:2">
+          A ReAct agent reads mock SIEM events, proposes containment, and pauses at a human-in-the-loop gate. Move the autonomy dial to change where it stops.
+        </p>
+      </div>
+
+      <div class="live-stage rise" style="--i:3">
+        <div class="stage-col stage-events">
+          <div class="stage-label">Event stream</div>
+          <ol class="event-log" id="event-log"></ol>
+        </div>
+        <div class="stage-col stage-agent">
+          <div class="stage-label">Agent · ReAct loop</div>
+          <div class="agent-trace" id="agent-trace">
+            <div class="trace-empty">Waiting for next incident…</div>
+          </div>
+        </div>
+        <div class="stage-col stage-gate">
+          <div class="stage-label">Human-in-the-loop</div>
+          <div class="gate-card">
+            <div class="gate-proposed is-idle" id="gate-proposed">Awaiting proposal…</div>
+            <div class="gate-actions">
+              <button class="gate-btn gate-approve" id="gate-approve" disabled>Approve</button>
+              <button class="gate-btn gate-deny" id="gate-deny" disabled>Deny</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="live-meta rise" style="--i:4">
+        <div class="autonomy-row">
+          <span class="autonomy-label">Autonomy dial</span>
+          <div class="autonomy-dial" role="radiogroup" aria-label="Autonomy level">
+            <button class="dial-step" data-level="0" aria-pressed="false" type="button">Suggest</button>
+            <button class="dial-step is-active" data-level="1" aria-pressed="true" type="button">Recommend</button>
+            <button class="dial-step" data-level="2" aria-pressed="false" type="button">Auto + Gate</button>
+            <button class="dial-step" data-level="3" aria-pressed="false" type="button" disabled>Auto</button>
+          </div>
+          <p class="dial-note" id="dial-note">Recommend — agent proposes containment, gate requires your approval.</p>
+        </div>
+        <ol class="audit-log" id="audit-log" aria-label="Audit trail">
+          <li class="audit-empty">No actions yet. Approve or deny to build the audit trail.</li>
+        </ol>
+      </div>
+
+      <div class="live-arch rise" style="--i:5">
+        <div class="stage-label">Architecture</div>
+        <svg class="arch-svg" viewBox="0 0 1100 220" role="img" aria-label="Sentinel Triage architecture: events flow through ingestion, reasoning, tools, the HITL gate, action, and audit, with a memory feedback loop.">
+          <!-- nodes -->
+          <g>
+            <rect class="arch-node-bg" x="20"   y="80" width="130" height="60"/>
+            <text class="arch-node-label" x="85"   y="108" text-anchor="middle">SIEM · Logs</text>
+            <text class="arch-node-sub"   x="85"   y="125" text-anchor="middle">events in</text>
+          </g>
+          <g>
+            <rect class="arch-node-bg" x="180"  y="80" width="130" height="60"/>
+            <text class="arch-node-label" x="245"  y="108" text-anchor="middle">Reason · LLM</text>
+            <text class="arch-node-sub"   x="245"  y="125" text-anchor="middle">ReAct loop</text>
+          </g>
+          <g>
+            <rect class="arch-node-bg" x="340"  y="80" width="130" height="60"/>
+            <text class="arch-node-label" x="405"  y="108" text-anchor="middle">Tools</text>
+            <text class="arch-node-sub"   x="405"  y="125" text-anchor="middle">enrich · lookup</text>
+          </g>
+          <g>
+            <rect class="arch-node-bg is-gate" x="500" y="80" width="130" height="60"/>
+            <text class="arch-node-label" x="565"  y="108" text-anchor="middle" fill="#5cd5ff">HITL Gate</text>
+            <text class="arch-node-sub"   x="565"  y="125" text-anchor="middle">approve · deny</text>
+          </g>
+          <g>
+            <rect class="arch-node-bg" x="660"  y="80" width="130" height="60"/>
+            <text class="arch-node-label" x="725"  y="108" text-anchor="middle">Action</text>
+            <text class="arch-node-sub"   x="725"  y="125" text-anchor="middle">isolate · rotate</text>
+          </g>
+          <g>
+            <rect class="arch-node-bg" x="820"  y="80" width="130" height="60"/>
+            <text class="arch-node-label" x="885"  y="108" text-anchor="middle">Audit</text>
+            <text class="arch-node-sub"   x="885"  y="125" text-anchor="middle">signed log</text>
+          </g>
+          <g>
+            <rect class="arch-node-bg" x="980" y="80" width="100" height="60"/>
+            <text class="arch-node-label" x="1030" y="108" text-anchor="middle">Memory</text>
+            <text class="arch-node-sub"   x="1030" y="125" text-anchor="middle">vector DB</text>
+          </g>
+
+          <!-- forward edges (arrows) -->
+          <defs>
+            <marker id="arrow-cy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#5cd5ff" opacity=".8"/>
+            </marker>
+            <marker id="arrow-mu" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="#92aecd" opacity=".7"/>
+            </marker>
+          </defs>
+          <line class="arch-edge" x1="150" y1="110" x2="180" y2="110" marker-end="url(#arrow-cy)"/>
+          <line class="arch-edge" x1="310" y1="110" x2="340" y2="110" marker-end="url(#arrow-cy)"/>
+          <line class="arch-edge" x1="470" y1="110" x2="500" y2="110" marker-end="url(#arrow-cy)"/>
+          <line class="arch-edge" x1="630" y1="110" x2="660" y2="110" marker-end="url(#arrow-cy)"/>
+          <line class="arch-edge" x1="790" y1="110" x2="820" y2="110" marker-end="url(#arrow-cy)"/>
+          <line class="arch-edge" x1="950" y1="110" x2="980" y2="110" marker-end="url(#arrow-cy)"/>
+
+          <!-- tools roundtrip -->
+          <path class="arch-edge-feedback" d="M 405 80 C 405 40, 245 40, 245 80" marker-end="url(#arrow-mu)"/>
+          <text class="arch-edge-label" x="325" y="34" text-anchor="middle">observation</text>
+
+          <!-- audit → memory and memory → reason feedback -->
+          <path class="arch-edge-feedback" d="M 1030 80 C 1030 30, 245 30, 245 78" marker-end="url(#arrow-mu)"/>
+          <text class="arch-edge-label" x="640" y="22" text-anchor="middle">feedback · learned patterns</text>
+
+          <!-- deny branch from gate to audit -->
+          <path class="arch-edge-feedback" d="M 565 140 C 565 180, 885 180, 885 142" marker-end="url(#arrow-mu)"/>
+          <text class="arch-edge-label" x="725" y="195" text-anchor="middle">deny → audit only</text>
+        </svg>
+        <p class="arch-caption">Every action is gated, logged, and learned from. The dial only changes where the gate sits — never whether it exists.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PANEL 4 — STACK -->
   <section class="panel" id="p-stack" aria-label="Stack and tooling">
     <div class="panel-inner">
       <div class="eyebrow rise" style="--i:0">Capabilities</div>
@@ -1228,7 +1640,13 @@ body::after { animation: flicker-bg 6s steps(1, end) infinite; }
         </div>
       </div>
 
-      <div class="tech-stack rise" style="--i:3">
+      <details class="tech-disclosure rise" style="--i:3">
+        <summary class="tech-summary">
+          <span class="tech-summary-label">Full stack &amp; tooling</span>
+          <span class="tech-summary-hint">Languages · AI frameworks · ML · models · cloud · web</span>
+          <span class="tech-summary-icon" aria-hidden="true">+</span>
+        </summary>
+      <div class="tech-stack">
         <div class="tech-row">
           <div class="tech-label">Languages</div>
           <div class="tech-tags">
@@ -1317,15 +1735,16 @@ body::after { animation: flicker-bg 6s steps(1, end) infinite; }
           </div>
         </div>
       </div>
+      </details>
     </div>
   </section>
 
-  <!-- PANEL 4 — BACKGROUND + CONTACT -->
+  <!-- PANEL 5 — BACKGROUND + CONTACT -->
   <section class="panel" id="p-contact" aria-label="Background and contact">
     <div class="panel-inner contact-inner">
 
       <div class="bg-block rise" style="--i:0">
-        <div class="bg-label">Background — 15 years, regulated environments</div>
+        <div class="bg-label">Enterprise systems veteran, building agentic AI</div>
         <p class="bg-body">
           <strong>Microsoft</strong> — Cloud Solutions Architect, Python automation for Entra ID Governance and Non-Human Identity (before NHI was a named discipline).<br>
           <strong>Starbucks</strong> — Senior Security Engineer, PowerShell automation across 60+ domains.<br>
@@ -1334,7 +1753,7 @@ body::after { animation: flicker-bg 6s steps(1, end) infinite; }
           <strong>Bank of America</strong> — IAM platform engineering.
         </p>
         <p class="bg-body">
-          PMP-certified. Security, identity, and compliance first. Agentic AI on top of fifteen years of it.
+          Most AI engineers are juniors learning the enterprise. This is the reverse: fifteen years of regulated infrastructure, now agentic systems on top of it. PMP-certified.
         </p>
       </div>
 
@@ -1363,8 +1782,9 @@ body::after { animation: flicker-bg 6s steps(1, end) infinite; }
 <div class="deck-tabs" role="tablist" aria-label="Site sections">
   <button class="deck-tab" data-panel="0"><span class="tab-num">01</span>Intro</button>
   <button class="deck-tab" data-panel="1"><span class="tab-num">02</span>Work</button>
-  <button class="deck-tab" data-panel="2"><span class="tab-num">03</span>Stack</button>
-  <button class="deck-tab" data-panel="3"><span class="tab-num">04</span>Contact</button>
+  <button class="deck-tab" data-panel="2"><span class="tab-num">03</span>Live</button>
+  <button class="deck-tab" data-panel="3"><span class="tab-num">04</span>Stack</button>
+  <button class="deck-tab" data-panel="4"><span class="tab-num">05</span>Contact</button>
 </div>
 
 <button class="sound-toggle" aria-pressed="true" aria-label="Toggle navigation sound">
@@ -1442,7 +1862,7 @@ var bdDeck = (function () {
     }
   }, { passive: true });
 
-  var hashMap = { '#work': 1, '#stack': 2, '#contact': 3 };
+  var hashMap = { '#work': 1, '#live': 2, '#stack': 3, '#contact': 4 };
   if (hashMap[location.hash] != null) { idx = hashMap[location.hash]; }
   render();
 
@@ -1593,6 +2013,241 @@ var bdDeck = (function () {
   }, { passive: true });
 
   render();
+})();
+
+/* ── SENTINEL TRIAGE — live HITL demo ─────────────────── */
+(function sentinelDemo() {
+  var eventLog    = document.getElementById('event-log');
+  var traceEl     = document.getElementById('agent-trace');
+  var proposedEl  = document.getElementById('gate-proposed');
+  var approveBtn  = document.getElementById('gate-approve');
+  var denyBtn     = document.getElementById('gate-deny');
+  var auditLog    = document.getElementById('audit-log');
+  var dialBtns    = Array.prototype.slice.call(document.querySelectorAll('.dial-step'));
+  var dialNote    = document.getElementById('dial-note');
+  if (!eventLog || !traceEl || !proposedEl) return;
+
+  var INCIDENTS = [
+    {
+      sev: 'high', source: 'EDR · 14:02',
+      title: 'Anomalous PowerShell on svc-billing-prod',
+      detail: 'parent=cmd.exe · encoded payload · outbound to 185.x.x.x',
+      thought: 'Encoded payload + svc account + non-corp egress. High-confidence post-exploit indicator.',
+      action:  'lookup_host("svc-billing-prod")',
+      obs:     'host=PROD · last_patched=2026-04 · runs payment ETL',
+      proposal: 'Isolate svc-billing-prod from network. Rotate service-account credentials. Page on-call.',
+      auto: 'Host isolated · creds rotated · on-call paged.'
+    },
+    {
+      sev: 'high', source: 'Entra · 14:07',
+      title: 'svc-etl sign-in from new geo',
+      detail: 'baseline=US-East · current=Jakarta · risk=high',
+      thought: 'Service account, not a user — should never travel. Likely token theft.',
+      action:  'enrich_geo("svc-etl", "Jakarta")',
+      obs:     'no prior sign-in from APAC · token issued 11 min ago in US-East',
+      proposal: 'Revoke active sessions for svc-etl. Block sign-in from new geo. Require admin re-approval.',
+      auto: 'Sessions revoked · geo blocked · admin re-approval queued.'
+    },
+    {
+      sev: 'med', source: 'Auth · 14:11',
+      title: 'MFA pattern — 14 fails then success',
+      detail: 'user=j.morrison · src=corp-vpn · device=trusted',
+      thought: 'Could be MFA fatigue/push-bombing, or legitimate fat-fingering on corp device.',
+      action:  'check_history("j.morrison", "mfa_fails_30d")',
+      obs:     'avg 0.3 fails/day · today=14 · spike confirmed',
+      proposal: 'Force MFA re-challenge. Invalidate current session. Notify user and manager.',
+      auto: 'Re-challenge forced · session invalidated · user notified.'
+    },
+    {
+      sev: 'high', source: 'OAuth · 14:18',
+      title: 'Token reuse across two machines',
+      detail: 'same JWT · host-A and host-B · 4 min apart',
+      thought: 'OAuth tokens are scoped to one device. Concurrent use = theft or replay.',
+      action:  'classify_token("jwt-7f3a…", "reuse")',
+      obs:     'token reuse confirmed · scope=mail.read · issued 22 min ago',
+      proposal: 'Revoke token jwt-7f3a. Force re-auth on both machines. Flag identity for review.',
+      auto: 'Token revoked · re-auth forced · identity flagged.'
+    }
+  ];
+
+  var autonomy = 1; // 0=Suggest, 1=Recommend, 2=Auto+Gate, 3=Auto (disabled)
+  var current  = null;
+  var idx      = 0;
+  var running  = false;
+
+  function timestamp() {
+    var d = new Date();
+    var hh = String(d.getHours()).padStart(2, '0');
+    var mm = String(d.getMinutes()).padStart(2, '0');
+    var ss = String(d.getSeconds()).padStart(2, '0');
+    return hh + ':' + mm + ':' + ss;
+  }
+
+  function appendAudit(kind, msg) {
+    var empty = auditLog.querySelector('.audit-empty');
+    if (empty) empty.remove();
+    var li = document.createElement('li');
+    li.className = 'is-' + kind;
+    var tagText = kind === 'approved' ? 'Approve' : kind === 'denied' ? 'Deny' : 'Auto';
+    li.innerHTML =
+      '<span class="audit-time">' + timestamp() + '</span>' +
+      '<span class="audit-tag">' + tagText + '</span>' +
+      '<span class="audit-msg"></span>';
+    li.querySelector('.audit-msg').textContent = msg;
+    auditLog.insertBefore(li, auditLog.firstChild);
+    while (auditLog.children.length > 12) auditLog.removeChild(auditLog.lastChild);
+  }
+
+  function clearTrace() {
+    traceEl.innerHTML = '';
+  }
+  function addTrace(kind, label, text, delay) {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        var row = document.createElement('div');
+        row.className = 'trace-step is-' + kind;
+        var lab = document.createElement('span');
+        lab.className = 'ts-label';
+        lab.textContent = label;
+        row.appendChild(lab);
+        var body = document.createElement('span');
+        body.textContent = text;
+        row.appendChild(body);
+        traceEl.appendChild(row);
+        traceEl.scrollTop = traceEl.scrollHeight;
+        resolve();
+      }, delay);
+    });
+  }
+
+  function paintEvent(inc, n) {
+    var li = document.createElement('li');
+    li.className = 'event-item is-current';
+    li.dataset.sev = inc.sev;
+    li.innerHTML =
+      '<span class="ev-dot"></span>' +
+      '<div>' +
+        '<div></div>' +
+        '<span class="ev-meta"></span>' +
+      '</div>';
+    li.querySelector('div > div').textContent = inc.title;
+    li.querySelector('.ev-meta').textContent = inc.source + ' · ' + inc.detail;
+    eventLog.insertBefore(li, eventLog.firstChild);
+    // mark older as done
+    Array.prototype.slice.call(eventLog.querySelectorAll('.event-item')).forEach(function (el, i) {
+      if (i > 0) { el.classList.remove('is-current'); el.classList.add('is-done'); }
+    });
+    while (eventLog.children.length > 5) eventLog.removeChild(eventLog.lastChild);
+  }
+
+  function setProposalIdle(text) {
+    proposedEl.classList.remove('is-armed');
+    proposedEl.classList.add('is-idle');
+    proposedEl.textContent = text;
+    approveBtn.disabled = true;
+    denyBtn.disabled = true;
+  }
+  function setProposalArmed(text) {
+    proposedEl.classList.add('is-armed');
+    proposedEl.classList.remove('is-idle');
+    proposedEl.textContent = text;
+    if (autonomy === 1) {
+      approveBtn.disabled = false;
+      denyBtn.disabled = false;
+    } else {
+      approveBtn.disabled = true;
+      denyBtn.disabled = true;
+    }
+  }
+
+  function runIncident() {
+    if (running) return;
+    running = true;
+    current = INCIDENTS[idx % INCIDENTS.length];
+    idx++;
+    paintEvent(current, idx);
+    clearTrace();
+
+    addTrace('thought', 'Thought',     current.thought, 280)
+      .then(function () { return addTrace('action', 'Action', current.action, 520); })
+      .then(function () { return addTrace('obs',    'Observation', current.obs, 520); })
+      .then(function () {
+        if (autonomy === 0) {
+          setProposalIdle('Suggest mode: ' + current.proposal + '\n\n(No action taken — observer mode.)');
+          appendAudit('auto', 'Suggested only · ' + current.proposal);
+          scheduleNext(2200);
+          running = false;
+        } else if (autonomy === 2) {
+          setProposalArmed('Auto-approved: ' + current.proposal);
+          appendAudit('auto', current.auto);
+          scheduleNext(2400);
+          running = false;
+        } else {
+          // autonomy 1 — Recommend, wait for human
+          setProposalArmed('Proposed: ' + current.proposal);
+          running = false;
+        }
+      });
+  }
+
+  var nextTimer = null;
+  function scheduleNext(ms) {
+    clearTimeout(nextTimer);
+    nextTimer = setTimeout(runIncident, ms);
+  }
+
+  approveBtn.addEventListener('click', function () {
+    if (!current) return;
+    appendAudit('approved', current.auto);
+    setProposalIdle('Approved · awaiting next incident…');
+    scheduleNext(1400);
+  });
+  denyBtn.addEventListener('click', function () {
+    if (!current) return;
+    appendAudit('denied', 'Rejected: ' + current.proposal);
+    setProposalIdle('Denied · awaiting next incident…');
+    scheduleNext(1400);
+  });
+
+  var DIAL_NOTES = [
+    'Suggest — agent only proposes. Nothing executes. Pure observer mode.',
+    'Recommend — agent proposes, gate requires your approval.',
+    'Auto + Gate — agent acts, every action logged to audit. No silent moves.',
+    'Auto — disabled in this demo. Production-only, narrowly scoped tools.'
+  ];
+  dialBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (btn.disabled) return;
+      autonomy = parseInt(btn.dataset.level, 10);
+      dialBtns.forEach(function (b) {
+        b.classList.toggle('is-active', b === btn);
+        b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+      });
+      dialNote.textContent = DIAL_NOTES[autonomy];
+      // re-evaluate current proposal state
+      if (current && proposedEl.classList.contains('is-armed') && autonomy === 1 && !running) {
+        approveBtn.disabled = false;
+        denyBtn.disabled = false;
+      } else if (autonomy !== 1) {
+        approveBtn.disabled = true;
+        denyBtn.disabled = true;
+      }
+    });
+  });
+
+  // Only auto-start when the Live panel becomes visible the first time.
+  var started = false;
+  var livePanel = document.getElementById('p-live');
+  function maybeStart() {
+    if (started) return;
+    if (!livePanel.classList.contains('is-active')) return;
+    started = true;
+    setTimeout(runIncident, 600);
+  }
+  // observe panel activation
+  var mo = new MutationObserver(maybeStart);
+  mo.observe(livePanel, { attributes: true, attributeFilter: ['class'] });
+  maybeStart();
 })();
 
 /* ── a quiet hello for the curious ── */
