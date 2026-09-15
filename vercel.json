@@ -2,18 +2,58 @@
   "version": 2,
   "name": "brucedavis-enterprise",
   "builds": [
-    { "src": "*.html", "use": "@vercel/static" },
-    { "src": "*.pdf", "use": "@vercel/static" },
-    { "src": "*.css", "use": "@vercel/static" },
-    { "src": "*.svg", "use": "@vercel/static" },
-    { "src": "lab/**", "use": "@vercel/static" },
-    { "src": "videos/**", "use": "@vercel/static" }
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.pdf",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.svg",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "lab/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "videos/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "demos/**",
+      "use": "@vercel/static"
+    }
   ],
   "routes": [
-    { "src": "/", "dest": "/index.html" },
-    { "src": "/_archive/(.*)", "status": 404 },
-    { "src": "/six-percent-playground.html", "status": 301, "headers": { "Location": "/001-physics-playground.html" } },
-    { "src": "/playground", "dest": "/001-physics-playground.html" },
-    { "src": "/(.*)", "dest": "/$1" }
+    {
+      "src": "/",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/_archive/(.*)",
+      "status": 404
+    },
+    {
+      "src": "/six-percent-playground.html",
+      "status": 301,
+      "headers": {
+        "Location": "/001-physics-playground.html"
+      }
+    },
+    {
+      "src": "/playground",
+      "dest": "/001-physics-playground.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
   ]
 }

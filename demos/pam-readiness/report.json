@@ -1,0 +1,285 @@
+{
+  "as_of": "2026-09-15",
+  "mode": "Read-only planning prototype; synthetic demonstration",
+  "capacity": 4,
+  "summary": {
+    "total": 12,
+    "blocked": 4,
+    "dependency_hold": 2,
+    "capacity_review": 0,
+    "scheduled": 6,
+    "waves": 3
+  },
+  "finding_counts": {
+    "CHANGE": 1,
+    "OWNER": 1,
+    "ROLLBACK": 1,
+    "ROTATION": 2,
+    "VAULT": 2
+  },
+  "waves": [
+    {
+      "wave": 1,
+      "accounts": [
+        "svc-003",
+        "svc-001",
+        "svc-002"
+      ],
+      "highest_criticality": "low"
+    },
+    {
+      "wave": 2,
+      "accounts": [
+        "svc-004",
+        "svc-005"
+      ],
+      "highest_criticality": "medium"
+    },
+    {
+      "wave": 3,
+      "accounts": [
+        "svc-006"
+      ],
+      "highest_criticality": "high"
+    }
+  ],
+  "manual_groups": [],
+  "accounts": [
+    {
+      "id": "svc-001",
+      "platform": "Windows",
+      "owner": "Workplace team",
+      "criticality": "low",
+      "dependency_group": "workplace",
+      "vaulted": true,
+      "rotation_tested": true,
+      "rollback_tested": true,
+      "change_approved": true,
+      "findings": [],
+      "status": "Proposed wave",
+      "wave": 1
+    },
+    {
+      "id": "svc-002",
+      "platform": "SQL",
+      "owner": "Workplace team",
+      "criticality": "low",
+      "dependency_group": "workplace",
+      "vaulted": true,
+      "rotation_tested": true,
+      "rollback_tested": true,
+      "change_approved": true,
+      "findings": [],
+      "status": "Proposed wave",
+      "wave": 1
+    },
+    {
+      "id": "svc-003",
+      "platform": "Linux",
+      "owner": "Reporting team",
+      "criticality": "low",
+      "dependency_group": "reporting",
+      "vaulted": true,
+      "rotation_tested": true,
+      "rollback_tested": true,
+      "change_approved": true,
+      "findings": [],
+      "status": "Proposed wave",
+      "wave": 1
+    },
+    {
+      "id": "svc-004",
+      "platform": "Oracle",
+      "owner": "Finance team",
+      "criticality": "medium",
+      "dependency_group": "finance",
+      "vaulted": true,
+      "rotation_tested": true,
+      "rollback_tested": true,
+      "change_approved": true,
+      "findings": [],
+      "status": "Proposed wave",
+      "wave": 2
+    },
+    {
+      "id": "svc-005",
+      "platform": "SQL",
+      "owner": "Finance team",
+      "criticality": "medium",
+      "dependency_group": "finance",
+      "vaulted": true,
+      "rotation_tested": true,
+      "rollback_tested": true,
+      "change_approved": true,
+      "findings": [],
+      "status": "Proposed wave",
+      "wave": 2
+    },
+    {
+      "id": "svc-006",
+      "platform": "Mainframe",
+      "owner": "Payments team",
+      "criticality": "high",
+      "dependency_group": "payments",
+      "vaulted": true,
+      "rotation_tested": true,
+      "rollback_tested": true,
+      "change_approved": true,
+      "findings": [],
+      "status": "Proposed wave",
+      "wave": 3
+    },
+    {
+      "id": "svc-007",
+      "platform": "Windows",
+      "owner": "",
+      "criticality": "medium",
+      "dependency_group": "hr",
+      "vaulted": false,
+      "rotation_tested": true,
+      "rollback_tested": true,
+      "change_approved": true,
+      "findings": [
+        "OWNER",
+        "VAULT"
+      ],
+      "status": "Blocked",
+      "wave": null
+    },
+    {
+      "id": "svc-008",
+      "platform": "SQL",
+      "owner": "HR team",
+      "criticality": "medium",
+      "dependency_group": "hr",
+      "vaulted": true,
+      "rotation_tested": true,
+      "rollback_tested": true,
+      "change_approved": true,
+      "findings": [],
+      "status": "Dependency hold",
+      "wave": null
+    },
+    {
+      "id": "svc-009",
+      "platform": "Oracle",
+      "owner": "Data team",
+      "criticality": "high",
+      "dependency_group": "data",
+      "vaulted": true,
+      "rotation_tested": false,
+      "rollback_tested": false,
+      "change_approved": true,
+      "findings": [
+        "ROTATION",
+        "ROLLBACK"
+      ],
+      "status": "Blocked",
+      "wave": null
+    },
+    {
+      "id": "svc-010",
+      "platform": "Linux",
+      "owner": "Data team",
+      "criticality": "high",
+      "dependency_group": "data",
+      "vaulted": true,
+      "rotation_tested": true,
+      "rollback_tested": true,
+      "change_approved": true,
+      "findings": [],
+      "status": "Dependency hold",
+      "wave": null
+    },
+    {
+      "id": "svc-011",
+      "platform": "Windows",
+      "owner": "Web team",
+      "criticality": "low",
+      "dependency_group": "web",
+      "vaulted": true,
+      "rotation_tested": true,
+      "rollback_tested": true,
+      "change_approved": false,
+      "findings": [
+        "CHANGE"
+      ],
+      "status": "Blocked",
+      "wave": null
+    },
+    {
+      "id": "svc-012",
+      "platform": "Linux",
+      "owner": "Integration team",
+      "criticality": "medium",
+      "dependency_group": "integration",
+      "vaulted": false,
+      "rotation_tested": false,
+      "rollback_tested": true,
+      "change_approved": true,
+      "findings": [
+        "VAULT",
+        "ROTATION"
+      ],
+      "status": "Blocked",
+      "wave": null
+    }
+  ],
+  "tasks": [
+    {
+      "id": "svc-007:OWNER",
+      "account": "svc-007",
+      "action": "Assign and confirm an accountable application owner.",
+      "suggested_team": "Application management",
+      "owner": "Unassigned"
+    },
+    {
+      "id": "svc-007:VAULT",
+      "account": "svc-007",
+      "action": "Complete vault onboarding and verify credential retrieval.",
+      "suggested_team": "PAM engineering",
+      "owner": "Unassigned"
+    },
+    {
+      "id": "svc-009:ROTATION",
+      "account": "svc-009",
+      "action": "Validate rotation with the dependent application.",
+      "suggested_team": "Platform engineering",
+      "owner": "Data team"
+    },
+    {
+      "id": "svc-009:ROLLBACK",
+      "account": "svc-009",
+      "action": "Test and document the credential recovery procedure.",
+      "suggested_team": "Platform engineering",
+      "owner": "Data team"
+    },
+    {
+      "id": "svc-011:CHANGE",
+      "account": "svc-011",
+      "action": "Obtain change approval for the proposed rollout.",
+      "suggested_team": "Change management",
+      "owner": "Web team"
+    },
+    {
+      "id": "svc-012:VAULT",
+      "account": "svc-012",
+      "action": "Complete vault onboarding and verify credential retrieval.",
+      "suggested_team": "PAM engineering",
+      "owner": "Integration team"
+    },
+    {
+      "id": "svc-012:ROTATION",
+      "account": "svc-012",
+      "action": "Validate rotation with the dependent application.",
+      "suggested_team": "Platform engineering",
+      "owner": "Integration team"
+    }
+  ],
+  "assumptions": [
+    "All gates are self-reported inventory fields, not independently verified controls.",
+    "Shared dependency_group values identify accounts that must be planned together; dependency discovery is out of scope.",
+    "Wave capacity is an account-count planning limit, not an effort or calendar estimate.",
+    "Each wave requires human validation, a confirmed change window, and a go/no-go decision. No account changes are performed."
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "scope": "Synthetic design review; assumptions require technical validation",
+  "subnets": [
+    {
+      "id": "web",
+      "cidr": "10.20.1.0/24"
+    },
+    {
+      "id": "application",
+      "cidr": "10.20.2.0/24"
+    },
+    {
+      "id": "data",
+      "cidr": "10.20.3.0/24"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "web-gateway",
+      "subnet": "web",
+      "owner": "Web team",
+      "criticality": "medium",
+      "instances": 2,
+      "backup_tested": true,
+      "depends_on": [
+        "app-service"
+      ]
+    },
+    {
+      "id": "app-service",
+      "subnet": "application",
+      "owner": "App team",
+      "criticality": "high",
+      "instances": 1,
+      "backup_tested": true,
+      "depends_on": [
+        "identity-service",
+        "database"
+      ]
+    },
+    {
+      "id": "identity-service",
+      "subnet": "application",
+      "owner": "Identity team",
+      "criticality": "high",
+      "instances": 2,
+      "backup_tested": true,
+      "depends_on": []
+    },
+    {
+      "id": "database",
+      "subnet": "data",
+      "owner": "",
+      "criticality": "high",
+      "instances": 2,
+      "backup_tested": false,
+      "depends_on": []
+    }
+  ],
+  "connections": [
+    {
+      "source": "internet",
+      "target": "web-gateway",
+      "port": 443
+    },
+    {
+      "source": "web-gateway",
+      "target": "app-service",
+      "port": 443
+    },
+    {
+      "source": "app-service",
+      "target": "identity-service",
+      "port": 443
+    },
+    {
+      "source": "app-service",
+      "target": "database",
+      "port": 1433
+    },
+    {
+      "source": "internet",
+      "target": "database",
+      "port": 1433
+    }
+  ],
+  "findings": [
+    {
+      "code": "REDUNDANCY",
+      "component": "app-service",
+      "reason": "Review a single-instance component supporting a high-criticality workload."
+    },
+    {
+      "code": "OWNER",
+      "component": "database",
+      "reason": "Confirm an accountable technical owner."
+    },
+    {
+      "code": "RECOVERY",
+      "component": "database",
+      "reason": "Validate recovery evidence against workload recovery objectives."
+    },
+    {
+      "code": "PUBLIC_ADMIN_DATA",
+      "component": "database",
+      "reason": "Review public access on port 1433; document intended restricted access."
+    }
+  ],
+  "provisioning_stages": [
+    [
+      "database",
+      "identity-service"
+    ],
+    [
+      "app-service"
+    ],
+    [
+      "web-gateway"
+    ]
+  ],
+  "unsequenced": [],
+  "summary": {
+    "components": 4,
+    "subnets": 3,
+    "findings": 4,
+    "sequenced": 4
+  }
+}

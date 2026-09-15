@@ -1,0 +1,96 @@
+{
+  "scope": "Synthetic plan; no change execution or approval actions",
+  "changes": [
+    {
+      "id": "CHG-001",
+      "owner": "Technical lead 1",
+      "resource": "Network team",
+      "start": "2026-10-01T18:00:00-04:00",
+      "end": "2026-10-01T19:00:00-04:00",
+      "depends_on": [],
+      "approved": true,
+      "tested": true,
+      "rollback_ready": true,
+      "evidence": "SYNTHETIC-EVIDENCE-1",
+      "findings": [],
+      "status": "Ready for review"
+    },
+    {
+      "id": "CHG-002",
+      "owner": "Technical lead 2",
+      "resource": "Platform team",
+      "start": "2026-10-01T19:00:00-04:00",
+      "end": "2026-10-01T20:00:00-04:00",
+      "depends_on": [
+        "CHG-001"
+      ],
+      "approved": true,
+      "tested": true,
+      "rollback_ready": true,
+      "evidence": "SYNTHETIC-EVIDENCE-2",
+      "findings": [],
+      "status": "Ready for review"
+    },
+    {
+      "id": "CHG-003",
+      "owner": "Technical lead 3",
+      "resource": "Database team",
+      "start": "2026-10-01T19:00:00-04:00",
+      "end": "2026-10-01T21:00:00-04:00",
+      "depends_on": [],
+      "approved": true,
+      "tested": true,
+      "rollback_ready": true,
+      "evidence": "SYNTHETIC-EVIDENCE-3",
+      "findings": [],
+      "status": "Ready for review"
+    },
+    {
+      "id": "CHG-004",
+      "owner": "Technical lead 4",
+      "resource": "PAM team",
+      "start": "2026-10-01T21:00:00-04:00",
+      "end": "2026-10-01T22:00:00-04:00",
+      "depends_on": [
+        "CHG-002"
+      ],
+      "approved": true,
+      "tested": true,
+      "rollback_ready": true,
+      "evidence": "SYNTHETIC-EVIDENCE-4",
+      "findings": [],
+      "status": "Ready for review"
+    }
+  ],
+  "summary": {
+    "total": 4,
+    "blocked": 0,
+    "ready_for_review": 4
+  },
+  "comparison": {
+    "added": [],
+    "removed": [],
+    "status_changes": [
+      {
+        "id": "CHG-001",
+        "before": "Blocked",
+        "after": "Ready for review"
+      },
+      {
+        "id": "CHG-002",
+        "before": "Blocked",
+        "after": "Ready for review"
+      },
+      {
+        "id": "CHG-003",
+        "before": "Blocked",
+        "after": "Ready for review"
+      },
+      {
+        "id": "CHG-004",
+        "before": "Blocked",
+        "after": "Ready for review"
+      }
+    ]
+  }
+}
