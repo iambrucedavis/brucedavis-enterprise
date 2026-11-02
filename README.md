@@ -14,4 +14,4 @@ The former `blueprint-theme.css` URL imports the shared theme for compatibility;
 
 Run `python3 -m http.server 8768` from this directory and open `http://localhost:8768/`. There is no build step. `vercel.json` includes the fonts, reports, videos and Lab modules as static assets.
 
-Both resume PDF URLs serve the supplied one-page resume. Keep their contents synchronized with the source resume when updating them. HTML resume pages offer the site-styled reading alternative.
+Both resume PDF URLs serve the same one-page resume. The public HTML resume is the editable source for both downloads. After an approved content update, `tools/resume/build_resume.py` regenerates the PDFs using ReportLab and embedded Arial fonts from the local macOS system. This authoring tool is not part of the website runtime. Render and inspect the result before releasing it; keep the supplied original PDF unchanged. HTML resume pages offer the site-styled reading alternative.
