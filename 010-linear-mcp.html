@@ -4,26 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Integration for Linear — Bruce Davis</title>
-<meta name="description" content="A tool that connects an AI assistant to Linear, the app software teams use to track their work. Six focused tools, a full test suite, and a written security review.">
+<meta name="description" content="Connects an assistant to project-tracking information so it can help summarize work and scope tasks. Designed to read information rather than change it. Personal work supporting Bruce Davis’s Technical Project Manager portfolio.">
 <meta property="og:title" content="AI Integration for Linear — Bruce Davis">
-<meta property="og:description" content="A tool that lets an AI assistant help run Linear. Six focused tools, a real test suite, and a written security review.">
+<meta property="og:description" content="Connects an assistant to project-tracking information so it can help summarize work and scope tasks. Designed to read information rather than change it. Personal work supporting Bruce Davis’s Technical Project Manager portfolio.">
 <meta property="og:type" content="website">
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
 
 /* ─── TOKENS — formal register ─────── */
 :root {
-  --paper:        #0A0E1A;
-  --paper-clean:  #121826;
-  --paper-deep:   #1A2236;
-  --ink:          #F5F7FA;
-  --ink-soft:     #C1C7D0;
-  --mute:         #7A8392;
-  --mute-soft:    #9CA3AF;
-  --signal:       #0066FF;
-  --signal-rgb:   0,102,255;
-  --hairline:        rgba(255,255,255,.08);
-  --hairline-strong: rgba(255,255,255,.18);
+  --paper:#FAF8F5;
+  --paper-clean:#F1EDE8;
+  --paper-deep:#F7E8EB;
+  --ink:#20242B;
+  --ink-soft:#55514E;
+  --mute:#706A65;
+  --mute-soft:#706A65;
+  --signal:#B42335;
+  --signal-rgb:180,35,53;
+  --hairline:#DDD6D0;
+  --hairline-strong:#A89D94;
   --display: 'Anton', 'Bebas Neue', Impact, sans-serif;
   --serif:   'EB Garamond', Georgia, serif;
   --mono:    'Space Mono', ui-monospace, monospace;
@@ -32,14 +32,14 @@
   --m-fast: 60ms  cubic-bezier(.2,0,0,1);
   --m-base: 140ms cubic-bezier(.2,0,0,1);
   /* aliases — keep inline-styled body content valid */
-  --bg: var(--paper);
-  --surface: var(--paper-clean);
-  --surface-hi: var(--paper-deep);
-  --border: var(--hairline);
-  --border-hi: var(--hairline-strong);
-  --text: var(--ink);
-  --text-dim: var(--ink-soft);
-  --text-muted: var(--mute);
+  --bg:#FAF8F5;
+  --surface:#F1EDE8;
+  --surface-hi:#F7E8EB;
+  --border:#DDD6D0;
+  --border-hi:#A89D94;
+  --text:#20242B;
+  --text-dim:#55514E;
+  --text-muted:#706A65;
 }
 
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
@@ -211,27 +211,20 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   html { scroll-behavior:auto; }
 }
 </style>
-<link rel="stylesheet" href="blueprint-theme.css">
+<style>
+.project-context {max-width:1280px;margin:76px auto 0;padding:18px 24px;background:#8D1828;color:#B42335;border:1px solid #B42335;font:16px/1.5 system-ui,sans-serif;position:relative;z-index:2;} .project-context a{color:#B42335;text-underline-offset:4px;}
+</style><link rel="stylesheet" href="portfolio-chrome.css"><script src="navigation.js" defer></script><link rel="stylesheet" href="portfolio-theme.css">
 </head>
 <body>
 
-<nav id="top-nav">
-  <a href="index.html" class="nav-back">← Bruce Davis</a>
-  <div class="nav-links">
-    <a href="index.html#work">Work</a>
-    <a href="about.html">About</a>
-    <a href="bruce-davis-resume.html">Resume</a>
-    <a href="index.html#contact">Contact</a>
-  </div>
-</nav>
+
+<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal technical experiment</strong> · Separate from employer deliverables. Older metrics and external integrations have not been revalidated in this review. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-pre">MCP Server · Threat-Modeled · Open Source</div>
   <h1 id="hero-hl">Linear MCP<br>Server</h1>
-  <p class="hero-sub">
-    Production-grade MCP server for Linear. Six tools, a 30-case evaluation harness, a documented threat model, per-tool cost analysis. Read-only by design — the gate that makes it enterprise-adoptable.
-  </p>
+  <p class="hero-sub">Connects an assistant to project-tracking information so it can help summarize work and scope tasks. Designed to read information rather than change it.</p>
   <div class="hero-meta">
     <span>6 MCP tools</span>
     <span>93% eval pass rate</span>
@@ -253,8 +246,8 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <p>An open-source MCP server that lets Claude (or any MCP client) operate on a Linear workspace safely. Six tools for inbox triage, scoping, velocity audit, and status reporting. Read-only — no destructive operations exist in the codebase.</p>
       </div>
       <div class="glance-col">
-        <h3>Maps to</h3>
-        <p class="glance-roles"><span>AI / Agent Engineer</span> · <span>AI Platform Engineer</span> · <span>Applied AI Engineer</span> · <span>AI Security Engineer</span></p>
+        <h3>Portfolio context</h3>
+        <p class="glance-roles">Personal exploration of technical design, workflow decisions, and UX. Supports the Technical Project Manager portfolio.</p>
         <h3 style="margin-top:22px;">Skills demonstrated</h3>
         <ul>
           <li>Production MCP server design (TypeScript SDK)</li>
@@ -472,7 +465,7 @@ if (motionOK) {
 
 /* ── 6% — easter egg */
 console.log('%c// 6% — small change. whole product.', 'color:#E1261C;font-family:monospace;letter-spacing:.04em;');
-console.log('%c// bruce davis · 2026', 'color:#8A847A;font-family:monospace;letter-spacing:.04em;');
+console.log('%c// bruce davis · 2026', 'color:#706A65;font-family:monospace;letter-spacing:.04em;');
 </script>
 
 </body>

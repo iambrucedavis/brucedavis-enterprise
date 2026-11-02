@@ -2,15 +2,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
   <defs>
     <style>
-      .ln { fill: none; stroke: #b8d4ee; stroke-width: 1; }
-      .ln-thin { fill: none; stroke: #b8d4ee; stroke-width: .5; opacity: .7; }
-      .ln-thick { fill: none; stroke: #b8d4ee; stroke-width: 1.5; }
-      .ln-dash { fill: none; stroke: #b8d4ee; stroke-width: 1; stroke-dasharray: 6 4; }
-      .ln-center { fill: none; stroke: #b8d4ee; stroke-width: .8; stroke-dasharray: 14 3 2 3; }
-      .lbl { font-family: 'Space Mono', monospace; font-size: 9px; fill: #b8d4ee; letter-spacing: .15em; text-transform: uppercase; }
-      .lbl-sm { font-family: 'Space Mono', monospace; font-size: 7.5px; fill: #b8d4ee; letter-spacing: .12em; }
-      .lbl-num { font-family: 'Space Mono', monospace; font-size: 8.5px; fill: #b8d4ee; letter-spacing: .04em; }
-      .arr { fill: #b8d4ee; }
+      .ln { fill: none; stroke: #82766B; stroke-width: 1; }
+      .ln-thin { fill: none; stroke: #82766B; stroke-width: .5; opacity: .7; }
+      .ln-thick { fill: none; stroke: #82766B; stroke-width: 1.5; }
+      .ln-dash { fill: none; stroke: #82766B; stroke-width: 1; stroke-dasharray: 6 4; }
+      .ln-center { fill: none; stroke: #82766B; stroke-width: .8; stroke-dasharray: 14 3 2 3; }
+      .lbl { font-family: 'Space Mono', monospace; font-size: 9px; fill: #82766B; letter-spacing: .15em; text-transform: uppercase; }
+      .lbl-sm { font-family: 'Space Mono', monospace; font-size: 7.5px; fill: #82766B; letter-spacing: .12em; }
+      .lbl-num { font-family: 'Space Mono', monospace; font-size: 8.5px; fill: #82766B; letter-spacing: .04em; }
+      .arr { fill: #82766B; }
     </style>
     <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
       <path d="M0,0 L10,5 L0,10 Z" class="arr"/>

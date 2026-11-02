@@ -4,23 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IT Support Copilot for Teams — Bruce Davis</title>
-<meta name="description" content="A Microsoft Teams copilot that handles internal IT requests end-to-end. Bot Framework + Microsoft Graph + Azure OpenAI + a deterministic policy engine. Self-serve, auto-fulfill, escalate, or deny — every decision auditable.">
+<meta name="description" content="Explores how an employee’s IT request could be fulfilled, escalated for approval, or declined under explicit rules. A personal prototype, separate from employer work. Personal work supporting Bruce Davis’s Technical Project Manager portfolio.">
 <meta property="og:title" content="IT Support Copilot for Teams — Bruce Davis">
-<meta property="og:description" content="A Teams-deployed AI copilot for internal IT support. Microsoft Graph for identity, Azure OpenAI for reasoning, a rules-based policy engine for the access decision.">
+<meta property="og:description" content="Explores how an employee’s IT request could be fulfilled, escalated for approval, or declined under explicit rules. A personal prototype, separate from employer work. Personal work supporting Bruce Davis’s Technical Project Manager portfolio.">
 <meta property="og:type" content="website">
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
 :root {
-  --paper:#0A0E1A; --paper-clean:#121826; --paper-deep:#1A2236;
-  --ink:#F5F7FA; --ink-soft:#C1C7D0; --mute:#7A8392; --mute-soft:#9CA3AF;
-  --signal:#0066FF; --signal-rgb:0,102,255;
-  --hairline:rgba(255,255,255,.08); --hairline-strong:rgba(255,255,255,.18);
+  --paper:#FAF8F5; --paper-clean:#F1EDE8; --paper-deep:#F7E8EB;
+  --ink:#20242B; --ink-soft:#55514E; --mute:#706A65; --mute-soft:#706A65;
+  --signal:#B42335; --signal-rgb:180,35,53;
+  --hairline:#DDD6D0; --hairline-strong:#A89D94;
   --display:'Anton','Bebas Neue',Impact,sans-serif;
   --serif:'EB Garamond',Georgia,serif;
   --mono:'Space Mono',ui-monospace,monospace;
   --shadow:0 0 0 1px var(--hairline-strong);
   --m-base:140ms cubic-bezier(.2,0,0,1);
-  --self:#2F7D4F; --auto:#3A6BA8; --esc:#9A6B12; --deny:#B5302A;
+  --self:#2F7D4F; --auto:#8D1828; --esc:#9A6B12; --deny:#B5302A;
 }
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
 html { scroll-behavior:smooth; }
@@ -89,7 +89,7 @@ a { color:inherit; text-decoration:none; }
 .bubble.user .bubble-meta { text-align:right; }
 .bubble-policy { display:inline-block; font-family:var(--mono); font-size:10px; padding:3px 8px; margin-top:8px; border-radius:3px; letter-spacing:.06em; text-transform:uppercase; }
 .bubble-policy.self  { color:var(--self); background:rgba(47,125,79,.12); border:1px solid var(--self); }
-.bubble-policy.auto  { color:var(--auto); background:rgba(58,107,168,.12); border:1px solid var(--auto); }
+.bubble-policy.auto  { color:var(--auto); background:rgba(180,35,53,.10); border:1px solid var(--auto); }
 .bubble-policy.esc   { color:var(--esc); background:rgba(154,107,18,.12); border:1px solid var(--esc); }
 .bubble-policy.deny  { color:var(--deny); background:rgba(181,48,42,.12); border:1px solid var(--deny); }
 .bubble-trace { font-family:var(--mono); font-size:10px; color:var(--mute); margin-top:8px; padding-top:8px; border-top:1px dashed var(--hairline); line-height:1.7; }
@@ -149,27 +149,20 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   html { scroll-behavior:auto; }
 }
 </style>
-<link rel="stylesheet" href="blueprint-theme.css">
+<style>
+.project-context {max-width:1280px;margin:76px auto 0;padding:18px 24px;background:#8D1828;color:#B42335;border:1px solid #B42335;font:16px/1.5 system-ui,sans-serif;position:relative;z-index:2;} .project-context a{color:#B42335;text-underline-offset:4px;}
+</style><link rel="stylesheet" href="portfolio-chrome.css"><script src="navigation.js" defer></script><link rel="stylesheet" href="portfolio-theme.css">
 </head>
 <body>
 
-<nav id="top-nav">
-  <a href="index.html" class="nav-back">← Bruce Davis</a>
-  <div class="nav-links">
-    <a href="index.html#work">Work</a>
-    <a href="about.html">About</a>
-    <a href="bruce-davis-resume.html">Resume</a>
-    <a href="index.html#contact">Contact</a>
-  </div>
-</nav>
+
+<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal technical experiment</strong> · Separate from employer deliverables. Older metrics and external integrations have not been revalidated in this review. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-pre">Microsoft Teams · Bot Framework · Azure OpenAI · Microsoft Graph</div>
   <h1 id="hero-hl">IT Support<br>Copilot</h1>
-  <p class="hero-sub">
-    A Teams-deployed copilot that handles internal IT requests end-to-end — password resets, VPN access, group memberships, laptop tickets. Azure OpenAI for reasoning, Microsoft Graph for identity, a deterministic policy engine for the decision. Self-serve, auto-fulfill, escalate, or deny — every outcome auditable.
-  </p>
+  <p class="hero-sub">Explores how an employee’s IT request could be fulfilled, escalated for approval, or declined under explicit rules. A personal prototype, separate from employer work.</p>
   <div class="hero-meta">
     <span>Bot Framework · Teams</span>
     <span>Azure OpenAI · Graph SDK</span>
@@ -191,8 +184,8 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <p>A complete internal-IT copilot stack — Teams Bot Framework wraps a FastAPI endpoint that calls Azure OpenAI with four Microsoft-Graph-backed tools. The LLM picks tools; a separate rule-based policy engine decides what happens. Runs offline against fixture data by default so the demo always works; <code style="font-family:var(--mono);font-size:14px;color:var(--ink);">GRAPH_MODE=live</code> swaps in real Microsoft Graph via managed identity.</p>
       </div>
       <div class="glance-col">
-        <h3>Maps to</h3>
-        <p class="glance-roles"><span>AI Transformation Lead</span> · <span>Microsoft Copilot Engineer</span> · <span>Enterprise AI Architect</span> · <span>Identity Engineer (Microsoft)</span></p>
+        <h3>Portfolio context</h3>
+        <p class="glance-roles">Personal exploration of technical design, workflow decisions, and UX. Supports the Technical Project Manager portfolio.</p>
         <h3 style="margin-top:22px;">Skills demonstrated</h3>
         <ul>
           <li>Bot Framework v4 adapter + Teams app manifest</li>
@@ -332,7 +325,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
     <h2 class="dv-title">What the LLM can call.</h2>
     <p class="dv-desc">Tools are intentionally narrow. Each one does exactly one thing, returns a JSON-shaped result, and is composable with the others.</p>
 
-    <table class="tool-table">
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Scrollable data table"><table class="tool-table">
       <thead>
         <tr><th>Tool</th><th>Purpose</th><th>Side effects</th></tr>
       </thead>
@@ -342,7 +335,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <tr><td class="tname">search_kb</td><td class="tdesc">Token-set scoring against title + tags + summary. Returns top articles. Used to answer self-service questions before considering a group change.</td><td class="tside">None</td></tr>
         <tr><td class="tname">request_access</td><td class="tdesc">POST to Microsoft Graph's <code>/groups/{id}/members/$ref</code>. Only callable after the policy engine has returned <strong style="color:var(--auto);">auto_fulfill</strong>.</td><td class="tside" style="color:var(--auto);">Mutates Graph</td></tr>
       </tbody>
-    </table>
+    </table></div>
   </div>
 </div>
 
@@ -435,7 +428,7 @@ if (motionOK) {
 }
 
 console.log('%c// 6% — small change. whole product.', 'color:#E1261C;font-family:monospace;letter-spacing:.04em;');
-console.log('%c// bruce davis · 2026', 'color:#8A847A;font-family:monospace;letter-spacing:.04em;');
+console.log('%c// bruce davis · 2026', 'color:#706A65;font-family:monospace;letter-spacing:.04em;');
 </script>
 
 </body>

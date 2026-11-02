@@ -46,12 +46,12 @@ export function launchFamiliar(stage, opts = {}) {
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   renderer.setSize(W(), H());
-  renderer.setClearColor(0x0b0b0b, 1);
+  renderer.setClearColor(0xfaf8f5, 1);
   stage.appendChild(renderer.domElement);
 
   scene.add(new THREE.AmbientLight(0xffffff, 0.4));
   const keyLight = new THREE.PointLight(0xfff0c4, 90, 40); keyLight.position.set(5, 6, 7); scene.add(keyLight);
-  const coolLight = new THREE.PointLight(0x8893ff, 26, 40); coolLight.position.set(-7, -4, -3); scene.add(coolLight);
+  const coolLight = new THREE.PointLight(0xb98d92, 26, 40); coolLight.position.set(-7, -4, -3); scene.add(coolLight);
 
   const familiar = new THREE.Group();
   scene.add(familiar);
@@ -61,14 +61,14 @@ export function launchFamiliar(stage, opts = {}) {
   const geo = new THREE.IcosahedronGeometry(R, 4);
   const base = Float32Array.from(geo.attributes.position.array);
   const bodyMat = new THREE.MeshStandardMaterial({
-    color: 0xe9e3d2, emissive: 0xe34234, emissiveIntensity: 0.2, roughness: 0.5, metalness: 0.0,
+    color: 0xe9e3d2, emissive: 0xb42335, emissiveIntensity: 0.2, roughness: 0.5, metalness: 0.0,
   });
   const body = new THREE.Mesh(geo, bodyMat);
   familiar.add(body);
 
   /* halo — a soft additive shell so the creature reads as glowing */
   const haloMat = new THREE.MeshBasicMaterial({
-    color: 0xe34234, transparent: true, opacity: 0.06,
+    color: 0xb42335, transparent: true, opacity: 0.06,
     side: THREE.BackSide, blending: THREE.AdditiveBlending, depthWrite: false,
   });
   const halo = new THREE.Mesh(new THREE.IcosahedronGeometry(R * 1.4, 2), haloMat);
@@ -76,7 +76,7 @@ export function launchFamiliar(stage, opts = {}) {
 
   /* eyes */
   const whiteMat = new THREE.MeshStandardMaterial({ color: 0xf3eedd, roughness: 0.35 });
-  const pupilMat = new THREE.MeshStandardMaterial({ color: 0x0b0b0b, roughness: 0.2 });
+  const pupilMat = new THREE.MeshStandardMaterial({ color: 0x20242b, roughness: 0.2 });
   const eyeGeos = [];
   function makeEye(x) {
     const g = new THREE.Group();
@@ -188,7 +188,7 @@ export function launchFamiliar(stage, opts = {}) {
     const ring = new THREE.Mesh(
       new THREE.RingGeometry(R * 1.05, R * 1.12, 56),
       new THREE.MeshBasicMaterial({
-        color: 0xe34234, transparent: true, opacity: 0.55,
+        color: 0xb42335, transparent: true, opacity: 0.55,
         side: THREE.DoubleSide, depthWrite: false,
       }),
     );

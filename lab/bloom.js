@@ -295,7 +295,7 @@ export function launchBloom(stage, opts = {}) {
     ctx.beginPath();
     ctx.moveTo(p.x, soilY);
     ctx.quadraticCurveTo(midX, midY, top.x, top.y);
-    ctx.strokeStyle = 'rgba(236,231,219,0.82)';
+    ctx.strokeStyle = 'rgba(32,36,43,0.82)';
     ctx.lineWidth = 2.4;
     ctx.lineCap = 'round';
     ctx.stroke();
@@ -309,7 +309,7 @@ export function launchBloom(stage, opts = {}) {
       ctx.rotate(p.leanDir * (0.5 + Math.sin(p.sway) * 0.12));
       ctx.beginPath();
       ctx.ellipse(p.leanDir * 11, 0, 12, 5, 0, 0, 6.2832);
-      ctx.fillStyle = 'rgba(236,231,219,0.5)';
+      ctx.fillStyle = 'rgba(32,36,43,0.5)';
       ctx.fill();
       ctx.restore();
     }
@@ -321,9 +321,9 @@ export function launchBloom(stage, opts = {}) {
       const pulse = 3.4 + levelSmooth * 7;
       ctx.beginPath();
       ctx.arc(top.x, top.y, pulse, 0, 6.2832);
-      ctx.fillStyle = '#E34234';
+      ctx.fillStyle = '#B42335';
       ctx.shadowBlur = 16 + levelSmooth * 26;
-      ctx.shadowColor = 'rgba(227,66,52,0.9)';
+      ctx.shadowColor = 'rgba(180,35,53,0.9)';
       ctx.fill();
       ctx.shadowBlur = 0;
     }
@@ -338,14 +338,14 @@ export function launchBloom(stage, opts = {}) {
     ctx.save();
     ctx.translate(x, y);
     ctx.rotate(p.sway * 0.05);
-    ctx.shadowBlur = 14; ctx.shadowColor = 'rgba(227,66,52,0.5)';
+    ctx.shadowBlur = 14; ctx.shadowColor = 'rgba(180,35,53,0.5)';
     /* petals */
     for (let i = 0; i < b.petals; i++) {
       ctx.save();
       ctx.rotate((i / b.petals) * 6.2832);
       ctx.beginPath();
       ctx.ellipse(0, -r * 0.62 * breathe, r * 0.34, r * 0.62 * breathe, 0, 0, 6.2832);
-      ctx.fillStyle = '#E34234';
+      ctx.fillStyle = '#B42335';
       ctx.fill();
       ctx.restore();
     }
@@ -353,7 +353,7 @@ export function launchBloom(stage, opts = {}) {
     /* core */
     ctx.beginPath();
     ctx.arc(0, 0, r * 0.3, 0, 6.2832);
-    ctx.fillStyle = '#ECE7DB';
+    ctx.fillStyle = '#20242B';
     ctx.fill();
     ctx.beginPath();
     ctx.arc(0, 0, r * 0.16, 0, 6.2832);
@@ -367,13 +367,13 @@ export function launchBloom(stage, opts = {}) {
 
     /* soil glow */
     const g = ctx.createLinearGradient(0, soilY - 60, 0, H);
-    g.addColorStop(0, 'rgba(227,66,52,0)');
-    g.addColorStop(1, 'rgba(227,66,52,0.06)');
+    g.addColorStop(0, 'rgba(180,35,53,0)');
+    g.addColorStop(1, 'rgba(180,35,53,0.06)');
     ctx.fillStyle = g;
     ctx.fillRect(0, soilY - 60, W, H - soilY + 60);
     ctx.beginPath();
     ctx.moveTo(0, soilY); ctx.lineTo(W, soilY);
-    ctx.strokeStyle = 'rgba(236,231,219,0.28)';
+    ctx.strokeStyle = 'rgba(32,36,43,0.28)';
     ctx.lineWidth = 1;
     ctx.stroke();
 
@@ -381,7 +381,7 @@ export function launchBloom(stage, opts = {}) {
     for (const m of motes) {
       ctx.beginPath();
       ctx.arc(m.x, m.y, m.r, 0, 6.2832);
-      ctx.fillStyle = 'rgba(227,66,52,0.34)';
+      ctx.fillStyle = 'rgba(180,35,53,0.34)';
       ctx.fill();
     }
 
@@ -395,9 +395,9 @@ export function launchBloom(stage, opts = {}) {
       if (b.ring < 0.18) {
         const fk = 1 - b.ring / 0.18;
         ctx.globalAlpha = fk;
-        ctx.fillStyle = '#FFF4F1';
+        ctx.fillStyle = '#20242B';
         ctx.shadowBlur = 30 * fk;
-        ctx.shadowColor = 'rgba(227,66,52,0.95)';
+        ctx.shadowColor = 'rgba(180,35,53,0.95)';
         ctx.beginPath();
         ctx.arc(b.x, b.y, 5 + fk * 17, 0, 6.2832);
         ctx.fill();
@@ -407,7 +407,7 @@ export function launchBloom(stage, opts = {}) {
       if (b.ring < 0.55) {
         const rk = b.ring / 0.55;
         ctx.globalAlpha = (1 - rk) * 0.7;
-        ctx.strokeStyle = '#FBDED9';
+        ctx.strokeStyle = '#20242B';
         ctx.lineWidth = 2.5 * (1 - rk);
         ctx.beginPath();
         ctx.arc(b.x, b.y, 8 + rk * 62, 0, 6.2832);
@@ -418,11 +418,11 @@ export function launchBloom(stage, opts = {}) {
         if (k >= 1) continue;
         const fade = 1 - k;
         ctx.globalAlpha = Math.min(1, fade * 1.7);
-        ctx.fillStyle = pt.tint < 0.4 ? '#E34234'
-          : pt.tint < 0.62 ? '#EF7E6B'
-            : pt.tint < 0.82 ? '#FBDED9' : '#ECE7DB';
+        ctx.fillStyle = pt.tint < 0.4 ? '#B42335'
+          : pt.tint < 0.62 ? '#A9636C'
+            : pt.tint < 0.82 ? '#20242B' : '#20242B';
         ctx.shadowBlur = 14 * fade;
-        ctx.shadowColor = 'rgba(227,66,52,0.85)';
+        ctx.shadowColor = 'rgba(180,35,53,0.85)';
         if (pt.kind === 'petal') {
           ctx.save();
           ctx.translate(pt.x, pt.y);

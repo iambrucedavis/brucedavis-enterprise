@@ -6,33 +6,33 @@
 <title>Security UX Concept — Bruce Davis</title>
 <meta property="og:title" content="Security UX Concept — Bruce Davis">
 <meta property="og:type" content="website">
-<meta property="og:description" content="A security awareness training surface that borrows the visual language of the threat itself — HUD UI, scan lines, threat pulse, a playable 'spot the phish' round.">
+<meta property="og:description" content="A concept study of security awareness that lets visitors practice spotting phishing messages. Personal work supporting Bruce Davis’s Technical Project Manager portfolio.">
 <!-- Security UX concept. Concept study, not a deployed product. -->
-<meta name="description" content="A security awareness training surface that borrows the visual language of the threat itself — HUD UI, scan lines, threat pulse, a playable 'spot the phish' round. Motion, empty states, and behavioral interaction design — applied to a surface that usually skips all three.">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<meta name="description" content="A concept study of security awareness that lets visitors practice spotting phishing messages. Personal work supporting Bruce Davis’s Technical Project Manager portfolio.">
+
 <style>
 
 /* ─── TOKENS ──────────────────────────────────── */
 :root{
-  --bg:           #0A0E1A;
-  --bg-deep:      #05080F;
-  --surface:      #121826;
-  --surface-hi:   #1A2236;
-  --border:       rgba(255,255,255,.08);
-  --border-hi:    rgba(255,255,255,.18);
-  --text:         #F5F7FA;
-  --text-dim:     #C1C7D0;
-  --text-muted:   #7A8392;
-  --signal:       #0066FF;
-  --signal-rgb:   0,102,255;
-  --amber:        #0066FF;
-  --amber-rgb:    0,102,255;
-  --teal:         #2AB6A4;
-  --teal-rgb:     42,182,164;
-  --threat:       #FF3550;
-  --threat-rgb:   255,53,80;
-  --ok:           #2BD89F;
-  --ok-rgb:       43,216,159;
+  --bg:#FAF8F5;
+  --bg-deep:#F1EDE8;
+  --surface:#F1EDE8;
+  --surface-hi:#F7E8EB;
+  --border:#DDD6D0;
+  --border-hi:#A89D94;
+  --text:#20242B;
+  --text-dim:#55514E;
+  --text-muted:#706A65;
+  --signal:#B42335;
+  --signal-rgb:180,35,53;
+  --amber:#B42335;
+  --amber-rgb:180,35,53;
+  --teal:#55514E;
+  --teal-rgb:85,81,78;
+  --threat:#B42335;
+  --threat-rgb:180,35,53;
+  --ok:#2F674D;
+  --ok-rgb:47,103,77;
   --mono:         'Space Mono', monospace;
 }
 /* ─── RESET ───────────────────────────────────── */
@@ -108,7 +108,7 @@ body::before{
   display:flex;align-items:center;justify-content:space-between;
   padding:18px 32px;
   border-bottom:1px solid var(--border);
-  background:rgba(10,14,15,.92);
+  background:rgba(250,248,245,.96);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
 }
 .nav-back{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--text-dim);transition:color .2s;}
@@ -224,15 +224,15 @@ body::before{
 .fake-before{
   margin-top:22px;
   padding:18px;
-  background:#fafaf6;color:#22272e;
+  background:#FAF8F5;color:#FAF8F5;
   font-family:Arial,sans-serif;font-size:11px;
-  border:1px solid #d0d2d0;border-radius:2px;
+  border:1px solid #20242B;border-radius:2px;
 }
-.fake-before-h{font-weight:bold;font-size:13px;margin-bottom:8px;color:#0a3d8f;}
-.fake-before p{margin-bottom:6px;line-height:1.4;color:#333;}
+.fake-before-h{font-weight:bold;font-size:13px;margin-bottom:8px;color:#8D1828;}
+.fake-before p{margin-bottom:6px;line-height:1.4;color:#FAF8F5;}
 .fake-before .stock-btn{
   display:inline-block;margin-top:10px;
-  padding:6px 14px;background:#1f7adf;color:#fff;
+  padding:6px 14px;background:#B42335;color:#20242B;
   font-size:11px;border-radius:2px;
 }
 
@@ -514,7 +514,7 @@ body::before{
 /* end-of-round modal */
 .round-end{
   position:absolute;inset:0;z-index:5;
-  background:rgba(7,9,10,.96);backdrop-filter:blur(8px);
+  background:rgba(250,248,245,.96);backdrop-filter:blur(8px);
   display:none;flex-direction:column;align-items:center;justify-content:center;
   padding:40px;text-align:center;
 }
@@ -610,7 +610,9 @@ footer{
 .reveal.visible{opacity:1;transform:none;}
 
 </style>
-<link rel="stylesheet" href="blueprint-theme.css">
+<style>
+.project-context {max-width:1280px;margin:76px auto 0;padding:18px 24px;background:#8D1828;color:#B42335;border:1px solid #B42335;font:16px/1.5 system-ui,sans-serif;position:relative;z-index:2;} .project-context a{color:#B42335;text-underline-offset:4px;}
+</style><link rel="stylesheet" href="portfolio-chrome.css"><script src="navigation.js" defer></script><link rel="stylesheet" href="portfolio-theme.css">
 </head>
 <body class="scanlines">
 
@@ -619,15 +621,7 @@ footer{
 <div id="cur" aria-hidden="true"></div>
 
 <!-- ── NAV ──────────────────────────────────── -->
-<nav id="top-nav">
-  <a href="index.html" class="nav-back">← Bruce Davis</a>
-  <div class="nav-links">
-    <a href="index.html#work">Work</a>
-    <a href="about.html">About</a>
-    <a href="bruce-davis-resume.html">Resume</a>
-    <a href="index.html#contact">Contact</a>
-  </div>
-</nav>
+<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal design study</strong> · Separate from employer deliverables. Older metrics and external integrations have not been revalidated in this review. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
 
 <!-- ── HERO ─────────────────────────────────── -->
 <section id="hero">
@@ -639,9 +633,7 @@ footer{
   </div>
   <div class="hero-pre"><span class="pulse"></span> Security UX · Behavioral Design</div>
   <h1 id="hero-hl">Security UX Concept</h1>
-  <p class="hero-sub">
-    A security awareness training surface that uses the visual language of the threat itself — HUD UI, scan lines, threat pulse, and a playable "spot the phish" round. Behavioral UX applied where there usually is none.
-  </p>
+  <p class="hero-sub">A concept study of security awareness that lets visitors practice spotting phishing messages.</p>
   <div class="hero-meta">
     <span>Playable demo</span>
     <span>Behavioral interaction</span>
@@ -660,8 +652,8 @@ footer{
         <p>A concept study that turns security awareness training from a compliance slideshow into a playable operator surface. HUD visual language, behavioral interaction design, real-time scoring, sensory feedback that matches the stakes. Adjacent to the safety UX AI products need.</p>
       </div>
       <div class="glance-col">
-        <h3>Maps to</h3>
-        <p class="glance-roles"><span>Design Engineer (security/AI)</span> · <span>Frontend Engineer</span> · <span>AI Safety UX</span> · <span>Product UI Engineer</span></p>
+        <h3>Portfolio context</h3>
+        <p class="glance-roles">Personal exploration of technical design, workflow decisions, and UX. Supports the Technical Project Manager portfolio.</p>
         <h3 style="margin-top:22px;">Skills demonstrated</h3>
         <ul>
           <li>Behavioral UX for a domain that usually has none</li>
@@ -858,7 +850,7 @@ footer{
 
 /* Security UX concept · Bruce Davis · 2026 */
 console.log('%c// 007 — phishing training, redesigned.', 'color:#FFA53D;font-family:monospace;letter-spacing:.04em;');
-console.log('%cSecurity UX concept · Bruce Davis', 'color:#7d7d7d;font-family:monospace;letter-spacing:.04em;');
+console.log('%cSecurity UX concept · Bruce Davis', 'color:#706A65;font-family:monospace;letter-spacing:.04em;');
 
 const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePntr = window.matchMedia('(pointer:fine)').matches;

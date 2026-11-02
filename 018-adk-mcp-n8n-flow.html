@@ -4,17 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ADK + MCP + n8n — Workflow-Driven Triage Agent — Bruce Davis</title>
-<meta name="description" content="An n8n workflow triggers a Google ADK agent that calls three MCP tools to triage support tickets. Cross-protocol architecture: n8n for ops, ADK for reasoning, MCP for tool reuse.">
+<meta name="description" content="Explores routing support requests through an automated workflow, with an assistant using tools to classify requests and gather context. Personal work supporting Bruce Davis’s Technical Project Manager portfolio.">
 <meta property="og:title" content="ADK + MCP + n8n — Workflow-Driven Triage Agent — Bruce Davis">
-<meta property="og:description" content="Customer-support triage agent built on Google ADK, MCP, and n8n. Working code, docker-compose stack, exported workflow.">
+<meta property="og:description" content="Explores routing support requests through an automated workflow, with an assistant using tools to classify requests and gather context. Personal work supporting Bruce Davis’s Technical Project Manager portfolio.">
 <meta property="og:type" content="website">
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
 :root {
-  --paper:#0A0E1A; --paper-clean:#121826; --paper-deep:#1A2236;
-  --ink:#F5F7FA; --ink-soft:#C1C7D0; --mute:#7A8392; --mute-soft:#9CA3AF;
-  --signal:#0066FF; --signal-rgb:0,102,255;
-  --hairline:rgba(255,255,255,.08); --hairline-strong:rgba(255,255,255,.18);
+  --paper:#FAF8F5; --paper-clean:#F1EDE8; --paper-deep:#F7E8EB;
+  --ink:#20242B; --ink-soft:#55514E; --mute:#706A65; --mute-soft:#706A65;
+  --signal:#B42335; --signal-rgb:180,35,53;
+  --hairline:#DDD6D0; --hairline-strong:#A89D94;
   --display:'Anton','Bebas Neue',Impact,sans-serif;
   --serif:'EB Garamond',Georgia,serif;
   --mono:'Space Mono',ui-monospace,monospace;
@@ -133,27 +133,20 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   html { scroll-behavior:auto; }
 }
 </style>
-<link rel="stylesheet" href="blueprint-theme.css">
+<style>
+.project-context {max-width:1280px;margin:76px auto 0;padding:18px 24px;background:#8D1828;color:#B42335;border:1px solid #B42335;font:16px/1.5 system-ui,sans-serif;position:relative;z-index:2;} .project-context a{color:#B42335;text-underline-offset:4px;}
+</style><link rel="stylesheet" href="portfolio-chrome.css"><script src="navigation.js" defer></script><link rel="stylesheet" href="portfolio-theme.css">
 </head>
 <body>
 
-<nav id="top-nav">
-  <a href="index.html" class="nav-back">← Bruce Davis</a>
-  <div class="nav-links">
-    <a href="index.html#work">Work</a>
-    <a href="about.html">About</a>
-    <a href="bruce-davis-resume.html">Resume</a>
-    <a href="index.html#contact">Contact</a>
-  </div>
-</nav>
+
+<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal technical experiment</strong> · Separate from employer deliverables. Older metrics and external integrations have not been revalidated in this review. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-pre">Google ADK · MCP · n8n · Cross-Protocol Architecture</div>
   <h1 id="hero-hl">Workflow-Driven<br>Triage Agent</h1>
-  <p class="hero-sub">
-    An n8n workflow triggers a Google ADK agent on Gemini 2.5 Flash, which calls three MCP tools to triage incoming support tickets. n8n routes the result. Three different protocols, each doing what it's best at.
-  </p>
+  <p class="hero-sub">Explores routing support requests through an automated workflow, with an assistant using tools to classify requests and gather context.</p>
   <div class="hero-meta">
     <span>Google ADK · Gemini 2.5 Flash</span>
     <span>3 MCP tools · stdio transport</span>
@@ -175,8 +168,8 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <p>A complete customer-support triage stack — n8n receives a ticket webhook, calls the agent, routes by priority. The agent is a Google ADK <code style="font-family:var(--mono);font-size:14px;color:var(--ink);">Agent</code> on Gemini 2.5 Flash that calls three tools exposed by a FastMCP server over stdio: <code style="font-family:var(--mono);font-size:14px;color:var(--ink);">classify_intent</code>, <code style="font-family:var(--mono);font-size:14px;color:var(--ink);">get_customer_history</code>, <code style="font-family:var(--mono);font-size:14px;color:var(--ink);">search_knowledge_base</code>. Runs as a two-container docker-compose stack; has a no-n8n demo script for fast iteration.</p>
       </div>
       <div class="glance-col">
-        <h3>Maps to</h3>
-        <p class="glance-roles"><span>AI Engineer (Agentic)</span> · <span>AI Automation Engineer</span> · <span>Forward-Deployed AI Engineer</span> · <span>AI Transformation Lead</span></p>
+        <h3>Portfolio context</h3>
+        <p class="glance-roles">Personal exploration of technical design, workflow decisions, and UX. Supports the Technical Project Manager portfolio.</p>
         <h3 style="margin-top:22px;">Skills demonstrated</h3>
         <ul>
           <li>Google ADK agent definition + tool registration</li>
@@ -495,7 +488,7 @@ if (motionOK) {
 }
 
 console.log('%c// 6% — small change. whole product.', 'color:#E1261C;font-family:monospace;letter-spacing:.04em;');
-console.log('%c// bruce davis · 2026', 'color:#8A847A;font-family:monospace;letter-spacing:.04em;');
+console.log('%c// bruce davis · 2026', 'color:#706A65;font-family:monospace;letter-spacing:.04em;');
 </script>
 
 </body>

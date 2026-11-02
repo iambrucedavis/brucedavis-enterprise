@@ -1,1 +1,146 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Automation &amp; Infrastructure Projects | Bruce Davis</title><meta name="description" content="Three personal prototypes demonstrating PAM onboarding, infrastructure design review, and change readiness. Python automation, synthetic scenarios, and 50 automated tests."><style>*{box-sizing:border-box}body{margin:0;background:#0d2747;color:#e6f3ff;font:17px/1.6 system-ui,sans-serif}main{max-width:1120px;margin:auto;padding:38px 24px}nav{display:flex;gap:24px;flex-wrap:wrap;font-size:14px;margin-bottom:48px}a{color:#65d9ff}h1{font-size:clamp(36px,5vw,62px);line-height:1.1;letter-spacing:-1px;max-width:850px}h2{font-size:24px;margin-top:0}.lead{max-width:800px;color:#c0d8ee}.eyebrow{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#7cdefa}.cards{display:grid;gap:24px;margin:36px 0}article{border:1px solid #3d6284;padding:28px;border-radius:12px;background:#103257}article p{max-width:880px}small{color:#b6d2e9}.links{display:flex;gap:20px;flex-wrap:wrap}.button{display:inline-block;padding:9px 16px;border:1px solid #65d9ff;border-radius:5px;text-decoration:none}footer{border-top:1px solid #3d6284;margin-top:40px;padding-top:24px;font-size:14px}li{margin:7px 0}.metrics{color:#7cdefa;font-weight:600}@media print{body{background:white;color:#17374a}article{background:white}a{color:#17374a}}</style></head><body><main><nav><a href="index.html">Bruce Davis</a><a href="about.html">About</a><a href="bruce-davis-resume.html">Resume</a><a href="https://github.com/iambrucedavis/automation-infrastructure-portfolio">GitHub repository</a></nav><div class="eyebrow">Technical project management · IAM/PAM · Infrastructure</div><h1>From technical requirements to reviewable delivery plans.</h1><p class="lead">Three personal projects connect my identity and infrastructure experience with practical automation. Each uses synthetic data, explicit rules, documented assumptions, and repeatable tests.</p><p class="lead">Developed with AI assistance in September 2026. These are read-only prototypes, with 50 passing automated tests across the suite.</p><div class="cards"><article><div class="eyebrow">Personal prototype · September 2026</div><h2>PAM Onboarding Readiness Analyzer</h2><p><strong>Plan identity onboarding with explicit prerequisites and dependency-aware rollout waves.</strong></p><p>Checks ownership, vault onboarding, rotation tests, rollback tests, and change approvals. Produces remediation tasks, proposed phases, and an aggregate-only AI briefing prompt.</p><p class="metrics">12 synthetic accounts · 3 proposed waves · 24 tests</p><p><small>The optional API adapter is tested with simulated responses. Live AI integration remains untested; readiness decisions use explicit rules.</small></p><div class="links"><a class="button" href="demos/pam-readiness/report.html">Open demonstration</a><a href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/pam-readiness">Code, tests &amp; project brief</a></div></article><article><div class="eyebrow">Personal prototype · September 2026</div><h2>Infrastructure Design Validator</h2><p><strong>Review a design before it becomes an implementation plan.</strong></p><p>Validates subnet ranges and declared dependencies, flags selected design gaps, and generates a topology diagram with proposed provisioning stages.</p><p class="metrics">4 components · 3 subnets · 4 review findings · 12 tests</p><p><small>No cloud resources are provisioned. Recovery, redundancy, ownership, and connectivity assumptions require technical validation.</small></p><div class="links"><a class="button" href="demos/infrastructure-design/report.html">Open demonstration</a><a href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/infrastructure-design">Code, tests &amp; project brief</a></div></article><article><div class="eyebrow">Personal prototype · September 2026</div><h2>Change Readiness Tracker</h2><p><strong>Make change-window conflicts and missing prerequisites visible.</strong></p><p>Checks resource overlaps, dependency sequencing, owners, evidence references, testing, rollback readiness, and approvals. Compares readiness across two plan snapshots.</p><p class="metrics">4 synthetic changes · baseline comparison · 14 tests</p><p><small>Ready for review is not approval to execute. The corrected sample changes demonstration data; it does not represent production delivery.</small></p><div class="links"><a class="button" href="demos/change-readiness/report.html">Open demonstration</a><a href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/change-readiness">Code, tests &amp; project brief</a></div></article></div><h2>What the portfolio demonstrates</h2><ul><li>Requirements and acceptance criteria translated into working tools.</li><li>Dependency analysis, phased planning, and resource-conflict detection.</li><li>Technical review artifacts: topology, findings, task lists, and baseline comparisons.</li><li>Transparent AI use, test evidence, and human decision points.</li></ul><footer><p>Bruce Davis · PMP · Charlotte, NC<br><a href="mailto:iambrucedavis@gmail.com">iambrucedavis@gmail.com</a></p><p>Personal prototypes. No customer deployment, business savings, or production certification is claimed.</p></footer></main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Prototypes | Bruce Davis — Find blockers before implementation starts</title>
+<meta name="description" content="Personal, AI-assisted prototypes show how technical requirements become checks, findings, and proposed plans. Synthetic scenarios; read-only.">
+<meta property="og:title" content="Bruce Davis — Technical Project Manager | PMP">
+<meta property="og:description" content="Personal, AI-assisted prototypes show how technical requirements become checks, findings, and proposed plans. Synthetic scenarios; read-only.">
+<meta property="og:type" content="website">
+
+
+<link rel="stylesheet" href="tpm-base.css">
+<link rel="stylesheet" href="portfolio-chrome.css">
+<link rel="stylesheet" href="tpm-layout.css">
+<script src="navigation.js" defer>
+</script>
+<link rel="stylesheet" href="portfolio-theme.css">
+</head>
+<body class="tpm-page">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="portfolio-header">
+<div class="nav-inner">
+<a class="nav-logo" href="index.html">Bruce Davis</a>
+<nav class="desktop-nav" aria-label="Main navigation">
+<ul>
+<li>
+<a href="index.html#work">Work</a>
+</li>
+<li>
+<a href="bruce-davis-resume.html#professional-experience">Experience</a>
+</li>
+<li>
+<a href="about.html">About</a>
+</li>
+<li>
+<a href="bruce-davis-resume.html">Resume</a>
+</li>
+<li>
+<a href="index.html#contact">Contact</a>
+</li>
+</ul>
+</nav>
+<details class="mobile-nav">
+<summary>Menu</summary>
+<nav aria-label="Mobile navigation">
+<ul>
+<li>
+<a href="index.html#work">Work</a>
+</li>
+<li>
+<a href="bruce-davis-resume.html#professional-experience">Experience</a>
+</li>
+<li>
+<a href="about.html">About</a>
+</li>
+<li>
+<a href="bruce-davis-resume.html">Resume</a>
+</li>
+<li>
+<a href="index.html#contact">Contact</a>
+</li>
+</ul>
+</nav>
+</details>
+</div>
+</header>
+<main id="main" tabindex="-1">
+<section class="reading-section">
+<div class="content-wrap detail prototype-page">
+<p class="eyebrow">Personal technical prototypes</p>
+<h1>Find blockers before implementation starts.</h1>
+<p>These personal prototypes show how I turn technical requirements into checks, findings, and proposed plans. They use synthetic examples—not customer systems—and were developed with AI assistance.</p>
+<p class="disclosure">Personal, AI-assisted prototypes · Synthetic scenarios · Read-only</p>
+<article class="prototype-row">
+<p class="eyebrow">PAM Onboarding Readiness</p>
+<h2>What is blocking the next account-onboarding wave?</h2>
+<p>Checks the supplied ownership, test, and approval information, then uses declared dependencies to propose rollout waves.</p>
+<div class="actions">
+<a class="text-action" href="demos/pam-readiness/report.html">View example report →</a>
+<a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/pam-readiness">View code and tests ↗</a>
+</div>
+<details class="technical-details">
+<summary>Requirements, implementation, and limitations</summary>
+<p>Checks five supplied flags: accountable owner, vault onboarding, rotation testing, rollback testing, and change approval. Keeps supplied dependency groups together; a blocked member holds its eligible peers. Sample output: 12 accounts, 6 in 3 proposed waves, 4 blocked, and 2 dependency holds. The optional AI adapter was tested with simulated responses; live AI calls and output quality remain unverified.</p>
+<p>Dependencies come from the supplied inventory. The tool does not discover them or verify approval evidence.</p>
+<p>24 automated tests passed locally on November 2, 2026.</p>
+<a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/pam-readiness">Read requirements and acceptance criteria ↗</a>
+</details>
+</article>
+<article class="prototype-row">
+<p class="eyebrow">Infrastructure Design Validator</p>
+<h2>What needs attention before this design becomes an implementation plan?</h2>
+<p>Reviews a sample infrastructure design for selected network, dependency, ownership, and recovery issues.</p>
+<div class="actions">
+<a class="text-action" href="demos/infrastructure-design/report.html">View example report →</a>
+<a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/infrastructure-design">View code and tests ↗</a>
+</div>
+<details class="technical-details">
+<summary>Requirements, implementation, and limitations</summary>
+<p>Checks declared subnet ranges, component references, dependencies, selected public ports, ownership, recovery evidence, and high-criticality single-instance components. Sample output: 4 components, 3 subnets, and 4 findings. It does not inspect actual routing, firewalls, backups, redundancy, or cloud resources.</p>
+<p>The review uses declared design data; it does not discover cloud resources or certify a design.</p>
+<p>12 automated tests passed locally on November 2, 2026.</p>
+<a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/infrastructure-design">Read requirements and acceptance criteria ↗</a>
+</details>
+</article>
+<article class="prototype-row">
+<p class="eyebrow">Change Readiness Tracker</p>
+<h2>What is preventing this change from being ready for review?</h2>
+<p>Highlights scheduling conflicts and missing prerequisites, then compares readiness across two versions of a plan.</p>
+<div class="actions">
+<a class="text-action" href="demos/change-readiness/report.html">View example report →</a>
+<a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/change-readiness">View code and tests ↗</a>
+</div>
+<details class="technical-details">
+<summary>Requirements, implementation, and limitations</summary>
+<p>Checks supplied windows, exclusive-resource conflicts, prerequisites, approval flags, testing, rollback readiness, and evidence references. Compares two plan snapshots. Four synthetic changes become ready for review after sample corrections; the tool does not verify evidence or execute changes.</p>
+<p>Ready for review is not approval to execute. Resource and evidence assumptions still require human review.</p>
+<p>14 automated tests passed locally on November 2, 2026.</p>
+<a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/change-readiness">Read requirements and acceptance criteria ↗</a>
+</details>
+</article>
+<h2>Limits that apply to all three</h2>
+<ul class="evidence-list">
+<li>No real accounts or cloud resources are changed.</li>
+<li>Readiness findings are not approval to execute.</li>
+<li>Test results and demonstration counts are not customer outcomes.</li>
+<li>Only simulated AI responses were tested; optional live AI functionality has not been verified.</li>
+</ul>
+<p class="small">Python 3.9+ and the standard library are sufficient for the documented local execution path. All 50 tests passed when run with python3 run_all.py.</p>
+</div>
+</section>
+</main>
+<footer id="contact" class="portfolio-footer">
+<div class="content-wrap">
+<p class="eyebrow">Contact</p>
+<h2>Let’s talk about your next project.</h2>
+<a class="contact-email" href="mailto:iambrucedavis@gmail.com">iambrucedavis@gmail.com</a>
+<p>
+<a class="text-action" href="bruce-davis-resume.pdf" download>Download resume PDF</a> <a class="text-action" href="other-work.html">Additional Work</a> <a class="text-action" href="https://github.com/iambrucedavis">GitHub</a>
+</p>
+<p class="small">Bruce Davis · Technical Project Manager · PMP</p>
+</div>
+</footer>
+</body>
+</html>

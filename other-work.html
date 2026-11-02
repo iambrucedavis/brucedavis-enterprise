@@ -3,207 +3,231 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Other Work — Bruce Davis</title>
-<meta name="description" content="Experiments, craft demos, and concept builds by Bruce Davis.">
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<style>
+<title>Additional Work | Bruce Davis — Technical Project Manager</title>
+<meta name="description" content="Personal technical experiments, interface studies, creative projects, and conceptual frameworks, separate from employer experience.">
+<meta property="og:title" content="Bruce Davis — Technical Project Manager | PMP">
+<meta property="og:description" content="Personal technical experiments, interface studies, creative projects, and conceptual frameworks, separate from employer experience.">
+<meta property="og:type" content="website">
 
-/* ─── TOKENS — formal register ─────── */
-:root {
-  --paper:        #0A0E1A;
-  --paper-clean:  #121826;
-  --ink:          #F5F7FA;
-  --ink-soft:     #C1C7D0;
-  --mute:         #7A8392;
-  --signal:       #0066FF;
-  --hairline:        rgba(255,255,255,.08);
-  --hairline-strong: rgba(255,255,255,.18);
-  --display: 'Anton', 'Bebas Neue', Impact, sans-serif;
-  --serif:   'EB Garamond', Georgia, serif;
-  --mono:    'Space Mono', ui-monospace, monospace;
-  --m-base: 140ms cubic-bezier(.2,0,0,1);
-}
 
-*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--serif);
-  font-size: 17px;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh;
-}
-
-/* ─── NAV ──────────────────────────────────────── */
-#top-nav {
-  position:fixed; top:0; left:0; right:0; z-index:500;
-  height:64px;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:0 clamp(22px,5vw,56px);
-  background:var(--paper);
-  border-bottom:1px solid var(--hairline-strong);
-}
-.nav-back {
-  font-family:var(--mono); font-weight:700;
-  font-size:13px; letter-spacing:.1em; text-transform:uppercase;
-  color:var(--ink); text-decoration:none;
-  transition:color var(--m-base);
-}
-.nav-back:hover { color:var(--signal); }
-.nav-links { display:flex; gap:clamp(20px,3vw,38px); list-style:none; }
-.nav-links a {
-  font-family:var(--mono);
-  font-size:11px; letter-spacing:.14em; text-transform:uppercase;
-  color:var(--mute); text-decoration:none;
-  transition:color var(--m-base);
-}
-.nav-links a:hover { color:var(--ink); }
-
-/* ─── SHELL ────────────────────────────────────── */
-.wrap { max-width: 760px; margin: 0 auto; padding: 148px clamp(22px,5vw,56px) 96px; }
-
-.eyebrow {
-  font-family: var(--mono);
-  font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
-  color: var(--mute);
-  margin-bottom: 22px;
-}
-
-h1 {
-  font-family: var(--display); font-weight: 400;
-  text-transform: uppercase;
-  font-size: clamp(40px, 6vw, 76px);
-  line-height: .95; letter-spacing: .01em;
-  margin-bottom: 22px;
-  color: var(--ink);
-}
-
-.intro {
-  font-family: var(--serif); font-style: italic;
-  font-size: clamp(18px, 1.8vw, 22px);
-  color: var(--ink-soft);
-  line-height: 1.5;
-  margin-bottom: 56px;
-  max-width: 48ch;
-}
-
-.list { list-style: none; border-top: 1px solid var(--hairline-strong); }
-.list li {
-  border-bottom: 1px solid var(--hairline-strong);
-  padding: 30px 0;
-}
-.item-name {
-  font-family: var(--display); font-weight: 400;
-  text-transform: uppercase;
-  font-size: clamp(22px, 2.4vw, 30px);
-  line-height: 1; letter-spacing: .01em;
-  margin-bottom: 12px;
-}
-.item-name a {
-  color: var(--ink);
-  text-decoration: none;
-  transition: color var(--m-base);
-}
-.item-name a:hover { color: var(--signal); }
-.item-desc {
-  font-family: var(--serif);
-  font-size: 16px;
-  color: var(--ink-soft);
-  line-height: 1.6;
-  margin-bottom: 12px;
-  max-width: 56ch;
-}
-.item-link {
-  font-family: var(--mono);
-  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--ink);
-  text-decoration: none;
-  border-bottom: 1.5px solid transparent;
-  transition: color var(--m-base), border-color var(--m-base);
-}
-.item-link:hover { color: var(--signal); border-bottom-color: var(--signal); }
-
-.back-bottom {
-  margin-top: 56px;
-  font-family: var(--mono);
-  font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--ink);
-  text-decoration: none;
-  display: inline-block;
-  border-bottom: 1.5px solid transparent;
-  transition: color var(--m-base), border-color var(--m-base);
-}
-.back-bottom:hover { color: var(--signal); border-bottom-color: var(--signal); }
-
-a:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
-
-@media (max-width: 600px) {
-  .wrap { padding: 120px 22px 72px; }
-  .intro { margin-bottom: 40px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-}
-
-</style>
-<link rel="stylesheet" href="blueprint-theme.css">
+<link rel="stylesheet" href="tpm-base.css">
+<link rel="stylesheet" href="portfolio-chrome.css">
+<link rel="stylesheet" href="tpm-layout.css">
+<script src="navigation.js" defer>
+</script>
+<link rel="stylesheet" href="portfolio-theme.css">
 </head>
-<body>
-
-<nav id="top-nav">
-  <a href="index.html" class="nav-back">← Bruce Davis</a>
-  <ul class="nav-links">
-    <li><a href="index.html#work">Work</a></li>
-    <li><a href="about.html">About</a></li>
-    <li><a href="bruce-davis-resume.html">Resume</a></li>
-    <li><a href="index.html#contact">Contact</a></li>
-  </ul>
+<body class="tpm-page">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="portfolio-header">
+<div class="nav-inner">
+<a class="nav-logo" href="index.html">Bruce Davis</a>
+<nav class="desktop-nav" aria-label="Main navigation">
+<ul>
+<li>
+<a href="index.html#work">Work</a>
+</li>
+<li>
+<a href="bruce-davis-resume.html#professional-experience">Experience</a>
+</li>
+<li>
+<a href="about.html">About</a>
+</li>
+<li>
+<a href="bruce-davis-resume.html">Resume</a>
+</li>
+<li>
+<a href="index.html#contact">Contact</a>
+</li>
+</ul>
 </nav>
-
-<div class="wrap">
-
-  <div class="eyebrow">Other Work</div>
-
-  <h1>Other Work</h1>
-
-  <p class="intro">
-    Experiments, craft demos, and concept builds that aren't directly aimed at the roles I'm targeting. Here if you want a longer look.
-  </p>
-
-  <ul class="list">
+<details class="mobile-nav">
+<summary>Menu</summary>
+<nav aria-label="Mobile navigation">
+<ul>
+<li>
+<a href="index.html#work">Work</a>
+</li>
+<li>
+<a href="bruce-davis-resume.html#professional-experience">Experience</a>
+</li>
+<li>
+<a href="about.html">About</a>
+</li>
+<li>
+<a href="bruce-davis-resume.html">Resume</a>
+</li>
+<li>
+<a href="index.html#contact">Contact</a>
+</li>
+</ul>
+</nav>
+</details>
+</div>
+</header>
+<main id="main" tabindex="-1">
+<section class="reading-section">
+<div class="content-wrap detail">
+<p class="eyebrow">Personal explorations</p>
+<h1>Additional Work</h1>
+<p>Technical experiments, interface studies, creative work, and conceptual frameworks. These are separate from employer deliverables; legacy metrics and external integrations have not been revalidated in this review.</p>
+<div class="actions">
+<a class="text-action" href="automation-infrastructure.html">View the featured prototypes →</a>
+<a class="text-action" href="lab.html">Visit the Lab →</a>
+</div>
+<ul class="additional-list">
 
     <li>
-      <div class="item-name"><a href="001-physics-playground.html" target="_blank" rel="noopener">Physics Playground</a></div>
+      <div class="item-name">
+<a href="001-physics-playground.html" target="_blank" rel="noopener">Physics Playground</a>
+</div>
       <p class="item-desc">A browser physics toy with synthesized sound on every collision. Built with Matter.js and Web Audio API.</p>
       <a href="001-physics-playground.html" target="_blank" rel="noopener" class="item-link">View →</a>
     </li>
 
     <li>
-      <div class="item-name"><a href="003-data-viz-dashboard.html">Interactive Data Viz Dashboard</a></div>
+      <div class="item-name">
+<a href="003-data-viz-dashboard.html">Interactive Data Viz Dashboard</a>
+</div>
       <p class="item-desc">Three live D3 charts: a real-time monitor, a filterable scatter plot, and a force-directed graph.</p>
       <a href="003-data-viz-dashboard.html" class="item-link">View →</a>
     </li>
 
     <li>
-      <div class="item-name"><a href="005-ai-web-toy.html">The Brief Machine</a></div>
+      <div class="item-name">
+<a href="005-ai-web-toy.html">The Brief Machine</a>
+</div>
       <p class="item-desc">Six design briefs displayed at reading pace, one phrase at a time. Format as a design move.</p>
       <a href="005-ai-web-toy.html" class="item-link">View →</a>
     </li>
 
     <li>
-      <div class="item-name"><a href="006-saas-landing-brand-study.html">SaaS Landing &amp; Brand Study</a></div>
+      <div class="item-name">
+<a href="006-saas-landing-brand-study.html">SaaS Landing &amp; Brand Study</a>
+</div>
       <p class="item-desc">A visual study of a modern SaaS surface. Concept, not shipped product.</p>
       <a href="006-saas-landing-brand-study.html" class="item-link">View →</a>
     </li>
 
-  </ul>
-
-  <a href="index.html" class="back-bottom">Back to main site →</a>
-
+  <li>
+<div class="item-name">
+<a href="002-ai-interface-design-system.html">AI Interface Patterns</a>
 </div>
-
+<p class="item-desc">Design study · Streaming, model states, uncertainty, and error recovery.</p>
+<a class="item-link" href="002-ai-interface-design-system.html">View project →</a>
+</li>
+<li>
+<div class="item-name">
+<a href="004-motion-showcase.html">Motion Showcase</a>
+</div>
+<p class="item-desc">Design study · Five browser motion techniques and their interaction tradeoffs.</p>
+<a class="item-link" href="004-motion-showcase.html">View project →</a>
+</li>
+<li>
+<div class="item-name">
+<a href="007-security-ux-concept.html">Security UX Concept</a>
+</div>
+<p class="item-desc">Concept study · A playable approach to phishing awareness.</p>
+<a class="item-link" href="007-security-ux-concept.html">View project →</a>
+</li>
+<li>
+<div class="item-name">
+<a href="008-six-percent-mcp.html">Content & Research MCP</a>
+</div>
+<p class="item-desc">Personal experiment · Tool-based retrieval, critique, and constrained changes.</p>
+<a class="item-link" href="008-six-percent-mcp.html">View project →</a>
+</li>
+<li>
+<div class="item-name">
+<a href="009-document-pipeline.html">Document Processing Pipeline</a>
+</div>
+<p class="item-desc">Personal experiment · Extraction, masking, validation, and human review; no compliance certification.</p>
+<a class="item-link" href="009-document-pipeline.html">View project →</a>
+</li>
+<li>
+<div class="item-name">
+<a href="010-linear-mcp.html">Linear MCP Server</a>
+</div>
+<p class="item-desc">Personal experiment · Read-only tools for planning and reporting.</p>
+<a class="item-link" href="010-linear-mcp.html">View project →</a>
+</li>
+<li>
+<div class="item-name">
+<a href="011-sentinel-triage.html">Autonomous Security Triage Agent</a>
+</div>
+<p class="item-desc">Personal experiment · Incident investigation and a human approval gate.</p>
+<a class="item-link" href="011-sentinel-triage.html">View project →</a>
+</li>
+<li>
+<div class="item-name">
+<a href="012-visionary-producer.html">Film Pre-Production Agent</a>
+</div>
+<p class="item-desc">Personal experiment · Script breakdown and with human approval planning.</p>
+<a class="item-link" href="012-visionary-producer.html">View project →</a>
+</li>
+<li>
+<div class="item-name">
+<a href="013-axe-provenance.html">AI Agent Governance Console</a>
+</div>
+<p class="item-desc">Personal experiment · Automated-account ownership and approval workflows.</p>
+<a class="item-link" href="013-axe-provenance.html">View project →</a>
+</li>
+<li>
+<div class="item-name">
+<a href="014-day-one.html">Day One</a>
+</div>
+<p class="item-desc">Personal experiment · Conversational onboarding UI; separate from the Microsoft employer MVP.</p>
+<a class="item-link" href="014-day-one.html">View project →</a>
+</li>
+<li>
+<div class="item-name">
+<a href="015-nhi-classifier.html">NHI Credential Risk Classifier</a>
+</div>
+<p class="item-desc">Personal experiment · Classification and evaluation on synthetic data.</p>
+<a class="item-link" href="015-nhi-classifier.html">View project →</a>
+</li>
+<li>
+<div class="item-name">
+<a href="016-ai-transformation-playbook.html">A framework for evaluating AI initiatives</a>
+</div>
+<p class="item-desc">Conceptual framework · Proposed evaluation rubrics and operating-model questions.</p>
+<a class="item-link" href="016-ai-transformation-playbook.html">View project →</a>
+</li>
+<li>
+<div class="item-name">
+<a href="017-entra-nhi-audit.html">Entra ID NHI Audit</a>
+</div>
+<p class="item-desc">Personal experiment · Identity review using a mock tenant scenario.</p>
+<a class="item-link" href="017-entra-nhi-audit.html">View project →</a>
+</li>
+<li>
+<div class="item-name">
+<a href="018-adk-mcp-n8n-flow.html">Workflow-Driven Triage Agent</a>
+</div>
+<p class="item-desc">Personal experiment · Workflow routing, agent tools, and protocol integration.</p>
+<a class="item-link" href="018-adk-mcp-n8n-flow.html">View project →</a>
+</li>
+<li>
+<div class="item-name">
+<a href="019-it-support-copilot.html">IT Support Copilot for Teams</a>
+</div>
+<p class="item-desc">Personal experiment · Request routing and deterministic policy decisions; separate from employer work.</p>
+<a class="item-link" href="019-it-support-copilot.html">View project →</a>
+</li>
+</ul>
+</div>
+</section>
+</main>
+<footer id="contact" class="portfolio-footer">
+<div class="content-wrap">
+<p class="eyebrow">Contact</p>
+<h2>Let’s talk about your next project.</h2>
+<a class="contact-email" href="mailto:iambrucedavis@gmail.com">iambrucedavis@gmail.com</a>
+<p>
+<a class="text-action" href="bruce-davis-resume.pdf" download>Download resume PDF</a> <a class="text-action" href="other-work.html">Additional Work</a> <a class="text-action" href="https://github.com/iambrucedavis">GitHub</a>
+</p>
+<p class="small">Bruce Davis · Technical Project Manager · PMP</p>
+</div>
+</footer>
 </body>
 </html>

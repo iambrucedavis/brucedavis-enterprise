@@ -29,6 +29,14 @@
     {
       "src": "demos/**",
       "use": "@vercel/static"
+    },
+    {
+      "src": "*.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "fonts/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [

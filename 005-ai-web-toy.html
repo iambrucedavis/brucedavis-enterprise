@@ -4,25 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Project 005 — The Brief Machine · Bruce Davis</title>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
 
 /* ─── TOKENS — formal register ─────── */
 :root {
-  --paper: #0A0E1A; --paper-clean: #121826; --paper-deep: #1A2236;
-  --ink: #F5F7FA; --ink-soft: #C1C7D0; --mute: #7A8392;
-  --signal: #0066FF; --signal-rgb: 0,102,255;
+  --paper:#FAF8F5; --paper-clean:#F1EDE8; --paper-deep:#F7E8EB;
+  --ink:#20242B; --ink-soft:#55514E; --mute:#706A65;
+  --signal:#B42335; --signal-rgb:180,35,53;
   --error: #C0392B; --warn: #9A6B12;
-  --hairline: rgba(255,255,255,.08); --hairline-strong: rgba(255,255,255,.18);
+  --hairline:#DDD6D0; --hairline-strong:#A89D94;
   --display: 'Anton','Bebas Neue',Impact,sans-serif;
   --serif: 'EB Garamond',Georgia,serif;
   --mono: 'Space Mono',ui-monospace,monospace;
   --shadow: 0 0 0 1px var(--hairline-strong);
   --m-base: 140ms cubic-bezier(.2,0,0,1);
   /* aliases — keep demo markup valid */
-  --bg: var(--paper); --surface: var(--paper-clean); --surface-hi: var(--paper-deep);
-  --border: var(--hairline); --border-hi: var(--hairline-strong);
-  --text: var(--ink); --text-dim: var(--ink-soft); --text-muted: var(--mute);
+  --bg:#FAF8F5; --surface:#F1EDE8; --surface-hi:#F7E8EB;
+  --border:#DDD6D0; --border-hi:#A89D94;
+  --text:#20242B; --text-dim:#55514E; --text-muted:#706A65;
 }
 
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
@@ -187,27 +187,20 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   #hero { padding-left:20px; padding-right:20px; }
 }
 </style>
-<link rel="stylesheet" href="blueprint-theme.css">
+<style>
+.project-context {max-width:1280px;margin:76px auto 0;padding:18px 24px;background:#8D1828;color:#B42335;border:1px solid #B42335;font:16px/1.5 system-ui,sans-serif;position:relative;z-index:2;} .project-context a{color:#B42335;text-underline-offset:4px;}
+</style><link rel="stylesheet" href="portfolio-chrome.css"><script src="navigation.js" defer></script><link rel="stylesheet" href="portfolio-theme.css">
 </head>
 <body>
 
-<nav id="top-nav">
-  <a href="index.html" class="nav-back">← Bruce Davis</a>
-  <div class="nav-links">
-    <a href="index.html#work">Work</a>
-    <a href="about.html">About</a>
-    <a href="bruce-davis-resume.html">Resume</a>
-    <a href="index.html#contact">Contact</a>
-  </div>
-</nav>
+
+<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal design study</strong> · Separate from employer deliverables. Older metrics and external integrations have not been revalidated in this review. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-pre">Design Brief Library · Paced Render</div>
   <h1 id="hero-hl">THE BRIEF<br>MACHINE.</h1>
-  <p class="hero-sub">
-    A curated library of six design briefs for the moments interface design matters most — error recovery, first use, loading, empty state, AI uncertainty, destructive action. The brief renders at reading pace.
-  </p>
+  <p class="hero-sub">A small library of design briefs for first use, loading, empty states, uncertainty, and error recovery.</p>
   <div class="hero-meta">
     <span>6 hand-written briefs</span>
     <span>Paced character render</span>
@@ -229,8 +222,8 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <p>A curated library of six design briefs for the interface moments most apps skip — error recovery, first use, loading, empty state, AI uncertainty, destructive action. Each brief renders at reading pace to slow the designer down at the moment of decision.</p>
       </div>
       <div class="glance-col">
-        <h3>Maps to</h3>
-        <p class="glance-roles"><span>Design Engineer</span> · <span>Product UI Engineer</span> · <span>Frontend (AI products)</span> · <span>Design Operations</span></p>
+        <h3>Portfolio context</h3>
+        <p class="glance-roles">Personal exploration of technical design, workflow decisions, and UX. Supports the Technical Project Manager portfolio.</p>
         <h3 style="margin-top:22px;">Skills demonstrated</h3>
         <ul>
           <li>Domain knowledge of high-stakes UX moments (the briefs themselves)</li>

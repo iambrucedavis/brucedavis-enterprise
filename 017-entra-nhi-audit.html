@@ -4,23 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Entra ID NHI Audit — Bruce Davis</title>
-<meta name="description" content="A PowerShell module that audits Microsoft Entra ID for non-human identity risk. Eight scored risk factors, HTML + JSON reports, works against a real tenant or a mock fixture.">
+<meta name="description" content="Reviews a sample cloud-identity inventory for selected access risks, then produces a report with findings and suggested actions. Personal work supporting Bruce Davis’s Technical Project Manager portfolio.">
 <meta property="og:title" content="Entra ID NHI Audit — Bruce Davis">
-<meta property="og:description" content="Working PowerShell + Microsoft Graph code for auditing Entra ID non-human identities. Discovery, scoring, reporting — production patterns, ungated mock fixture, real-tenant entry point.">
+<meta property="og:description" content="Reviews a sample cloud-identity inventory for selected access risks, then produces a report with findings and suggested actions. Personal work supporting Bruce Davis’s Technical Project Manager portfolio.">
 <meta property="og:type" content="website">
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
 :root {
-  --paper:#0A0E1A; --paper-clean:#121826; --paper-deep:#1A2236;
-  --ink:#F5F7FA; --ink-soft:#C1C7D0; --mute:#7A8392; --mute-soft:#9CA3AF;
-  --signal:#0066FF; --signal-rgb:0,102,255;
-  --hairline:rgba(255,255,255,.08); --hairline-strong:rgba(255,255,255,.18);
+  --paper:#FAF8F5; --paper-clean:#F1EDE8; --paper-deep:#F7E8EB;
+  --ink:#20242B; --ink-soft:#55514E; --mute:#706A65; --mute-soft:#706A65;
+  --signal:#B42335; --signal-rgb:180,35,53;
+  --hairline:#DDD6D0; --hairline-strong:#A89D94;
   --display:'Anton','Bebas Neue',Impact,sans-serif;
   --serif:'EB Garamond',Georgia,serif;
   --mono:'Space Mono',ui-monospace,monospace;
   --shadow:0 0 0 1px var(--hairline-strong);
   --m-base:140ms cubic-bezier(.2,0,0,1);
-  --crit:#B5302A; --high:#C7611A; --med:#9A6B12; --low:#3A6BA8; --healthy:#2F7D4F;
+  --crit:#B5302A; --high:#C7611A; --med:#9A6B12; --low:#706A65; --healthy:#2F7D4F;
 }
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
 html { scroll-behavior:smooth; }
@@ -144,27 +144,20 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   html { scroll-behavior:auto; }
 }
 </style>
-<link rel="stylesheet" href="blueprint-theme.css">
+<style>
+.project-context {max-width:1280px;margin:76px auto 0;padding:18px 24px;background:#8D1828;color:#B42335;border:1px solid #B42335;font:16px/1.5 system-ui,sans-serif;position:relative;z-index:2;} .project-context a{color:#B42335;text-underline-offset:4px;}
+</style><link rel="stylesheet" href="portfolio-chrome.css"><script src="navigation.js" defer></script><link rel="stylesheet" href="portfolio-theme.css">
 </head>
 <body>
 
-<nav id="top-nav">
-  <a href="index.html" class="nav-back">← Bruce Davis</a>
-  <div class="nav-links">
-    <a href="index.html#work">Work</a>
-    <a href="about.html">About</a>
-    <a href="bruce-davis-resume.html">Resume</a>
-    <a href="index.html#contact">Contact</a>
-  </div>
-</nav>
+
+<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal technical experiment</strong> · Separate from employer deliverables. Older metrics and external integrations have not been revalidated in this review. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-pre">PowerShell · Microsoft Graph · NHI Governance</div>
   <h1 id="hero-hl">Entra ID<br>NHI Audit</h1>
-  <p class="hero-sub">
-    A PowerShell module that audits a Microsoft Entra ID tenant for non-human identity risk. Discovers every service principal, app registration, and managed identity; scores each on eight factors; writes an HTML + JSON report your IAM team can act on.
-  </p>
+  <p class="hero-sub">Reviews a sample cloud-identity inventory for selected access risks, then produces a report with findings and suggested actions.</p>
   <div class="hero-meta">
     <span>PowerShell 7</span>
     <span>Microsoft Graph SDK</span>
@@ -186,8 +179,8 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <p>A focused, opinionated audit tool. Four cmdlets: <code style="font-family:var(--mono);font-size:14px;color:var(--ink);">Connect</code>, <code style="font-family:var(--mono);font-size:14px;color:var(--ink);">Get-Inventory</code>, <code style="font-family:var(--mono);font-size:14px;color:var(--ink);">Test-Risk</code>, <code style="font-family:var(--mono);font-size:14px;color:var(--ink);">Export-Report</code>. Runs offline against a 28-record mock tenant for demos; connects to a real tenant via Microsoft.Graph SDK when given a tenant GUID. Same risk-scoring logic both ways. Ships a sample report so you can preview the output without installing anything.</p>
       </div>
       <div class="glance-col">
-        <h3>Maps to</h3>
-        <p class="glance-roles"><span>Identity Engineer</span> · <span>NHI Governance Engineer</span> · <span>Cloud Identity (Microsoft)</span> · <span>Security Engineer (IAM)</span></p>
+        <h3>Portfolio context</h3>
+        <p class="glance-roles">Personal exploration of technical design, workflow decisions, and UX. Supports the Technical Project Manager portfolio.</p>
         <h3 style="margin-top:22px;">Skills demonstrated</h3>
         <ul>
           <li>PowerShell 7 module design (manifest, public/private structure)</li>
@@ -217,7 +210,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <span class="dv-label">01 — Sample Output</span>
       <span class="dv-version">28 mock NHIs · auto-scored</span>
     </div>
-    <h2 class="dv-title">A real audit, written for an IAM team.</h2>
+    <h2 class="dv-title">A mock audit report for review.</h2>
     <p class="dv-desc">What the report looks like — exec-summary counts at the top, per-identity cards sorted by risk, each finding paired with a specific remediation. The full HTML is self-contained, drop it on a fileshare or attach it to a ticket.</p>
 
     <div class="report-frame">
@@ -284,7 +277,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
     <h2 class="dv-title">What the scorer looks for.</h2>
     <p class="dv-desc">Each factor produces a finding with a severity, a one-sentence description, and a specific remediation. The factors are deliberately opinionated — the kind of things an IAM lead would call out in a quarterly review.</p>
 
-    <table class="factor-table">
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Scrollable data table"><table class="factor-table">
       <thead>
         <tr><th>Code</th><th>Factor</th><th>Severity</th></tr>
       </thead>
@@ -298,7 +291,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <tr><td class="code">NHI007</td><td class="what">Account disabled but credentials still present</td><td class="sev med">Medium</td></tr>
         <tr><td class="code">NHI008</td><td class="what">Tagged 'legacy' and still enabled</td><td class="sev high">High</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <p class="c-cap">Adding a factor is a function in <code style="font-family:var(--mono);font-size:13px;color:var(--ink);">Test-NhiRisk.ps1</code>. The scoring is linear (per-factor weights add to 0–100) so individual contributions stay readable in a report — no opaque ML model.</p>
   </div>
 </div>
@@ -405,7 +398,7 @@ if (motionOK) {
 }
 
 console.log('%c// 6% — small change. whole product.', 'color:#E1261C;font-family:monospace;letter-spacing:.04em;');
-console.log('%c// bruce davis · 2026', 'color:#8A847A;font-family:monospace;letter-spacing:.04em;');
+console.log('%c// bruce davis · 2026', 'color:#706A65;font-family:monospace;letter-spacing:.04em;');
 </script>
 
 </body>

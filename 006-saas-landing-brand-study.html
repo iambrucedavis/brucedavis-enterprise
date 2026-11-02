@@ -6,16 +6,16 @@
 <title>Project 006 — SaaS Landing &amp; Brand Study · Bruce Davis</title>
 <!-- // 6% — concept study, not a shipped product. -->
 
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
 
 /* ─── TOKENS — formal register ─────── */
 :root {
-  --paper: #0A0E1A; --paper-clean: #121826; --paper-deep: #1A2236;
-  --ink: #F5F7FA; --ink-soft: #C1C7D0; --mute: #7A8392;
-  --signal: #0066FF; --signal-rgb: 0,102,255;
-  --error: #C0392B; --warn: #9A6B12; --ok: #2F7D4F;
-  --hairline: rgba(255,255,255,.08); --hairline-strong: rgba(255,255,255,.18);
+  --paper:#FAF8F5; --paper-clean:#F1EDE8; --paper-deep:#F7E8EB;
+  --ink:#20242B; --ink-soft:#55514E; --mute:#706A65;
+  --signal:#B42335; --signal-rgb:180,35,53;
+  --error: #C0392B; --warn: #9A6B12; --ok:#2F674D;
+  --hairline:#DDD6D0; --hairline-strong:#A89D94;
   --display: 'Anton','Bebas Neue',Impact,sans-serif;
   --serif: 'EB Garamond',Georgia,serif;
   --mono: 'Space Mono',ui-monospace,monospace;
@@ -23,9 +23,9 @@
   --shadow-lg: 0 0 0 1px var(--hairline-strong), 0 24px 48px -24px rgba(0,0,0,.6);
   --m-base: 140ms cubic-bezier(.2,0,0,1);
   /* aliases — keep demo markup valid */
-  --bg: var(--paper); --surface: var(--paper-clean); --surface-hi: var(--paper-deep);
-  --border: var(--hairline); --border-hi: var(--hairline-strong);
-  --text: var(--ink); --text-dim: var(--ink-soft); --text-muted: var(--mute);
+  --bg:#FAF8F5; --surface:#F1EDE8; --surface-hi:#F7E8EB;
+  --border:#DDD6D0; --border-hi:#A89D94;
+  --text:#20242B; --text-dim:#55514E; --text-muted:#706A65;
 }
 
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
@@ -71,7 +71,7 @@ a { color:inherit; text-decoration:none; }
 .b-url {
   flex:1; font-family:var(--mono); font-size:10px;
   color:var(--mute); text-align:center;
-  background:rgba(0,0,0,.05); padding:4px 10px;
+  background:rgba(250,248,245,.05); padding:4px 10px;
 }
 
 /* ─── SIGNAL PRODUCT UI (light dashboard mockup) ─ */
@@ -161,11 +161,11 @@ a { color:inherit; text-decoration:none; }
   gap:10px; cursor:pointer; transition:background .15s;
   position:relative;
 }
-.sig-deploy-row:hover { background:rgba(0,0,0,.03); }
+.sig-deploy-row:hover { background:rgba(250,248,245,.03); }
 .sig-deploy-name  { font-family:var(--mono); font-size:11px; font-weight:700; color:var(--ink); flex:1; }
 .sig-deploy-branch {
   font-family:var(--mono); font-size:9px; color:var(--ink-soft);
-  background:rgba(0,0,0,.06); padding:2px 6px;
+  background:rgba(250,248,245,.06); padding:2px 6px;
 }
 .sig-deploy-time  { font-family:var(--mono); font-size:9px; color:var(--mute); width:52px; text-align:right; }
 .sig-badge {
@@ -319,27 +319,20 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   html { scroll-behavior:auto; }
 }
 </style>
-<link rel="stylesheet" href="blueprint-theme.css">
+<style>
+.project-context {max-width:1280px;margin:76px auto 0;padding:18px 24px;background:#8D1828;color:#B42335;border:1px solid #B42335;font:16px/1.5 system-ui,sans-serif;position:relative;z-index:2;} .project-context a{color:#B42335;text-underline-offset:4px;}
+</style><link rel="stylesheet" href="portfolio-chrome.css"><script src="navigation.js" defer></script><link rel="stylesheet" href="portfolio-theme.css">
 </head>
 <body>
 
-<nav id="top-nav">
-  <a href="index.html" class="nav-back">← Bruce Davis</a>
-  <div class="nav-links">
-    <a href="index.html#work">Work</a>
-    <a href="about.html">About</a>
-    <a href="bruce-davis-resume.html">Resume</a>
-    <a href="index.html#contact">Contact</a>
-  </div>
-</nav>
+
+<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal design study</strong> · Separate from employer deliverables. Older metrics and external integrations have not been revalidated in this review. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-pre">SaaS Surface · Brand &amp; Motion System</div>
   <h1 id="hero-hl">SURFACE<br>STUDY.</h1>
-  <p class="hero-sub">
-    A modern SaaS surface as one visual system — landing, brand, hierarchy, motion. Click deploy and the state animates through. Toggle the pricing and the value swaps. Designed and built as a concept.
-  </p>
+  <p class="hero-sub">A concept study of how a landing page and product dashboard can share a consistent visual system. Displayed deployments and pricing are simulated.</p>
   <div class="hero-meta">
     <span>Single-file build</span>
     <span>Brand + surface + motion</span>
@@ -361,8 +354,8 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <p>A SaaS surface designed end-to-end as one system: marketing landing, brand mark, dashboard with a live deploy state machine, log stream, pricing toggle. The kind of polished product surface AI startups need but rarely ship.</p>
       </div>
       <div class="glance-col">
-        <h3>Maps to</h3>
-        <p class="glance-roles"><span>Design Engineer</span> · <span>Frontend (AI SaaS)</span> · <span>Product UI Engineer</span> · <span>Brand / Marketing Engineer</span></p>
+        <h3>Portfolio context</h3>
+        <p class="glance-roles">Personal exploration of technical design, workflow decisions, and UX. Supports the Technical Project Manager portfolio.</p>
         <h3 style="margin-top:22px;">Skills demonstrated</h3>
         <ul>
           <li>Cohesive design system across marketing + product</li>

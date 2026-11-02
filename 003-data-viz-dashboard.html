@@ -4,32 +4,32 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Project 003 — Interactive Data Viz · Bruce Davis</title>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
 
 /* ─── TOKENS — formal register ─────── */
 :root {
-  --paper: #0A0E1A; --paper-clean: #121826; --paper-deep: #1A2236;
-  --ink: #F5F7FA; --ink-soft: #C1C7D0; --mute: #7A8392;
-  --signal: #0066FF; --signal-rgb: 0,102,255;
+  --paper:#FAF8F5; --paper-clean:#F1EDE8; --paper-deep:#F7E8EB;
+  --ink:#20242B; --ink-soft:#55514E; --mute:#706A65;
+  --signal:#B42335; --signal-rgb:180,35,53;
   --error: #C0392B; --warn: #9A6B12;
-  --hairline: rgba(255,255,255,.08); --hairline-strong: rgba(255,255,255,.18);
+  --hairline:#DDD6D0; --hairline-strong:#A89D94;
   --display: 'Anton','Bebas Neue',Impact,sans-serif;
   --serif: 'EB Garamond',Georgia,serif;
   --mono: 'Space Mono',ui-monospace,monospace;
   --shadow: 0 0 0 1px var(--hairline-strong);
   --m-base: 140ms cubic-bezier(.2,0,0,1);
   /* aliases — keep demo/chart markup valid */
-  --bg: var(--paper); --surface: var(--paper-clean); --surface-hi: var(--paper-deep);
-  --border: var(--hairline); --border-hi: var(--hairline-strong);
-  --text: var(--ink); --text-dim: var(--ink-soft); --text-muted: var(--mute);
+  --bg:#FAF8F5; --surface:#F1EDE8; --surface-hi:#F7E8EB;
+  --border:#DDD6D0; --border-hi:#A89D94;
+  --text:#20242B; --text-dim:#55514E; --text-muted:#706A65;
 }
 
 /* ─── D3 SVG AXES — dark on paper ─────────────── */
-#fps-chart svg text, #scatter-chart svg text { fill: rgba(0,0,0,.5); }
-#fps-chart svg line, #scatter-chart svg line { stroke: rgba(255,255,255,.08); }
-#force-chart svg text { fill: rgba(0,0,0,.55); }
-#force-chart svg line { stroke: rgba(0,0,0,.18); }
+#fps-chart svg text, #scatter-chart svg text { fill: rgba(32,36,43,.5); }
+#fps-chart svg line, #scatter-chart svg line { stroke: rgba(32,36,43,.08); }
+#force-chart svg text { fill: rgba(32,36,43,.55); }
+#force-chart svg line { stroke: rgba(32,36,43,.18); }
 
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
 html { scroll-behavior:smooth; }
@@ -76,10 +76,10 @@ a { color:inherit; text-decoration:none; }
 /* ─── SVG CHART ELEMENTS (CSS-var-aware) ──────── */
 .chart-line   { stroke: var(--signal); stroke-width: 1.5; fill: none; }
 .chart-area   { fill: rgba(var(--signal-rgb), .1); }
-.chart-dot-mo { fill:rgba(0,102,255,.35); stroke:rgba(0,102,255,.85); stroke-width:1; }
+.chart-dot-mo { fill:rgba(180,35,53,.35); stroke:rgba(180,35,53,.85); stroke-width:1; }
 .chart-dot-ix { fill:rgba(20,110,130,.35); stroke:rgba(20,110,130,.85); stroke-width:1; }
 .chart-dot-ai { fill:rgba(120,100,20,.4); stroke:rgba(120,100,20,.85); stroke-width:1; }
-.chart-dot-la { fill:rgba(0,0,0,.18); stroke:rgba(0,0,0,.5); stroke-width:1; }
+.chart-dot-la { fill:rgba(32,36,43,.18); stroke:rgba(32,36,43,.5); stroke-width:1; }
 .chart-dot-da { fill:rgba(150,40,30,.4); stroke:rgba(150,40,30,.85); stroke-width:1; }
 
 /* ─── FPS CHART ───────────────────────────────── */
@@ -125,7 +125,7 @@ a { color:inherit; text-decoration:none; }
 .fl-item { display:flex; align-items:center; gap:5px; }
 .fl-dot  { width:8px; height:8px; border-radius:50%; }
 .fl-dot.comp { background:var(--signal); }
-.fl-dot.hook { background:#146E82; }
+.fl-dot.hook { background:#8D1828; }
 .fl-dot.util { background:var(--mute); }
 #force-chart { width:100%; }
 .force-tip {
@@ -180,27 +180,20 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   html { scroll-behavior:auto; }
 }
 </style>
-<link rel="stylesheet" href="blueprint-theme.css">
+<style>
+.project-context {max-width:1280px;margin:76px auto 0;padding:18px 24px;background:#8D1828;color:#B42335;border:1px solid #B42335;font:16px/1.5 system-ui,sans-serif;position:relative;z-index:2;} .project-context a{color:#B42335;text-underline-offset:4px;}
+</style><link rel="stylesheet" href="portfolio-chrome.css"><script src="navigation.js" defer></script><link rel="stylesheet" href="portfolio-theme.css">
 </head>
 <body>
 
-<nav id="top-nav">
-  <a href="index.html" class="nav-back">← Bruce Davis</a>
-  <div class="nav-links">
-    <a href="index.html#work">Work</a>
-    <a href="about.html">About</a>
-    <a href="bruce-davis-resume.html">Resume</a>
-    <a href="index.html#contact">Contact</a>
-  </div>
-</nav>
+
+<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal design study</strong> · Separate from employer deliverables. Older metrics and external integrations have not been revalidated in this review. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-pre">Interactive Data Visualization · D3.js</div>
   <h1 id="hero-hl">THE DATA<br>MOVES.</h1>
-  <p class="hero-sub">
-    Three D3.js charts built like product interfaces. Live FPS monitor, interactive scatter plot, force-directed graph with drag and hover.
-  </p>
+  <p class="hero-sub">Three interactive charts explore changing values, comparisons, and relationships. A personal data-visualization study.</p>
   <div class="hero-meta">
     <span>3 live charts</span>
     <span>D3.js v7</span>
@@ -219,11 +212,11 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
     <div class="glance">
       <div class="glance-col">
         <h3>What it is</h3>
-        <p>Three production-grade D3.js visualizations — performance monitor, scatter plot, force-directed graph — built like interactive product surfaces, not static charts. The kind of data UI an AI dashboard or agent observability console needs.</p>
+        <p>Three demonstration D3.js visualizations — performance monitor, scatter plot, force-directed graph — built like interactive product surfaces, not static charts. The kind of data UI an AI dashboard or agent observability console needs.</p>
       </div>
       <div class="glance-col">
-        <h3>Maps to</h3>
-        <p class="glance-roles"><span>Frontend Engineer (AI dashboards)</span> · <span>Design Engineer</span> · <span>Data-Viz Engineer</span> · <span>AI Observability UX</span></p>
+        <h3>Portfolio context</h3>
+        <p class="glance-roles">Personal exploration of technical design, workflow decisions, and UX. Supports the Technical Project Manager portfolio.</p>
         <h3 style="margin-top:22px;">Skills demonstrated</h3>
         <ul>
           <li>D3.js v7 — three chart types, one visual language</li>
@@ -457,22 +450,22 @@ function buildFpsChart() {
   /* Grid */
   g.append('g').selectAll('line').data([30, 45, 60]).join('line')
     .attr('x1', 0).attr('x2', IW).attr('y1', d => y(d)).attr('y2', d => y(d))
-    .attr('stroke', 'rgba(255,255,255,.04)').attr('stroke-width', 1);
+    .attr('stroke', 'rgba(32,36,43,.04)').attr('stroke-width', 1);
 
   /* 60fps target */
   g.append('line')
     .attr('x1', 0).attr('x2', IW)
     .attr('y1', y(60)).attr('y2', y(60))
-    .attr('stroke', 'rgba(255,255,255,.18)').attr('stroke-width', 1)
+    .attr('stroke', 'rgba(32,36,43,.18)').attr('stroke-width', 1)
     .attr('stroke-dasharray', '4 4');
   g.append('text').attr('x', IW + 4).attr('y', y(60) + 4)
-    .attr('fill', 'rgba(255,255,255,.25)').attr('font-family', "'Space Mono',monospace")
+    .attr('fill', 'rgba(32,36,43,0.7)').attr('font-family', "'Space Mono',monospace")
     .attr('font-size', 9).text('60');
 
   /* Y axis */
   g.append('g').selectAll('text').data([30, 45, 60]).join('text')
     .attr('x', -5).attr('y', d => y(d) + 4).attr('text-anchor', 'end')
-    .attr('fill', 'rgba(255,255,255,.22)').attr('font-family', "'Space Mono',monospace")
+    .attr('fill', 'rgba(32,36,43,.22)').attr('font-family', "'Space Mono',monospace")
     .attr('font-size', 9).text(d => d);
 
   const lineGen = d3.line().x((d, i) => x(i)).y(d => y(d)).curve(d3.curveCatmullRom.alpha(.5));
@@ -483,7 +476,7 @@ function buildFpsChart() {
 
   /* Crosshair */
   const xhair = g.append('line').attr('y1', 0).attr('y2', IH)
-    .attr('stroke', 'rgba(255,255,255,.18)').attr('stroke-width', 1).style('display', 'none');
+    .attr('stroke', 'rgba(32,36,43,.18)').attr('stroke-width', 1).style('display', 'none');
   const xdot = g.append('circle').attr('r', 3).attr('fill', 'var(--signal)').style('display', 'none');
 
   const tip = document.getElementById('fps-tip');
@@ -602,29 +595,29 @@ function buildScatter() {
   g.append('g').selectAll('line.gx').data(d3.range(2, 10)).join('line')
     .attr('x1', d => x(d)).attr('x2', d => x(d))
     .attr('y1', 0).attr('y2', IH)
-    .attr('stroke', 'rgba(255,255,255,.04)').attr('stroke-width', 1);
+    .attr('stroke', 'rgba(32,36,43,.04)').attr('stroke-width', 1);
   g.append('g').selectAll('line.gy').data([5, 6, 7, 8, 9]).join('line')
     .attr('x1', 0).attr('x2', IW).attr('y1', d => y(d)).attr('y2', d => y(d))
-    .attr('stroke', 'rgba(255,255,255,.04)').attr('stroke-width', 1);
+    .attr('stroke', 'rgba(32,36,43,.04)').attr('stroke-width', 1);
 
   /* Axes */
   g.append('g').attr('transform', `translate(0,${IH})`).call(
     d3.axisBottom(x).ticks(5).tickSize(0).tickFormat(d => d)
   ).select('.domain').remove();
-  g.selectAll('.tick text').attr('fill', 'rgba(255,255,255,.25)')
+  g.selectAll('.tick text').attr('fill', 'rgba(32,36,43,0.7)')
     .attr('font-family', "'Space Mono',monospace").attr('font-size', 9);
 
   g.append('g').call(d3.axisLeft(y).ticks(4).tickSize(0))
     .select('.domain').remove();
-  g.selectAll('.tick text').attr('fill', 'rgba(255,255,255,.25)')
+  g.selectAll('.tick text').attr('fill', 'rgba(32,36,43,0.7)')
     .attr('font-family', "'Space Mono',monospace").attr('font-size', 9);
 
   /* Axis labels */
   g.append('text').attr('x', IW / 2).attr('y', IH + 30).attr('text-anchor', 'middle')
-    .attr('fill', 'rgba(255,255,255,.2)').attr('font-family', "'Space Mono',monospace").attr('font-size', 9)
+    .attr('fill', 'rgba(32,36,43,0.7)').attr('font-family', "'Space Mono',monospace").attr('font-size', 9)
     .text('// complexity →');
   g.append('text').attr('transform', 'rotate(-90)').attr('x', -IH / 2).attr('y', -34).attr('text-anchor', 'middle')
-    .attr('fill', 'rgba(255,255,255,.2)').attr('font-family', "'Space Mono',monospace").attr('font-size', 9)
+    .attr('fill', 'rgba(32,36,43,0.7)').attr('font-family', "'Space Mono',monospace").attr('font-size', 9)
     .text('// impact →');
 
   /* Dots */
@@ -706,7 +699,7 @@ function buildForce() {
     { source:'apiClient',            target:'theme'           },
   ];
 
-  const GROUP_COLORS = { comp: 'var(--signal)', hook: '#2AA8C4', util: '#555555' };
+  const GROUP_COLORS = { comp: 'var(--signal)', hook: '#B42335', util: '#706A65' };
   const GROUP_R      = { comp: 10, hook: 8, util: 7 };
 
   const svg = d3.select(wrap).append('svg')
@@ -721,7 +714,7 @@ function buildForce() {
 
   const linkEl = svg.append('g')
     .selectAll('line').data(LINKS).join('line')
-    .attr('stroke', 'rgba(255,255,255,.1)')
+    .attr('stroke', 'rgba(32,36,43,.1)')
     .attr('stroke-width', 1);
 
   const nodeEl = svg.append('g')
@@ -749,7 +742,7 @@ function buildForce() {
   nodeEl.append('text')
     .attr('dy', d => -GROUP_R[d.group] - 5)
     .attr('text-anchor', 'middle')
-    .attr('fill', 'rgba(255,255,255,.5)')
+    .attr('fill', 'rgba(32,36,43,0.7)')
     .attr('font-family', "'Space Mono',monospace")
     .attr('font-size', 8.5)
     .text(d => d.id);
@@ -769,7 +762,7 @@ function buildForce() {
         .attr('stroke-opacity', n => connected.has(n.id) ? 1 : .2);
       linkEl
         .attr('stroke', l => (l.source.id === d.id || l.target.id === d.id)
-          ? 'rgba(255,255,255,.45)' : 'rgba(255,255,255,.06)')
+          ? 'rgba(32,36,43,.45)' : 'rgba(32,36,43,.06)')
         .attr('stroke-width', l => (l.source.id === d.id || l.target.id === d.id) ? 1.5 : 1);
       tip.textContent   = `${d.id} · ${d.group}`;
       tip.style.left    = (mx + 12) + 'px';
@@ -779,7 +772,7 @@ function buildForce() {
     .on('mouseleave', () => {
       nodeEl.select('circle')
         .attr('fill-opacity', .35).attr('stroke-opacity', 1);
-      linkEl.attr('stroke', 'rgba(255,255,255,.1)').attr('stroke-width', 1);
+      linkEl.attr('stroke', 'rgba(32,36,43,.1)').attr('stroke-width', 1);
       tip.style.opacity = '0';
     });
 

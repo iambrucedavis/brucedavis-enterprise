@@ -4,26 +4,26 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Day One — Bruce Davis</title>
-<meta name="description" content="A conversational generative-UI onboarding demo — a new hire types a plain-language request, Claude returns a structured UI spec, and the app renders the right interactive component: a wizard, a progress ring, a benefits picker. Generative UI, not a chat transcript.">
+<meta name="description" content="Explores an onboarding interface that turns a plain-language request into an interactive screen. A personal experiment, separate from the Microsoft employer MVP. Personal work supporting Bruce Davis’s Technical Project Manager portfolio.">
 <meta property="og:title" content="Day One — Bruce Davis">
-<meta property="og:description" content="Type a sentence, get an interface. Structured outputs from Claude, dynamically rendered React components — a generative-UI onboarding experience.">
+<meta property="og:description" content="Explores an onboarding interface that turns a plain-language request into an interactive screen. A personal experiment, separate from the Microsoft employer MVP. Personal work supporting Bruce Davis’s Technical Project Manager portfolio.">
 <meta property="og:type" content="website">
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
 
 /* ─── TOKENS — formal register ─────── */
 :root {
-  --paper:        #0A0E1A;
-  --paper-clean:  #121826;
-  --paper-deep:   #1A2236;
-  --ink:          #F5F7FA;
-  --ink-soft:     #C1C7D0;
-  --mute:         #7A8392;
-  --mute-soft:    #9CA3AF;
-  --signal:       #0066FF;
-  --signal-rgb:   0,102,255;
-  --hairline:        rgba(255,255,255,.08);
-  --hairline-strong: rgba(255,255,255,.18);
+  --paper:#FAF8F5;
+  --paper-clean:#F1EDE8;
+  --paper-deep:#F7E8EB;
+  --ink:#20242B;
+  --ink-soft:#55514E;
+  --mute:#706A65;
+  --mute-soft:#706A65;
+  --signal:#B42335;
+  --signal-rgb:180,35,53;
+  --hairline:#DDD6D0;
+  --hairline-strong:#A89D94;
   --display: 'Anton', 'Bebas Neue', Impact, sans-serif;
   --serif:   'EB Garamond', Georgia, serif;
   --mono:    'Space Mono', ui-monospace, monospace;
@@ -121,7 +121,7 @@ a { color:inherit; text-decoration:none; }
 .video-bar { display:flex; align-items:center; justify-content:space-between; padding:11px 18px; border-bottom:1px solid var(--hairline-strong); background:var(--paper-deep); gap:12px; }
 .video-bar-name { font-family:var(--mono); font-size:10px; letter-spacing:.04em; color:var(--ink-soft); }
 .video-bar-status { font-family:var(--mono); font-size:10px; letter-spacing:.06em; color:var(--signal); }
-.video-frame video { display:block; width:100%; height:auto; background:#0a0b0d; }
+.video-frame video { display:block; width:100%; height:auto; background:#FAF8F5; }
 
 /* ─── FLOW DIAGRAM ─────────────────────────────── */
 .flow { display:flex; align-items:stretch; border:1px solid var(--hairline-strong); box-shadow:var(--shadow); background:var(--paper-clean); }
@@ -206,27 +206,20 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   html { scroll-behavior:auto; }
 }
 </style>
-<link rel="stylesheet" href="blueprint-theme.css">
+<style>
+.project-context {max-width:1280px;margin:76px auto 0;padding:18px 24px;background:#8D1828;color:#B42335;border:1px solid #B42335;font:16px/1.5 system-ui,sans-serif;position:relative;z-index:2;} .project-context a{color:#B42335;text-underline-offset:4px;}
+</style><link rel="stylesheet" href="portfolio-chrome.css"><script src="navigation.js" defer></script><link rel="stylesheet" href="portfolio-theme.css">
 </head>
 <body>
 
-<nav id="top-nav">
-  <a href="index.html" class="nav-back">← Bruce Davis</a>
-  <div class="nav-links">
-    <a href="index.html#work">Work</a>
-    <a href="about.html">About</a>
-    <a href="bruce-davis-resume.html">Resume</a>
-    <a href="index.html#contact">Contact</a>
-  </div>
-</nav>
+
+<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal technical experiment</strong> · Separate from employer deliverables. Older metrics and external integrations have not been revalidated in this review. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-pre">Generative UI · Structured Outputs</div>
   <h1 id="hero-hl">Day One</h1>
-  <p class="hero-sub">
-    A conversational onboarding experience. The interface is assembled at request time — Claude returns structured data; the app renders an interactive component instead of a chat reply.
-  </p>
+  <p class="hero-sub">Explores an onboarding interface that turns a plain-language request into an interactive screen. A personal experiment, separate from the Microsoft employer MVP.</p>
   <div class="hero-meta">
     <span>6 generative components</span>
     <span>Structured-output rendering</span>
@@ -248,8 +241,8 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <p>A generative-UI onboarding experience. The user types a plain-language request; Claude returns structured JSON; the app renders an interactive component (wizard, progress ring, benefits picker) chosen and assembled at request time. Six components compose into many surfaces.</p>
       </div>
       <div class="glance-col">
-        <h3>Maps to</h3>
-        <p class="glance-roles"><span>AI Product Engineer</span> · <span>Frontend (AI)</span> · <span>Applied AI Engineer</span> · <span>Design Engineer (AI)</span></p>
+        <h3>Portfolio context</h3>
+        <p class="glance-roles">Personal exploration of technical design, workflow decisions, and UX. Supports the Technical Project Manager portfolio.</p>
         <h3 style="margin-top:22px;">Skills demonstrated</h3>
         <ul>
           <li>Generative UI architecture (LLM → JSON → React render)</li>
@@ -494,7 +487,7 @@ if (motionOK) {
 
 /* ── 6% — easter egg */
 console.log('%c// 6% — small change. whole product.', 'color:#E1261C;font-family:monospace;letter-spacing:.04em;');
-console.log('%c// bruce davis · 2026', 'color:#8A847A;font-family:monospace;letter-spacing:.04em;');
+console.log('%c// bruce davis · 2026', 'color:#706A65;font-family:monospace;letter-spacing:.04em;');
 </script>
 
 </body>

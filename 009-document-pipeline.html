@@ -4,32 +4,32 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document Processing Pipeline — Bruce Davis</title>
-<meta name="description" content="A document pipeline built as a set of Claude tools — extraction, PII masking, structured JSON outputs, validation, human-in-the-loop review, token-cost tracking. Built for regulated environments.">
+<meta name="description" content="Explores extracting document information, masking selected personal information, checking the required format, and sending exceptions for human review. No compliance certification is established. Personal work supporting Bruce Davis’s Technical Project Manager portfolio.">
 <meta property="og:title" content="Document Processing Pipeline — Bruce Davis">
-<meta property="og:description" content="A document pipeline built as a set of Claude tools — reads a doc, masks PII, validates the extraction with structured JSON outputs, escalates anything unusual to a human reviewer, tracks token cost. Built for regulated environments.">
+<meta property="og:description" content="Explores extracting document information, masking selected personal information, checking the required format, and sending exceptions for human review. No compliance certification is established. Personal work supporting Bruce Davis’s Technical Project Manager portfolio.">
 <meta property="og:type" content="website">
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
 
 /* ─── TOKENS — formal register ─────── */
 :root {
-  --paper:        #0A0E1A;
-  --paper-clean:  #121826;
-  --paper-deep:   #1A2236;
-  --ink:          #F5F7FA;
-  --ink-soft:     #C1C7D0;
-  --mute:         #7A8392;
-  --mute-soft:    #9CA3AF;
-  --signal:       #0066FF;
-  --signal-rgb:   0,102,255;
+  --paper:#FAF8F5;
+  --paper-clean:#F1EDE8;
+  --paper-deep:#F7E8EB;
+  --ink:#20242B;
+  --ink-soft:#55514E;
+  --mute:#706A65;
+  --mute-soft:#706A65;
+  --signal:#B42335;
+  --signal-rgb:180,35,53;
   --add:          #2F7D4F;
   --del:          #B5302A;
   --warn:         #9A6B12;
   --code-str:     #3F6B4A;
   --code-num:     #8A5A1F;
   --code-bool:    #2A5A6B;
-  --hairline:        rgba(255,255,255,.08);
-  --hairline-strong: rgba(255,255,255,.18);
+  --hairline:#DDD6D0;
+  --hairline-strong:#A89D94;
   --display: 'Anton', 'Bebas Neue', Impact, sans-serif;
   --serif:   'EB Garamond', Georgia, serif;
   --mono:    'Space Mono', ui-monospace, monospace;
@@ -37,14 +37,14 @@
   --shadow-lg: 0 0 0 1px var(--hairline-strong), 0 24px 48px -24px rgba(0,0,0,.6);
   --m-base: 140ms cubic-bezier(.2,0,0,1);
   /* aliases — keep inline-styled / JS-driven body content valid */
-  --bg: var(--paper);
-  --surface: var(--paper-clean);
-  --surface-hi: var(--paper-deep);
-  --border: var(--hairline);
-  --border-hi: var(--hairline-strong);
-  --text: var(--ink);
-  --text-dim: var(--ink-soft);
-  --text-muted: var(--mute);
+  --bg:#FAF8F5;
+  --surface:#F1EDE8;
+  --surface-hi:#F7E8EB;
+  --border:#DDD6D0;
+  --border-hi:#A89D94;
+  --text:#20242B;
+  --text-dim:#55514E;
+  --text-muted:#706A65;
 }
 
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
@@ -234,31 +234,24 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
   html { scroll-behavior:auto; }
 }
 </style>
-<link rel="stylesheet" href="blueprint-theme.css">
+<style>
+.project-context {max-width:1280px;margin:76px auto 0;padding:18px 24px;background:#8D1828;color:#B42335;border:1px solid #B42335;font:16px/1.5 system-ui,sans-serif;position:relative;z-index:2;} .project-context a{color:#B42335;text-underline-offset:4px;}
+</style><link rel="stylesheet" href="portfolio-chrome.css"><script src="navigation.js" defer></script><link rel="stylesheet" href="portfolio-theme.css">
 </head>
 <body>
 
-<nav id="top-nav">
-  <a href="index.html" class="nav-back">← Bruce Davis</a>
-  <div class="nav-links">
-    <a href="index.html#work">Work</a>
-    <a href="about.html">About</a>
-    <a href="bruce-davis-resume.html">Resume</a>
-    <a href="index.html#contact">Contact</a>
-  </div>
-</nav>
+
+<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal technical experiment</strong> · Separate from employer deliverables. Older metrics and external integrations have not been revalidated in this review. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-pre">Regulated AI · MCP · HIPAA-Grade</div>
+  <div class="hero-pre">Regulated AI · MCP · Masking demonstration</div>
   <h1 id="hero-hl">Document Processing<br>Pipeline</h1>
-  <p class="hero-sub">
-    Five MCP tools, one per stage. Extract, PII mask, validate, route to human review, report cost. Model-agnostic — runs on Claude, GPT, Gemini, or any tool-calling model.
-  </p>
+  <p class="hero-sub">Explores extracting document information, masking selected personal information, checking the required format, and sending exceptions for human review. No compliance certification is established.</p>
   <div class="hero-meta">
     <span>5 MCP tools</span>
     <span>PII masking + schema validation</span>
-    <span>HITL queue</span>
+    <span>Human-review queue</span>
     <span>Python · Node</span>
   </div>
 </section>
@@ -273,11 +266,11 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
     <div class="glance">
       <div class="glance-col">
         <h3>What it is</h3>
-        <p>A document-processing MCP server for regulated environments. Five composable tools, one per stage, with deterministic PII masking, schema + business-rule validation, an HITL queue for exceptions, and per-document token-cost reporting. Built on Claude; portable to any tool-calling model.</p>
+        <p>A document-processing MCP server for regulated environments. Five composable tools, one per stage, with deterministic PII masking, schema + business-rule validation, an Human-review queue for exceptions, and per-document token-cost reporting. Built on Claude; portable to any tool-calling model.</p>
       </div>
       <div class="glance-col">
-        <h3>Maps to</h3>
-        <p class="glance-roles"><span>AI / Agent Engineer</span> · <span>Applied AI Engineer</span> · <span>AI Platform Engineer</span> · <span>Forward-Deployed Engineer (regulated)</span></p>
+        <h3>Portfolio context</h3>
+        <p class="glance-roles">Personal exploration of technical design, workflow decisions, and UX. Supports the Technical Project Manager portfolio.</p>
         <h3 style="margin-top:22px;">Skills demonstrated</h3>
         <ul>
           <li>MCP tool design — one stage per tool, no shared state</li>
@@ -294,7 +287,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
           <span class="glance-chip">JSON Schema</span>
           <span class="glance-chip">ajv</span>
           <span class="glance-chip">PII Masking</span>
-          <span class="glance-chip">HIPAA-Grade</span>
+          <span class="glance-chip">Masking demonstration</span>
         </div>
       </div>
     </div>
@@ -702,7 +695,7 @@ function renderCostStage(num, stage) {
         <div class="field-val">${fmtCount(stage.totals.tokens_in)} in · ${fmtCount(stage.totals.tokens_out)} out · ${fmtMoney(stage.totals.cost_usd)}</div>
       </div>
     </div>
-    <table class="cost-table">
+    <div class="table-scroll" tabindex="0" role="region" aria-label="Scrollable data table"><table class="cost-table">
       <thead><tr><th>stage</th><th>tokens in</th><th>tokens out</th><th>cost USD</th></tr></thead>
       <tbody>${rows}
         <tr class="totals">
@@ -712,7 +705,7 @@ function renderCostStage(num, stage) {
           <td>${fmtMoney(stage.totals.cost_usd)}</td>
         </tr>
       </tbody>
-    </table>
+    </table></div>
     <div class="scaling">
       <div class="scaling-cell">
         <div class="scaling-lbl">per 1k docs</div>

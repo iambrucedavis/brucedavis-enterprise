@@ -8,26 +8,26 @@
 <meta property="og:title" content="Motion Showcase — Bruce Davis">
 <meta property="og:description" content="Five GSAP-driven motion techniques — split-text entrance, scroll scrub, magnetic hover, staggered grid reveal, kinetic type. Motion as a UX decision, not decoration.">
 <meta property="og:type" content="website">
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
 
 /* ─── TOKENS — formal register ─── */
 :root {
-  --paper:      #0A0E1A;
-  --paper-clean:#121826;
-  --ink:        #F5F7FA;
-  --ink-soft:   #C1C7D0;
-  --mute:       #7A8392;
-  --signal:     #0066FF;
-  --signal-rgb: 0,102,255;
-  --border:     rgba(255,255,255,.08);
-  --border-hi:  rgba(255,255,255,.18);
+  --paper:#FAF8F5;
+  --paper-clean:#F1EDE8;
+  --ink:#20242B;
+  --ink-soft:#55514E;
+  --mute:#706A65;
+  --signal:#B42335;
+  --signal-rgb:180,35,53;
+  --border:#DDD6D0;
+  --border-hi:#A89D94;
   --display: 'Anton','Bebas Neue',Impact,sans-serif;
   --serif:   'EB Garamond',Georgia,serif;
   --mono:    'Space Mono',ui-monospace,monospace;
   /* aliases */
-  --bg: var(--paper); --surface: var(--paper-clean);
-  --text: var(--ink); --text-dim: var(--ink-soft); --text-muted: var(--mute);
+  --bg:#FAF8F5; --surface:#F1EDE8;
+  --text:#20242B; --text-dim:#55514E; --text-muted:#706A65;
 }
 
 /* ─── RESET ──────────────────────────────── */
@@ -192,7 +192,7 @@ a:focus-visible { outline:2px solid var(--signal); outline-offset:3px; }
   font-size: 44vw;
   font-weight: 400;
   line-height: 1;
-  color: rgba(0,0,0,.04);
+  color: rgba(32,36,43,.04);
   pointer-events: none;
   user-select: none;
 }
@@ -461,7 +461,7 @@ a:focus-visible { outline:2px solid var(--signal); outline-offset:3px; }
 
 /* ─── AT A GLANCE ──────────────────────── */
 #glance-sec { padding:72px 32px; border-bottom:1px solid var(--border); background:var(--bg); }
-.glance { display:grid; grid-template-columns:1fr 1fr; gap:32px 48px; padding:40px; background:var(--surface, #121826); border:1px solid var(--border); }
+.glance { display:grid; grid-template-columns:1fr 1fr; gap:32px 48px; padding:40px; background:var(--surface, #8D1828); border:1px solid var(--border); }
 .glance-col h3 { font-family:'Space Mono', monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--signal); margin-bottom:14px; }
 .glance-col p { font-size:15px; line-height:1.6; color:var(--text); }
 .glance-col ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
@@ -487,9 +487,12 @@ a:focus-visible { outline:2px solid var(--signal); outline-offset:3px; }
 }
 
 </style>
-<link rel="stylesheet" href="blueprint-theme.css">
+<style>
+.project-context {max-width:1280px;margin:76px auto 0;padding:18px 24px;background:#8D1828;color:#B42335;border:1px solid #B42335;font:16px/1.5 system-ui,sans-serif;position:relative;z-index:2;} .project-context a{color:#B42335;text-underline-offset:4px;}
+</style><link rel="stylesheet" href="portfolio-chrome.css"><script src="navigation.js" defer></script><link rel="stylesheet" href="portfolio-theme.css">
 </head>
 <body>
+
 
 <!-- ── CURSOR ──────────────────────────────── -->
 <div id="cur"><span id="cur-label"></span></div>
@@ -499,21 +502,13 @@ a:focus-visible { outline:2px solid var(--signal); outline-offset:3px; }
 <div id="progress"></div>
 
 <!-- ── NAV ────────────────────────────────── -->
-<nav id="nav">
-  <a href="index.html" class="nav-back">← Bruce Davis</a>
-  <div class="nav-links">
-    <a href="index.html#work">Work</a>
-    <a href="about.html">About</a>
-    <a href="bruce-davis-resume.html">Resume</a>
-    <a href="index.html#contact">Contact</a>
-  </div>
-</nav>
+<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal design study</strong> · Separate from employer deliverables. Older metrics and external integrations have not been revalidated in this review. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
 
 
 <!-- ── 01 · HERO ─────────────────────────── -->
 <section id="hero">
 
-  <div class="annot" id="hero-eyebrow">AI Product Engineer · Experience</div>
+  <div class="annot" id="hero-eyebrow">Personal design study · Motion</div>
 
   <h1 id="hero-headline">Motion Showcase</h1>
 
@@ -536,8 +531,8 @@ a:focus-visible { outline:2px solid var(--signal); outline-offset:3px; }
       <p>Five production motion techniques in one demo — split-text entrances, scroll-driven reveals, magnetic cursor hover, staggered grid reveals, kinetic type. The motion vocabulary AI product surfaces use to feel alive without feeling busy. Built in GSAP, no framework.</p>
     </div>
     <div class="glance-col">
-      <h3>Maps to</h3>
-      <p class="glance-roles"><span>Design Engineer</span> · <span>Frontend (AI products)</span> · <span>Motion Engineer</span> · <span>Product UI Engineer</span></p>
+      <h3>Portfolio context</h3>
+      <p class="glance-roles">Personal exploration of technical design, workflow decisions, and UX. Supports the Technical Project Manager portfolio.</p>
       <h3 style="margin-top:22px;">Skills demonstrated</h3>
       <ul>
         <li>GSAP + ScrollTrigger — five production patterns</li>
@@ -752,7 +747,7 @@ document.querySelectorAll('a, .footer-back').forEach(el => {
 });
 
 /* ─── NAV ────────────────────────────────── */
-const nav = document.getElementById('nav');
+const nav = document.querySelector('.portfolio-header');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 60);
 }, { passive:true });

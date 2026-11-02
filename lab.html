@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Lab — Bruce Davis</title>
-<meta name="description" content="The Lab — five interactive web experiments by Bruce Davis, AI Product Engineer. The engagement-systems thesis in pure form. Built to be played with, not looked at.">
+<meta name="description" content="The Lab — five interactive web experiments by Bruce Davis, Technical Project Manager. The engagement-systems thesis in pure form. Built to be played with, not looked at.">
 <meta property="og:title" content="The Lab — Bruce Davis">
 <meta property="og:description" content="Five interactive web experiments. Built to be played with, not just looked at.">
 <meta property="og:type" content="website">
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 <script type="importmap">
 { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
 </script>
@@ -17,11 +17,11 @@
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
 :root {
-  --ink:       #0B0B0B;
-  --bone:      #ECE7DB;
-  --dim:       #6E6A60;
-  --line:      rgba(11,11,11,.22);
-  --signal:    #E34234;
+  --ink:#20242B;
+  --bone:#FAF8F5;
+  --dim:#706A65;
+  --line:#DDD6D0;
+  --signal:#B42335;
   --display:   'Anton', Impact, sans-serif;
   --mono:      'Space Mono', ui-monospace, monospace;
 }
@@ -151,7 +151,7 @@ a { color:inherit; }
 
 /* ─── FAMILIAR OVERLAY ─────────────────────── */
 .toy-overlay {
-  position:fixed; inset:0; z-index:100; background:#0B0B0B;
+  position:fixed; inset:0; z-index:100; background:#FAF8F5;
   opacity:0; transition:opacity .3s ease;
 }
 .toy-overlay.is-open { opacity:1; }
@@ -160,14 +160,14 @@ a { color:inherit; }
 .toy-stage canvas { display:block; }
 .toy-back {
   position:absolute; top:clamp(16px,3vw,24px); left:clamp(16px,3vw,24px); z-index:3;
-  background:transparent; border:1px solid rgba(236,231,219,.4); color:#ECE7DB;
+  background:transparent; border:1px solid rgba(32,36,43,.4); color:#20242B;
   font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
   padding:9px 14px; cursor:pointer; transition:border-color .2s, color .2s;
 }
 .toy-back:hover, .toy-back:focus-visible { outline:none; border-color:var(--signal); color:var(--signal); }
 .toy-sound {
   position:absolute; top:clamp(16px,3vw,24px); right:clamp(16px,3vw,24px); z-index:3;
-  background:transparent; border:1px solid rgba(236,231,219,.4); color:#ECE7DB;
+  background:transparent; border:1px solid rgba(32,36,43,.4); color:#20242B;
   font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
   padding:9px 14px; cursor:pointer; transition:border-color .2s, color .2s;
 }
@@ -182,18 +182,18 @@ a { color:inherit; }
 }
 .fam-memory {
   font-family:var(--mono); font-size:12px; letter-spacing:.04em;
-  color:#ECE7DB; min-height:1.3em;
+  color:#20242B; min-height:1.3em;
 }
 .fam-mood {
   display:flex; align-items:center; gap:10px;
   font-family:var(--mono); font-size:9px; letter-spacing:.2em; text-transform:uppercase;
-  color:rgba(236,231,219,.5);
+  color:rgba(32,36,43,.5);
 }
-.fam-mood-track { display:block; width:120px; height:2px; background:rgba(236,231,219,.16); }
+.fam-mood-track { display:block; width:120px; height:2px; background:rgba(32,36,43,.16); }
 .fam-mood-fill { display:block; height:100%; background:var(--signal); transform-origin:left; transform:scaleX(.5); }
 .fam-fallback {
   position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-  text-align:center; color:#ECE7DB; font-family:var(--mono); font-size:13px; line-height:2;
+  text-align:center; color:#20242B; font-family:var(--mono); font-size:13px; line-height:2;
   padding:24px;
 }
 
@@ -206,7 +206,7 @@ a { color:inherit; }
 .wisp-score {
   position:absolute; top:clamp(16px,3vw,24px); left:50%; transform:translateX(-50%); z-index:3;
   font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase;
-  color:rgba(236,231,219,.6);
+  color:rgba(32,36,43,.6);
 }
 .wisp-score b { color:var(--signal); font-weight:700; }
 .wisp-readout {
@@ -214,26 +214,26 @@ a { color:inherit; }
   display:flex; flex-direction:column; align-items:center; gap:8px;
   pointer-events:none; text-align:center; padding:0 20px;
 }
-.wisp-hint { font-family:var(--mono); font-size:12px; letter-spacing:.04em; color:#ECE7DB; }
+.wisp-hint { font-family:var(--mono); font-size:12px; letter-spacing:.04em; color:#20242B; }
 .wisp-legend {
   display:flex; gap:18px; flex-wrap:wrap; justify-content:center;
   font-family:var(--mono); font-size:9px; letter-spacing:.13em; text-transform:uppercase;
-  color:rgba(236,231,219,.45);
+  color:rgba(32,36,43,.45);
 }
 .wisp-cta {
   position:absolute; inset:0; z-index:3;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
-  text-align:center; gap:14px; padding:32px; background:rgba(11,11,11,.72);
+  text-align:center; gap:14px; padding:32px; background:rgba(250,248,245,.72);
 }
 .wisp-cta[hidden] { display:none; }
 .wisp-cta-line {
   font-family:var(--display); font-weight:400;
   font-size:clamp(26px,3.6vw,44px); line-height:1; text-transform:uppercase;
-  letter-spacing:.01em; color:#ECE7DB; max-width:18ch;
+  letter-spacing:.01em; color:#20242B; max-width:18ch;
 }
 .wisp-cta-sub {
   font-family:var(--mono); font-size:12px; line-height:1.75;
-  color:rgba(236,231,219,.6); max-width:46ch;
+  color:rgba(32,36,43,.6); max-width:46ch;
 }
 .wisp-cta-btn {
   margin-top:6px; background:var(--signal); color:var(--ink); border:none;
@@ -250,10 +250,10 @@ a { color:inherit; }
   display:flex; flex-direction:column; align-items:center; gap:12px;
   pointer-events:none;
 }
-.tumble-hint { font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:rgba(236,231,219,.55); }
+.tumble-hint { font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:rgba(32,36,43,.55); }
 .tumble-reset {
   pointer-events:auto;
-  background:transparent; border:1px solid rgba(236,231,219,.4); color:#ECE7DB;
+  background:transparent; border:1px solid rgba(32,36,43,.4); color:#20242B;
   font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
   padding:9px 16px; cursor:pointer; transition:border-color .2s, color .2s;
 }
@@ -264,7 +264,7 @@ a { color:inherit; }
 .bloom-score {
   position:absolute; top:clamp(16px,3vw,24px); left:50%; transform:translateX(-50%); z-index:3;
   font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase;
-  color:rgba(236,231,219,.6);
+  color:rgba(32,36,43,.6);
 }
 .bloom-score b { color:var(--signal); font-weight:700; }
 .bloom-readout {
@@ -272,24 +272,24 @@ a { color:inherit; }
   display:flex; flex-direction:column; align-items:center; gap:11px;
   pointer-events:none; padding:0 20px;
 }
-.bloom-hint { font-family:var(--mono); font-size:12px; letter-spacing:.04em; color:#ECE7DB; }
-.bloom-meter { width:160px; height:3px; background:rgba(236,231,219,.16); overflow:hidden; }
+.bloom-hint { font-family:var(--mono); font-size:12px; letter-spacing:.04em; color:#20242B; }
+.bloom-meter { width:160px; height:3px; background:rgba(32,36,43,.16); overflow:hidden; }
 .bloom-meter-fill { display:block; width:100%; height:100%; background:var(--signal); transform-origin:left; transform:scaleX(0); }
 .bloom-cta {
   position:absolute; inset:0; z-index:3;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
-  text-align:center; gap:14px; padding:32px; background:rgba(11,11,11,.72);
+  text-align:center; gap:14px; padding:32px; background:rgba(250,248,245,.72);
   transition:opacity .3s ease;
 }
 .bloom-cta.is-gone { opacity:0; pointer-events:none; }
 .bloom-cta-line {
   font-family:var(--display); font-weight:400;
   font-size:clamp(26px,3.6vw,44px); line-height:1; text-transform:uppercase;
-  letter-spacing:.01em; color:#ECE7DB; max-width:18ch;
+  letter-spacing:.01em; color:#20242B; max-width:18ch;
 }
 .bloom-cta-sub {
   font-family:var(--mono); font-size:12px; line-height:1.75;
-  color:rgba(236,231,219,.6); max-width:46ch;
+  color:rgba(32,36,43,.6); max-width:46ch;
 }
 .bloom-cta-btn {
   margin-top:6px; background:var(--signal); color:var(--ink); border:none;
@@ -307,26 +307,26 @@ a { color:inherit; }
   display:flex; flex-direction:column; align-items:center; gap:8px;
   pointer-events:none; text-align:center; padding:0 20px;
 }
-.mae-hint { font-family:var(--mono); font-size:12px; letter-spacing:.04em; color:#ECE7DB; }
+.mae-hint { font-family:var(--mono); font-size:12px; letter-spacing:.04em; color:#20242B; }
 .mae-legend {
   display:flex; gap:18px; flex-wrap:wrap; justify-content:center;
   font-family:var(--mono); font-size:9px; letter-spacing:.13em; text-transform:uppercase;
-  color:rgba(236,231,219,.45);
+  color:rgba(32,36,43,.45);
 }
 .mae-cta {
   position:absolute; inset:0; z-index:3;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
-  text-align:center; gap:14px; padding:32px; background:rgba(11,11,11,.72);
+  text-align:center; gap:14px; padding:32px; background:rgba(250,248,245,.72);
 }
 .mae-cta[hidden] { display:none; }
 .mae-cta-line {
   font-family:var(--display); font-weight:400;
   font-size:clamp(26px,3.6vw,44px); line-height:1; text-transform:uppercase;
-  letter-spacing:.01em; color:#ECE7DB; max-width:18ch;
+  letter-spacing:.01em; color:#20242B; max-width:18ch;
 }
 .mae-cta-sub {
   font-family:var(--mono); font-size:12px; line-height:1.75;
-  color:rgba(236,231,219,.6); max-width:46ch;
+  color:rgba(32,36,43,.6); max-width:46ch;
 }
 .mae-cta-btn {
   margin-top:6px; background:var(--signal); color:var(--ink); border:none;
@@ -358,21 +358,12 @@ a { color:inherit; }
 }
 
 </style>
-<link rel="stylesheet" href="blueprint-theme.css">
+<link rel="stylesheet" href="portfolio-chrome.css"><script src="navigation.js" defer></script><link rel="stylesheet" href="portfolio-theme.css">
 </head>
 <body>
 
 <!-- ── TOP BAR ───────────────────────────── -->
-<header class="lab-top">
-  <a href="index.html">← Bruce Davis</a>
-  <nav class="lab-nav">
-    <a href="index.html#work">Work</a>
-    <a href="lab.html">Lab</a>
-    <a href="about.html">About</a>
-    <a href="bruce-davis-resume.html">Resume</a>
-    <a href="index.html#contact">Contact</a>
-  </nav>
-</header>
+<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><div id="main" tabindex="-1"></div>
 
 <!-- ── HERO ──────────────────────────────── -->
 <section class="lab-hero wrap">
@@ -546,14 +537,17 @@ soundBtn.addEventListener('click', () => {
 
 let toyHandle = null;
 let busy = false;
+let toyTrigger = null;
 
 async function openToy(id) {
   const toy = TOYS[id];
   if (busy || !overlay.hidden || !toy) return;
   busy = true;
+  toyTrigger = document.activeElement;
   overlay.hidden = false;
   void overlay.offsetWidth;            /* commit the hidden state so the fade runs */
   overlay.classList.add('is-open');
+  backBtn.focus({preventScroll:true});
   document.body.style.overflow = 'hidden';
   soundBtn.hidden = !toy.sound;
   recordPlay(id);
@@ -573,6 +567,7 @@ function closeToy() {
   document.body.style.overflow = '';
   setTimeout(() => {
     overlay.hidden = true;
+    toyTrigger?.focus({preventScroll:true});
     if (toyHandle) { try { toyHandle.dispose(); } catch (e) { /* ignore */ } toyHandle = null; }
     stage.innerHTML = '';
     if (pendingReward) {

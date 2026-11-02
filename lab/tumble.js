@@ -148,11 +148,11 @@ export function launchTumble(stage, opts = {}) {  // eslint-disable-line no-unus
       }
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
-      ctx.strokeStyle = pass === 0 ? '#e34234' : '#fbdcd7';
+      ctx.strokeStyle = pass === 0 ? '#B42335' : '#20242B';
       ctx.lineWidth = pass === 0 ? 14 : 4;
       ctx.globalAlpha = pass === 0 ? 0.2 : 1;
       ctx.shadowBlur = pass === 0 ? 20 : 6;
-      ctx.shadowColor = '#e34234';
+      ctx.shadowColor = '#B42335';
       ctx.stroke();
     }
     ctx.globalAlpha = 1;
@@ -168,9 +168,9 @@ export function launchTumble(stage, opts = {}) {  // eslint-disable-line no-unus
     for (const b of balls) {
       ctx.beginPath();
       ctx.arc(b.position.x, b.position.y, b.tumbleR, 0, 6.2832);
-      ctx.fillStyle = '#ECE7DB';
+      ctx.fillStyle = '#20242B';
       ctx.shadowBlur = 12;
-      ctx.shadowColor = 'rgba(227,66,52,0.45)';
+      ctx.shadowColor = 'rgba(180,35,53,0.45)';
       ctx.fill();
     }
     ctx.shadowBlur = 0;

@@ -1,0 +1,9 @@
+body{font:16px/1.7 Manrope,system-ui,sans-serif!important;background:#FAF8F5!important;color:#20242B!important}
+main{max-width:1200px!important;padding:48px 32px!important}
+header{background:#F1EDE8!important;color:#20242B!important;border:1px solid #DDD6D0;border-radius:0!important;padding:32px!important}
+h1{font-size:clamp(36px,5vw,54px)!important}h2{font-size:30px!important;margin-top:36px!important}
+table{background:#FAF8F5!important;color:#20242B!important}td,th{border-color:#DDD6D0!important}th{background:#F1EDE8!important;color:#20242B!important}
+input,select{background:#FAF8F5!important;color:#20242B!important;border:1px solid #A89D94!important;border-radius:0!important;padding:10px!important;min-height:44px}
+.card,.stat,.metric,.panel{background:#F1EDE8!important;color:#20242B!important;border-color:#DDD6D0!important;border-radius:0!important}
+.report-back{display:inline-flex;align-items:center;min-height:44px;margin-bottom:24px;font-size:14px}
+@media(max-width:600px){main{padding:24px 20px!important}header{padding:24px!important}h1{font-size:36px!important}td,th{padding:12px!important}}
