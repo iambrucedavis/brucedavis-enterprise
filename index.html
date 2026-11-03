@@ -153,9 +153,6 @@
 <div>
 <h3>Exploring automated employee onboarding</h3>
 <p class="story-summary">I consulted on an early version of an automated employee-onboarding solution for a customer who wanted to pilot it.</p>
-<p class="supporting-focus">
-<strong>Scope:</strong> Consulting on an early solution for a proposed pilot.</p>
-<p class="small">This employer work is separate from my personal Day One project.</p>
 <a class="text-action" href="enterprise-experience.html#microsoft">Read case study →</a>
 </div>
 </article>
@@ -165,6 +162,7 @@
 <div class="content-wrap">
 <p class="eyebrow">How I work</p>
 <h2>What I bring to a project</h2>
+<p>I also contribute to product development by defining requirements, building early solutions, and improving how people use them.</p>
 <p class="section-introduction">I work through what needs to be built, how to test the idea, and how to organize the work.</p>
 <div class="capability-evidence">
 <article>
@@ -197,16 +195,16 @@
 <div class="content-wrap">
 <p class="eyebrow">Personal technical work</p>
 <h2>Check what is missing before work starts.</h2>
-<p class="section-introduction">I built three personal, AI-assisted prototypes to check sample plans and designs. They use synthetic data, not customer data, and are separate from my employer work.</p>
+<p class="section-introduction">I built these three personal prototypes to check sample plans and designs. They are separate from my employer work.</p>
 <article class="prototype-row">
 <p class="eyebrow">PAM Onboarding Readiness</p>
 <h3>Which accounts are ready for the next rollout group?</h3>
 <p class="project-kind">Personal project · AI-assisted · Synthetic data · Read-only</p>
-<p>Checks whether sample accounts have owners, completed tests, and approval flags before proposing rollout groups. It uses supplied information and does not change accounts.</p>
+<p>Checks whether sample accounts have owners, completed tests, and approval flags before proposing rollout groups.</p>
 <p class="contribution">
 <strong>My contribution:</strong> I defined what to check and built the rules, sample account list, report, and tests with AI assistance.</p>
 <p class="important-limits">
-<strong>Keep in mind:</strong> The tool trusts the sample account information. People still need to check the findings and approve any rollout.</p>
+<strong>Keep in mind:</strong> A person must check the supplied account information before approving a rollout.</p>
 <p class="try-this">
 <a href="demos/pam-readiness/report.html#account-readiness">Try this: choose “Blocked” to see what each account is missing.</a>
 </p>
@@ -214,34 +212,43 @@
 <a class="text-action" href="demos/pam-readiness/report.html">View example report →</a>
 <a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/pam-readiness">View code and tests ↗</a>
 </div>
+<details class="scope-context"><summary>Scope and context</summary>
+<p>The tool reads supplied account information; it does not change accounts. It does not discover dependencies or verify approvals and tests. A person must check the findings and approve any rollout. The optional AI connection was tested with simulated responses, not live AI calls.</p>
+</details>
 </article>
 <article class="prototype-row">
 <p class="eyebrow">Infrastructure Design Validator</p>
 <h3>What needs attention in this design?</h3>
 <p class="project-kind">Personal project · AI-assisted · Synthetic data · Read-only</p>
-<p>Checks a sample design for selected network, dependency, ownership, and recovery issues. It does not inspect live cloud systems or certify an architecture.</p>
+<p>Checks a sample design for selected network, dependency, ownership, and recovery issues.</p>
 <p class="contribution">
 <strong>My contribution:</strong> I defined the checks and built the sample design, validation rules, system diagram, report, and tests with AI assistance.</p>
 <p class="important-limits">
-<strong>Keep in mind:</strong> A technical lead still needs to check the supplied design and its assumptions.</p>
+<strong>Keep in mind:</strong> These sample-design checks do not inspect live systems or certify an architecture.</p>
 <div class="actions">
 <a class="text-action" href="demos/infrastructure-design/report.html">View example report →</a>
 <a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/infrastructure-design">View code and tests ↗</a>
 </div>
+<details class="scope-context"><summary>Scope and context</summary>
+<p>The tool reads a supplied design; it does not inspect or change live cloud systems. A technical lead must check the findings and assumptions. These checks do not certify an architecture.</p>
+</details>
 </article>
 <article class="prototype-row">
 <p class="eyebrow">Change Readiness Tracker</p>
 <h3>What is missing from this change plan?</h3>
 <p class="project-kind">Personal project · AI-assisted · Synthetic data · Read-only</p>
-<p>Highlights missing prerequisites and scheduling conflicts, then compares two versions of a change plan. Being ready for review does not mean a change is approved to execute.</p>
+<p>Highlights missing prerequisites and scheduling conflicts, then compares two versions of a change plan.</p>
 <p class="contribution">
 <strong>My contribution:</strong> I defined the checks and built the sample plans, comparison rules, report, and tests with AI assistance.</p>
 <p class="important-limits">
-<strong>Keep in mind:</strong> The tool does not verify the supplied records or carry out changes.</p>
+<strong>Keep in mind:</strong> Ready for review does not mean approved to execute.</p>
 <div class="actions">
 <a class="text-action" href="demos/change-readiness/report.html">View example report →</a>
 <a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/change-readiness">View code and tests ↗</a>
 </div>
+<details class="scope-context"><summary>Scope and context</summary>
+<p>The tool reads supplied change plans; it does not verify their records, approve work, or carry out changes. A person must check the findings and approve the work. Ready for review is not approval to execute.</p>
+</details>
 </article>
 <p class="small recorded-validation">Recorded validation: 50 automated tests passed on November 2, 2026. Those tests cover synthetic examples, not customer outcomes.</p>
 <a class="text-action" href="automation-infrastructure.html">Read how the prototypes work →</a>
