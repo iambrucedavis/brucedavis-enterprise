@@ -1,4 +1,4 @@
-"""Build application (two-page) and overview (one-page) PDFs from public HTML.
+"""Build the optional overview from public HTML; preserve the supplied primary PDF.
 Requires ReportLab. Platform fonts are embedded; the supplied original is untouched.
 """
 from pathlib import Path
@@ -55,7 +55,16 @@ def paragraph(text,key,styles):
 
 def build(path,compact=False):
     styles=styles_for(compact);story=[]
-    for i,(tag,text) in enumerate(parser.blocks):
+    blocks = parser.blocks
+    if compact:
+        # The overview avoids repeating highlights that appear in role bullets.
+        start = next(i for i,b in enumerate(blocks) if b[1]=='Selected delivery highlights')
+        end = next(i for i,b in enumerate(blocks) if b[1]=='Core capabilities & tools')
+        blocks = blocks[:start] + blocks[end:]
+        cert = next(i for i,b in enumerate(blocks) if b[1]=='Certifications')
+        education = next(i for i,b in enumerate(blocks) if b[1]=='Education')
+        blocks = blocks[:cert] + [('h2','Certifications & education'), ('p',' | '.join(t for _,t in blocks[cert+1:education])), ('p',' | '.join(t for _,t in blocks[education+1:]))]
+    for i,(tag,text) in enumerate(blocks):
         if not compact and text=='Microsoft | May 2024 - Nov 2024':
             story += [PageBreak(),paragraph(parser.blocks[0][1],'name',styles),paragraph(parser.blocks[1][1],'role',styles),paragraph(parser.blocks[2][1],'contact',styles),paragraph('PROFESSIONAL EXPERIENCE - CONTINUED','section',styles)]
         if tag=='h1':key='name'
@@ -65,7 +74,7 @@ def build(path,compact=False):
         elif tag=='h3':key='job'
         elif tag=='li':key='bullet';text='- '+text
         elif text.startswith('- '):key='bullet'
-        elif i+1<len(parser.blocks) and parser.blocks[i+1][0]=='h3':key='meta'
+        elif i+1<len(blocks) and blocks[i+1][0]=='h3':key='meta'
         else:key='body'
         story.append(paragraph(text,key,styles))
     def footer(canvas,doc):
@@ -77,7 +86,6 @@ def build(path,compact=False):
     doc=SimpleDocTemplate(str(path),pagesize=(612,792),leftMargin=margin,rightMargin=margin,topMargin=28 if compact else 36,bottomMargin=28 if compact else 38,title='Bruce Davis - Technical Project Manager'+(' Overview' if compact else ' Application Resume'),author='Bruce Davis',subject='PMP-certified technical project management resume',pageCompression=1)
     doc.build(story,onFirstPage=footer,onLaterPages=footer)
 
-build(ROOT/'bruce-davis-resume.pdf')
 shutil.copyfile(ROOT/'bruce-davis-resume.pdf',ROOT/'bruce-davis-resume-ats.pdf')
 build(ROOT/'bruce-davis-resume-overview.pdf',compact=True)
-print('Built two-page application PDFs and optional one-page overview from HTML.')
+print('Preserved supplied primary PDF, mirrored ATS download, and rebuilt optional overview.')
