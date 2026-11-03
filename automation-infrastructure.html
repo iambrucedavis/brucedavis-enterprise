@@ -70,17 +70,16 @@
 <div class="content-wrap detail prototype-page">
 <p class="eyebrow">Personal technical prototypes</p>
 <h1>Check what is missing before work starts.</h1>
-<p>I built these personal prototypes with AI assistance to check sample accounts, designs, and change plans. They use synthetic data, not customer systems. They read supplied information and do not change systems.</p>
-<p class="disclosure">Personal project · AI-assisted · Synthetic data · Read-only</p>
+<p>I built these personal prototypes to check sample accounts, designs, and change plans. They are separate from my employer work.</p>
 <article class="prototype-row">
 <p class="eyebrow">PAM Onboarding Readiness</p>
 <h2>Which accounts are ready for the next rollout group?</h2>
 <p class="project-kind">Personal project · AI-assisted · Synthetic data · Read-only</p>
-<p>Checks whether sample accounts have owners, completed tests, and approval flags before proposing rollout groups. It uses supplied information and does not change accounts.</p>
+<p>Checks whether sample accounts have owners, completed tests, and approval flags before proposing rollout groups.</p>
 <p class="contribution">
 <strong>My contribution:</strong> I defined what to check and built the rules, sample account list, report, and tests with AI assistance.</p>
 <p class="important-limits">
-<strong>Keep in mind:</strong> The tool trusts the sample account information. People still need to check the findings and approve any rollout.</p>
+<strong>Keep in mind:</strong> A person must check the supplied account information before approving a rollout.</p>
 <p class="try-this">
 <a href="demos/pam-readiness/report.html#account-readiness">Try this: choose “Blocked” to see what each account is missing.</a>
 </p>
@@ -90,8 +89,8 @@
 </div>
 <details class="technical-details">
 <summary>Scope and context</summary>
-<p>The tool checks five supplied fields: account owner, secure credential storage, password-change testing, recovery testing, and change approval. Accounts that depend on each other stay together; if one is blocked, the others wait. The sample has 12 accounts: 6 in 3 proposed rollout groups, 4 blocked, and 2 waiting on dependencies. The optional AI connection was tested with simulated responses, not live AI calls.</p>
-<p>The account list supplies the dependencies and approvals. The tool does not find or verify them.</p>
+<p>The tool reads supplied account information; it does not change accounts. It does not discover dependencies or verify approvals and tests. A person must check the findings and approve any rollout. The optional AI connection was tested with simulated responses, not live AI calls.</p>
+<p>The tool checks five supplied fields: account owner, secure credential storage, password-change testing, recovery testing, and change approval. Accounts that depend on each other stay together; if one is blocked, the others wait. The sample has 12 accounts: 6 in 3 proposed rollout groups, 4 blocked, and 2 waiting on dependencies.</p>
 <p>Recorded validation: 24 automated tests passed on November 2, 2026.</p>
 <a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/pam-readiness">Read the checks and test criteria ↗</a>
 </details>
@@ -100,19 +99,19 @@
 <p class="eyebrow">Infrastructure Design Validator</p>
 <h2>What needs attention in this design?</h2>
 <p class="project-kind">Personal project · AI-assisted · Synthetic data · Read-only</p>
-<p>Checks a sample design for selected network, dependency, ownership, and recovery issues. It does not inspect live cloud systems or certify an architecture.</p>
+<p>Checks a sample design for selected network, dependency, ownership, and recovery issues.</p>
 <p class="contribution">
 <strong>My contribution:</strong> I defined the checks and built the sample design, validation rules, system diagram, report, and tests with AI assistance.</p>
 <p class="important-limits">
-<strong>Keep in mind:</strong> A technical lead still needs to check the supplied design and its assumptions.</p>
+<strong>Keep in mind:</strong> These sample-design checks do not inspect live systems or certify an architecture.</p>
 <div class="actions">
 <a class="text-action" href="demos/infrastructure-design/report.html">View example report →</a>
 <a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/infrastructure-design">View code and tests ↗</a>
 </div>
 <details class="technical-details">
 <summary>Scope and context</summary>
-<p>The tool checks the supplied network ranges, system connections, owners, recovery records, selected public ports, and critical systems with only one instance. The sample has 4 components, 3 subnets, and 4 findings. It does not inspect real routing, firewalls, backups, or cloud resources.</p>
-<p>All findings come from the sample design. They do not certify a real architecture.</p>
+<p>The tool reads a supplied design; it does not inspect or change live cloud systems. A technical lead must check the findings and assumptions. These checks do not certify an architecture.</p>
+<p>The tool checks the supplied network ranges, system connections, owners, recovery records, selected public ports, and critical systems with only one instance. The sample has 4 components, 3 subnets, and 4 findings.</p>
 <p>Recorded validation: 12 automated tests passed on November 2, 2026.</p>
 <a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/infrastructure-design">Read the checks and test criteria ↗</a>
 </details>
@@ -121,30 +120,31 @@
 <p class="eyebrow">Change Readiness Tracker</p>
 <h2>What is missing from this change plan?</h2>
 <p class="project-kind">Personal project · AI-assisted · Synthetic data · Read-only</p>
-<p>Highlights missing prerequisites and scheduling conflicts, then compares two versions of a change plan. Being ready for review does not mean a change is approved to execute.</p>
+<p>Highlights missing prerequisites and scheduling conflicts, then compares two versions of a change plan.</p>
 <p class="contribution">
 <strong>My contribution:</strong> I defined the checks and built the sample plans, comparison rules, report, and tests with AI assistance.</p>
 <p class="important-limits">
-<strong>Keep in mind:</strong> The tool does not verify the supplied records or carry out changes.</p>
+<strong>Keep in mind:</strong> Ready for review does not mean approved to execute.</p>
 <div class="actions">
 <a class="text-action" href="demos/change-readiness/report.html">View example report →</a>
 <a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/change-readiness">View code and tests ↗</a>
 </div>
 <details class="technical-details">
 <summary>Scope and context</summary>
-<p>The tool checks planned times, shared resources, prerequisites, approval flags, tests, recovery plans, and linked records. It compares two versions of a plan. Four synthetic changes become ready for review after sample corrections. The tool does not verify the records or carry out changes.</p>
-<p>A person still needs to check the resources and records before approving work.</p>
+<p>The tool reads supplied change plans; it does not verify their records, approve work, or carry out changes. A person must check the findings and approve the work. Ready for review is not approval to execute.</p>
+<p>The tool checks planned times, shared resources, prerequisites, approval flags, tests, recovery plans, and linked records. It compares two versions of a plan. Four synthetic changes become ready for review after sample corrections.</p>
 <p>Recorded validation: 14 automated tests passed on November 2, 2026.</p>
 <a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/change-readiness">Read the checks and test criteria ↗</a>
 </details>
 </article>
-<h2>What these prototypes do not do</h2>
+<details class="scope-context"><summary>Scope and context for all three prototypes</summary>
 <ul class="evidence-list">
 <li>No real accounts or cloud resources are changed.</li>
-<li>Readiness findings are not approval to execute.</li>
+<li>Findings require human review; readiness is not approval to execute.</li>
 <li>Test results and demonstration counts are not customer outcomes.</li>
 <li>The optional AI connection was tested with simulated responses, not live AI calls.</li>
 </ul>
+</details>
 <p class="small">To run the examples locally, use Python 3.9+ and its standard library. The recorded 50-test run used python3 run_all.py with synthetic scenarios.</p>
 </div>
 </section>
