@@ -5,12 +5,14 @@ import { EVIDENCE, BY_ID } from './evidence.mjs';
 const blocked = [
   /https?:\/\/|www\./i,
   /fine.tun|\brag\b|retrieval.augmented|model hosting|host(?:ed|ing)? models?|model.training|train(?:ed|ing)? (?:ai |computer.vision )?models?|computer.vision engineer/i,
-  /\b(salary|compensation|pay expectation|pay range|hourly rate|availability|available|start date|relocat|remote preference|visa|citizenship|phone number|home address)\b/i,
+  /\b(salary|compensation|pay|paid|wages?|earnings|income|pay expectation|pay range|hourly rate|availability|available|start date|relocat|remote preference|visa|citizenship|phone number|home address)\b/i,
   /\b(when|how soon)\b.{0,35}\b(join|start|hire)\b/i,
   /\b(saving|savings|saved|revenue|roi|profit|percent|percentage|reduced costs?|financial benefit|million|dollars?)\b|\d\s*%/i,
   /\b(invent|fabricate|pretend|impersonate|act as|change roles?|ignore|disregard|override|jailbreak)\b/i,
   /\b(system|developer|hidden)\s*(prompt|instructions?|message)|\b(reveal|expose|print|show)\b.{0,35}\b(secret|api key|password|prompt|credential)\b/i,
   /\b(api[_ -]?key|environment variables?|access token|secret key|private key)\b/i,
+  /\bcommercial product ownership\b|\bmonetiz/i,
+  /(?:when|what year|what date).{0,40}(?:graduat|degree)|graduat.{0,35}(?:date|year)/i,
   /\b(mentored|mentoring|direct reports?|hired|fired|married|age|religion|health|politic)\b/i
 ];
 export function candidatesFor(question) {
