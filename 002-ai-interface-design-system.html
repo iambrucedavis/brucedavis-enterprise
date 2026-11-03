@@ -438,13 +438,13 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 
 
 <!-- NAV -->
-<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal design study</strong> · Separate from employer deliverables. Project figures are not verified customer outcomes. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
+<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Work experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Work experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal design study</strong> · Separate from my employer work. Project figures describe personal examples, not customer results. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-pre">AI Product UI · Live React Patterns</div>
   <h1 id="hero-hl">AI Interface Patterns</h1>
-  <p class="hero-sub">Shows common interface states: a response arriving gradually, a task in progress, missing context, uncertainty, and error recovery. A personal interface study.</p>
+  <p class="hero-sub">I designed examples of how an AI interface can show progress, missing information, uncertainty, and errors.</p>
   <div class="hero-meta">
     <span>5 working patterns</span>
     <span>Live React · TypeScript</span>
@@ -463,12 +463,12 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
     <div class="glance">
       <div class="glance-col">
         <h3>What it is</h3>
-        <p>Five demonstration UI patterns for AI products, each a working React/TypeScript implementation: streaming output, model-state indicators, low-context warnings, confidence flags, error recovery. The loading, empty, and error states most AI demos hand-wave past.</p>
+        <p>I built five interface examples: a response arriving gradually, a task in progress, missing information, uncertainty, and error recovery. The examples use React and TypeScript. Some states are demonstrations rather than connections to a production service.</p>
       </div>
       <div class="glance-col">
-        <h3>Portfolio context</h3>
-        <p class="glance-roles">Personal exploration of technical design, workflow decisions, and UX. Supports the Technical Project Manager portfolio.</p>
-        <h3 style="margin-top:22px;">Skills demonstrated</h3>
+        <h3>What I explored</h3>
+        <p class="glance-roles">I explored how to show what an AI system is doing and help people recover when it fails.</p>
+        <h3 style="margin-top:22px;">Skills and tools</h3>
         <ul>
           <li>Streaming UI architecture (token-by-token render)</li>
           <li>State-machine design for AI lifecycle</li>
@@ -492,9 +492,9 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 <section id="brief" class="reveal">
   <div class="brief-lbl">The Brief</div>
   <div class="brief-body">
-    <p>Most AI interfaces design around the output. This one designs around the states between outputs.</p>
-    <p>There are five distinct model behaviors — streaming, thinking, done, uncertain, failed — and most products render all of them the same way. Each state here is treated as a separate design problem, with its own visual contract, affordance, and meaning for the user.</p>
-    <p>These are working patterns. The state machine runs and the streaming render works. The confidence and error treatments are demonstrated but not connected to production wiring. The next version of this page integrates them; this version documents them.</p>
+    <p>I focused on what people see while an AI response is arriving, when it is uncertain, and when it fails.</p>
+    <p>I gave each of five states a different treatment: responding, thinking, done, uncertain, and failed. Each treatment explains what is happening and what the person can do next.</p>
+    <p>The progress logic and gradual response display work in the demo. The confidence and error examples are not connected to a production service.</p>
   </div>
 </section>
 
