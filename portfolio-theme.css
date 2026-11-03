@@ -99,3 +99,63 @@ pre,.code,.code-body{max-width:100%;overflow-x:auto}
 .toy-tag,.lab-open{color:#FAF8F5!important}
 :root{--shadow-lg:none}
 .hero-sub{font-style:normal!important}
+
+/* Recruiter refinement: preserve the editorial identity and bring evidence forward. */
+.tpm-page .hero-name{font-size:clamp(64px,6.3vw,88px);margin-bottom:24px}
+.tpm-page .hero-lead{font:500 clamp(24px,2.4vw,32px)/1.35 Manrope,system-ui,sans-serif;letter-spacing:-.025em;margin-top:28px;max-width:26ch}
+.tpm-page .hero-introduction{font-size:18px;line-height:1.65;margin-top:20px}
+.tpm-page .capability-line{margin-top:20px;color:#55514E}
+.proof-line{font-size:13px;line-height:1.8;color:#55514E;margin-top:18px!important;max-width:62ch}
+.proof-line a{display:inline-block;padding-block:5px}
+.tpm-page .hero-section{padding:64px 0}
+.capability-evidence{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 56px;margin:36px 0 22px}
+.capability-evidence article{border-top:1px solid #DDD6D0;padding-top:24px}
+.tpm-page .capability-evidence h3{font-size:28px;margin:0 0 16px}
+.capability-evidence p{font-size:16px;line-height:1.75;color:#55514E}
+.project-kind{font-size:13px!important;line-height:1.7;color:#8D1828;margin-top:14px!important}
+.contribution{font-size:16px!important;line-height:1.75;color:#55514E}
+.important-limits{font-size:15px!important;line-height:1.75;color:#55514E;border-left:2px solid #A89D94;padding-left:14px}
+.try-this{font-size:15px;line-height:1.7;color:#8D1828;background:#F7E8EB;padding:14px 18px;margin-top:20px!important;max-width:70ch}
+.case-index{display:flex;flex-wrap:wrap;gap:6px 24px;margin-top:28px;padding-bottom:12px}
+.case-index a{display:inline-flex;align-items:center;min-height:44px;font-size:15px}
+.scope-context,.work-archive{border-top:1px solid #DDD6D0;margin-top:28px;padding-top:6px}
+.scope-context summary,.work-archive summary{cursor:pointer;min-height:48px;padding:12px 0;color:#8D1828;font-size:15px;font-weight:600}
+.scope-context p{font-size:15px!important;color:#55514E;line-height:1.75}
+.detail .employer-case{margin-top:48px;padding-top:40px;scroll-margin-top:110px}
+.case-visual{margin:24px 0 12px;padding:28px;background:#F1EDE8;border:1px solid #DDD6D0}
+.visual-heading{font:600 16px/1.5 Manrope,system-ui,sans-serif;margin-bottom:24px}
+.case-visual figcaption{font-size:12px;line-height:1.7;color:#55514E;margin-top:24px;padding-top:16px;border-top:1px solid #DDD6D0}
+.case-visual .visual-note{font-size:13px!important;line-height:1.7;color:#55514E;margin-top:18px}
+.delivery-inputs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;list-style:none;margin:0;padding:0}
+.delivery-inputs li{padding:14px 10px;border:1px solid #A89D94;background:#FAF8F5;font-size:14px;text-align:center}
+.delivery-connection{height:28px;width:76%;margin:auto;border:1px solid #82766B;border-top:0;position:relative}
+.delivery-connection::after{content:'';position:absolute;left:50%;top:28px;height:20px;border-left:1px solid #82766B}
+.case-visual .visual-result{margin:20px auto 0;max-width:280px;padding:14px 20px;text-align:center;background:#20242B;color:#FAF8F5;font-size:18px}
+.requirements-flow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;list-style:none;padding:0;margin:0;counter-reset:requirement}
+.requirements-flow li{font-size:14px;line-height:1.6;border-top:2px solid #B42335;padding-top:16px;position:relative}
+.requirements-flow li::before{counter-increment:requirement;content:'0' counter(requirement);display:block;font:12px/1.4 var(--mono);color:#8D1828;margin-bottom:12px}
+.requirements-flow li:not(:last-child)::after{content:'→';position:absolute;right:-20px;top:45px;color:#82766B}
+.separate-efforts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.separate-efforts section{padding:24px;background:#FAF8F5;border:1px solid #DDD6D0;min-width:0}
+.separate-efforts h4{font-size:25px;margin:12px 0 16px}
+.separate-efforts ul{padding-left:20px;margin:0;font-size:15px;line-height:1.9}
+.separate-efforts p:not(.eyebrow){font-size:15px;line-height:1.8}
+.onboarding-concept{display:grid;grid-template-columns:96px minmax(0,1fr);gap:20px 28px;align-items:center}
+.onboarding-concept svg{color:#20242B}
+.onboarding-concept figcaption{grid-column:1/-1;margin-top:0}
+.onboarding-concept .visual-heading{margin-bottom:12px}
+.resume-bullets{padding-left:20px;margin:16px 0 24px;max-width:70ch}
+.resume-bullets li{font-size:17px;line-height:1.7;margin:10px 0}
+#freelance{scroll-margin-top:110px}
+.work-category{border-top:1px solid #DDD6D0;margin-top:48px;padding-top:20px}
+.work-category .additional-list{margin-top:16px}
+.work-category .additional-list>li:first-child{border-top:0;padding-top:10px}
+.featured-pick .item-name{font-family:Newsreader,Georgia,serif;font-size:29px}
+.work-archive .additional-list{margin-top:0}
+@media(max-width:900px){.tpm-page .hero-name{font-size:72px}.tpm-page .hero{gap:36px;grid-template-columns:1.2fr .85fr}}
+@media(max-width:700px){.tpm-page .hero-name{font-size:64px}.tpm-page .hero{grid-template-columns:1fr;gap:40px}.tpm-page .hero-lead{font-size:26px;margin-top:24px}.tpm-page .hero-introduction{font-size:17px}.tpm-page .hero-section{padding:44px 0}.capability-evidence{grid-template-columns:1fr;gap:28px}.case-visual{padding:20px}.delivery-inputs{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.delivery-connection{width:52%}.requirements-flow{grid-template-columns:1fr;gap:20px}.requirements-flow li{padding-top:12px;padding-left:40px;min-height:50px}.requirements-flow li::before{position:absolute;left:0;top:14px}.requirements-flow li:not(:last-child)::after{content:'↓';right:auto;left:8px;top:auto;bottom:-19px}.separate-efforts{grid-template-columns:1fr;gap:20px}.onboarding-concept{grid-template-columns:1fr}.onboarding-concept svg{width:72px;height:72px}.resume-bullets li{font-size:16px}.case-index{gap:4px 18px}.detail .employer-case{scroll-margin-top:90px}}
+@media print{.scope-context>*:not(summary){display:block!important}.case-visual{break-inside:avoid}.case-index,.case-studies .text-action{display:none}.employer-case h3{break-after:avoid}.resume-bullets li{font-size:10pt;margin:4px 0}}
+.proof-line a{display:inline-flex;align-items:center;min-height:44px}
+.try-this:has(>a){padding:0}
+.try-this>a{display:block;padding:14px 18px;min-height:48px}
+@media(max-width:700px){.tpm-page .hero-name{font-size:clamp(52px,16.4vw,64px)}}

@@ -71,11 +71,19 @@
 <p class="eyebrow">Personal technical prototypes</p>
 <h1>Find blockers before implementation starts.</h1>
 <p>These personal prototypes show how I turn technical requirements into checks, findings, and proposed plans. They use synthetic examples—not customer systems—and were developed with AI assistance.</p>
-<p class="disclosure">Personal, AI-assisted prototypes · Synthetic scenarios · Read-only</p>
+<p class="disclosure">Personal project · AI-assisted · Synthetic data · Read-only</p>
 <article class="prototype-row">
 <p class="eyebrow">PAM Onboarding Readiness</p>
 <h2>What is blocking the next account-onboarding wave?</h2>
-<p>Checks the supplied ownership, test, and approval information, then uses declared dependencies to propose rollout waves.</p>
+<p class="project-kind">Personal project · AI-assisted · Synthetic data · Read-only</p>
+<p>Checks supplied ownership, vault onboarding, rotation and rollback testing, and change-approval flags. Uses declared dependencies to propose rollout waves.</p>
+<p class="contribution">
+<strong>My contribution:</strong> Defined the readiness requirements and acceptance criteria; developed the rule checks, sample inventory, report, and tests with AI assistance.</p>
+<p class="important-limits">
+<strong>Important limitations:</strong> Dependencies and readiness flags are supplied, not discovered or independently verified. Proposed waves still need technical review and approval.</p>
+<p class="try-this">
+<a href="demos/pam-readiness/report.html#account-readiness">Try this: filter to “Blocked” and inspect the missing prerequisites.</a>
+</p>
 <div class="actions">
 <a class="text-action" href="demos/pam-readiness/report.html">View example report →</a>
 <a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/pam-readiness">View code and tests ↗</a>
@@ -84,14 +92,19 @@
 <summary>Requirements, implementation, and limitations</summary>
 <p>Checks five supplied flags: accountable owner, vault onboarding, rotation testing, rollback testing, and change approval. Keeps supplied dependency groups together; a blocked member holds its eligible peers. Sample output: 12 accounts, 6 in 3 proposed waves, 4 blocked, and 2 dependency holds. The optional AI adapter was tested with simulated responses; live AI calls and output quality remain unverified.</p>
 <p>Dependencies come from the supplied inventory. The tool does not discover them or verify approval evidence.</p>
-<p>24 automated tests passed locally on November 2, 2026.</p>
+<p>Recorded validation: 24 automated tests passed on November 2, 2026. Not rerun for this content and design review.</p>
 <a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/pam-readiness">Read requirements and acceptance criteria ↗</a>
 </details>
 </article>
 <article class="prototype-row">
 <p class="eyebrow">Infrastructure Design Validator</p>
 <h2>What needs attention before this design becomes an implementation plan?</h2>
-<p>Reviews a sample infrastructure design for selected network, dependency, ownership, and recovery issues.</p>
+<p class="project-kind">Personal project · AI-assisted · Synthetic data · Read-only</p>
+<p>Reviews declared network ranges, dependencies, ownership, recovery evidence, and selected public ports. Produces a topology and review checklist.</p>
+<p class="contribution">
+<strong>My contribution:</strong> Defined the design checks and synthetic scenario; developed the validation logic, topology, report, and tests with AI assistance.</p>
+<p class="important-limits">
+<strong>Important limitations:</strong> The review does not discover cloud resources or certify an architecture. A technical lead must validate the declared design and assumptions.</p>
 <div class="actions">
 <a class="text-action" href="demos/infrastructure-design/report.html">View example report →</a>
 <a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/infrastructure-design">View code and tests ↗</a>
@@ -100,14 +113,19 @@
 <summary>Requirements, implementation, and limitations</summary>
 <p>Checks declared subnet ranges, component references, dependencies, selected public ports, ownership, recovery evidence, and high-criticality single-instance components. Sample output: 4 components, 3 subnets, and 4 findings. It does not inspect actual routing, firewalls, backups, redundancy, or cloud resources.</p>
 <p>The review uses declared design data; it does not discover cloud resources or certify a design.</p>
-<p>12 automated tests passed locally on November 2, 2026.</p>
+<p>Recorded validation: 12 automated tests passed on November 2, 2026. Not rerun for this content and design review.</p>
 <a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/infrastructure-design">Read requirements and acceptance criteria ↗</a>
 </details>
 </article>
 <article class="prototype-row">
 <p class="eyebrow">Change Readiness Tracker</p>
 <h2>What is preventing this change from being ready for review?</h2>
-<p>Highlights scheduling conflicts and missing prerequisites, then compares readiness across two versions of a plan.</p>
+<p class="project-kind">Personal project · AI-assisted · Synthetic data · Read-only</p>
+<p>Checks supplied change windows, resource conflicts, prerequisites, approvals, testing, and rollback readiness, then compares two plan snapshots.</p>
+<p class="contribution">
+<strong>My contribution:</strong> Defined readiness requirements and sample plans; developed the comparison logic, findings report, and tests with AI assistance.</p>
+<p class="important-limits">
+<strong>Important limitations:</strong> Evidence references and prerequisite completion are unverified. Ready for review is not approval to execute; no changes are executed.</p>
 <div class="actions">
 <a class="text-action" href="demos/change-readiness/report.html">View example report →</a>
 <a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/change-readiness">View code and tests ↗</a>
@@ -116,7 +134,7 @@
 <summary>Requirements, implementation, and limitations</summary>
 <p>Checks supplied windows, exclusive-resource conflicts, prerequisites, approval flags, testing, rollback readiness, and evidence references. Compares two plan snapshots. Four synthetic changes become ready for review after sample corrections; the tool does not verify evidence or execute changes.</p>
 <p>Ready for review is not approval to execute. Resource and evidence assumptions still require human review.</p>
-<p>14 automated tests passed locally on November 2, 2026.</p>
+<p>Recorded validation: 14 automated tests passed on November 2, 2026. Not rerun for this content and design review.</p>
 <a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/change-readiness">Read requirements and acceptance criteria ↗</a>
 </details>
 </article>
@@ -127,14 +145,14 @@
 <li>Test results and demonstration counts are not customer outcomes.</li>
 <li>Only simulated AI responses were tested; optional live AI functionality has not been verified.</li>
 </ul>
-<p class="small">Python 3.9+ and the standard library are sufficient for the documented local execution path. All 50 tests passed when run with python3 run_all.py.</p>
+<p class="small">Python 3.9+ and the standard library are sufficient for the documented local execution path. The recorded 50-test validation used python3 run_all.py; this content and design review did not rerun the analysis suite.</p>
 </div>
 </section>
 </main>
 <footer id="contact" class="portfolio-footer">
 <div class="content-wrap">
 <p class="eyebrow">Contact</p>
-<h2>Let’s talk about your next project.</h2>
+<h2>Let’s discuss your technical project management role.</h2>
 <a class="contact-email" href="mailto:iambrucedavis@gmail.com">iambrucedavis@gmail.com</a>
 <p>
 <a class="text-action" href="bruce-davis-resume.pdf" download>Download resume PDF</a> <a class="text-action" href="other-work.html">Additional Work</a> <a class="text-action" href="https://github.com/iambrucedavis">GitHub</a>
