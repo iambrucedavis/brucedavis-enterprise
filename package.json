@@ -3,5 +3,5 @@
   "private": true,
   "type": "module",
   "engines": { "node": "24.x" },
-  "scripts": { "test": "node --test tests/assistant/*.test.mjs", "preview": "node tools/preview-server.mjs" }
+  "scripts": { "test": "node --test tests/experience-guide.test.mjs", "preview": "node tools/preview-server.mjs" }
 }
