@@ -1,10 +1,17 @@
 #!/usr/bin/env bash
-# Regenerate a resume PDF from its HTML source via headless Chrome.
+# Export a non-primary HTML document via headless Chrome.
 # Pass the slug as $1:
-#   ./tools/build-resume-pdf.sh bruce-davis-resume
-#   ./tools/build-resume-pdf.sh bruce-davis-resume-ats
-# Defaults to "bruce-davis-resume" for backwards compatibility.
+# Primary resume PDFs are protected; use tools/resume/build_resume.py
+# to regenerate the optional overview.
 set -euo pipefail
+
+# Primary resume PDFs are user-supplied originals, never generated from HTML.
+case "${1:-bruce-davis-resume}" in
+  bruce-davis-resume|bruce-davis-resume-ats)
+    echo "Primary PDF is user-supplied. Replace it only with an approved supplied PDF; use tools/resume/build_resume.py for the optional overview." >&2
+    exit 1
+    ;;
+esac
 
 SLUG="${1:-bruce-davis-resume}"
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"

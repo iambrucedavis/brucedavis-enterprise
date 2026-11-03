@@ -14,7 +14,9 @@ The former `blueprint-theme.css` URL imports the shared theme for compatibility;
 
 Run `python3 -m http.server 8768` from this directory and open `http://localhost:8768/`. There is no build step. `vercel.json` includes the fonts, reports, videos and Lab modules as static assets.
 
-The existing standard and ATS PDF URLs serve the same readable two-page application resume. A compact one-page overview is available at `bruce-davis-resume-overview.pdf`. The public HTML resume is the editable source for both downloads. After an approved content update, `tools/resume/build_resume.py` regenerates both layouts from the same content using ReportLab and embedded Arial fonts from the local macOS system. This authoring tool is not part of the website runtime. Render and inspect the result before releasing it; keep the supplied original PDF unchanged. HTML resume pages offer the site-styled reading alternative.
+The primary resume is the user-supplied `Bruce-Davis-Technical-Project_Manager_Resume.pdf` (approved November 2, 2026), served unchanged at `bruce-davis-resume.pdf` and mirrored at `bruce-davis-resume-ats.pdf`. Treat this supplied PDF as the authoritative resume moving forward. Both HTML resume pages reflect its content while retaining the site theme. When a new resume is supplied, replace both primary PDF copies byte-for-byte and synchronize the HTML content; do not regenerate or reformat the supplied PDF.
+
+The optional compact overview is `bruce-davis-resume-overview.pdf`. `tools/resume/build_resume.py` generates only this overview from the HTML and mirrors the supplied primary PDF to the ATS URL. It never rebuilds the primary PDF. The legacy Chrome script refuses to overwrite either primary PDF. These tools are not part of the website runtime. Render and inspect generated overview changes before release.
 
 ## Validation history
 
