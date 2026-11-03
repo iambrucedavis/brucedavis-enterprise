@@ -92,7 +92,7 @@
 <summary>Requirements, implementation, and limitations</summary>
 <p>Checks five supplied flags: accountable owner, vault onboarding, rotation testing, rollback testing, and change approval. Keeps supplied dependency groups together; a blocked member holds its eligible peers. Sample output: 12 accounts, 6 in 3 proposed waves, 4 blocked, and 2 dependency holds. The optional AI adapter was tested with simulated responses; live AI calls and output quality remain unverified.</p>
 <p>Dependencies come from the supplied inventory. The tool does not discover them or verify approval evidence.</p>
-<p>Recorded validation: 24 automated tests passed on November 2, 2026. Not rerun for this content and design review.</p>
+<p>Recorded validation: 24 automated tests passed on November 2, 2026.</p>
 <a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/pam-readiness">Read requirements and acceptance criteria ↗</a>
 </details>
 </article>
@@ -113,7 +113,7 @@
 <summary>Requirements, implementation, and limitations</summary>
 <p>Checks declared subnet ranges, component references, dependencies, selected public ports, ownership, recovery evidence, and high-criticality single-instance components. Sample output: 4 components, 3 subnets, and 4 findings. It does not inspect actual routing, firewalls, backups, redundancy, or cloud resources.</p>
 <p>The review uses declared design data; it does not discover cloud resources or certify a design.</p>
-<p>Recorded validation: 12 automated tests passed on November 2, 2026. Not rerun for this content and design review.</p>
+<p>Recorded validation: 12 automated tests passed on November 2, 2026.</p>
 <a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/infrastructure-design">Read requirements and acceptance criteria ↗</a>
 </details>
 </article>
@@ -134,7 +134,7 @@
 <summary>Requirements, implementation, and limitations</summary>
 <p>Checks supplied windows, exclusive-resource conflicts, prerequisites, approval flags, testing, rollback readiness, and evidence references. Compares two plan snapshots. Four synthetic changes become ready for review after sample corrections; the tool does not verify evidence or execute changes.</p>
 <p>Ready for review is not approval to execute. Resource and evidence assumptions still require human review.</p>
-<p>Recorded validation: 14 automated tests passed on November 2, 2026. Not rerun for this content and design review.</p>
+<p>Recorded validation: 14 automated tests passed on November 2, 2026.</p>
 <a class="text-action" href="https://github.com/iambrucedavis/automation-infrastructure-portfolio/tree/main/projects/change-readiness">Read requirements and acceptance criteria ↗</a>
 </details>
 </article>
@@ -145,7 +145,7 @@
 <li>Test results and demonstration counts are not customer outcomes.</li>
 <li>Only simulated AI responses were tested; optional live AI functionality has not been verified.</li>
 </ul>
-<p class="small">Python 3.9+ and the standard library are sufficient for the documented local execution path. The recorded 50-test validation used python3 run_all.py; this content and design review did not rerun the analysis suite.</p>
+<p class="small">Python 3.9+ and the standard library are sufficient for the documented local execution path. The recorded 50-test validation used python3 run_all.py with synthetic scenarios.</p>
 </div>
 </section>
 </main>

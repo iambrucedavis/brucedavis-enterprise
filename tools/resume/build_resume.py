@@ -1,5 +1,5 @@
-"""Build both static resume PDFs from the public HTML resume (requires reportlab).
-The supplied original PDF is preserved outside the checkout.
+"""Build application (two-page) and overview (one-page) PDFs from public HTML.
+Requires ReportLab. Platform fonts are embedded; the supplied original is untouched.
 """
 from pathlib import Path
 from html.parser import HTMLParser
@@ -9,12 +9,12 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib.colors import HexColor
 from reportlab.lib.styles import ParagraphStyle
-from reportlab.platypus import SimpleDocTemplate,Paragraph,KeepTogether,Spacer
-from reportlab.lib.enums import TA_LEFT
+from reportlab.platypus import SimpleDocTemplate, Paragraph, PageBreak
 
 ROOT=Path(__file__).resolve().parents[2]
 class ResumeParser(HTMLParser):
-    def __init__(self):super().__init__();self.main=False;self.tag=None;self.parts=[];self.blocks=[]
+    def __init__(self):
+        super().__init__();self.main=False;self.tag=None;self.parts=[];self.blocks=[]
     def handle_starttag(self,tag,attrs):
         if tag=='main':self.main=True
         if self.main and tag in ('h1','h2','h3','p','li'):
@@ -24,46 +24,60 @@ class ResumeParser(HTMLParser):
     def handle_endtag(self,tag):
         if tag==self.tag:
             text=' '.join(''.join(self.parts).split())
-            if text and text!='Download resume PDF':self.blocks.append((tag,text))
+            if text:self.blocks.append((tag,text))
             self.tag=None;self.parts=[]
         if tag=='main':self.main=False
 
 parser=ResumeParser();parser.feed((ROOT/'bruce-davis-resume.html').read_text())
 fonts=Path('/System/Library/Fonts/Supplemental')
-# Platform fonts are embedded in the PDF; substitute licensed local TTFs on other hosts.
 for name,file in [('ResumeSans','Arial.ttf'),('ResumeBold','Arial Bold.ttf')]:
     pdfmetrics.registerFont(TTFont(name,str(fonts/file)))
-ink=HexColor('#20242B');accent=HexColor('#8D1828')
-styles={
- 'name':ParagraphStyle('Name',fontName='ResumeSans',fontSize=24,leading=26,textColor=ink,spaceAfter=1),
- 'role':ParagraphStyle('Role',fontName='ResumeSans',fontSize=10,leading=12,textColor=ink,spaceAfter=1),
- 'contact':ParagraphStyle('Contact',fontName='ResumeSans',fontSize=9.1,leading=11,textColor=ink,spaceAfter=5),
- 'section':ParagraphStyle('Section',fontName='ResumeBold',fontSize=8.8,leading=10.5,textColor=accent,spaceBefore=5,spaceAfter=2,keepWithNext=True),
- 'job':ParagraphStyle('Job',fontName='ResumeBold',fontSize=9.25,leading=10.4,textColor=ink,spaceAfter=2,keepWithNext=True),
- 'meta':ParagraphStyle('Meta',fontName='ResumeSans',fontSize=9.0,leading=10.5,textColor=ink,spaceBefore=3,spaceAfter=1,keepWithNext=True),
- 'body':ParagraphStyle('Body',fontName='ResumeSans',fontSize=9.25,leading=10.4,textColor=ink,spaceAfter=1),
- 'bullet':ParagraphStyle('Bullet',fontName='ResumeSans',fontSize=9.25,leading=10.4,textColor=ink,leftIndent=8,firstLineIndent=-8,spaceAfter=1),
-}
-story=[]
-for i,(tag,text) in enumerate(parser.blocks):
-    text=text.replace('–','-').replace('—','-').replace('’',"'").replace('“','"').replace('”','"')
-    if tag=='h1':key='name'
-    elif i==1:key='role'
-    elif i==2:key='contact'
-    elif tag=='h2':key='section';text=text.upper()
-    elif tag=='h3':key='job'
-    elif tag=='li':key='bullet';text='- '+text
-    elif text.startswith('- '):key='bullet'
-    elif i+1<len(parser.blocks) and parser.blocks[i+1][0]=='h3':key='meta'
-    else:key='body'
-    safe=escape(text)
-    if key=='contact':safe=safe.replace('iambrucedavis@gmail.com','<link href="mailto:iambrucedavis@gmail.com">iambrucedavis@gmail.com</link>').replace('iambrucedavis.com','<link href="https://www.iambrucedavis.com/">iambrucedavis.com</link>')
-    story.append(Paragraph(safe,styles[key]))
+ink=HexColor('#20242B');accent=HexColor('#8D1828');muted=HexColor('#55514E')
 
-def build(path):
-    doc=SimpleDocTemplate(str(path),pagesize=(612,792),leftMargin=32,rightMargin=32,topMargin=28,bottomMargin=28,title='Bruce Davis - Technical Project Manager',author='Bruce Davis',subject='PMP-certified technical project management resume',pageCompression=1)
-    doc.build(story)
+def clean(text):
+    return text.replace('–','-').replace('—','-').replace('’',"'").replace('“','"').replace('”','"')
+
+def styles_for(compact):
+    if compact:
+        sizes={'name':(24,26,1),'role':(10,12,1),'contact':(9.1,11,5),'section':(8.8,10.5,2),'job':(9.25,10.4,2),'meta':(9,10.5,1),'body':(9.25,10.4,1),'bullet':(9.25,10.4,1)}
+    else:
+        sizes={'name':(25,28,4),'role':(11.5,15,4),'contact':(10.5,14,8),'section':(10.5,14,6),'job':(11.2,14.5,4),'meta':(10.5,13.5,2),'body':(11,14.2,5),'bullet':(11,14.2,4)}
+    styles={}
+    for key,(size,leading,after) in sizes.items():
+        styles[key]=ParagraphStyle(key,fontName='ResumeBold' if key in ('section','job') else 'ResumeSans',fontSize=size,leading=leading,textColor=accent if key=='section' else ink,spaceAfter=after,spaceBefore=(5 if compact else 9) if key=='section' else ((3 if compact else 7) if key=='meta' else 0),keepWithNext=key in ('section','job','meta'),leftIndent=(8 if compact else 10) if key=='bullet' else 0,firstLineIndent=(-8 if compact else -10) if key=='bullet' else 0)
+    return styles
+
+def paragraph(text,key,styles):
+    safe=escape(clean(text))
+    if key=='contact':
+        safe=safe.replace('iambrucedavis@gmail.com','<link href="mailto:iambrucedavis@gmail.com">iambrucedavis@gmail.com</link>').replace('iambrucedavis.com','<link href="https://www.iambrucedavis.com/">iambrucedavis.com</link>')
+    return Paragraph(safe,styles[key])
+
+def build(path,compact=False):
+    styles=styles_for(compact);story=[]
+    for i,(tag,text) in enumerate(parser.blocks):
+        if not compact and text=='Microsoft | May 2024 - Nov 2024':
+            story += [PageBreak(),paragraph(parser.blocks[0][1],'name',styles),paragraph(parser.blocks[1][1],'role',styles),paragraph(parser.blocks[2][1],'contact',styles),paragraph('PROFESSIONAL EXPERIENCE - CONTINUED','section',styles)]
+        if tag=='h1':key='name'
+        elif i==1:key='role'
+        elif i==2:key='contact'
+        elif tag=='h2':key='section';text=text.upper()
+        elif tag=='h3':key='job'
+        elif tag=='li':key='bullet';text='- '+text
+        elif text.startswith('- '):key='bullet'
+        elif i+1<len(parser.blocks) and parser.blocks[i+1][0]=='h3':key='meta'
+        else:key='body'
+        story.append(paragraph(text,key,styles))
+    def footer(canvas,doc):
+        if compact:return
+        canvas.saveState();canvas.setFont('ResumeSans',9);canvas.setFillColor(muted)
+        canvas.drawString(42,23,'Bruce Davis | Technical Project Manager')
+        canvas.drawRightString(570,23,f'{doc.page} / 2');canvas.restoreState()
+    margin=32 if compact else 42
+    doc=SimpleDocTemplate(str(path),pagesize=(612,792),leftMargin=margin,rightMargin=margin,topMargin=28 if compact else 36,bottomMargin=28 if compact else 38,title='Bruce Davis - Technical Project Manager'+(' Overview' if compact else ' Application Resume'),author='Bruce Davis',subject='PMP-certified technical project management resume',pageCompression=1)
+    doc.build(story,onFirstPage=footer,onLaterPages=footer)
 
 build(ROOT/'bruce-davis-resume.pdf')
 shutil.copyfile(ROOT/'bruce-davis-resume.pdf',ROOT/'bruce-davis-resume-ats.pdf')
-print('Built both resume PDF URLs from bruce-davis-resume.html')
+build(ROOT/'bruce-davis-resume-overview.pdf',compact=True)
+print('Built two-page application PDFs and optional one-page overview from HTML.')
