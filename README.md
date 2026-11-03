@@ -21,3 +21,7 @@ The optional compact overview is `bruce-davis-resume-overview.pdf`. `tools/resum
 ## Validation history
 
 Dated test results on the site refer to the recorded prototype run, not customer outcomes. Review-process and revalidation notes belong in [project validation documentation](docs/project-validation.md).
+
+## Recruiter assistant (review integration)
+
+The homepage has an inline, evidence-grounded assistant backed by one Vercel Node.js function. It stays unavailable until server-side OpenAI and shared Redis configuration is complete. See [setup, privacy, limits, and verification](docs/recruiter-assistant.md). `npm test` covers the handler; `npm run preview` starts the local preview. No framework migration or downloadable resume update is involved.

@@ -37,9 +37,24 @@
     {
       "src": "fonts/**",
       "use": "@vercel/static"
+    },
+    {
+      "src": "api/recruiter.mjs",
+      "use": "@vercel/node",
+      "config": {
+        "maxDuration": 20
+      }
     }
   ],
   "routes": [
+    {
+      "src": "/api/recruiter",
+      "dest": "/api/recruiter.mjs"
+    },
+    {
+      "src": "/api/(.*)",
+      "status": 404
+    },
     {
       "src": "/",
       "dest": "/index.html"

@@ -16,6 +16,8 @@
 <script src="navigation.js" defer>
 </script>
 <link rel="stylesheet" href="portfolio-theme.css">
+<link rel="stylesheet" href="assistant.css">
+<script src="assistant.js" defer></script>
 </head>
 <body class="tpm-page">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -82,6 +84,7 @@
 <a class="btn btn-primary" href="#work">Explore selected projects</a>
 <a class="btn btn-ghost" href="bruce-davis-resume.pdf" download>Download resume PDF</a>
 </div>
+<p class="assistant-discovery"><a class="text-action" href="#ask-about-experience">Ask about my experience →</a></p>
 </div>
 <aside class="hero-diagram" aria-label="What I bring to a project">
 <p class="diagram-caption">What I bring to a project · 01–03</p>
@@ -252,6 +255,39 @@
 </article>
 <p class="small recorded-validation">Recorded validation: 50 automated tests passed on November 2, 2026. Those tests cover synthetic examples, not customer outcomes.</p>
 <a class="text-action" href="automation-infrastructure.html">Read how the prototypes work →</a>
+</div>
+</section>
+<section id="ask-about-experience" class="reading-section">
+<div class="content-wrap assistant-wrap">
+<p class="eyebrow">AI assistant</p>
+<h2>Ask about my experience</h2>
+<p class="assistant-intro">This AI assistant answers questions using the information published on this site. It links to relevant experience and projects and will tell you when information is unavailable.</p>
+<div class="assistant-private" data-private data-hj-suppress data-clarity-mask="true" data-sentry-mask data-dd-privacy="hidden">
+<p data-chat-noscript>The interactive assistant needs JavaScript. You can still browse the projects, download my resume, or contact me below.</p>
+<div data-chat-ui hidden>
+<div class="assistant-starters" aria-label="Starter questions">
+<button type="button" data-starter>What projects has Bruce managed?</button>
+<button type="button" data-starter>How has Bruce written business requirements?</button>
+<button type="button" data-starter>What applications and early solutions has he worked on?</button>
+<button type="button" data-starter>How has Bruce handled teams and project risks?</button>
+</div>
+<div role="log" aria-label="Conversation with the AI assistant" aria-live="polite" aria-relevant="additions"></div>
+<form aria-label="Ask the AI assistant" aria-busy="false">
+<label for="assistant-question">Your question</label>
+<textarea id="assistant-question" name="question" rows="3" maxlength="1000" required aria-describedby="assistant-help assistant-count assistant-privacy" autocomplete="off" spellcheck="false"></textarea>
+<p id="assistant-help" class="assistant-help">Ask one question at a time. Each question is answered on its own. Maximum 1,000 characters.</p>
+<p id="assistant-count" class="assistant-count" data-count>0 / 1,000 characters</p>
+<div class="assistant-actions">
+<button type="submit" class="btn btn-primary" data-send>Send</button>
+<button type="button" class="text-action" data-clear>Clear chat</button>
+<button type="button" class="text-action" data-retry hidden>Retry this question</button>
+</div>
+</form>
+<p class="assistant-status" role="status" aria-live="polite" aria-atomic="true" data-status></p>
+<p id="assistant-privacy" class="assistant-privacy">This site keeps chat history only in this page’s memory. Questions are sent to OpenAI; provider retention policies may apply. Short-lived usage counters contain no chat text. Please don’t include private information. <a href="https://developers.openai.com/api/docs/guides/your-data" rel="noopener" target="_blank">Provider data policy</a>.</p>
+</div>
+</div>
+<p class="assistant-contact">Prefer email? <a href="mailto:iambrucedavis@gmail.com">Contact Bruce at iambrucedavis@gmail.com</a>.</p>
 </div>
 </section>
 <section class="reading-section alternate">

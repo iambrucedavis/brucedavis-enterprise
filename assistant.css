@@ -1,0 +1,25 @@
+/* Assistant-only additions; use the existing editorial palette and typography. */
+.assistant-discovery{margin-top:18px}
+.assistant-wrap{max-width:920px}
+.assistant-intro{max-width:70ch}
+.assistant-starters{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:28px 0}
+.assistant-starters button{font:inherit;line-height:1.55;text-align:left;color:#20242B;background:transparent;border:1px solid #DDD6D0;padding:14px 16px;cursor:pointer;overflow-wrap:anywhere}
+.assistant-starters button:hover{border-color:#B42335}
+.assistant-private label{display:block;font-weight:600;margin:20px 0 10px}
+.assistant-private textarea{display:block;box-sizing:border-box;width:100%;min-height:120px;resize:vertical;font:inherit;line-height:1.65;color:#20242B;background:#FAF8F5;border:1px solid #B7AEA7;border-radius:0;padding:14px}
+.assistant-help,.assistant-privacy,.assistant-count{font-size:14px!important;line-height:1.65!important;color:#55514E!important}
+.assistant-count{margin-top:6px!important}
+.assistant-actions{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:16px}
+.assistant-actions button{font-family:inherit;cursor:pointer}
+.assistant-actions .text-action{background:none;border:0;border-bottom:1px solid currentColor;padding:6px 0;color:#8D1828;font-size:15px}
+.assistant-private button:disabled{opacity:.55;cursor:default}
+.assistant-status{min-height:1.75em;margin-top:18px!important;font-size:15px!important;overflow-wrap:anywhere}
+.assistant-turn{padding:22px 0;border-top:1px solid #DDD6D0;overflow-wrap:anywhere}
+.assistant-turn .eyebrow{margin:8px 0!important}
+.assistant-turn p{white-space:pre-wrap}
+.assistant-sources{display:flex;gap:10px 24px;flex-wrap:wrap;padding-left:20px;font-size:14px}
+.assistant-sources a{overflow-wrap:anywhere}
+.assistant-contact{margin-top:20px}
+.assistant-private [hidden]{display:none!important}
+@media(max-width:700px){.assistant-starters{grid-template-columns:1fr}.assistant-private textarea{font-size:16px}.assistant-actions{gap:16px}.assistant-sources{display:block}.assistant-sources li{margin:8px 0}}
+#ask-about-experience{scroll-margin-top:100px}
