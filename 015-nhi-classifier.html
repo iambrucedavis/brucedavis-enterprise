@@ -243,13 +243,13 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 <body>
 
 
-<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal technical experiment</strong> · Separate from employer deliverables. Project figures are not verified customer outcomes. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
+<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Work experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Work experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal technical experiment</strong> · Separate from my employer work. Project figures describe personal examples, not customer results. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-pre">Machine Learning · Fine-Tuning · Hugging Face</div>
   <h1 id="hero-hl">NHI Credential<br>Risk Classifier</h1>
-  <p class="hero-sub">Compares two small models that sort synthetic machine-identity credentials into risk categories. Reported benchmarks describe a personal synthetic-data experiment, not customer deployments.</p>
+  <p class="hero-sub">I compared two small AI models that sort synthetic software-account credentials into risk categories. The results are from a personal experiment, not customer systems.</p>
   <div class="hero-meta">
     <span>Two fine-tuned models</span>
     <span>3,000-record synthetic dataset</span>
@@ -268,12 +268,12 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
     <div class="glance">
       <div class="glance-col">
         <h3>What it is</h3>
-        <p>A real ML portfolio piece — synthetic dataset, two fine-tuned models, eval harness with per-class metrics and a cost/latency comparison. Classifies a machine identity credential into one of four risk states (<em>active_legitimate · orphaned · over_scoped · suspicious</em>). The classifier becomes the brain of the AI Agent Governance Console's Triage agent.</p>
+        <p>I used synthetic data to compare two trained models that classify software-account credentials. The four categories are legitimate use, missing owner, excessive access, and suspicious use. I compared accuracy, cost, and response time. NHI means non-human identity: an account used by software rather than a person.</p>
       </div>
       <div class="glance-col">
-        <h3>Portfolio context</h3>
-        <p class="glance-roles">Personal exploration of technical design, workflow decisions, and UX. Supports the Technical Project Manager portfolio.</p>
-        <h3 style="margin-top:22px;">Skills demonstrated</h3>
+        <h3>What I explored</h3>
+        <p class="glance-roles">I explored how to compare model results on the same task using synthetic data.</p>
+        <h3 style="margin-top:22px;">Skills and tools</h3>
         <ul>
           <li>Synthetic dataset design with controlled, learnable patterns</li>
           <li>Transformer fine-tuning (Hugging Face Trainer)</li>
@@ -328,7 +328,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
         <span class="flow-sub">FastAPI · CLI</span>
       </div>
     </div>
-    <p class="flow-cap">Most NHI tooling is rules-based or LLM-prompted. <strong style="color:var(--ink);font-weight:600;">Neither scales</strong> — rules miss the long tail, LLM API calls cost too much at enterprise volume. A small fine-tuned classifier sits in the right place: cheap enough to run on every credential, accurate enough to triage.</p>
+    <p class="flow-cap">I compared two small models on the same synthetic credential data. I measured their classification accuracy, cost, and response time within this personal experiment.</p>
   </div>
 </div>
 

@@ -234,13 +234,13 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 <body>
 
 
-<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal technical experiment</strong> · Separate from employer deliverables. Project figures are not verified customer outcomes. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
+<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Work experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Work experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal technical experiment</strong> · Separate from my employer work. Project figures describe personal examples, not customer results. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-pre">Custom MCP · Three-Pattern Architecture</div>
   <h1 id="hero-hl">Content &amp; Research<br>MCP Server</h1>
-  <p class="hero-sub">Explores how an assistant can retrieve research, check draft text, and preview content changes under explicit rules.</p>
+  <p class="hero-sub">I built tools that let an AI assistant find research, check draft writing, and make controlled content changes.</p>
   <div class="hero-meta">
     <span>5 MCP tools</span>
     <span>3 deliberate patterns</span>
@@ -259,12 +259,12 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
     <div class="glance">
       <div class="glance-col">
         <h3>What it is</h3>
-        <p>A custom MCP server in daily use. Five Notion-backed tools across three patterns: retrieval (returns options for Claude to choose), critique (flags what's wrong), mutation (writes the change). Tools enforce constraints; Claude reasons.</p>
+        <p>I built five tools backed by Notion. They retrieve research, check draft text, and write changes under explicit rules. Model Context Protocol, or MCP, connects the assistant to these tools.</p>
       </div>
       <div class="glance-col">
-        <h3>Portfolio context</h3>
-        <p class="glance-roles">Personal exploration of technical design, workflow decisions, and UX. Supports the Technical Project Manager portfolio.</p>
-        <h3 style="margin-top:22px;">Skills demonstrated</h3>
+        <h3>What I explored</h3>
+        <p class="glance-roles">I explored how explicit rules can limit what an AI assistant reads and changes.</p>
+        <h3 style="margin-top:22px;">Skills and tools</h3>
         <ul>
           <li>Custom MCP server design from scratch</li>
           <li>Three-pattern architecture: retrieval / critique / mutation</li>
@@ -288,9 +288,9 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 <section id="brief" class="reveal">
   <div class="brief-lbl">The Brief</div>
   <div class="brief-body">
-    <p>Most projects that use Claude treat it as a generator wrapped in code. You write a function, the function calls Claude, Claude returns text, the function parses the text back into something usable. Claude does the work; the code is plumbing.</p>
-    <p>This project flips that. Claude is the <strong>decision-maker; the tools are the constraints</strong> — rules about what fits my voice, my color library, my workflow. Three patterns, deliberately: <strong>retrieval</strong> (the tool returns options, Claude picks), <strong>critique</strong> (the tool flags problems, Claude rewrites), <strong>mutation</strong> (Claude decides, the tool writes the change).</p>
-    <p>The tools never call Claude; Claude calls the tools. This page was drafted, voice-checked, and scaffolded by Claude using the same five tools the page documents.</p>
+    <p>I wanted the assistant to work within clear rules for my content, research, and writing style.</p>
+    <p>I separated the tools into three jobs: find information, check writing, and make an allowed change. Claude chooses a tool; the tool enforces its rules.</p>
+    <p>Claude calls the tools. The tools do not make their own AI requests.</p>
   </div>
 </section>
 

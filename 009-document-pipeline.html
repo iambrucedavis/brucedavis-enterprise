@@ -241,13 +241,13 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 <body>
 
 
-<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal technical experiment</strong> · Separate from employer deliverables. Project figures are not verified customer outcomes. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
+<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Work experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Work experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal technical experiment</strong> · Separate from my employer work. Project figures describe personal examples, not customer results. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-pre">Regulated AI · MCP · Masking demonstration</div>
   <h1 id="hero-hl">Document Processing<br>Pipeline</h1>
-  <p class="hero-sub">Explores extracting document information, masking selected personal information, checking the required format, and sending exceptions for human review. No compliance certification is established.</p>
+  <p class="hero-sub">I built an experiment that extracts document details, masks selected personal information, checks the results, and sends exceptions for human review. It is not a compliance certification.</p>
   <div class="hero-meta">
     <span>5 MCP tools</span>
     <span>PII masking + schema validation</span>
@@ -266,12 +266,12 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
     <div class="glance">
       <div class="glance-col">
         <h3>What it is</h3>
-        <p>A document-processing MCP server for regulated environments. Five composable tools, one per stage, with deterministic PII masking, schema + business-rule validation, an Human-review queue for exceptions, and per-document token-cost reporting. Built on Claude; portable to any tool-calling model.</p>
+        <p>I built five document-processing tools for extraction, masking personal information, checking required fields and rules, human review, and cost reporting. The tools work with Claude. This personal experiment does not establish compliance.</p>
       </div>
       <div class="glance-col">
-        <h3>Portfolio context</h3>
-        <p class="glance-roles">Personal exploration of technical design, workflow decisions, and UX. Supports the Technical Project Manager portfolio.</p>
-        <h3 style="margin-top:22px;">Skills demonstrated</h3>
+        <h3>What I explored</h3>
+        <p class="glance-roles">I explored how to separate automated checks from decisions that need a person.</p>
+        <h3 style="margin-top:22px;">Skills and tools</h3>
         <ul>
           <li>MCP tool design — one stage per tool, no shared state</li>
           <li>Two-layer PII masking (path-based + regex + free-text flagging)</li>
@@ -301,8 +301,8 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <span class="dv-label">01 — The pipeline</span>
       <span class="dv-version">5 stages · 3 patterns · ~1240 lines of source code</span>
     </div>
-    <h2 class="dv-title">Five tools, one conductor.</h2>
-    <p class="dv-desc">Each stage is a separate custom Claude tool, swappable on its own. The conductor is Claude. Three of the five tools change something (extract, mask, route); one is a check (validate); one totals things up (cost).</p>
+    <h2 class="dv-title">Five steps, with human review.</h2>
+    <p class="dv-desc">I separated the process into tools that extract, mask, check, route, and total costs. Claude chooses the tools. Exceptions go to a person for review.</p>
 
     <div class="pl-flow">
       <div class="pl-node">
@@ -339,7 +339,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 
     <div class="c-ann">
       <span class="ann-lbl">Design rationale</span>
-      <span class="ann-txt">Splitting the work by stage splits it by concern. Each tool's input is the previous tool's output — no shared state. The pipeline stays inspectable: drop a tool's trace into Claude, swap one piece for another, test different prompts side by side. The work-order pattern keeps the demo runnable on a Claude Max subscription; production with direct API access plugs in at <code>doc_extract</code> without touching the four downstream tools.</span>
+      <span class="ann-txt">Splitting the work by stage splits it by concern. Each tool's input is the previous tool's output — no shared state. I can review each step’s output, replace one tool, and compare prompts side by side. The work-order pattern keeps the demo runnable on a Claude Max subscription; production with direct API access plugs in at <code>doc_extract</code> without touching the four downstream tools.</span>
     </div>
   </div>
 </div>

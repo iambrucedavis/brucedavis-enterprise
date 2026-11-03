@@ -156,13 +156,13 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
 <body>
 
 
-<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal technical experiment</strong> · Separate from employer deliverables. Project figures are not verified customer outcomes. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
+<a class="skip-link" href="#main">Skip to content</a><header class="portfolio-header"><div class="nav-inner"><a class="nav-logo" href="index.html">Bruce Davis</a><nav class="desktop-nav" aria-label="Main navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Work experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation"><ul><li><a href="index.html#work">Work</a></li><li><a href="bruce-davis-resume.html#professional-experience">Work experience</a></li><li><a href="about.html">About</a></li><li><a href="bruce-davis-resume.html">Resume</a></li><li><a href="index.html#contact">Contact</a></li></ul></nav></details></div></header><aside class="project-context"><strong>Personal technical experiment</strong> · Separate from my employer work. Project figures describe personal examples, not customer results. <a href="other-work.html">Additional Work →</a></aside><div id="main" tabindex="-1"></div>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-pre">Microsoft Teams · Bot Framework · Azure OpenAI · Microsoft Graph</div>
   <h1 id="hero-hl">IT Support<br>Copilot</h1>
-  <p class="hero-sub">Explores how an employee’s IT request could be fulfilled, escalated for approval, or declined under explicit rules. A personal prototype, separate from employer work.</p>
+  <p class="hero-sub">I built a personal prototype that checks whether an IT request can be fulfilled, needs approval, or should be declined. It is separate from my employer work.</p>
   <div class="hero-meta">
     <span>Bot Framework · Teams</span>
     <span>Azure OpenAI · Graph SDK</span>
@@ -181,12 +181,12 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
     <div class="glance">
       <div class="glance-col">
         <h3>What it is</h3>
-        <p>A complete internal-IT copilot stack — Teams Bot Framework wraps a FastAPI endpoint that calls Azure OpenAI with four Microsoft-Graph-backed tools. The LLM picks tools; a separate rule-based policy engine decides what happens. Runs offline against fixture data by default so the demo always works; <code style="font-family:var(--mono);font-size:14px;color:var(--ink);">GRAPH_MODE=live</code> swaps in real Microsoft Graph via managed identity.</p>
+        <p>I built a Teams-based assistant with four tools for IT requests. The AI interprets the request; separate rules decide what happens next. The demo uses sample data by default. Connecting it to live Microsoft Graph requires configuration.</p>
       </div>
       <div class="glance-col">
-        <h3>Portfolio context</h3>
-        <p class="glance-roles">Personal exploration of technical design, workflow decisions, and UX. Supports the Technical Project Manager portfolio.</p>
-        <h3 style="margin-top:22px;">Skills demonstrated</h3>
+        <h3>What I explored</h3>
+        <p class="glance-roles">I explored how clear rules and human approvals can guide an IT assistant.</p>
+        <h3 style="margin-top:22px;">Skills and tools</h3>
         <ul>
           <li>Bot Framework v4 adapter + Teams app manifest</li>
           <li>Microsoft Graph SDK (User, Group, GroupMember APIs)</li>
@@ -218,7 +218,7 @@ a:focus-visible, button:focus-visible { outline:2px solid var(--signal); outline
       <span class="dv-version">one decision per turn</span>
     </div>
     <h2 class="dv-title">Every request routes to one of four answers.</h2>
-    <p class="dv-desc">The split between LLM reasoning (what the user is asking for) and rule-based policy (what happens next) is deliberate. The LLM is good at understanding language; rules are good at being audit-defensible.</p>
+    <p class="dv-desc">I kept interpretation separate from permission. The AI identifies what the person wants. Fixed rules decide whether the request can proceed or needs approval.</p>
 
     <div class="outcome-cards">
       <div class="outcome is-self">
