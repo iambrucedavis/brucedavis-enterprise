@@ -20,7 +20,7 @@ test('every curated answer is unchanged and has its reviewed source',()=>{
 });
 test('all four questions and seven topic links reach native answer disclosures',()=>{
  const links=[...html.matchAll(/href="#(experience-[^"]+)" data-experience-link/g)];
- assert.equal(links.length,11);assert.equal((html.match(/<details id="experience-/g)||[]).length,7);
+ assert.equal(links.length,14);assert.equal((html.match(/<details id="experience-/g)||[]).length,7);
  for(const [,id]of links)assert.ok(html.includes(`<details id="${id}"><summary>`),id);
  assert.match(js,/target\.open = true/);assert.match(js,/\.focus\(\{ preventScroll: true \}\)/);
  assert.match(js,/hashchange/);assert.match(js,/pageshow/);
@@ -28,7 +28,12 @@ test('all four questions and seven topic links reach native answer disclosures',
 test('no AI, request form, storage or network client remains in the guide',()=>{
  const guide=html.slice(html.indexOf('<section id="ask-about-experience"'),html.indexOf('</section>',html.indexOf('<section id="ask-about-experience"')));
  assert.doesNotMatch(guide,/<form|<textarea|AI assistant|OpenAI|Redis|chat history/i);
- assert.match(guide,/prepared answers, not AI-generated responses/);
+ assert.match(guide,/<h2>Experience guide<\/h2>/);
+ assert.match(guide,/Explore prepared answers about my experience, skills, and projects\./);
+ assert.match(guide,/I don’t have verified information about that/);
+ assert.match(guide,/data-clear-guide/);
+ assert.match(js,/Guide cleared\./);
+ assert.match(guide,/data-hj-suppress/);
  assert.doesNotMatch(js,/fetch\(|XMLHttpRequest|WebSocket|localStorage|sessionStorage|innerHTML|console\./);
  for(const path of ['api/recruiter.mjs','server/assistant/handler.mjs','server/assistant/limits.mjs','.env.example'])assert.equal(existsSync(path),false,path);
  assert.deepEqual(readFileSync('vercel.json'),original('vercel.json'));

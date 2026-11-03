@@ -4,7 +4,7 @@ The user chose a free guided experience instead of an AI assistant. This replace
 
 ## Behavior and costs
 
-The homepage section is titled “Explore my experience.” Four recruiter questions and seven topic links open prepared, source-linked answers. Seven native HTML disclosures contain 17 reviewed factual records from the previous evidence catalog. All answer text is in the HTML and readable without JavaScript. The small JavaScript enhancement opens the requested disclosure and moves keyboard focus to its summary; direct fragment links work as well.
+The homepage section is titled “Experience guide,” with the description “Explore prepared answers about my experience, skills, and projects.” Four recruiter questions and seven topic links open prepared, source-linked answers. Seven native HTML disclosures contain 17 reviewed factual records from the previous evidence catalog. All answer text is in the HTML and readable without JavaScript. The small JavaScript enhancement opens the requested disclosure and moves keyboard focus to its summary; direct fragment links work as well.
 
 There is no question field, chat, model call, Redis, API endpoint, external provider dependency or credential requirement. The section makes no network requests and uses no browser storage. The site's existing hosting terms and usage limits still apply; this feature adds no paid service or per-answer AI charge. All original site content and downloadable resumes are preserved byte for byte outside the added homepage section/link/assets.
 
@@ -23,3 +23,7 @@ Visitor task: recruiters find a relevant example, read a concise prepared answer
 `npm test` checks all 17 unchanged answers and their citation targets, the four questions/seven topic links, no AI endpoint/network/storage path, static hosting configuration, and exact preservation of existing site/resume files. `npm run preview` serves static files only.
 
 Before handoff: check desktop and 390 px layouts; all questions/topics; native keyboard disclosure activation and visible focus; a direct topic fragment; no-JavaScript answers; source/case links; contact and resume downloads. Verify anonymous access to the Vercel review preview and confirm production still points to base commit `56f5b4dbbdbc570e392f84c2dd536984a22295ee`. No live model/provider verification is needed for this implementation.
+
+## Final prepared-answer requirements
+
+There is no free-text input or keyword matching. “My question isn’t covered” gives the exact response “I don’t have verified information about that” with links to leadership, skills and personal-project topics. “Clear guide” closes all answer and unsupported disclosures, clears the selected topic fragment, announces the reset, and focuses the first question. This replaces chat clearing because the guide has no message transcript. No messages or selections are persisted. The guide region is masked for common session-replay tools; no analytics or replay SDK is installed. Future integrations must explicitly exclude this region.

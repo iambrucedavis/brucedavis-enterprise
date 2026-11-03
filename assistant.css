@@ -20,3 +20,11 @@
 .assistant-contact{margin-top:26px}
 #ask-about-experience{scroll-margin-top:100px}
 @media(max-width:700px){.assistant-starters{grid-template-columns:1fr}.experience-topics{gap:12px 18px}.experience-answers summary{font-size:18px}.experience-answer{padding-bottom:22px}}
+
+.guide-unavailable{margin-top:24px;border:1px solid #DDD6D0;padding:16px;scroll-margin-top:105px}
+.guide-unavailable summary{cursor:pointer;font-size:16px;line-height:1.5}
+.guide-unavailable p{font-size:16px;margin:16px 0}
+.guide-unavailable .experience-topics{margin-bottom:0}
+.guide-clear{margin-top:22px;border:0;border-bottom:1px solid currentColor;background:none;color:#8D1828;font:inherit;padding:8px 0;cursor:pointer}
+.guide-clear[hidden]{display:none}
+.guide-status{font-size:14px!important;min-height:1.6em;margin:8px 0!important}
