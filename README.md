@@ -21,3 +21,7 @@ The optional compact overview is `bruce-davis-resume-overview.pdf`. `tools/resum
 ## Validation history
 
 Dated test results on the site refer to the recorded prototype run, not customer outcomes. Review-process and revalidation notes belong in [project validation documentation](docs/project-validation.md).
+
+## Free experience guide (review branch)
+
+The homepage offers prepared answers with source links, grouped by recruiter questions and topics. It uses native HTML disclosures and a small browser-only enhancement. There is no model, API, shared storage, credential requirement or additional paid service. See [review notes and verification](docs/recruiter-assistant.md). `npm test` checks the guide's source coverage, links and preserved files; `npm run preview` starts a static local preview. Resume downloads are unchanged.

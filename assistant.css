@@ -1,0 +1,30 @@
+/* Experience guide: retain the portfolio's existing editorial palette and type. */
+.assistant-discovery{margin-top:18px}
+.assistant-wrap{max-width:920px}
+.assistant-intro{max-width:70ch}
+.assistant-starters{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:28px 0}
+.assistant-starters a{display:flex;align-items:center;justify-content:space-between;gap:16px;font:inherit;line-height:1.55;text-decoration:none;color:#20242B;background:transparent;border:1px solid #DDD6D0;padding:14px 16px;overflow-wrap:anywhere}
+.assistant-starters a:hover{border-color:#B42335}
+.assistant-starters span{color:#8D1828}
+.experience-topics{display:flex;gap:10px 20px;flex-wrap:wrap;margin:0 0 30px;font-size:14px}
+.experience-topics a{color:#8D1828;text-underline-offset:4px}
+.experience-answers details{border-top:1px solid #DDD6D0;padding:0;scroll-margin-top:105px}
+.experience-answers details:last-child{border-bottom:1px solid #DDD6D0}
+.experience-answers summary{cursor:pointer;font-size:19px;font-weight:500;padding:20px 4px;line-height:1.5}
+.experience-answers details[open] summary{color:#8D1828}
+.experience-answer{padding:0 4px 24px;max-width:75ch}
+.experience-answer article+article{margin-top:26px}
+.experience-answer h3{font:600 17px/1.5 var(--font-sans,Arial,sans-serif);margin:0 0 10px}
+.experience-answer p{margin:0 0 12px}
+.experience-answer a{font-size:14px;overflow-wrap:anywhere}
+.assistant-contact{margin-top:26px}
+#ask-about-experience{scroll-margin-top:100px}
+@media(max-width:700px){.assistant-starters{grid-template-columns:1fr}.experience-topics{gap:12px 18px}.experience-answers summary{font-size:18px}.experience-answer{padding-bottom:22px}}
+
+.guide-unavailable{margin-top:24px;border:1px solid #DDD6D0;padding:16px;scroll-margin-top:105px}
+.guide-unavailable summary{cursor:pointer;font-size:16px;line-height:1.5}
+.guide-unavailable p{font-size:16px;margin:16px 0}
+.guide-unavailable .experience-topics{margin-bottom:0}
+.guide-clear{margin-top:22px;border:0;border-bottom:1px solid currentColor;background:none;color:#8D1828;font:inherit;padding:8px 0;cursor:pointer}
+.guide-clear[hidden]{display:none}
+.guide-status{font-size:14px!important;min-height:1.6em;margin:8px 0!important}
